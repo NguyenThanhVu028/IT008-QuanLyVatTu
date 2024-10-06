@@ -25,6 +25,7 @@
             helloToolStripMenuItem = new ToolStripMenuItem();
             domainUpDown1 = new DomainUpDown();
             comboBox1 = new ComboBox();
+            textBox1 = new TextBox();
             menuStrip1.SuspendLayout();
             SuspendLayout();
             // 
@@ -60,7 +61,7 @@
             // 
             // domainUpDown1
             // 
-            domainUpDown1.Location = new Point(149, 45);
+            domainUpDown1.Location = new Point(78, 177);
             domainUpDown1.Name = "domainUpDown1";
             domainUpDown1.Size = new Size(150, 27);
             domainUpDown1.TabIndex = 3;
@@ -69,16 +70,26 @@
             // comboBox1
             // 
             comboBox1.FormattingEnabled = true;
-            comboBox1.Location = new Point(149, 93);
+            comboBox1.Location = new Point(272, 297);
             comboBox1.Name = "comboBox1";
             comboBox1.Size = new Size(151, 28);
             comboBox1.TabIndex = 4;
+            // 
+            // textBox1
+            // 
+            textBox1.Location = new Point(316, 140);
+            textBox1.Name = "textBox1";
+            textBox1.Size = new Size(368, 27);
+            textBox1.TabIndex = 6;
+            string path1 = Path.Combine("C:", "text.txt");
+            textBox1.Text = path1;
             // 
             // MyForm
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(800, 450);
+            Controls.Add(textBox1);
             Controls.Add(comboBox1);
             Controls.Add(domainUpDown1);
             Controls.Add(menuStrip1);
@@ -101,5 +112,6 @@
         private ToolStripMenuItem helloToolStripMenuItem;
         private DomainUpDown domainUpDown1;
         private ComboBox comboBox1;
+        private TextBox textBox1;
     }
 }

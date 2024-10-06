@@ -30,9 +30,9 @@
         {
             components = new System.ComponentModel.Container();
             contextMenuStrip1 = new ContextMenuStrip(components);
-            listBox1 = new ListBox();
             helloToolStripMenuItem = new ToolStripMenuItem();
             hiToolStripMenuItem = new ToolStripMenuItem();
+            listBox1 = new ListBox();
             contextMenuStrip1.SuspendLayout();
             SuspendLayout();
             // 
@@ -41,28 +41,28 @@
             contextMenuStrip1.ImageScalingSize = new Size(20, 20);
             contextMenuStrip1.Items.AddRange(new ToolStripItem[] { helloToolStripMenuItem, hiToolStripMenuItem });
             contextMenuStrip1.Name = "contextMenuStrip1";
-            contextMenuStrip1.Size = new Size(211, 80);
-            // 
-            // listBox1
-            // 
-            listBox1.ContextMenuStrip = contextMenuStrip1;
-            listBox1.FormattingEnabled = true;
-            listBox1.Location = new Point(308, 159);
-            listBox1.Name = "listBox1";
-            listBox1.Size = new Size(150, 104);
-            listBox1.TabIndex = 1;
+            contextMenuStrip1.Size = new Size(115, 52);
             // 
             // helloToolStripMenuItem
             // 
             helloToolStripMenuItem.Name = "helloToolStripMenuItem";
-            helloToolStripMenuItem.Size = new Size(210, 24);
+            helloToolStripMenuItem.Size = new Size(114, 24);
             helloToolStripMenuItem.Text = "Hello";
             // 
             // hiToolStripMenuItem
             // 
             hiToolStripMenuItem.Name = "hiToolStripMenuItem";
-            hiToolStripMenuItem.Size = new Size(210, 24);
+            hiToolStripMenuItem.Size = new Size(114, 24);
             hiToolStripMenuItem.Text = "Hi";
+            // 
+            // listBox1
+            // 
+            listBox1.ContextMenuStrip = contextMenuStrip1;
+            listBox1.FormattingEnabled = true;
+            listBox1.Location = new Point(317, 135);
+            listBox1.Name = "listBox1";
+            listBox1.Size = new Size(150, 104);
+            listBox1.TabIndex = 1;
             // 
             // ChildForm
             // 
