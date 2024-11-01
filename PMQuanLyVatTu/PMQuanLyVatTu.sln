@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.9.34701.34
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WinFormTest", "WinFormTest\WinFormTest.csproj", "{366F4C2F-1475-46B0-B9FC-8D407BF69ED7}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PMQuanLyVatTu", "PMQuanLyVatTu.csproj", "{0D3EA04A-3A96-4AF4-92FE-3D31F894D550}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -11,15 +11,15 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{366F4C2F-1475-46B0-B9FC-8D407BF69ED7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{366F4C2F-1475-46B0-B9FC-8D407BF69ED7}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{366F4C2F-1475-46B0-B9FC-8D407BF69ED7}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{366F4C2F-1475-46B0-B9FC-8D407BF69ED7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0D3EA04A-3A96-4AF4-92FE-3D31F894D550}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0D3EA04A-3A96-4AF4-92FE-3D31F894D550}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0D3EA04A-3A96-4AF4-92FE-3D31F894D550}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0D3EA04A-3A96-4AF4-92FE-3D31F894D550}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		SolutionGuid = {5E990583-59F5-4E1B-91BA-1CC2076B9585}
+		SolutionGuid = {3B88DF9C-A802-4517-BB8B-4C38F9317B82}
 	EndGlobalSection
 EndGlobal
