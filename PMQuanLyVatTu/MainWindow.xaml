@@ -5,8 +5,15 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PMQuanLyVatTu"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
-    <Grid>
-
+        Title="MainWindow" Height="450" Width="800"
+        AllowsTransparency="True"
+        WindowStyle="None"
+        Background="Transparent"
+        WindowStartupLocation="CenterScreen">
+    <Grid x:Name="BorderGrid">
+        <Border Background="#FF001E28"
+                CornerRadius="10"
+                MouseDown="BorderMouseDown">
+        </Border>
     </Grid>
 </Window>

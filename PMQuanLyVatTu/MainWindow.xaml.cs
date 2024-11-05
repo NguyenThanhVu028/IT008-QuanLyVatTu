@@ -20,5 +20,12 @@ namespace PMQuanLyVatTu
         {
             InitializeComponent();
         }
+        void BorderMouseDown(object sender, MouseButtonEventArgs e)
+        {
+            if(e.ChangedButton == MouseButton.Left)
+            {
+                this.DragMove();
+            }
+        }
     }
 }
