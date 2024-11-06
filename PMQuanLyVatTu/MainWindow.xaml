@@ -43,6 +43,18 @@
                         Style="{StaticResource CloseButtonStyle}"
                         Click="CloseWindows"/>
             </StackPanel>
+            <Border x:Name="PageDispayArea"
+                    Grid.Row="1"
+                    Grid.Column="1"
+                    BorderBrush="Aqua"
+                    BorderThickness="1"
+                    CornerRadius="10"
+                    Margin="10">
+                <Border.Background>
+                    <ImageBrush ImageSource="Images/BackGround/DefaultBackGround.jpg"
+                                Opacity="0.2"/>
+                </Border.Background>
+            </Border>
         </Grid>
     </Grid>
 </Window>
