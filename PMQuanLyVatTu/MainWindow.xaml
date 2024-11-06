@@ -5,15 +5,44 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PMQuanLyVatTu"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800"
+        Title="MainWindow" Height="720" Width="1280"
         AllowsTransparency="True"
         WindowStyle="None"
         Background="Transparent"
         WindowStartupLocation="CenterScreen">
-    <Grid x:Name="BorderGrid">
+    <Grid x:Name="WindowsGrid">
         <Border Background="#FF001E28"
                 CornerRadius="10"
-                MouseDown="BorderMouseDown">
+                MouseDown="BorderMouseDown"
+                BorderBrush="Aqua"
+                BorderThickness="1">
         </Border>
+        <Grid x:Name="LayoutGrid">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="200"/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="55"/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+            <Image Source="Images/AppLogo/logo.png"/>
+            <StackPanel x:Name="Stackpanel_WindowsButton"
+                        Grid.Column="1"
+                        Margin="10"
+                        HorizontalAlignment="Right"
+                        VerticalAlignment="Center"
+                        Orientation="Horizontal">
+                <Button x:Name="MinimizeButton"
+                        Style="{StaticResource MinimizeButtonStyle}"
+                        Click="MinimizeWindows"/>
+                <Button x:Name="MaximizeButton"
+                        Style="{StaticResource MaximizeButtonStyle}"
+                        Click="MaximizeWindows"/>
+                <Button x:Name="CloseButton"
+                        Style="{StaticResource CloseButtonStyle}"
+                        Click="CloseWindows"/>
+            </StackPanel>
+        </Grid>
     </Grid>
 </Window>

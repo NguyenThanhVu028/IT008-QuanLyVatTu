@@ -9,7 +9,17 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Images\" />
+    <None Remove="Images\AppLogo\logo.png" />
+    <None Remove="Images\Icons\close.png" />
+    <None Remove="Images\Icons\maximize.png" />
+    <None Remove="Images\Icons\minimize.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Images\AppLogo\logo.png" />
+    <Resource Include="Images\Icons\close.png" />
+    <Resource Include="Images\Icons\maximize.png" />
+    <Resource Include="Images\Icons\minimize.png" />
   </ItemGroup>
 
 </Project>

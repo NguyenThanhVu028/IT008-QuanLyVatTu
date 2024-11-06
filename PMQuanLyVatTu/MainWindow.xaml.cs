@@ -11,9 +11,6 @@ using System.Windows.Shapes;
 
 namespace PMQuanLyVatTu
 {
-    /// <summary>
-    /// Interaction logic for MainWindow.xaml
-    /// </summary>
     public partial class MainWindow : Window
     {
         public MainWindow()
@@ -26,6 +23,25 @@ namespace PMQuanLyVatTu
             {
                 this.DragMove();
             }
+        }
+        void CloseWindows(object sender, RoutedEventArgs e)
+        {
+            this.Close();
+        }
+        void MaximizeWindows(object sender, RoutedEventArgs e)
+        {
+            if(WindowState == WindowState.Normal)
+            {
+                WindowState = WindowState.Maximized;
+            }
+            else
+            {
+                WindowState = WindowState.Normal;
+            }
+        }
+        void MinimizeWindows(object sender, RoutedEventArgs e)
+        {
+            WindowState = WindowState.Minimized;
         }
     }
 }
