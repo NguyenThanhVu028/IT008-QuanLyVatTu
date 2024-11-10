@@ -9,19 +9,34 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Remove="Images\AppLogo\logo.png" />
-    <None Remove="Images\BackGround\DefaultBackGround.jpg" />
-    <None Remove="Images\Icons\close.png" />
-    <None Remove="Images\Icons\maximize.png" />
-    <None Remove="Images\Icons\minimize.png" />
+    <None Remove="Material\Images\AppLogo\logo.png" />
+    <None Remove="Material\Images\AppLogo\logo_black.png" />
+    <None Remove="Material\Images\BackGround\BackGround.jpg" />
+    <None Remove="Material\Images\BackGround\BackGround.png" />
+    <None Remove="Material\Images\BackGround\BackGround2.jpg" />
+    <None Remove="Material\Images\BackGround\DefaultBackGround.jpg" />
+    <None Remove="Material\Images\Icons\close.png" />
+    <None Remove="Material\Images\Icons\maximize.png" />
+    <None Remove="Material\Images\Icons\minimize.png" />
+    <None Remove="Material\Images\Icons\password_login.png" />
+    <None Remove="Material\Images\Icons\user_login.png" />
   </ItemGroup>
 
   <ItemGroup>
-    <Resource Include="Images\AppLogo\logo.png" />
-    <Resource Include="Images\BackGround\DefaultBackGround.jpg" />
-    <Resource Include="Images\Icons\close.png" />
-    <Resource Include="Images\Icons\maximize.png" />
-    <Resource Include="Images\Icons\minimize.png" />
+    <Resource Include="Material\Images\AppLogo\logo.png" />
+    <Resource Include="Material\Images\AppLogo\logo_black.png" />
+    <Resource Include="Material\Images\BackGround\BackGround.jpg" />
+    <Resource Include="Material\Images\BackGround\BackGround2.jpg" />
+    <Resource Include="Material\Images\BackGround\DefaultBackGround.jpg" />
+    <Resource Include="Material\Images\Icons\close.png" />
+    <Resource Include="Material\Images\Icons\maximize.png" />
+    <Resource Include="Material\Images\Icons\minimize.png" />
+    <Resource Include="Material\Images\Icons\password_login.png" />
+    <Resource Include="Material\Images\Icons\user_login.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="View\" />
   </ItemGroup>
 
 </Project>

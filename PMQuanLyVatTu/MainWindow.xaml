@@ -9,15 +9,16 @@
         AllowsTransparency="True"
         WindowStyle="None"
         Background="Transparent"
-        WindowStartupLocation="CenterScreen">
-    <Grid x:Name="WindowsGrid">
+        WindowStartupLocation="CenterScreen"
+        DataContext="{StaticResource MainVM}">
+    <Grid x:Name="MainWindowsGrid">
         <Border Background="#FF001E28"
                 CornerRadius="10"
                 MouseDown="BorderMouseDown"
                 BorderBrush="Aqua"
                 BorderThickness="1">
         </Border>
-        <Grid x:Name="LayoutGrid">
+        <Grid x:Name="MW_LayoutGrid">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="200"/>
                 <ColumnDefinition/>
@@ -26,7 +27,7 @@
                 <RowDefinition Height="55"/>
                 <RowDefinition/>
             </Grid.RowDefinitions>
-            <Image Source="Images/AppLogo/logo.png"/>
+            <Image Source="Material/Images/AppLogo/logo.png"/>
             <StackPanel x:Name="Stackpanel_WindowsButton"
                         Grid.Column="1"
                         Margin="10"
@@ -51,7 +52,7 @@
                     CornerRadius="10"
                     Margin="10">
                 <Border.Background>
-                    <ImageBrush ImageSource="Images/BackGround/DefaultBackGround.jpg"
+                    <ImageBrush ImageSource="Material/Images/BackGround/DefaultBackGround.jpg"
                                 Opacity="0.2"/>
                 </Border.Background>
             </Border>

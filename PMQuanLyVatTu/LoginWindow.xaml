@@ -1,0 +1,92 @@
+﻿<Window x:Class="PMQuanLyVatTu.LoginWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:PMQuanLyVatTu"
+        mc:Ignorable="d"
+        Height="720" Width="1280"
+        WindowStyle="None"
+        Background="Transparent"
+        AllowsTransparency="True"
+        WindowStartupLocation="CenterScreen">
+    <Grid x:Name="LoginWindowGrid">
+        <Border CornerRadius="10">
+            <Border.Background>
+                <ImageBrush ImageSource="/Material/Images/BackGround/BackGround.jpg"/>
+            </Border.Background>
+        </Border>
+        <Grid x:Name="LW_LayoutGrid">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="715"/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="55"/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+            <Image Grid.Row="1" 
+                   Source="Material/Images/AppLogo/logo.png"
+                   VerticalAlignment="Top"
+                   HorizontalAlignment="Left"
+                   Margin="0, 180">
+                <Image.BitmapEffect>
+                    <DropShadowBitmapEffect/>
+                </Image.BitmapEffect>
+            </Image>
+            <StackPanel x:Name="Stackpanel_WindowsButton"
+                        Grid.Column="1"
+                        Orientation="Horizontal"
+                        HorizontalAlignment="Right" Width="70">
+                <Button x:Name="MinimizeButon"
+                        Style="{StaticResource MinimizeButtonStyle}"/>
+                <Button x:Name="CloseButon"
+                        Style="{StaticResource CloseButtonStyle}"/>
+            </StackPanel>
+            <Grid x:Name="LoginArea" 
+                  Grid.Row="1"
+                  Grid.Column="1"
+                  Margin="60, 50, 60, 50">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="120"/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+                <Border Grid.RowSpan="2"
+                        Background="{StaticResource DarkGreen3Transparent}"
+                        BorderBrush="Aqua"
+                        BorderThickness="2"
+                        CornerRadius="20"/>
+                <TextBlock Text="ĐĂNG NHẬP"
+                           Foreground="{StaticResource LightAqua3}"
+                           FontWeight="Black"
+                           FontSize="40"
+                           FontFamily="Material/Fonts/Lexend/#Lexend Black"
+                           HorizontalAlignment="Center"
+                           VerticalAlignment="Center">
+                    <TextBlock.BitmapEffect>
+                        <DropShadowBitmapEffect Opacity="0.3"
+                                                Softness="0.2"/>
+                    </TextBlock.BitmapEffect>
+                </TextBlock>
+                <TextBlock Grid.Row="1"
+                           Text="Vui lòng đăng nhập để tiếp tục"
+                           Foreground="{StaticResource LightAqua2}"
+                           FontSize="18"
+                           FontFamily="Material/Fonts/Lexend/#Lexend Black"
+                           VerticalAlignment="Top"
+                           HorizontalAlignment="Left"
+                           Margin="15"/>
+                <TextBox Grid.Row="1"
+                         Style="{StaticResource LoginAccountTextboxStyle}"
+                         HorizontalAlignment="Center"
+                         VerticalAlignment="Top"
+                         Margin="0, 50"/>
+                <PasswordBox Grid.Row="1"
+                             Style="{StaticResource LoginPasswordTextboxStyle}"
+                             HorizontalAlignment="Center"
+                             VerticalAlignment="Top"
+                             Margin="0, 120"/>
+            </Grid>
+        </Grid>
+    </Grid>
+</Window>
