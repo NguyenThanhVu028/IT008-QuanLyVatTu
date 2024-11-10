@@ -4,6 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PMQuanLyVatTu"
+        xmlns:CustomControl="clr-namespace:PMQuanLyVatTu.CustomControls"
         mc:Ignorable="d"
         Title="MainWindow" Height="720" Width="1280"
         AllowsTransparency="True"
@@ -34,15 +35,21 @@
                         HorizontalAlignment="Right"
                         VerticalAlignment="Center"
                         Orientation="Horizontal">
-                <Button x:Name="MinimizeButton"
-                        Style="{StaticResource MinimizeButtonStyle}"
-                        Click="MinimizeWindows"/>
-                <Button x:Name="MaximizeButton"
-                        Style="{StaticResource MaximizeButtonStyle}"
-                        Click="MaximizeWindows"/>
-                <Button x:Name="CloseButton"
-                        Style="{StaticResource CloseButtonStyle}"
-                        Click="CloseWindows"/>
+                <CustomControl:ImageButton Width="25"
+                                           Height="25"
+                                           Margin="0, 0, 10, 0"
+                                           ImageLocation="/Material/Images/Icons/minimize.png"
+                                           BorderBackgroundHightlight="{StaticResource DarkBlueTransparent1}"/>
+                <CustomControl:ImageButton Width="25"
+                                           Height="25"
+                                           Margin="0, 0, 10, 0"
+                                           ImageLocation="/Material/Images/Icons/maximize.png"
+                                           BorderBackgroundHightlight="{StaticResource DarkBlueTransparent1}"/>
+                <CustomControl:ImageButton Width="25"
+                                           Height="25"
+                                           Margin="0, 0, 10, 0"
+                                           ImageLocation="/Material/Images/Icons/close.png"
+                                           BorderBackgroundHightlight="{StaticResource RedTransparent1}"/>
             </StackPanel>
             <Border x:Name="PageDispayArea"
                     Grid.Row="1"

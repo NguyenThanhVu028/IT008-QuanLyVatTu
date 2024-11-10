@@ -9,6 +9,7 @@
                 <ResourceDictionary Source="Material/Styles/ButtonRes.xaml"/>
                 <ResourceDictionary Source="Material/Styles/ColorRes.xaml"/>
                 <ResourceDictionary Source="Resource/MainRes.xaml"/>
+                <ResourceDictionary Source="Themes/CustomControlsStyles.xaml"/>
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Application.Resources>

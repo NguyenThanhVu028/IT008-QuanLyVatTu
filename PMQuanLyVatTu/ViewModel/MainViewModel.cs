@@ -11,8 +11,11 @@ namespace PMQuanLyVatTu.ViewModel
     {
         public MainViewModel()
         {
-            LoginWindow lgw = new LoginWindow();
-            lgw.ShowDialog();
+            //LoginWindow lgw = new LoginWindow();
+            //lgw.ShowDialog();
+
+            //ForgetPasswordWindow fpw = new ForgetPasswordWindow();
+            //fpw.ShowDialog();
         }
     }
 }

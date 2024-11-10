@@ -20,6 +20,7 @@
     <None Remove="Material\Images\Icons\minimize.png" />
     <None Remove="Material\Images\Icons\password_login.png" />
     <None Remove="Material\Images\Icons\user_login.png" />
+    <None Remove="Material\Images\null_image.jpg" />
   </ItemGroup>
 
   <ItemGroup>
@@ -33,6 +34,7 @@
     <Resource Include="Material\Images\Icons\minimize.png" />
     <Resource Include="Material\Images\Icons\password_login.png" />
     <Resource Include="Material\Images\Icons\user_login.png" />
+    <Resource Include="Material\Images\null_image.jpg" />
   </ItemGroup>
 
   <ItemGroup>
