@@ -16,11 +16,26 @@
     <None Remove="Material\Images\BackGround\BackGround.png" />
     <None Remove="Material\Images\BackGround\BackGround2.jpg" />
     <None Remove="Material\Images\BackGround\DefaultBackGround.jpg" />
+    <None Remove="Material\Images\Icons\approve.png" />
     <None Remove="Material\Images\Icons\close.png" />
+    <None Remove="Material\Images\Icons\close2.png" />
+    <None Remove="Material\Images\Icons\customer.png" />
+    <None Remove="Material\Images\Icons\delete.png" />
+    <None Remove="Material\Images\Icons\denied_request.png" />
+    <None Remove="Material\Images\Icons\employee.png" />
+    <None Remove="Material\Images\Icons\home.png" />
     <None Remove="Material\Images\Icons\maximize.png" />
     <None Remove="Material\Images\Icons\minimize.png" />
     <None Remove="Material\Images\Icons\password_login.png" />
+    <None Remove="Material\Images\Icons\printer1.png" />
+    <None Remove="Material\Images\Icons\printer2.png" />
+    <None Remove="Material\Images\Icons\receipt.png" />
+    <None Remove="Material\Images\Icons\report.png" />
+    <None Remove="Material\Images\Icons\request.png" />
+    <None Remove="Material\Images\Icons\supplier.png" />
+    <None Remove="Material\Images\Icons\supply.png" />
     <None Remove="Material\Images\Icons\user_login.png" />
+    <None Remove="Material\Images\Icons\warehouse.png" />
     <None Remove="Material\Images\Icons\wrong.png" />
     <None Remove="Material\Images\null_image.jpg" />
   </ItemGroup>
@@ -32,17 +47,33 @@
     <Resource Include="Material\Images\BackGround\BackGround.jpg" />
     <Resource Include="Material\Images\BackGround\BackGround2.jpg" />
     <Resource Include="Material\Images\BackGround\DefaultBackGround.jpg" />
+    <Resource Include="Material\Images\Icons\approve.png" />
     <Resource Include="Material\Images\Icons\close.png" />
+    <Resource Include="Material\Images\Icons\close2.png" />
+    <Resource Include="Material\Images\Icons\customer.png" />
+    <Resource Include="Material\Images\Icons\delete.png" />
+    <Resource Include="Material\Images\Icons\denied_request.png" />
+    <Resource Include="Material\Images\Icons\employee.png" />
+    <Resource Include="Material\Images\Icons\home.png" />
     <Resource Include="Material\Images\Icons\maximize.png" />
     <Resource Include="Material\Images\Icons\minimize.png" />
     <Resource Include="Material\Images\Icons\password_login.png" />
+    <Resource Include="Material\Images\Icons\printer1.png" />
+    <Resource Include="Material\Images\Icons\printer2.png" />
+    <Resource Include="Material\Images\Icons\receipt.png" />
+    <Resource Include="Material\Images\Icons\report.png" />
+    <Resource Include="Material\Images\Icons\request.png" />
+    <Resource Include="Material\Images\Icons\supplier.png" />
+    <Resource Include="Material\Images\Icons\supply.png" />
     <Resource Include="Material\Images\Icons\user_login.png" />
+    <Resource Include="Material\Images\Icons\warehouse.png" />
     <Resource Include="Material\Images\Icons\wrong.png" />
     <Resource Include="Material\Images\null_image.jpg" />
   </ItemGroup>
 
   <ItemGroup>
     <Folder Include="Model\" />
+    <Folder Include="View\" />
   </ItemGroup>
 
 </Project>

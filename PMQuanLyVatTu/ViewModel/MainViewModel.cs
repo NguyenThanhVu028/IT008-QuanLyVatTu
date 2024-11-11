@@ -20,6 +20,9 @@ namespace PMQuanLyVatTu.ViewModel
 
             //LoginError lge = new LoginError();
             //lge.ShowDialog();
+
+            ChangePasswordWindows cpw = new ChangePasswordWindows();
+            cpw.ShowDialog();
         }
     }
 }
