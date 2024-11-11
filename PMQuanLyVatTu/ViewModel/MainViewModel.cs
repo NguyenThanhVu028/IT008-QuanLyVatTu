@@ -1,4 +1,5 @@
-﻿using System;
+﻿using PMQuanLyVatTu.ErrorMessage;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -16,6 +17,9 @@ namespace PMQuanLyVatTu.ViewModel
 
             //ForgetPasswordWindow fpw = new ForgetPasswordWindow();
             //fpw.ShowDialog();
+
+            //LoginError lge = new LoginError();
+            //lge.ShowDialog();
         }
     }
 }

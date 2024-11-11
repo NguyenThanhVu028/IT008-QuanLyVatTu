@@ -60,9 +60,16 @@
                     Margin="10">
                 <Border.Background>
                     <ImageBrush ImageSource="Material/Images/BackGround/DefaultBackGround.jpg"
-                                Opacity="0.2"/>
+                                Opacity="0.3"/>
                 </Border.Background>
             </Border>
+            <CustomControl:CircleImage Grid.Column="1"
+                                       Grid.Row="1"
+                                       Width="200"
+                                       Height="200"
+                                       ImageLocation="/Material/Images/Avatars/user1.jpg"
+                                       BorderThick="10"
+                                       BorderColor="{StaticResource DarkGreen1}"/>
         </Grid>
     </Grid>
 </Window>

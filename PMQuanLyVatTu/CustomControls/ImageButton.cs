@@ -22,7 +22,7 @@ namespace PMQuanLyVatTu.CustomControls
             DefaultStyleKeyProperty.OverrideMetadata(typeof(ImageButton), new FrameworkPropertyMetadata(typeof(ImageButton)));
         }
 
-        //Image source
+        #region ImageLocation
         public string ImageLocation
         {
             get { return (string)GetValue(ImageLocationProperty); }
@@ -30,8 +30,8 @@ namespace PMQuanLyVatTu.CustomControls
         }
         public static readonly DependencyProperty ImageLocationProperty =
             DependencyProperty.Register("ImageLocation", typeof(string), typeof(ImageButton), new PropertyMetadata("/Material/Images/null_image.jpg"));
-
-        //Border Background color
+        #endregion
+        #region BorderBackgroundHighlight
         public SolidColorBrush BorderBackgroundHightlight
         {
             get { return (SolidColorBrush)GetValue(BorderBackgroundHightlightProperty); }
@@ -39,5 +39,6 @@ namespace PMQuanLyVatTu.CustomControls
         }
         public static readonly DependencyProperty BorderBackgroundHightlightProperty =
             DependencyProperty.Register("BorderBackgroundHightlight", typeof(SolidColorBrush), typeof(CustomButton), new PropertyMetadata(Brushes.Aqua));
+        #endregion
     }
 }

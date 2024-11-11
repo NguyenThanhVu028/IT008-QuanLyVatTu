@@ -11,6 +11,7 @@
   <ItemGroup>
     <None Remove="Material\Images\AppLogo\logo.png" />
     <None Remove="Material\Images\AppLogo\logo_black.png" />
+    <None Remove="Material\Images\Avatars\user1.jpg" />
     <None Remove="Material\Images\BackGround\BackGround.jpg" />
     <None Remove="Material\Images\BackGround\BackGround.png" />
     <None Remove="Material\Images\BackGround\BackGround2.jpg" />
@@ -20,12 +21,14 @@
     <None Remove="Material\Images\Icons\minimize.png" />
     <None Remove="Material\Images\Icons\password_login.png" />
     <None Remove="Material\Images\Icons\user_login.png" />
+    <None Remove="Material\Images\Icons\wrong.png" />
     <None Remove="Material\Images\null_image.jpg" />
   </ItemGroup>
 
   <ItemGroup>
     <Resource Include="Material\Images\AppLogo\logo.png" />
     <Resource Include="Material\Images\AppLogo\logo_black.png" />
+    <Resource Include="Material\Images\Avatars\user1.jpg" />
     <Resource Include="Material\Images\BackGround\BackGround.jpg" />
     <Resource Include="Material\Images\BackGround\BackGround2.jpg" />
     <Resource Include="Material\Images\BackGround\DefaultBackGround.jpg" />
@@ -34,11 +37,12 @@
     <Resource Include="Material\Images\Icons\minimize.png" />
     <Resource Include="Material\Images\Icons\password_login.png" />
     <Resource Include="Material\Images\Icons\user_login.png" />
+    <Resource Include="Material\Images\Icons\wrong.png" />
     <Resource Include="Material\Images\null_image.jpg" />
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="View\" />
+    <Folder Include="Model\" />
   </ItemGroup>
 
 </Project>

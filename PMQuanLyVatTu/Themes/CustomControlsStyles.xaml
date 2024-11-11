@@ -2,7 +2,8 @@
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:CustomControl="clr-namespace:PMQuanLyVatTu.CustomControls">
-
+    
+    <!--#region CustomButton-->
     <Style TargetType="CustomControl:CustomButton">
         <Setter Property="Template">
             <Setter.Value>
@@ -36,6 +37,8 @@
             </Setter.Value>
         </Setter>
     </Style>
+    <!--#endregion-->
+    <!--#region ImageButton-->
     <Style TargetType="CustomControl:ImageButton">
         <Setter Property="Template">
             <Setter.Value>
@@ -55,6 +58,8 @@
             </Setter.Value>
         </Setter>
     </Style>
+    <!--#endregion-->
+    <!--#region CustomTextbox-->
     <Style TargetType="CustomControl:CustomTextbox">
         <Setter Property="FontFamily" Value="/Material/Fonts/Lexend/#Lexend Regular"/>
         <Setter Property="FontWeight" Value="Medium"/>
@@ -95,4 +100,63 @@
             </Setter.Value>
         </Setter>
     </Style>
+    <!--#endregion-->
+    <!--#region CircleImage-->
+    <Style TargetType="CustomControl:CircleImage">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="CustomControl:CircleImage">
+                    <Grid>
+                        <Ellipse Width="{Binding Width, RelativeSource={RelativeSource Self}}"
+                                 Height="{Binding Height, RelativeSource={RelativeSource Self}}">
+                            <Ellipse.BitmapEffect>
+                                <DropShadowBitmapEffect/>
+                            </Ellipse.BitmapEffect>
+                            <Ellipse.Fill>
+                                <ImageBrush ImageSource="{Binding ImageLocation, RelativeSource={RelativeSource TemplatedParent}}"
+                                            Stretch="UniformToFill"/>
+                            </Ellipse.Fill>
+                        </Ellipse>
+                        <Ellipse x:Name="WaterMarkImage" 
+                                 Width="{Binding Width, RelativeSource={RelativeSource Self}}"
+                                 Height="{Binding Height, RelativeSource={RelativeSource Self}}"
+                                 Opacity="0">
+                            <Ellipse.Fill>
+                                <ImageBrush ImageSource="{Binding WaterMark, RelativeSource={RelativeSource TemplatedParent}}"
+                                            Stretch="UniformToFill"/>
+                            </Ellipse.Fill>
+                        </Ellipse>
+                        <Ellipse Width="{Binding Width, RelativeSource={RelativeSource Self}}"
+                                 Height="{Binding Height, RelativeSource={RelativeSource Self}}"
+                                 StrokeThickness="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=BorderThick}"
+                                 Stroke="{TemplateBinding BorderColor}">
+                            <Ellipse.BitmapEffect>
+                                <DropShadowBitmapEffect/>
+                            </Ellipse.BitmapEffect>
+                        </Ellipse>
+                    </Grid>
+                    <ControlTemplate.Triggers>
+                        <!--<Trigger Property="IsMouseOver" Value="True">
+                            <Setter Property="Visibility" Value="Visible" TargetName="WaterMarkImage"/>
+                        </Trigger>-->
+                        <EventTrigger RoutedEvent="Mouse.MouseEnter">
+                            <BeginStoryboard>
+                                <Storyboard>
+                                    <DoubleAnimation Duration="0:0:0.25" Storyboard.TargetName="WaterMarkImage" Storyboard.TargetProperty="Opacity" To="0.7"/>
+                                </Storyboard>
+                            </BeginStoryboard>
+                        </EventTrigger>
+                        <EventTrigger RoutedEvent="Mouse.MouseLeave">
+                            <BeginStoryboard>
+                                <Storyboard>
+                                    <DoubleAnimation Duration="0:0:0.25" Storyboard.TargetName="WaterMarkImage" Storyboard.TargetProperty="Opacity" To="0"/>
+                                </Storyboard>
+                            </BeginStoryboard>
+                        </EventTrigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    <!--#endregion-->
 </ResourceDictionary>
