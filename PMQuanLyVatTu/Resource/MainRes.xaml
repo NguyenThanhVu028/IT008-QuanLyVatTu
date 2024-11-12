@@ -2,5 +2,5 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:viewmodel="clr-namespace:PMQuanLyVatTu.ViewModel">
     <viewmodel:MainViewModel x:Key="MainVM"/>
-    <viewmodel:LoginViewModel x:Key="LoginVM"/>
+    <viewmodel:LoginWindowViewModel x:Key="LoginVM"/>
 </ResourceDictionary>

@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.ComponentModel.Design;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -9,22 +7,23 @@ using System.Windows;
 
 namespace PMQuanLyVatTu.ViewModel
 {
-    public class LoginViewModel : BaseViewModel
+    class LoginWindowViewModel:BaseViewModel
     {
         private string _userName = "";
         private string _passWord = "";
-        public string UserName {
+        public string UserName
+        {
             get { return _userName; }
-            set { _userName = value; }
+            set { _userName = value; OnPropertyChanged(); }
         }
-        public string PassWord
+        public string Password
         {
             get { return _passWord; }
-            set { _passWord = value; }
+            set{ _passWord = value; OnPropertyChanged(); }
         }
-        public LoginViewModel()
+        public LoginWindowViewModel()
         {
-
+            MessageBox.Show("An instance of LoginViewModel has been created!");
         }
     }
 }

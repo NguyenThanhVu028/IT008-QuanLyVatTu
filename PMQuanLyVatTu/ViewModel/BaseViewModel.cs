@@ -10,6 +10,7 @@ namespace PMQuanLyVatTu.ViewModel
 {
     public class BaseViewModel : INotifyPropertyChanged
     {
+        #region PropertyChangedHandler
         public event PropertyChangedEventHandler? PropertyChanged;
         public void OnPropertyChanged([CallerMemberName] string name = null)
         {
@@ -18,5 +19,8 @@ namespace PMQuanLyVatTu.ViewModel
                 PropertyChanged(this, new PropertyChangedEventArgs(name));
             }
         }
+        #endregion
+
     }
 }
+

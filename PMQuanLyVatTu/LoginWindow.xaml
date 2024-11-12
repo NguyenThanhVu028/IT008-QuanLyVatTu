@@ -5,6 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PMQuanLyVatTu"
         xmlns:CustomControl="clr-namespace:PMQuanLyVatTu.CustomControls"
+        xmlns:ViewModel="clr-namespace:PMQuanLyVatTu.ViewModel"
         mc:Ignorable="d"
         Height="720" Width="1280"
         WindowStyle="None"
@@ -64,7 +65,7 @@
                     <RowDefinition/>
                 </Grid.RowDefinitions>
                 <Border Grid.RowSpan="2"
-                        Background="{StaticResource DarkGreen3Transparent}"
+                        Background="{StaticResource DarkGreenTransparent1}"
                         BorderBrush="Aqua"
                         BorderThickness="2"
                         CornerRadius="20"/>
@@ -93,12 +94,13 @@
                          Style="{StaticResource LoginAccountTextboxStyle}"
                          HorizontalAlignment="Center"
                          VerticalAlignment="Top"
-                         Margin="0, 50"/>
-                <PasswordBox Grid.Row="1"
-                             Style="{StaticResource LoginPasswordTextboxStyle}"
+                         Margin="0, 50"
+                         Text="{Binding UserName, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
+                <CustomControl:CustomPasswordbox Grid.Row="1"
                              HorizontalAlignment="Center"
                              VerticalAlignment="Top"
-                             Margin="0, 120"/>
+                             Margin="0, 120"
+                             Password="{Binding Password, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
                 <CustomControl:CustomButton Grid.Row="1"
                                             BorderBackground="Transparent"
                                             DisplayText="Quên mật khẩu?"

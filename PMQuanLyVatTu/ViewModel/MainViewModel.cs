@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -21,8 +22,11 @@ namespace PMQuanLyVatTu.ViewModel
             //LoginError lge = new LoginError();
             //lge.ShowDialog();
 
-            ChangePasswordWindows cpw = new ChangePasswordWindows();
-            cpw.ShowDialog();
+            //ChangePasswordWindows cpw = new ChangePasswordWindows();
+            //cpw.ShowDialog();
+
+            //CustomMessage msg = new CustomMessage("/Material/Images/Icons/wrong.png", "Nhập sai dữ liệu", "Vui lòng nhập lại dữ liệu đúng với định dạng yêu cầu!");
+            //msg.ShowDialog();
         }
     }
 }

@@ -243,7 +243,7 @@
                         </StackPanel>
                     </Grid>
                     <ControlTemplate.Triggers>
-                        <EventTrigger RoutedEvent="Mouse.MouseEnter">
+                        <!--<EventTrigger RoutedEvent="Mouse.MouseEnter">
                             <BeginStoryboard>
                                 <Storyboard>
                                     <ColorAnimation Duration="0:0:0.25" Storyboard.TargetName="AccountBorder" Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)" To="#FF64FFFF"/>
@@ -256,9 +256,9 @@
                                     <ColorAnimation Duration="0:0:0.25" Storyboard.TargetName="AccountBorder" Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)" To="#FF56CDCD"/>
                                 </Storyboard>
                             </BeginStoryboard>
-                        </EventTrigger>
+                        </EventTrigger>-->
                         <Trigger Property="IsPressed" Value="True">
-                            <Setter Property="Background" Value="#FF56CDCD" TargetName="AccountBorder"/>
+                            <Setter Property="Background" Value="#FF42A3A3" TargetName="AccountBorder"/>
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
