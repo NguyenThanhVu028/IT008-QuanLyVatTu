@@ -7,7 +7,7 @@ using System.Windows;
 
 namespace PMQuanLyVatTu.ViewModel
 {
-    class LoginWindowViewModel:BaseViewModel
+    public class LoginWindowViewModel:BaseViewModel
     {
         private string _userName = "";
         private string _passWord = "";
@@ -23,7 +23,6 @@ namespace PMQuanLyVatTu.ViewModel
         }
         public LoginWindowViewModel()
         {
-            MessageBox.Show("An instance of LoginViewModel has been created!");
         }
     }
 }

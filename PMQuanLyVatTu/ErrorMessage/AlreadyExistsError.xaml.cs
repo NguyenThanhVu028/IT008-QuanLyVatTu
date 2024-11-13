@@ -14,14 +14,18 @@ using System.Windows.Shapes;
 
 namespace PMQuanLyVatTu.ErrorMessage
 {
-    /// <summary>
-    /// Interaction logic for AlreadyExistsError.xaml
-    /// </summary>
     public partial class AlreadyExistsError : Window
     {
         public AlreadyExistsError()
         {
             InitializeComponent();
+        }
+        void MouseDownEvent(object sender, MouseButtonEventArgs e)
+        {
+            if(e.ChangedButton == MouseButton.Left)
+            {
+                this.DragMove();
+            }
         }
     }
 }

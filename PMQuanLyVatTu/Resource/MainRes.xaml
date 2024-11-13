@@ -3,4 +3,6 @@
                     xmlns:viewmodel="clr-namespace:PMQuanLyVatTu.ViewModel">
     <viewmodel:MainViewModel x:Key="MainVM"/>
     <viewmodel:LoginWindowViewModel x:Key="LoginVM"/>
+    <viewmodel:ChangePasswordViewModel x:Key="ChangePasswordVM"/>
+    <viewmodel:AlreadyExistsErrorViewModel x:Key="AlreadyExistsErrorVM"/>
 </ResourceDictionary>

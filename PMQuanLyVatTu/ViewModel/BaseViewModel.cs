@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Runtime.CompilerServices;
 using System.ComponentModel;
+using System.Windows.Input;
 
 namespace PMQuanLyVatTu.ViewModel
 {
@@ -20,7 +21,42 @@ namespace PMQuanLyVatTu.ViewModel
             }
         }
         #endregion
+        #region RelayCommand
+        public class RelayCommand<T> : ICommand
+        {
+            private readonly Predicate<T> _canExecute;
+            private readonly Action<T> _execute;
 
+            public RelayCommand(Action<T> execute, Predicate<T> canExecute = null)
+            {
+                _canExecute = canExecute;
+                _execute = execute;
+            }
+
+            public event EventHandler CanExecuteChanged
+            {
+                add { CommandManager.RequerySuggested += value; }
+                remove { CommandManager.RequerySuggested -= value; }
+            }
+
+            public bool CanExecute(object parameter)
+            {
+                try
+                {
+                    return _canExecute == null ? true : _canExecute((T)parameter);
+                }
+                catch
+                {
+                    return true;
+                }
+            }
+
+            public void Execute(object? parameter)
+            {
+                _execute((T)parameter);
+            }
+        }
+        #endregion
     }
 }
 

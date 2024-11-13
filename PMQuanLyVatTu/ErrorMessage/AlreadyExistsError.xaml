@@ -11,7 +11,10 @@
         WindowStyle="None"
         Background="Transparent"
         WindowStartupLocation="CenterScreen"
-        Height="150" Width="400">
+        Height="150" Width="400"
+        DataContext="{StaticResource AlreadyExistsErrorVM}"
+        Name="ThisWin"
+        MouseDown="MouseDownEvent">
     <Grid>
         <Border Background="{StaticResource LightAqua1}"
                 CornerRadius="20"/>
@@ -39,6 +42,8 @@
                                     BorderBackground="{StaticResource DarkGreen2}"
                                     BorderBackgroundClicked="{StaticResource DarkGreen3}"
                                     BorderColor="{StaticResource LightAqua1}"
-                                    BorderColorHighlight="{StaticResource White}"/>
+                                    BorderColorHighlight="{StaticResource White}"
+                                    Command="{Binding CloseCommand}"
+                                    CommandParameter="{Binding ElementName=ThisWin}"/>
     </Grid>
 </Window>

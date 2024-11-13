@@ -1,0 +1,46 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Data;
+using System.Windows.Documents;
+using System.Windows.Input;
+using System.Windows.Media;
+using System.Windows.Media.Imaging;
+using System.Windows.Navigation;
+using System.Windows.Shapes;
+
+namespace PMQuanLyVatTu.CustomControls
+{
+    public partial class DateSelector : UserControl
+    {
+        public string SelectedValue
+        {
+            get { return (string)GetValue(SelectedValueProperty); }
+            set { SetValue(SelectedValueProperty, value); }
+        }
+        public static readonly DependencyProperty SelectedValueProperty =
+            DependencyProperty.Register("SelectedValue", typeof(string), typeof(DateSelector), new PropertyMetadata(""));
+        public DateSelector()
+        {
+            InitializeComponent();
+        }
+        void OutputFocused(object sender, RoutedEventArgs e)
+        {
+            Container.Visibility = Visibility.Visible;
+        }
+        void OutputUnFocused(object sender, RoutedEventArgs e)
+        {
+            Container.Visibility = Visibility.Collapsed;
+        }
+        void SelectedDateChanged(object sender, RoutedEventArgs e)
+        {
+            DateTime temp = (DateTime)InnerCalender.SelectedDate;
+            Output.Text = temp.ToShortDateString();
+            SelectedValue = temp.ToShortDateString();
+        }
+    }
+}
