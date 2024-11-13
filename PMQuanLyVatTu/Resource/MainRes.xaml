@@ -5,4 +5,6 @@
     <viewmodel:LoginWindowViewModel x:Key="LoginVM"/>
     <viewmodel:ChangePasswordViewModel x:Key="ChangePasswordVM"/>
     <viewmodel:AlreadyExistsErrorViewModel x:Key="AlreadyExistsErrorVM"/>
+    <viewmodel:TrangChuViewModel x:Key="TrangChuVM"/>
+    <viewmodel:ThongTinVatTuWindowViewModel x:Key="ThongTinVatTuWindowVM"/>
 </ResourceDictionary>

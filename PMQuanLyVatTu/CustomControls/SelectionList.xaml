@@ -28,10 +28,12 @@
                                      x:Name="Output" 
                                      HorizontalAlignment="Stretch"
                                      VerticalAlignment="Stretch"
-                                     RadiusOfCorner="10"
+                                     RadiusOfCorner="5"
                                      BorderThick="2"
                                      BorderColor="{StaticResource DarkGreen2}"
+                                     BorderColorClicked="{StaticResource LightAqua2}"
                                      Margin="0, 0, 0, 0"
+                                     TextSize="15"
                                      TextChanged="TextChangedEvent"/>
         <Border x:Name="Container" 
                 Grid.Row="1"
@@ -44,7 +46,9 @@
                 Margin="0, 0, 0, 0"
                 Visibility="Collapsed">
             <ScrollViewer VerticalScrollBarVisibility="Hidden">
-                <StackPanel x:Name="ContainerStack">
+                <StackPanel x:Name="ContainerStack"
+                            HorizontalAlignment="Left"
+                            Margin="10, 0, 0, 0">
                 </StackPanel>
             </ScrollViewer>
         </Border>

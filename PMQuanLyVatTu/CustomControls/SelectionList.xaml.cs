@@ -72,7 +72,8 @@ namespace PMQuanLyVatTu.CustomControls
             foreach(string s in DataList)
             {
                 Button temp = new Button();
-                temp.Content = s; temp.Click += ItemClicked;
+                temp.Content = s;
+                temp.Click += ItemClicked;
                 ContainerStack.Children.Add(temp);
             }
         }
