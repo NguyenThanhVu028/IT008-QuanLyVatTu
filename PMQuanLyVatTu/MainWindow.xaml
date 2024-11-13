@@ -70,8 +70,6 @@
                                 Opacity="0.3"/>
                 </Border.Background>
             </Border>
-            <CustomControl:DateSelector Grid.Column="1"
-                                         Grid.Row="1" Margin="392,185,489,267"/>
             <CustomControl:AccountButton Grid.Row="1" 
                                          VerticalAlignment="Top"
                                          Height="70"
