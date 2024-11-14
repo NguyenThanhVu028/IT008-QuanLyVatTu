@@ -43,8 +43,14 @@ namespace PMQuanLyVatTu.ViewModel
             //CustomMessage msg = new CustomMessage("/Material/Images/Icons/wrong.png", "Nhập sai dữ liệu", "Vui lòng nhập lại dữ liệu đúng với định dạng yêu cầu!");
             //msg.ShowDialog();
 
-            ThongTinVatTuWindow newWin = new ThongTinVatTuWindow();
-            newWin.ShowDialog();
+            //ThongTinVatTuWindow newWin = new ThongTinVatTuWindow();
+            //newWin.ShowDialog();
+
+            //ThongTinNhanVienWindow newWin = new ThongTinNhanVienWindow();
+            //newWin.ShowDialog();
+
+            //ThongTinCaNhanWindow newWin = new ThongTinCaNhanWindow();
+            //newWin.ShowDialog ();
 
         }
         void CloseWin(Window window)

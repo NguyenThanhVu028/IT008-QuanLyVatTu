@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -21,6 +22,17 @@ namespace PMQuanLyVatTu.CustomControls
         {
             DefaultStyleKeyProperty.OverrideMetadata(typeof(CustomTextbox), new FrameworkPropertyMetadata(typeof(CustomTextbox)));
         }
+        #region IsHidden
+        public bool IsShow
+        {
+            get { return (bool)GetValue(IsShowProperty); }
+            set { SetValue(IsShowProperty, value); }
+        }
+        public static readonly DependencyProperty IsShowProperty =
+            DependencyProperty.Register("IsShow", typeof(bool), typeof(CustomTextbox), new PropertyMetadata(true));
+
+
+        #endregion
         #region WaterMark
         public string WaterMark
         {
@@ -102,5 +114,19 @@ namespace PMQuanLyVatTu.CustomControls
         public static readonly DependencyProperty RadiusOfCornerProperty =
             DependencyProperty.Register("RadiusOfCorner", typeof(CornerRadius), typeof(CustomTextbox), new PropertyMetadata(new CornerRadius(0)));
         #endregion
+    }
+    public class VisibilityConverter : IValueConverter
+    {
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            if ((bool)value == false) return Visibility.Visible;
+            else return Visibility.Collapsed;
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            if ((Visibility)value == Visibility.Collapsed) return false;
+            else return true;
+        }
     }
 }

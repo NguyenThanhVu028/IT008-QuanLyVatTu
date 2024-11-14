@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Media;
 using System.Windows.Threading;
 
 namespace PMQuanLyVatTu.ViewModel
@@ -11,6 +12,7 @@ namespace PMQuanLyVatTu.ViewModel
     {
         private string _now;
         private string _imgIcon;
+        private SolidColorBrush _timeOfDayColor;
         public string TimeNow
         {
             get
@@ -20,6 +22,20 @@ namespace PMQuanLyVatTu.ViewModel
             set
             {
                 _now = value;
+                OnPropertyChanged();
+            }
+        }
+        public string DateNow
+        {
+            get { return _now; }
+            set { _now = value; OnPropertyChanged(); }
+        }
+        public SolidColorBrush TimeOfDayColor
+        {
+            get => _timeOfDayColor;
+            set
+            {
+                _timeOfDayColor = value;
                 OnPropertyChanged();
             }
         }
@@ -45,10 +61,23 @@ namespace PMQuanLyVatTu.ViewModel
         void TimerTick(object sender, EventArgs e)
         {
             TimeNow = DateTime.Now.ToShortTimeString();
-            if (DateTime.Now.Hour >= 5 && DateTime.Now.Hour < 6) ImgIcon = "/Material/Images/Icons/sun_rise.png";
-            else if (DateTime.Now.Hour > 6 && DateTime.Now.Hour < 18) ImgIcon = "/Material/Images/Icons/noon.png";
-            else if (DateTime.Now.Hour >= 18 && DateTime.Now.Hour < 19) ImgIcon = "/Material/Images/Icons/sun_set.png";
-            else ImgIcon = "/Material/Images/Icons/moon.png";
+            DateNow = DateTime.Now.ToShortDateString();
+            if (DateTime.Now.Hour >= 5 && DateTime.Now.Hour < 6) {
+                ImgIcon = "/Material/Images/Icons/sun_rise.png";
+                TimeOfDayColor = (SolidColorBrush)(new BrushConverter().ConvertFrom("#FFC87B2D"));
+            } 
+            else if (DateTime.Now.Hour > 6 && DateTime.Now.Hour < 18) { 
+                ImgIcon = "/Material/Images/Icons/noon.png";
+                TimeOfDayColor = (SolidColorBrush)(new BrushConverter().ConvertFrom("#FF00B5FF"));
+            }
+            else if (DateTime.Now.Hour >= 18 && DateTime.Now.Hour < 19) { 
+                ImgIcon = "/Material/Images/Icons/sun_set.png";
+                TimeOfDayColor = (SolidColorBrush)(new BrushConverter().ConvertFrom("#FFC87B2D"));
+            }
+            else { 
+                ImgIcon = "/Material/Images/Icons/moon.png";
+                TimeOfDayColor = (SolidColorBrush)(new BrushConverter().ConvertFrom("#FF002A56"));
+            }
         }
     }
 }

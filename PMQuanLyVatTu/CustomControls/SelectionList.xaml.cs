@@ -30,8 +30,6 @@ namespace PMQuanLyVatTu.CustomControls
         }
         public static readonly DependencyProperty DataListProperty =
             DependencyProperty.Register("DataList", typeof(ObservableCollection<string>), typeof(SelectionList), new PropertyMetadata(new ObservableCollection<string> { "option1", "option2" }));
-
-
         public string SelectedValue
         {
             get { return (string)GetValue(SelectedValueProperty); }
@@ -39,6 +37,13 @@ namespace PMQuanLyVatTu.CustomControls
         }
         public static readonly DependencyProperty SelectedValueProperty =
             DependencyProperty.Register("SelectedValue", typeof(string), typeof(SelectionList), new PropertyMetadata(""));
+        public bool IsAllowed
+        {
+            get { return (bool)GetValue(IsAllowedProperty); }
+            set { SetValue(IsAllowedProperty, value); }
+        }
+        public static readonly DependencyProperty IsAllowedProperty =
+            DependencyProperty.Register("IsAllowed", typeof(bool), typeof(SelectionList), new PropertyMetadata(true));
 
 
         public SelectionList()
@@ -59,8 +64,11 @@ namespace PMQuanLyVatTu.CustomControls
         {
             string temp = (sender as Button).Content.ToString();
             Container.Visibility = Visibility.Collapsed;
-            SelectedValue = temp;
-            Output.Text = temp;
+            if(IsAllowed == true)
+            {
+                SelectedValue = temp;
+                Output.Text = temp;
+            }
         }
         void TextChangedEvent(object sender, TextChangedEventArgs e)
         {

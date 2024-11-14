@@ -13,6 +13,7 @@
         <Grid.Resources>
             <Style TargetType="Button">
                 <Setter Property="FontFamily" Value="/Material/Fonts/Lexend/#Lexend Regular"/>
+                <Setter Property="FontSize" Value="15"/>
                 <Setter Property="Background" Value="Transparent"/>
                 <Setter Property="FontWeight" Value="Medium"/>
                 <Setter Property="BorderBrush" Value="{StaticResource DarkGreen2}"/>
@@ -25,6 +26,7 @@
             <RowDefinition/>
         </Grid.RowDefinitions>
         <CustomControl:CustomTextbox Grid.Row="0" 
+                                     IsEnabled="False"
                                      x:Name="Output" 
                                      HorizontalAlignment="Stretch"
                                      VerticalAlignment="Stretch"
@@ -33,6 +35,7 @@
                                      BorderColor="{StaticResource DarkGreen2}"
                                      BorderColorClicked="{StaticResource LightAqua2}"
                                      Margin="0, 0, 0, 0"
+                                     WaterMark="Chọn"
                                      TextSize="15"
                                      TextChanged="TextChangedEvent"/>
         <Border x:Name="Container" 

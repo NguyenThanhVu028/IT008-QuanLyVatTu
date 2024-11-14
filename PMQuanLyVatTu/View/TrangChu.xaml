@@ -30,7 +30,6 @@
             <Style TargetType="Calendar">
                 <Setter Property="Background" Value="{StaticResource DarkGreenTransparent2}"/>
             </Style>
-
         </Grid.Resources>
         <Border Background="{StaticResource DarkGreenTransparent1}"
                 CornerRadius="10"
@@ -44,7 +43,7 @@
                 <RowDefinition/>
                 <RowDefinition/>
             </Grid.RowDefinitions>
-            <Border Background="{StaticResource BackGroundColorTransparent}"
+            <Border Background="#4C00FFA3"
                     Margin="30,40,30,10"
                     CornerRadius="30"
                     BorderThickness="1"
@@ -69,7 +68,8 @@
                                TextAlignment="Center"/>
                 </StackPanel>
             </Border>
-            <Border Background="{StaticResource BackGroundColorTransparent}"
+            <Border x:Name="TimeOfDayBorder" 
+                    Background="{Binding TimeOfDayColor}"
                     Margin="30,10,30,30"
                     CornerRadius="30"
                     BorderThickness="1"
@@ -90,7 +90,7 @@
                            Foreground="{StaticResource LightAqua1}"/>
                 </StackPanel>
             </Border>
-            <Border Background="{StaticResource BackGroundColorTransparent}"
+            <Border Background="#4C600065"
                     Margin="30"
                     CornerRadius="30"
                     BorderThickness="1"
@@ -100,12 +100,21 @@
                 <Viewbox Stretch="Uniform">
                     <Calendar CalendarItemStyle="{DynamicResource CalendarCalendarItemStyle1}" 
                               CalendarDayButtonStyle="{DynamicResource CalendarCalendarDayButtonStyle1}" 
-                              Margin="20"
+                              Margin="20, 50, 20, 10"
                               HorizontalAlignment="Center"
-                              VerticalAlignment="Center"/>
+                              VerticalAlignment="Stretch"/>
                 </Viewbox>
-
             </Border>
+            <TextBlock Grid.Column="1"
+                       x:Name="DateDisplayer"
+                       Text="{Binding DateNow}"
+                       FontFamily="/Material/Fonts/Lexend/#Lexend Black"
+                       FontSize="40"
+                       FontWeight="Black"
+                       HorizontalAlignment="Center"
+                       VerticalAlignment="Top"
+                       Margin="0, 60"
+                       Foreground="{StaticResource LightAqua1}"/>
         </Grid>
     </Grid>
 </UserControl>

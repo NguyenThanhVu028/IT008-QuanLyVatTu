@@ -1,8 +1,8 @@
 ﻿<ResourceDictionary
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:CustomControl="clr-namespace:PMQuanLyVatTu.CustomControls">
-    
+    xmlns:CustomControl="clr-namespace:PMQuanLyVatTu.CustomControls"
+    xmlns:Convert="clr-namespace:PMQuanLyVatTu.CustomControls">
     <!--#region CustomButton-->
     <Style TargetType="CustomControl:CustomButton">
         <Setter Property="Template">
@@ -22,7 +22,8 @@
                                    VerticalAlignment="Center"
                                    FontFamily="/Material/Fonts/Lexend/#Lexend Medium"
                                    FontSize="{TemplateBinding TextSize}"
-                                   FontWeight="Medium"/>
+                                   FontWeight="Medium"
+                                   TextWrapping="Wrap"/>
                     </Grid>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsMouseOver" Value="True">
@@ -64,9 +65,13 @@
         <Setter Property="FontFamily" Value="/Material/Fonts/Lexend/#Lexend Medium"/>
         <Setter Property="FontWeight" Value="Medium"/>
         <Setter Property="FontSize" Value="{Binding TextSize, RelativeSource={RelativeSource Self}}"/>
+        <Setter Property="IsEnabled" Value="{Binding IsShow, RelativeSource={RelativeSource Self}}"/>
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="CustomControl:CustomTextbox">
+                    <ControlTemplate.Resources>
+                        <Convert:VisibilityConverter x:Key="ConvertVisibility"/>
+                    </ControlTemplate.Resources>
                     <Grid>
                         <Border x:Name="BoxBorder" 
                                 Background="{TemplateBinding BackgroundColor}"
@@ -78,14 +83,18 @@
                                       VerticalAlignment="Center"
                                       VerticalScrollBarVisibility="Hidden"
                                       Margin="10"/>
-                        <TextBlock x:Name="WaterMark" 
+                        <TextBlock x:Name="WaterMark"
                                    Text="{TemplateBinding WaterMark}"
+                                   Foreground="{TemplateBinding TextColor}"
                                    FontFamily="/Material/Fonts/Lexend/#Lexend Regular"
                                    FontSize="{TemplateBinding TextSize}"
                                    HorizontalAlignment="Left"
                                    VerticalAlignment="Center"
                                    Margin="12, 0, 0, 0"
                                    Visibility="Collapsed"/>
+                        <TextBlock x:Name="HideArea"
+                                   Background="Gray"
+                                   Visibility="{TemplateBinding IsShow, Converter={StaticResource ConvertVisibility}}"/>
                     </Grid>
                     <ControlTemplate.Triggers>
                         <Trigger Property="Text" Value="">
@@ -110,7 +119,7 @@
                         <Ellipse Width="{Binding Width, RelativeSource={RelativeSource Self}}"
                                  Height="{Binding Height, RelativeSource={RelativeSource Self}}">
                             <Ellipse.BitmapEffect>
-                                <DropShadowBitmapEffect Opacity="0.5"/>
+                                <DropShadowBitmapEffect Opacity="0.5" ShadowDepth="0"/>
                             </Ellipse.BitmapEffect>
                             <Ellipse.Fill>
                                 <ImageBrush ImageSource="{Binding ImageLocation, RelativeSource={RelativeSource TemplatedParent}}"
@@ -131,7 +140,7 @@
                                  StrokeThickness="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=BorderThick}"
                                  Stroke="{TemplateBinding BorderColor}">
                             <Ellipse.BitmapEffect>
-                                <DropShadowBitmapEffect/>
+                                <DropShadowBitmapEffect ShadowDepth="0"/>
                             </Ellipse.BitmapEffect>
                         </Ellipse>
                     </Grid>
@@ -216,10 +225,22 @@
                 <ControlTemplate TargetType="CustomControl:AccountButton">
                     <Grid>
                         <Border x:Name="AccountBorder" 
-                                Background="{StaticResource LightAqua2}"
+                                Background="{StaticResource DarkGreen1}"
+                                BorderBrush="Aqua"
+                                BorderThickness="2"
                                 HorizontalAlignment="Stretch"
                                 VerticalAlignment="Stretch"
                                 CornerRadius="10"/>
+                        <Border Background="Transparent"
+                                BorderBrush="Aqua"
+                                BorderThickness="2"
+                                HorizontalAlignment="Stretch"
+                                VerticalAlignment="Stretch"
+                                CornerRadius="10">
+                            <Border.BitmapEffect>
+                                <DropShadowBitmapEffect ShadowDepth="0.1"/>
+                            </Border.BitmapEffect>
+                        </Border>
                         <StackPanel Orientation="Horizontal"
                                     VerticalAlignment="Center"
                                     HorizontalAlignment="Left">
@@ -236,8 +257,8 @@
                                        TextWrapping="Wrap"
                                        Margin="5, 0, 5, 0"
                                        Text="Trịnh Trần Phương Tuấn"
-                                       FontFamily="/Material/Fonts/Lexend/#Lexend Bold"
-                                       FontWeight="Bold"
+                                       FontFamily="/Material/Fonts/Lexend/#Lexend Black"
+                                       FontWeight="Black"
                                        FontSize="14"
                                        TextAlignment="Center"
                                        Foreground="White"/>
@@ -261,6 +282,61 @@
                         <Trigger Property="IsPressed" Value="True">
                             <Setter Property="Background" Value="#FF42A3A3" TargetName="AccountBorder"/>
                         </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    <!--#endregion-->
+    <!--#region CustomTogglebutton-->
+    <Style TargetType="CustomControl:CustomTogglebutton">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="CustomControl:CustomTogglebutton">
+                    <Grid>
+                        <Border x:Name="ToggleBorder" 
+                                Background="{TemplateBinding BorderBackground}"
+                                BorderThickness="{TemplateBinding BorderThick}"
+                                BorderBrush="{TemplateBinding BorderColor}"
+                                CornerRadius="{TemplateBinding RadiusOfCorner}"/>
+                        <Border x:Name="Slider" 
+                                Background="{TemplateBinding SliderColor}"
+                                Width="{TemplateBinding SliderWidth}"
+                                Height="{TemplateBinding SliderHeight}"
+                                CornerRadius="{TemplateBinding RadiusOfCorner}"
+                                HorizontalAlignment="Left"
+                                VerticalAlignment="Stretch"
+                                Margin="2, 0, 2, 0"/>
+                    </Grid>
+                    <ControlTemplate.Triggers>
+                        <EventTrigger RoutedEvent="Checked">
+                            <BeginStoryboard>
+                                <Storyboard>
+                                    <ColorAnimation Duration="0:0:0.25" Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)" Storyboard.TargetName="ToggleBorder" To="White"/>
+                                    <ObjectAnimationUsingKeyFrames Duration="0" Storyboard.TargetProperty="HorizontalAlignment" Storyboard.TargetName="Slider">
+                                        <DiscreteObjectKeyFrame KeyTime="0:0:0">
+                                            <DiscreteObjectKeyFrame.Value>
+                                                <HorizontalAlignment>Right</HorizontalAlignment>
+                                            </DiscreteObjectKeyFrame.Value>
+                                        </DiscreteObjectKeyFrame>
+                                    </ObjectAnimationUsingKeyFrames>
+                                </Storyboard>
+                            </BeginStoryboard>
+                        </EventTrigger>
+                        <EventTrigger RoutedEvent="Unchecked">
+                            <BeginStoryboard>
+                                <Storyboard>
+                                    <ColorAnimation Duration="0:0:0.25" Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)" Storyboard.TargetName="ToggleBorder" To="Transparent"/>
+                                    <ObjectAnimationUsingKeyFrames Duration="0" Storyboard.TargetProperty="HorizontalAlignment" Storyboard.TargetName="Slider">
+                                        <DiscreteObjectKeyFrame KeyTime="0:0:0">
+                                            <DiscreteObjectKeyFrame.Value>
+                                                <HorizontalAlignment>Left</HorizontalAlignment>
+                                            </DiscreteObjectKeyFrame.Value>
+                                        </DiscreteObjectKeyFrame>
+                                    </ObjectAnimationUsingKeyFrames>
+                                </Storyboard>
+                            </BeginStoryboard>
+                        </EventTrigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
             </Setter.Value>

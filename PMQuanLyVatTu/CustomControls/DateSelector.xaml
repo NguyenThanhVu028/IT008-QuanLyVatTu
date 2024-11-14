@@ -17,9 +17,10 @@
                              x:Name="Output" 
                              HorizontalAlignment="Stretch"
                              VerticalAlignment="Stretch"
-                             RadiusOfCorner="10"
+                             RadiusOfCorner="5"
                              BorderThick="2"
                              BorderColor="{StaticResource DarkGreen2}"
+                             TextSize="15"
                              Margin="0, 0, 0, 0"
                              WaterMark="Chọn ngày"
                              IsEnabled="False"/>
@@ -35,6 +36,7 @@
                 Visibility="Collapsed">
             <Calendar x:Name="InnerCalender" 
                       BorderThickness="0"
+                      Background="Transparent"
                       HorizontalAlignment="Center"
                       VerticalAlignment="Center"
                       Margin="0, 0, 0, 0"

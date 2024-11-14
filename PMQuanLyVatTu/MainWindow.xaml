@@ -8,6 +8,7 @@
         xmlns:viewmodel="clr-namespace:PMQuanLyVatTu.ViewModel" 
         d:DataContext="{d:DesignInstance Type=viewmodel:MainViewModel}"
         xmlns:view="clr-namespace:PMQuanLyVatTu.View"
+        xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
         mc:Ignorable="d"
         Title="MainWindow" Height="720" Width="1280"
         AllowsTransparency="True"
@@ -73,6 +74,18 @@
                                 Opacity="0.3"/>
                 </Border.Background>
             </Border>
+            <!--<view:TrangChu Grid.Column="1"
+                           Grid.Row="1"/>-->
+            <!--<view:NhanVien Grid.Column="1"
+                           Grid.Row="1"/>-->
+            <!--<view:VatTu Grid.Column="1"
+                        Grid.Row="1"/>-->
+            <!--<view:KhachHang Grid.Column="1"
+                            Grid.Row="1"/>-->
+            <!--<view:NhaCungCap Grid.Column="1"
+                             Grid.Row="1"/>-->
+            <view:Kho Grid.Column="1"
+                      Grid.Row="1"/>
             <CustomControl:AccountButton Grid.Row="1" 
                                          VerticalAlignment="Top"
                                          Height="70"

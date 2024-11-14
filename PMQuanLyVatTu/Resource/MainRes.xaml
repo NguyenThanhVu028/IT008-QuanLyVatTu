@@ -7,4 +7,11 @@
     <viewmodel:AlreadyExistsErrorViewModel x:Key="AlreadyExistsErrorVM"/>
     <viewmodel:TrangChuViewModel x:Key="TrangChuVM"/>
     <viewmodel:ThongTinVatTuWindowViewModel x:Key="ThongTinVatTuWindowVM"/>
+    <viewmodel:ThongTinNhanVienWindowViewModel x:Key="ThongTinNhanVienWindowVM"/>
+    <viewmodel:ThongTinCaNhanWindowViewModel x:Key="ThongTinCaNhanWindowVM"/>
+    <viewmodel:NhanVienViewModel x:Key="NhanVienVM"/>
+    <viewmodel:VatTuViewModel x:Key="VatTuVM"/>
+    <viewmodel:KhachHangViewModel x:Key="KhachHangVM"/>
+    <viewmodel:NhaCungCapViewModel x:Key="NhaCungCapVM"/>
+    <viewmodel:KhoViewModel x:Key="KhoVM"/>
 </ResourceDictionary>
