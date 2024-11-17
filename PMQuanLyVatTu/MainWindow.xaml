@@ -78,8 +78,8 @@
                                 Opacity="0.3"/>
                 </Border.Background>
             </Border>
-            <!--<view:TrangChu Grid.Column="1"
-                           Grid.Row="1"/>-->
+            <view:TrangChu Grid.Column="1"
+                           Grid.Row="1"/>
             <!--<view:NhanVien Grid.Column="1"
                            Grid.Row="1"/>-->
             <!--<view:VatTu Grid.Column="1"

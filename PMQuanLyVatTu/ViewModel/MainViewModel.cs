@@ -40,8 +40,8 @@ namespace PMQuanLyVatTu.ViewModel
             //CustomMessage msg = new CustomMessage("/Material/Images/Icons/wrong.png", "Nhập sai dữ liệu", "Vui lòng nhập lại dữ liệu đúng với định dạng yêu cầu!");
             //msg.ShowDialog();
 
-            ThongTinVatTuWindow newWin = new ThongTinVatTuWindow();
-            newWin.ShowDialog();
+            //ThongTinVatTuWindow newWin = new ThongTinVatTuWindow();
+            //newWin.ShowDialog();
 
             //ThongTinNhanVienWindow newWin = new ThongTinNhanVienWindow();
             //newWin.ShowDialog();
@@ -54,6 +54,27 @@ namespace PMQuanLyVatTu.ViewModel
 
             //ThongTinKhoWindow newWin = new ThongTinKhoWindow();
             //newWin.ShowDialog();
+
+            //ThongTinKhachHangWindow newWin = new ThongTinKhachHangWindow();
+            //newWin.ShowDialog();
+
+            //ThongTinNhaCungCapWindow newWin = new ThongTinNhaCungCapWindow();
+            //newWin.ShowDialog();
+
+            //ThongTinYeuCauMuaHangWindow newWin = new ThongTinYeuCauMuaHangWindow();
+            //newWin.ShowDialog();
+
+            //ThongTinYeuCauNhapHangWindow newWin = new ThongTinYeuCauNhapHangWindow();
+            //newWin.ShowDialog();
+
+            //ThemSuaVatTuWindow newWin = new ThemSuaVatTuWindow();
+            //newWin.ShowDialog();
+
+            //ChiTietPhieuXuatWindow newWin = new ChiTietPhieuXuatWindow();
+            //newWin.ShowDialog();
+
+            ChiTietPhieuNhapWindow newWin = new ChiTietPhieuNhapWindow();
+            newWin.ShowDialog();
         }
 
         #region Commands

@@ -1,0 +1,91 @@
+﻿<Window x:Class="PMQuanLyVatTu.ThemSuaVatTuWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:PMQuanLyVatTu"
+        xmlns:CustomControl="clr-namespace:PMQuanLyVatTu.CustomControls"
+        xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+        mc:Ignorable="d"
+        Title="ThemSuaVatTuWindow" Height="230" Width="360"
+        WindowStartupLocation="CenterScreen"
+        Background="Transparent"
+        AllowsTransparency="True"
+        WindowStyle="None"
+        Name="ChangePasswordWin"
+        DataContext="{StaticResource ThemSuaVatTuWindowVM}">
+    <Grid>
+        <Border Background="{StaticResource DarkGreen2}"
+                CornerRadius="20" Margin="0,0,0,0">
+            <i:Interaction.Triggers>
+                <i:EventTrigger EventName="MouseLeftButtonDown">
+                    <i:InvokeCommandAction Command="{Binding MoveWindowCommand}"
+                               CommandParameter="{Binding ElementName=ChangePasswordWin}"/>
+                </i:EventTrigger>
+            </i:Interaction.Triggers>
+        </Border>
+        <TextBlock Text="THÊM / SỬA VẬT TƯ"
+                   Foreground="White"
+                   FontFamily="/Material/Fonts/Lexend/#Lexend Regular"
+                   FontWeight="Black"
+                   FontSize="22"
+                   HorizontalAlignment="Center"
+                   VerticalAlignment="Top"
+                   Margin="0, 25"/>
+        <TextBlock Text="Số lượng:"
+                   FontSize="15"
+                   Foreground="White"
+                   FontFamily="/Material/Fonts/Lexend/#Lexend Regular"
+                   HorizontalAlignment="Left"
+                   VerticalAlignment="Top"
+                   Margin="20, 130, 0, 0"/>
+        <CustomControl:CustomTextbox Height="40"
+                                     Width="220"
+                                     HorizontalAlignment="Left"
+                                     VerticalAlignment="Top"
+                                     BackgroundColor="{StaticResource White}"
+                                     WaterMark="Nhập số lượng"
+                                     TextSize="15"
+                                     Margin="110,120, 0, 0"
+                                     RadiusOfCorner="5"/>
+        <CustomControl:CustomButton VerticalAlignment="Bottom"
+                                    HorizontalAlignment="Left"
+                                    RadiusOfCorner="10"
+                                    DisplayText="Xác nhận"
+                                    BorderBackground="{StaticResource LightAqua3}"
+                                    BorderBackgroundClicked="Aqua"
+                                    BorderColor="{StaticResource DarkGreen2}"
+                                    BorderColorHighlight="{StaticResource DarkGreen3}"
+                                    Margin="200, 0, 0, 20"
+                                    Width="120"
+                                    Height="30"
+                                    Command="{Binding ConfirmCommand}"/>
+        <CustomControl:CustomButton VerticalAlignment="Bottom"
+                                    HorizontalAlignment="Left"
+                                    RadiusOfCorner="10"
+                                    DisplayText="Hủy"
+                                    BorderBackground="{StaticResource LightRed}"
+                                    BorderColorHighlight="Red"
+                                    BorderBackgroundClicked="{StaticResource DarkRed}"
+                                    BorderColor="{StaticResource DarkRed}"
+                                    Margin="40, 0, 0, 20"
+                                    Width="120"
+                                    Height="30"
+                                    Command="{Binding CancelCommand}"
+                                    CommandParameter="{Binding ElementName=ChangePasswordWin}"/>
+        <TextBlock Text="Mã vật tư:"
+                   FontSize="15"
+                   Foreground="White"
+                   FontFamily="/Material/Fonts/Lexend/#Lexend Regular"
+                   HorizontalAlignment="Left"
+                   VerticalAlignment="Top"
+                   Margin="20, 80, 0, 0"/>
+        <CustomControl:SelectionList Grid.Row="1"
+                                     Height="115"
+                                     Width="220"
+                                     VerticalAlignment="Top"
+                                     HorizontalAlignment="Left"
+                                     Margin="110, 70, 0, 0"
+                                     DataList="{Binding GioiTinh}"/>
+    </Grid>
+</Window>

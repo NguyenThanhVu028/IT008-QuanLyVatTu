@@ -17,4 +17,11 @@
     <viewmodel:XoaGanDayWindowViewModel x:Key="XoaGanDayVM"/>
     <viewmodel:ForgetPasswordWindowViewModel x:Key="ForgetPasswordWindowVM"/>
     <viewmodel:ThongTinKhoWindowViewModel x:Key="ThongTinKhoWindowVM"/>
+    <viewmodel:ThongTinKhachHangWindowViewModel x:Key="ThongTinKhachHangWindowVM"/>
+    <viewmodel:ThongTinNhaCungCapWindowViewModel x:Key="ThongTinNhaCungCapWindowVM"/>
+    <viewmodel:ThongTinYeuCauMuaHangWindowViewModel x:Key="ThongTinYeuCauMuaHangWindowVM"/>
+    <viewmodel:ThongTinYeuCauNhapHangWindowViewModel x:Key="ThongTinYeuCauNhapHangWindowVM"/>
+    <viewmodel:ThemSuaVatTuWindowViewModel x:Key="ThemSuaVatTuWindowVM"/>
+    <viewmodel:ChiTietPhieuXuatWindowViewModel x:Key="ChiTietPhieuXuatWindowVM"/>
+    <viewmodel:ChiTietPhieuNhapWindowViewModel x:Key="ChiTietPhieuNhapWindowVM"/>
 </ResourceDictionary>

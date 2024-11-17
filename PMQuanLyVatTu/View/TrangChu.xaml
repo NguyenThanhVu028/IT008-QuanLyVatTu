@@ -35,16 +35,29 @@
                 CornerRadius="10"
                 Margin="10"/>
         <Grid x:Name="LayoutGrid">
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <!--<Grid.ColumnDefinitions>
                 <ColumnDefinition Width="46*"/>
                 <ColumnDefinition Width="89*"/>
             </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
                 <RowDefinition/>
                 <RowDefinition/>
-            </Grid.RowDefinitions>
-            <Border Background="#4C00FFA3"
-                    Margin="30,40,30,10"
+            </Grid.RowDefinitions>-->
+            <Border Grid.Row="0"
+                    Grid.ColumnSpan="3"
+                    Background="#4C00FFA3"
+                    HorizontalAlignment="Stretch"
+                    VerticalAlignment="Stretch"
+                    Margin="30,30,30,30"
                     CornerRadius="30"
                     BorderThickness="1"
                     BorderBrush="Aqua">
@@ -59,7 +72,7 @@
                     <TextBlock x:Name="UserNameDisplay" 
                                Text="Trịnh Trần Phương Tuấn"
                                FontFamily="/Material/Fonts/Lexend/#Lexend Black"
-                               FontSize="35"
+                               FontSize="60"
                                FontWeight="ExtraBlack"
                                HorizontalAlignment="Center"
                                Foreground="{StaticResource LightAqua1}"
@@ -68,13 +81,15 @@
                                TextAlignment="Center"/>
                 </StackPanel>
             </Border>
-            <Border x:Name="TimeOfDayBorder" 
+            <Border Grid.Row="1" 
+                    x:Name="TimeOfDayBorder" 
                     Background="{Binding TimeOfDayColor}"
-                    Margin="30,10,30,30"
+                    HorizontalAlignment="Stretch"
+                    VerticalAlignment="Stretch"
+                    Margin="30,30,20,30"
                     CornerRadius="30"
                     BorderThickness="1"
-                    BorderBrush="Aqua"
-                    Grid.Row="1">
+                    BorderBrush="Aqua">
                 <StackPanel Orientation="Vertical">
                     <Image x:Name="TimeStatus" 
                            Source="{Binding ImgIcon}"
@@ -90,31 +105,37 @@
                            Foreground="{StaticResource LightAqua1}"/>
                 </StackPanel>
             </Border>
-            <Border Background="#4C600065"
-                    Margin="30"
+            <Border Grid.Row="1" 
+                    Grid.Column="1" 
+                    Background="#4C600065"
+                    HorizontalAlignment="Stretch"
+                    VerticalAlignment="Stretch"
+                    Margin="20,30,20,30"
                     CornerRadius="30"
                     BorderThickness="1"
-                    BorderBrush="Aqua"
-                    Grid.Column="1"
-                    Grid.RowSpan="2">
-                <Viewbox Stretch="Uniform">
-                    <Calendar CalendarItemStyle="{DynamicResource CalendarCalendarItemStyle1}" 
+                    BorderBrush="Aqua">
+                <Grid>
+                    <TextBlock Grid.Column="1"
+                                x:Name="DateDisplayer"
+                                Text="{Binding DateNow}"
+                                FontFamily="/Material/Fonts/Lexend/#Lexend Black"
+                                FontSize="20"
+                                FontWeight="Black"
+                                HorizontalAlignment="Center"
+                                VerticalAlignment="Top"
+                                Margin="0, 20"
+                                Foreground="{StaticResource LightAqua1}"/>
+                    <Viewbox Stretch="Uniform"
+                         Margin="10, 10, 10, 10">
+                        <Calendar CalendarItemStyle="{DynamicResource CalendarCalendarItemStyle1}" 
                               CalendarDayButtonStyle="{DynamicResource CalendarCalendarDayButtonStyle1}" 
                               Margin="20, 50, 20, 10"
                               HorizontalAlignment="Center"
                               VerticalAlignment="Stretch"/>
-                </Viewbox>
+                    </Viewbox>
+                </Grid>
             </Border>
-            <TextBlock Grid.Column="1"
-                       x:Name="DateDisplayer"
-                       Text="{Binding DateNow}"
-                       FontFamily="/Material/Fonts/Lexend/#Lexend Black"
-                       FontSize="40"
-                       FontWeight="Black"
-                       HorizontalAlignment="Center"
-                       VerticalAlignment="Top"
-                       Margin="0, 60"
-                       Foreground="{StaticResource LightAqua1}"/>
+
         </Grid>
     </Grid>
 </UserControl>
