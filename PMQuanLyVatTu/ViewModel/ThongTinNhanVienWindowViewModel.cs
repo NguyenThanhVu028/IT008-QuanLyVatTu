@@ -14,6 +14,10 @@ namespace PMQuanLyVatTu.ViewModel
         public ThongTinNhanVienWindowViewModel()
         {
             CloseCommand = new RelayCommand<Window>(CloseWindow);
+            MoveWindowCommand = new RelayCommand<Window>(MoveWindow);
+            EditInfoCommand = new RelayCommand<object>(EditInfo);
+            SaveInfoCommand = new RelayCommand<object>(SaveInfo);
+            ChangeAvatarCommand = new RelayCommand<object>(ChangeAvatar);
         }
         private ObservableCollection<string> _gioiTinh = new ObservableCollection<string>() {"Nam", "Nữ" };
         public ObservableCollection<string> GioiTinh
@@ -31,6 +35,25 @@ namespace PMQuanLyVatTu.ViewModel
         void CloseWindow(Window window)
         {
             window.Close();
+        }
+        public ICommand MoveWindowCommand { get; set; }
+        void MoveWindow(Window window)
+        {
+            window.DragMove();
+        }
+        public ICommand EditInfoCommand { get; set; }
+        void EditInfo(object t) {
+            MessageBox.Show("EditInfoCommand Executed");
+        }
+        public ICommand SaveInfoCommand { get; set; }
+        void SaveInfo(object t)
+        {
+            MessageBox.Show("SaveInfoCommand Executed");
+        }
+        public ICommand ChangeAvatarCommand { get; set; }
+        void ChangeAvatar(object t)
+        {
+            MessageBox.Show("Change image location");
         }
     }
 }

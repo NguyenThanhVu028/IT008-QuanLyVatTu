@@ -17,13 +17,12 @@ namespace PMQuanLyVatTu.CustomControls
 {
     public class CircleImage : Button
     {
-        
         static CircleImage()
         {
             DefaultStyleKeyProperty.OverrideMetadata(typeof(CircleImage), new FrameworkPropertyMetadata(typeof(CircleImage)));
         }
         #region ImageLocation
-                public string ImageLocation
+        public string ImageLocation
                 {
                     get { return (string)GetValue(ImageLocationProperty); }
                     set { SetValue(ImageLocationProperty, value); }

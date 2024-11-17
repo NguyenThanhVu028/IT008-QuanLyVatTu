@@ -53,17 +53,17 @@ namespace PMQuanLyVatTu.CustomControls
         void OutputFocused(object sender, RoutedEventArgs e)
         {
             DataChanged();
-            Container.Visibility = Visibility.Visible;
+            //Container.Visibility = Visibility.Visible;
         }
         void OutputUnFocused(object sender, RoutedEventArgs e)
         {
             DataChanged();
-            Container.Visibility = Visibility.Collapsed;
+            //Container.Visibility = Visibility.Collapsed;
         }
         void ItemClicked(object sender, RoutedEventArgs e)
         {
             string temp = (sender as Button).Content.ToString();
-            Container.Visibility = Visibility.Collapsed;
+            //Container.Visibility = Visibility.Collapsed;
             if(IsAllowed == true)
             {
                 SelectedValue = temp;

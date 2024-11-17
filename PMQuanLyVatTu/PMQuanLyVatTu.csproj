@@ -31,6 +31,8 @@
     <None Remove="Material\Images\Icons\customer.png" />
     <None Remove="Material\Images\Icons\delete.png" />
     <None Remove="Material\Images\Icons\denied_request.png" />
+    <None Remove="Material\Images\Icons\edit1.png" />
+    <None Remove="Material\Images\Icons\edit2.png" />
     <None Remove="Material\Images\Icons\employee.png" />
     <None Remove="Material\Images\Icons\home.png" />
     <None Remove="Material\Images\Icons\maximize.png" />
@@ -43,6 +45,7 @@
     <None Remove="Material\Images\Icons\receipt.png" />
     <None Remove="Material\Images\Icons\report.png" />
     <None Remove="Material\Images\Icons\request.png" />
+    <None Remove="Material\Images\Icons\success.png" />
     <None Remove="Material\Images\Icons\sun_rise.png" />
     <None Remove="Material\Images\Icons\sun_set.png" />
     <None Remove="Material\Images\Icons\supplier.png" />
@@ -83,6 +86,8 @@
     <Resource Include="Material\Images\Icons\customer.png" />
     <Resource Include="Material\Images\Icons\delete.png" />
     <Resource Include="Material\Images\Icons\denied_request.png" />
+    <Resource Include="Material\Images\Icons\edit1.png" />
+    <Resource Include="Material\Images\Icons\edit2.png" />
     <Resource Include="Material\Images\Icons\employee.png" />
     <Resource Include="Material\Images\Icons\home.png" />
     <Resource Include="Material\Images\Icons\maximize.png" />
@@ -95,6 +100,7 @@
     <Resource Include="Material\Images\Icons\receipt.png" />
     <Resource Include="Material\Images\Icons\report.png" />
     <Resource Include="Material\Images\Icons\request.png" />
+    <Resource Include="Material\Images\Icons\success.png" />
     <Resource Include="Material\Images\Icons\sun_rise.png" />
     <Resource Include="Material\Images\Icons\sun_set.png" />
     <Resource Include="Material\Images\Icons\supplier.png" />

@@ -4,23 +4,21 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
 using System.Windows.Input;
 
 namespace PMQuanLyVatTu.ViewModel
 {
-    public class ChangePasswordViewModel : BaseViewModel
+    public class XoaGanDayWindowViewModel:BaseViewModel
     {
-        public ChangePasswordViewModel()
+        public XoaGanDayWindowViewModel()
         {
-            CancelCommand = new RelayCommand<Window>(CloseWindow);
+            CloseCommand = new RelayCommand<Window>(Close);
             MoveWindowCommand = new RelayCommand<Window>(MoveWindow);
         }
-        public ICommand CancelCommand { get; set; }
-        void CloseWindow(Window uc)
+        public ICommand CloseCommand { get; set; }
+        void Close(Window window)
         {
-            MessageBox.Show("Command Executed!");
-            uc.Close();
+            window.Close();
         }
         public ICommand MoveWindowCommand { get; set; }
         void MoveWindow(Window window)

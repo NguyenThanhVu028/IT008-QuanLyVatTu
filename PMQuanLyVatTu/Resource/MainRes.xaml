@@ -14,4 +14,7 @@
     <viewmodel:KhachHangViewModel x:Key="KhachHangVM"/>
     <viewmodel:NhaCungCapViewModel x:Key="NhaCungCapVM"/>
     <viewmodel:KhoViewModel x:Key="KhoVM"/>
+    <viewmodel:XoaGanDayWindowViewModel x:Key="XoaGanDayVM"/>
+    <viewmodel:ForgetPasswordWindowViewModel x:Key="ForgetPasswordWindowVM"/>
+    <viewmodel:ThongTinKhoWindowViewModel x:Key="ThongTinKhoWindowVM"/>
 </ResourceDictionary>

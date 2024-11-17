@@ -66,6 +66,7 @@
         <Setter Property="FontWeight" Value="Medium"/>
         <Setter Property="FontSize" Value="{Binding TextSize, RelativeSource={RelativeSource Self}}"/>
         <Setter Property="IsEnabled" Value="{Binding IsShow, RelativeSource={RelativeSource Self}}"/>
+        <Setter Property="CaretBrush" Value="{Binding TextColor, RelativeSource={RelativeSource Self}}"/>
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="CustomControl:CustomTextbox">
@@ -309,17 +310,13 @@
                                 Margin="2, 0, 2, 0"/>
                     </Grid>
                     <ControlTemplate.Triggers>
+                        <Trigger Property="IsChecked" Value="True">
+                            <Setter Property="HorizontalAlignment" Value="Right" TargetName="Slider"/>
+                        </Trigger>
                         <EventTrigger RoutedEvent="Checked">
                             <BeginStoryboard>
                                 <Storyboard>
                                     <ColorAnimation Duration="0:0:0.25" Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)" Storyboard.TargetName="ToggleBorder" To="White"/>
-                                    <ObjectAnimationUsingKeyFrames Duration="0" Storyboard.TargetProperty="HorizontalAlignment" Storyboard.TargetName="Slider">
-                                        <DiscreteObjectKeyFrame KeyTime="0:0:0">
-                                            <DiscreteObjectKeyFrame.Value>
-                                                <HorizontalAlignment>Right</HorizontalAlignment>
-                                            </DiscreteObjectKeyFrame.Value>
-                                        </DiscreteObjectKeyFrame>
-                                    </ObjectAnimationUsingKeyFrames>
                                 </Storyboard>
                             </BeginStoryboard>
                         </EventTrigger>
@@ -327,13 +324,6 @@
                             <BeginStoryboard>
                                 <Storyboard>
                                     <ColorAnimation Duration="0:0:0.25" Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)" Storyboard.TargetName="ToggleBorder" To="Transparent"/>
-                                    <ObjectAnimationUsingKeyFrames Duration="0" Storyboard.TargetProperty="HorizontalAlignment" Storyboard.TargetName="Slider">
-                                        <DiscreteObjectKeyFrame KeyTime="0:0:0">
-                                            <DiscreteObjectKeyFrame.Value>
-                                                <HorizontalAlignment>Left</HorizontalAlignment>
-                                            </DiscreteObjectKeyFrame.Value>
-                                        </DiscreteObjectKeyFrame>
-                                    </ObjectAnimationUsingKeyFrames>
                                 </Storyboard>
                             </BeginStoryboard>
                         </EventTrigger>

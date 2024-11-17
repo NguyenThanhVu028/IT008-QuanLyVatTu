@@ -5,6 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PMQuanLyVatTu"
         xmlns:CustomControl="clr-namespace:PMQuanLyVatTu.CustomControls" 
+        xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
         mc:Ignorable="d"
         Title="ThongTinCaNhanWindow" Height="600" Width="680"
         AllowsTransparency="True"
@@ -15,7 +16,14 @@
         DataContext="{StaticResource ThongTinCaNhanWindowVM}">
     <Grid>
         <Border Background="{StaticResource LightAqua1}"
-                CornerRadius="15"/>
+                CornerRadius="15">
+            <i:Interaction.Triggers>
+                <i:EventTrigger EventName="MouseLeftButtonDown">
+                    <i:InvokeCommandAction Command="{Binding MoveWindowCommand}"
+                                           CommandParameter="{Binding ElementName=ThisWin}"/>
+                </i:EventTrigger>
+            </i:Interaction.Triggers>
+        </Border>
         <Grid>
             <Grid.RowDefinitions>
                 <RowDefinition Height="55"/>
@@ -28,7 +36,7 @@
                                        Margin="0, 0, 20, 0"
                                        ImageLocation="/Material/Images/Icons/close2.png"
                                        BorderBackgroundHightlight="{StaticResource LightRed}"
-                                       Command="{Binding CloseCommand}"
+                                       Command="{Binding CloseWindowCommand}"
                                        CommandParameter="{Binding ElementName=ThisWin}"/>
             <Border Grid.Row="1"
                     HorizontalAlignment="Stretch"
@@ -53,6 +61,15 @@
                        FontSize="30"
                        TextAlignment="Center"
                        TextWrapping="Wrap"/>
+            <CustomControl:ImageButton Grid.Row="1"
+                                   HorizontalAlignment="Right"
+                                   VerticalAlignment="Top"
+                                   Margin="0, 25, 35, 0"
+                                   Width="30"
+                                   Height="30"
+                                   ImageLocation="/Material/Images/Icons/edit1.png"
+                                   BorderBackgroundHightlight="{StaticResource LightAqua1}"
+                                   Command="{Binding EditInfoCommand}"/>
             <TextBlock Grid.Row="1" 
                        Text="Mã nhân viên"
                        Foreground="{StaticResource DarkGreen2}"
@@ -144,7 +161,7 @@
                                          HorizontalAlignment="Left"
                                          Margin="60,280,0,0"
                                          Height="40"
-                                         Width="560"
+                                         Width="270"
                                          TextSize="15"
                                          BorderColor="{StaticResource DarkGreen2}"
                                          BorderColorClicked="{StaticResource LightAqua2}"
@@ -153,7 +170,7 @@
             <TextBlock Grid.Row="1"
                        HorizontalAlignment="Left"
                        VerticalAlignment="Top" 
-                       Margin="60,330,0,0"
+                       Margin="350,250,0,0"
                        Text="Địa chỉ"
                        Foreground="{StaticResource DarkGreen2}"
                        FontSize="20"
@@ -162,14 +179,28 @@
             <CustomControl:CustomTextbox Grid.Row="1"
                                          VerticalAlignment="Top"
                                          HorizontalAlignment="Left"
-                                         Margin="60,360,0,0"
+                                         Margin="350,280,0,0"
                                          Height="40"
-                                         Width="560"
+                                         Width="270"
                                          TextSize="15"
                                          BorderColor="{StaticResource DarkGreen2}"
                                          BorderColorClicked="{StaticResource LightAqua2}"
                                          BorderThick="2"
                                          RadiusOfCorner="5"/>
+            <CustomControl:CustomButton Grid.Row="1"
+                                        Height="50"
+                                        Width="200"
+                                        VerticalAlignment="Top"
+                                        HorizontalAlignment="Stretch"
+                                        Margin="0, 360, 0, 0"
+                                        BorderBackground="{StaticResource DarkGreen2}"
+                                        BorderBackgroundClicked="{StaticResource DarkGreen3}"
+                                        BorderColor="White"
+                                        BorderColorHighlight="White"
+                                        TextSize="15"
+                                        DisplayText="Đổi mật khẩu"
+                                        RadiusOfCorner="10"
+                                        Command="{Binding ChangePasswordCommand}"/>
             <TextBlock Grid.Row="1"
                        HorizontalAlignment="Left"
                        VerticalAlignment="Top" 
@@ -199,7 +230,7 @@
                                         TextSize="25"
                                         DisplayText="Hủy"
                                         RadiusOfCorner="10"
-                                        Command="{Binding CloseCommand}"
+                                        Command="{Binding CloseWindowCommand}"
                                         CommandParameter="{Binding ElementName=ThisWin}"/>
             <CustomControl:CustomButton Grid.Row="1" 
                                         HorizontalAlignment="Right"
@@ -214,7 +245,8 @@
                                         TextSize="25"
                                         DisplayText="Lưu"
                                         RadiusOfCorner="10" 
-                                        BorderColorHighlight="#FF27C5C5" Grid.Column="1"/>
+                                        BorderColorHighlight="#FF27C5C5" Grid.Column="1"
+                                        Command="{Binding SaveInfoCommand}"/>
         </Grid>
     </Grid>
 </Window>

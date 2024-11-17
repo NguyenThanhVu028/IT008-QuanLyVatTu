@@ -15,16 +15,13 @@ namespace PMQuanLyVatTu.ViewModel
 {
     public class MainViewModel:BaseViewModel
     {
-        #region Commands
-        public ICommand CloseWindowCommand { get; set; }
-        public ICommand MaximizeWindowCommand { get; set; }
-        public ICommand MinimizeWindowCommand { get; set; }
-        #endregion
         public MainViewModel()
         {
             CloseWindowCommand = new RelayCommand<Window>(CloseWin);
             MaximizeWindowCommand = new RelayCommand<Window>(MaximizeWin);
             MinimizeWindowCommand = new RelayCommand<Window>(MinimizeWin);
+            MoveWindowCommand = new RelayCommand<Window>(MoveWindow);
+
             //LoginWindow lgw = new LoginWindow();
             //lgw.ShowDialog();
 
@@ -43,23 +40,32 @@ namespace PMQuanLyVatTu.ViewModel
             //CustomMessage msg = new CustomMessage("/Material/Images/Icons/wrong.png", "Nhập sai dữ liệu", "Vui lòng nhập lại dữ liệu đúng với định dạng yêu cầu!");
             //msg.ShowDialog();
 
-            //ThongTinVatTuWindow newWin = new ThongTinVatTuWindow();
-            //newWin.ShowDialog();
+            ThongTinVatTuWindow newWin = new ThongTinVatTuWindow();
+            newWin.ShowDialog();
 
             //ThongTinNhanVienWindow newWin = new ThongTinNhanVienWindow();
             //newWin.ShowDialog();
 
             //ThongTinCaNhanWindow newWin = new ThongTinCaNhanWindow();
-            //newWin.ShowDialog ();
+            //newWin.ShowDialog();
 
+            //XoaGanDayWindow newWin = new XoaGanDayWindow();
+            //newWin.ShowDialog();
+
+            //ThongTinKhoWindow newWin = new ThongTinKhoWindow();
+            //newWin.ShowDialog();
         }
+
+        #region Commands
+        public ICommand CloseWindowCommand { get; set; }
         void CloseWin(Window window)
         {
             window.Close();
         }
+        public ICommand MaximizeWindowCommand { get; set; }
         void MaximizeWin(Window window)
         {
-            if(window.WindowState == WindowState.Maximized)
+            if (window.WindowState == WindowState.Maximized)
             {
                 window.WindowState = WindowState.Normal;
             }
@@ -68,9 +74,16 @@ namespace PMQuanLyVatTu.ViewModel
                 window.WindowState = WindowState.Maximized;
             }
         }
+        public ICommand MinimizeWindowCommand { get; set; }
         void MinimizeWin(Window window)
         {
             window.WindowState = WindowState.Minimized;
         }
+        public ICommand MoveWindowCommand { get; set; }
+        void MoveWindow(Window window)
+        {
+            window.DragMove();
+        }
+        #endregion
     }
 }

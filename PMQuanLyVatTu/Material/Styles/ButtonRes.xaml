@@ -11,6 +11,7 @@
         <Setter Property="Cursor" Value="Hand"/>
         <Setter Property="FontSize" Value="20"/>
         <Setter Property="FontFamily" Value="Fonts/Roboto/#Roboto Regular"/>
+        <Setter Property="FontWeight" Value="Regular"/>
         <Setter Property="Margin" Value="0, 0, 0, 0"/>
         <Setter Property="Template">
             <Setter.Value>
@@ -24,22 +25,26 @@
                         SnapsToDevicePixels="True">
                         <Grid>
                             <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="35"/>
+                                <ColumnDefinition Width="30"/>
                                 <ColumnDefinition/>
                             </Grid.ColumnDefinitions>
                             <Image Source="/Material/Images/Icons/user_login.png"></Image>
 
-                            <ScrollViewer x:Name="PART_ContentHost" 
-                                      Grid.Column="1"
-                                      Focusable="True"
-                                      Width="500"
-                                      Height="50"
-                                      VerticalScrollBarVisibility="Hidden">
+                            <ScrollViewer x:Name="PART_ContentHost"
+                                          HorizontalAlignment="Stretch"
+                                          VerticalAlignment="Center"
+                                          Margin="17, 0, 0, 0"
+                                          Grid.Column="0"
+                                          Grid.ColumnSpan="2"
+                                          Focusable="True"
+                                          Width="500"
+                                          Height="50"
+                                          VerticalScrollBarVisibility="Hidden">
                             </ScrollViewer>
                             <Label x:Name="WaterMark"
                                    Grid.Column="1"
                                    Content="Tên đăng nhập"
-                                   Margin="16, 7, 0, 0"
+                                   Margin="5, 7, 0, 0"
                                    Foreground="Black"
                                    FontFamily="Fonts/Roboto/#Roboto Regular"
                                    Visibility="Collapsed">
@@ -351,13 +356,13 @@
                                 </VisualState>
                             </VisualStateGroup>
                         </VisualStateManager.VisualStateGroups>
-                        <Rectangle x:Name="TodayBackground" Fill="#FF009191" Opacity="0" RadiusX="1" RadiusY="1"/>
-                        <Rectangle x:Name="SelectedBackground" Fill="#7F003547" Opacity="0" RadiusX="1" RadiusY="1"/>
+                        <Rectangle x:Name="TodayBackground" Fill="#FF009191" Opacity="0" RadiusX="5" RadiusY="5"/>
+                        <Rectangle x:Name="SelectedBackground" Fill="#7F003547" Opacity="0" RadiusX="5" RadiusY="5"/>
                         <Border Background="{TemplateBinding Background}" BorderBrush="Transparent" BorderThickness="0"/>
-                        <Rectangle x:Name="HighlightBackground" Fill="#FFBADDE9" Opacity="0" RadiusX="1" RadiusY="1"/>
+                        <Rectangle x:Name="HighlightBackground" Fill="#FFBADDE9" Opacity="0" RadiusX="5" RadiusY="5"/>
                         <ContentPresenter x:Name="NormalText" TextElement.Foreground="#FF333333" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" Margin="5,1,5,1" VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
                         <Path x:Name="Blackout" Data="M8.1772461,11.029181 L10.433105,11.029181 L11.700684,12.801641 L12.973633,11.029181 L15.191895,11.029181 L12.844727,13.999395 L15.21875,17.060919 L12.962891,17.060919 L11.673828,15.256231 L10.352539,17.060919 L8.1396484,17.060919 L10.519043,14.042364 z" Fill="Transparent" HorizontalAlignment="Stretch" Margin="3" Opacity="0" RenderTransformOrigin="0.5,0.5" Stretch="Fill" VerticalAlignment="Stretch"/>
-                        <Rectangle x:Name="DayButtonFocusVisual" IsHitTestVisible="false" RadiusX="1" RadiusY="1" Stroke="#FF45D6FA" Visibility="Collapsed"/>
+                        <Rectangle x:Name="DayButtonFocusVisual" IsHitTestVisible="false" RadiusX="5" RadiusY="5" Stroke="#FF45D6FA" Visibility="Collapsed"/>
                     </Grid>
                 </ControlTemplate>
             </Setter.Value>

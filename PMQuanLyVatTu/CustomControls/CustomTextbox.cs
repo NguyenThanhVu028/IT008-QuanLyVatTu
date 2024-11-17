@@ -103,7 +103,7 @@ namespace PMQuanLyVatTu.CustomControls
             set { SetValue(TextSizeProperty, value); }
         }
         public static readonly DependencyProperty TextSizeProperty =
-            DependencyProperty.Register("TextSize", typeof(double), typeof(CustomTextbox), new PropertyMetadata(0.0));
+            DependencyProperty.Register("TextSize", typeof(double), typeof(CustomTextbox), new PropertyMetadata(15.0));
         #endregion
         #region RadiusOfCorner
         public CornerRadius RadiusOfCorner

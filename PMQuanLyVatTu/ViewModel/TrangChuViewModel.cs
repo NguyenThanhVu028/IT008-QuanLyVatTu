@@ -66,11 +66,11 @@ namespace PMQuanLyVatTu.ViewModel
                 ImgIcon = "/Material/Images/Icons/sun_rise.png";
                 TimeOfDayColor = (SolidColorBrush)(new BrushConverter().ConvertFrom("#FFC87B2D"));
             } 
-            else if (DateTime.Now.Hour > 6 && DateTime.Now.Hour < 18) { 
+            else if (DateTime.Now.Hour > 6 && DateTime.Now.Hour < 17) { 
                 ImgIcon = "/Material/Images/Icons/noon.png";
                 TimeOfDayColor = (SolidColorBrush)(new BrushConverter().ConvertFrom("#FF00B5FF"));
             }
-            else if (DateTime.Now.Hour >= 18 && DateTime.Now.Hour < 19) { 
+            else if (DateTime.Now.Hour >= 17 && DateTime.Now.Hour < 18) { 
                 ImgIcon = "/Material/Images/Icons/sun_set.png";
                 TimeOfDayColor = (SolidColorBrush)(new BrushConverter().ConvertFrom("#FFC87B2D"));
             }

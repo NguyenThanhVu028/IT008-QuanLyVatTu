@@ -31,6 +31,5 @@ namespace PMQuanLyVatTu.CustomControls
         public static readonly DependencyProperty ImageLocationProperty =
             DependencyProperty.Register("ImageLocation", typeof(string), typeof(AccountButton), new PropertyMetadata("/Material/Images/null_image.jpg"));
         #endregion
-
     }
 }

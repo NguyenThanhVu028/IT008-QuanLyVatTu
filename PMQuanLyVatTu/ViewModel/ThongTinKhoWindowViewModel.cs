@@ -9,21 +9,20 @@ using System.Windows.Input;
 
 namespace PMQuanLyVatTu.ViewModel
 {
-    public class ThongTinCaNhanWindowViewModel : BaseViewModel
+    public class ThongTinKhoWindowViewModel : BaseViewModel
     {
-        public ThongTinCaNhanWindowViewModel()
+        public ThongTinKhoWindowViewModel()
         {
             CloseWindowCommand = new RelayCommand<Window>(CloseWindow);
             MoveWindowCommand = new RelayCommand<Window>(MoveWindow);
             EditInfoCommand = new RelayCommand<object>(EditInfo);
             SaveInfoCommand = new RelayCommand<object>(SaveInfo);
-            ChangePasswordCommand = new RelayCommand<object>(ChangePassword);
         }
-        private ObservableCollection<string> _gioiTinh = new ObservableCollection<string>() { "Nam", "Nữ" };
-        public ObservableCollection<string> GioiTinh
+        ObservableCollection<string> _loaiVatTu = new ObservableCollection<string>() { "NVL", "CC", "TB" };
+        public ObservableCollection<string> LoaiVatTu
         {
-            get { return _gioiTinh; }
-            set { _gioiTinh = value; OnPropertyChanged(); }
+            get { return _loaiVatTu; }
+            set { _loaiVatTu = value; OnPropertyChanged(); }
         }
         public ICommand CloseWindowCommand { get; set; }
         void CloseWindow(Window window)
@@ -31,23 +30,18 @@ namespace PMQuanLyVatTu.ViewModel
             window.Close();
         }
         public ICommand MoveWindowCommand { get; set; }
-        void MoveWindow(Window window)
-        {
+        void MoveWindow(Window window) {
             window.DragMove();
         }
         public ICommand EditInfoCommand { get; set; }
-        void EditInfo(object t) {
+        void EditInfo(object t)
+        {
             MessageBox.Show("EditInfoCommand Executed");
         }
         public ICommand SaveInfoCommand { get; set; }
         void SaveInfo(object t)
         {
             MessageBox.Show("SaveInfoCommand Executed");
-        }
-        public ICommand ChangePasswordCommand { get; set; }
-        void ChangePassword(object t)
-        {
-            MessageBox.Show("ChangePasswordCommand Executed");
         }
     }
 }

@@ -20,9 +20,13 @@
     <Grid x:Name="MainWindowsGrid">
         <Border Background="#FF001E28"
                 CornerRadius="10"
-                MouseDown="BorderMouseDown"
                 BorderBrush="Aqua"
                 BorderThickness="1">
+            <i:Interaction.Triggers>
+                <i:EventTrigger EventName="MouseLeftButtonDown">
+                    <i:InvokeCommandAction Command="{Binding MoveWindowCommand}" CommandParameter="{Binding ElementName=MainWin}"/>
+                </i:EventTrigger>
+            </i:Interaction.Triggers>
         </Border>
         <Grid x:Name="MW_LayoutGrid">
             <Grid.ColumnDefinitions>
@@ -84,8 +88,8 @@
                             Grid.Row="1"/>-->
             <!--<view:NhaCungCap Grid.Column="1"
                              Grid.Row="1"/>-->
-            <view:Kho Grid.Column="1"
-                      Grid.Row="1"/>
+            <!--<view:Kho Grid.Column="1"
+                      Grid.Row="1"/>-->
             <CustomControl:AccountButton Grid.Row="1" 
                                          VerticalAlignment="Top"
                                          Height="70"

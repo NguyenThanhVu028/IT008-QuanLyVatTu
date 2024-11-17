@@ -11,6 +11,14 @@ namespace PMQuanLyVatTu.ViewModel
 {
     public class ThongTinVatTuWindowViewModel : BaseViewModel
     {
+        public ThongTinVatTuWindowViewModel()
+        {
+            CloseCommand = new RelayCommand<Window>(CloseWin);
+            MoveWindowCommand = new RelayCommand<Window>(MoveWindow);
+            EditInfoCommand = new RelayCommand<object>(EditInfo);
+            SaveInfoCommand = new RelayCommand<object>(SaveInfo);
+            ChangeAvatarCommand = new RelayCommand<object>(ChangeAvatar);
+        }
         ObservableCollection<string> _nhaCungCap = new ObservableCollection<string>() {"NCC1", "NCC2", "NCC3", "NCC4" };
         public ObservableCollection<string> NhaCungCap
         {
@@ -30,13 +38,29 @@ namespace PMQuanLyVatTu.ViewModel
             set { _khoChua = value; OnPropertyChanged(); }
         }
         public ICommand CloseCommand { get; set; }
-        public ThongTinVatTuWindowViewModel()
-        {
-            CloseCommand = new RelayCommand<Window>(CloseWin);
-        }
         void CloseWin(Window window)
         {
             window.Close();
+        }
+        public ICommand MoveWindowCommand { get; set; }
+        void MoveWindow(Window window)
+        {
+            window.DragMove();
+        }
+        public ICommand EditInfoCommand { get; set; }
+        void EditInfo(object t)
+        {
+            MessageBox.Show("EditInfoCommand Executed");
+        }
+        public ICommand SaveInfoCommand { get; set; }
+        void SaveInfo(object t)
+        {
+            MessageBox.Show("SaveInfoCommand Executed");
+        }
+        public ICommand ChangeAvatarCommand {  get; set; }
+        void ChangeAvatar(object t)
+        {
+            MessageBox.Show("Change image location");
         }
     }
 }

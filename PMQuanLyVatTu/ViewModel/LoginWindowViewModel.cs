@@ -4,11 +4,18 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Input;
 
 namespace PMQuanLyVatTu.ViewModel
 {
     public class LoginWindowViewModel:BaseViewModel
     {
+        public LoginWindowViewModel()
+        {
+            CloseWindowCommand = new RelayCommand<Window>(CloseWindow);
+            MinimizeWindowCommand = new RelayCommand<Window>(MinimizeWindow);
+            MoveWindowCommand = new RelayCommand<Window>(MoveWindow);
+        }
         private string _userName = "";
         private string _passWord = "";
         public string UserName
@@ -21,8 +28,20 @@ namespace PMQuanLyVatTu.ViewModel
             get { return _passWord; }
             set{ _passWord = value; OnPropertyChanged(); }
         }
-        public LoginWindowViewModel()
+        public ICommand CloseWindowCommand { get; set; }
+        void CloseWindow(Window window)
         {
+            window.Close();
+        }
+        public ICommand MinimizeWindowCommand {  get; set; }
+        void MinimizeWindow(Window window)
+        {
+            window.WindowState = WindowState.Minimized;
+        }
+        public ICommand MoveWindowCommand { get; set; }
+        void MoveWindow(Window window)
+        {
+            window.DragMove();
         }
     }
 }

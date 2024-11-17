@@ -5,6 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PMQuanLyVatTu"
         xmlns:CustomControl="clr-namespace:PMQuanLyVatTu.CustomControls"
+        xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
         xmlns:ViewModel="clr-namespace:PMQuanLyVatTu.ViewModel"
         mc:Ignorable="d"
         Height="720" Width="1280"
@@ -12,7 +13,8 @@
         Background="Transparent"
         AllowsTransparency="True"
         WindowStartupLocation="CenterScreen"
-        DataContext="{StaticResource LoginVM}">
+        DataContext="{StaticResource LoginVM}"
+        x:Name="LoginWin">
     <Grid x:Name="LoginWindowGrid">
         <Border CornerRadius="10"
                 BorderThickness="1"
@@ -20,6 +22,12 @@
             <Border.Background>
                 <ImageBrush ImageSource="/Material/Images/BackGround/BackGround.jpg"/>
             </Border.Background>
+            <i:Interaction.Triggers>
+                <i:EventTrigger EventName="MouseLeftButtonDown">
+                    <i:InvokeCommandAction Command="{Binding MoveWindowCommand}"
+                                           CommandParameter="{Binding ElementName=LoginWin}"/>
+                </i:EventTrigger>
+            </i:Interaction.Triggers>
         </Border>
         <Grid x:Name="LW_LayoutGrid">
             <Grid.ColumnDefinitions>
@@ -48,13 +56,17 @@
                                            BorderBackgroundHightlight="#FF063747"
                                            HorizontalAlignment="Right"
                                            Margin="0,0,10,0"
-                                           ImageLocation="/Material/Images/Icons/minimize.png"/>
+                                           ImageLocation="/Material/Images/Icons/minimize.png"
+                                           Command="{Binding MinimizeWindowCommand}"
+                                           CommandParameter="{Binding ElementName=LoginWin}"/>
                 <CustomControl:ImageButton Width="25"
                                            Height="25"
                                            BorderBackgroundHightlight="{StaticResource RedTransparent1}"
                                            HorizontalAlignment="Right"
                                            Margin="0,0,10,0"
-                                           ImageLocation="/Material/Images/Icons/close.png"/>
+                                           ImageLocation="/Material/Images/Icons/close.png"
+                                           Command="{Binding CloseWindowCommand}"
+                                           CommandParameter="{Binding ElementName=LoginWin}"/>
             </StackPanel>
             <Grid x:Name="LoginArea" 
                   Grid.Row="1"
@@ -137,7 +149,9 @@
                                             BorderBackgroundClicked="#B2470000"
                                             BorderThick="2"
                                             RadiusOfCorner="10"
-                                            TextSize="20"/>
+                                            TextSize="20"
+                                            Command="{Binding CloseWindowCommand}"
+                                            CommandParameter="{Binding ElementName=LoginWin}"/>
             </Grid>
         </Grid>
     </Grid>

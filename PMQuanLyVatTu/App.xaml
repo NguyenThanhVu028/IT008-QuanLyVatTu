@@ -10,6 +10,8 @@
                 <ResourceDictionary Source="Material/Styles/ColorRes.xaml"/>
                 <ResourceDictionary Source="Resource/MainRes.xaml"/>
                 <ResourceDictionary Source="Themes/CustomControlsStyles.xaml"/>
+                <ResourceDictionary Source="Material/Styles/DataGridRes.xaml"/>
+                <ResourceDictionary Source="Resource/ConverterRes.xaml"/>
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Application.Resources>

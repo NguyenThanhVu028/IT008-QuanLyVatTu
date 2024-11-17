@@ -27,19 +27,11 @@ namespace PMQuanLyVatTu.CustomControls
         public DateSelector()
         {
             InitializeComponent();
-        }
-        void OutputFocused(object sender, RoutedEventArgs e)
-        {
-            Container.Visibility = Visibility.Visible;
-        }
-        void OutputUnFocused(object sender, RoutedEventArgs e)
-        {
-            Container.Visibility = Visibility.Collapsed;
+            this.DataContext = this;
         }
         void SelectedDateChanged(object sender, RoutedEventArgs e)
         {
             DateTime temp = (DateTime)InnerCalender.SelectedDate;
-            Output.Text = temp.ToShortDateString();
             SelectedValue = temp.ToShortDateString();
         }
     }
