@@ -1,4 +1,5 @@
 ﻿using PMQuanLyVatTu.ErrorMessage;
+using PMQuanLyVatTu.View;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -17,66 +18,41 @@ namespace PMQuanLyVatTu.ViewModel
     {
         public MainViewModel()
         {
+            ThongTinYeuCauMuaHangWindow newWin = new ThongTinYeuCauMuaHangWindow();
+            newWin.ShowDialog();
+
             CloseWindowCommand = new RelayCommand<Window>(CloseWin);
             MaximizeWindowCommand = new RelayCommand<Window>(MaximizeWin);
             MinimizeWindowCommand = new RelayCommand<Window>(MinimizeWin);
             MoveWindowCommand = new RelayCommand<Window>(MoveWindow);
 
-            //LoginWindow lgw = new LoginWindow();
-            //lgw.ShowDialog();
+            TrangChuCommand = new RelayCommand<object>(TrangChu);
+            VatTuCommand = new RelayCommand<object>(VatTu);
+            NhanVienCommand = new RelayCommand<object>(NhanVien);
+            KhachHangCommand = new RelayCommand<object>(KhachHang);
+            NhaCungCapCommand = new RelayCommand<object>(NhaCungCap);
+            KhoCommand = new RelayCommand<object>(Kho);
 
-            //ForgetPasswordWindow fpw = new ForgetPasswordWindow();
-            //fpw.ShowDialog();
+            TrangChuVM = new TrangChuViewModel();
+            VatTuVM = new VatTuViewModel();
+            NhanVienVM = new NhanVienViewModel();
+            KhachHangVM = new KhachHangViewModel();
+            NhaCungCapVM = new NhaCungCapViewModel();
+            KhoVM = new KhoViewModel();
 
-            //LoginError lge = new LoginError();
-            //lge.ShowDialog();
 
-            //ChangePasswordWindows cpw = new ChangePasswordWindows();
-            //cpw.ShowDialog();
+            _currentPage = new TrangChu(); (_currentPage as TrangChu).DataContext = TrangChuVM;
 
-            //AlreadyExistsError ae = new AlreadyExistsError();
-            //ae.ShowDialog();
-
-            //CustomMessage msg = new CustomMessage("/Material/Images/Icons/wrong.png", "Nhập sai dữ liệu", "Vui lòng nhập lại dữ liệu đúng với định dạng yêu cầu!");
-            //msg.ShowDialog();
-
-            //ThongTinVatTuWindow newWin = new ThongTinVatTuWindow();
-            //newWin.ShowDialog();
-
-            //ThongTinNhanVienWindow newWin = new ThongTinNhanVienWindow();
-            //newWin.ShowDialog();
-
-            //ThongTinCaNhanWindow newWin = new ThongTinCaNhanWindow();
-            //newWin.ShowDialog();
-
-            //XoaGanDayWindow newWin = new XoaGanDayWindow();
-            //newWin.ShowDialog();
-
-            //ThongTinKhoWindow newWin = new ThongTinKhoWindow();
-            //newWin.ShowDialog();
-
-            //ThongTinKhachHangWindow newWin = new ThongTinKhachHangWindow();
-            //newWin.ShowDialog();
-
-            //ThongTinNhaCungCapWindow newWin = new ThongTinNhaCungCapWindow();
-            //newWin.ShowDialog();
-
-            //ThongTinYeuCauMuaHangWindow newWin = new ThongTinYeuCauMuaHangWindow();
-            //newWin.ShowDialog();
-
-            //ThongTinYeuCauNhapHangWindow newWin = new ThongTinYeuCauNhapHangWindow();
-            //newWin.ShowDialog();
-
-            //ThemSuaVatTuWindow newWin = new ThemSuaVatTuWindow();
-            //newWin.ShowDialog();
-
-            //ChiTietPhieuXuatWindow newWin = new ChiTietPhieuXuatWindow();
-            //newWin.ShowDialog();
-
-            ChiTietPhieuNhapWindow newWin = new ChiTietPhieuNhapWindow();
-            newWin.ShowDialog();
         }
-
+        private object _currentPage;
+        public object CurrentPage
+        {
+            get { return _currentPage; }
+            set
+            {
+                _currentPage = value; OnPropertyChanged();
+            }
+        }
         #region Commands
         public ICommand CloseWindowCommand { get; set; }
         void CloseWin(Window window)
@@ -105,6 +81,26 @@ namespace PMQuanLyVatTu.ViewModel
         {
             window.DragMove();
         }
+
+        public ICommand TrangChuCommand {  get; set; }
+        void TrangChu(object t) { if((CurrentPage as TrangChu) == null) {CurrentPage = new TrangChu(); (CurrentPage as TrangChu).DataContext = TrangChuVM; } }
+        public ICommand VatTuCommand {  get; set; }
+        void VatTu(object t) { if ((CurrentPage as VatTu) == null) {CurrentPage = new VatTu(); (CurrentPage as VatTu).DataContext = VatTuVM; } }
+        public ICommand NhanVienCommand { get; set; }
+        void NhanVien(object t) { if((CurrentPage as NhanVien) == null) {CurrentPage = new NhanVien(); (CurrentPage as NhanVien).DataContext = NhanVienVM; } }
+        public ICommand KhachHangCommand { get; set; }
+        void KhachHang(object t) { if((CurrentPage as KhachHang) == null) {CurrentPage = new KhachHang(); (CurrentPage as KhachHang).DataContext = KhachHangVM; } }
+        public ICommand NhaCungCapCommand {  get; set; }
+        void NhaCungCap(object t) { if((CurrentPage as NhaCungCap) == null) {CurrentPage = new NhaCungCap(); (CurrentPage as NhaCungCap).DataContext = NhaCungCapVM; } }
+        public ICommand KhoCommand {  get; set; }
+        void Kho(object t) { if((CurrentPage as Kho) == null) {CurrentPage = new Kho(); (CurrentPage as Kho).DataContext = KhoVM; } }
+
+        TrangChuViewModel TrangChuVM;
+        VatTuViewModel VatTuVM;
+        NhanVienViewModel NhanVienVM;
+        KhachHangViewModel KhachHangVM;
+        NhaCungCapViewModel NhaCungCapVM;
+        KhoViewModel KhoVM;
         #endregion
     }
 }

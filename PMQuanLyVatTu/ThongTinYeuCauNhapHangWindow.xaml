@@ -7,7 +7,7 @@
         xmlns:CustomControl="clr-namespace:PMQuanLyVatTu.CustomControls"
         xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
         mc:Ignorable="d"
-        Title="ThongTinYeuCauNhapHangWindow"  Height="500" Width="600"
+        Title="ThongTinYeuCauNhapHangWindow"  Height="600" Width="600"
         AllowsTransparency="True"
         WindowStyle="None"
         Background="Transparent"
@@ -110,6 +110,44 @@
                                      BorderThick="2"
                                      RadiusOfCorner="5" 
                                      Margin="180,280,0,0" Grid.Column="1"/>
+        <TextBlock Grid.Row="1" 
+                   Text="Ghi chú"
+                   Foreground="{StaticResource DarkGreen2}"
+                   HorizontalAlignment="Left"
+                   VerticalAlignment="Top" 
+                   Margin="50,330,0,0"
+                   FontSize="20"
+                   FontFamily="/Material/Fonts/Lexend/#Lexend Medium"
+                   FontWeight="Medium" Grid.Column="1"/>
+        <CustomControl:CustomTextbox Grid.Row="1"
+                                     Height="40"
+                                     Width="490"
+                                     TextSize="15"
+                                     VerticalAlignment="Top"
+                                     HorizontalAlignment="Left"
+                                     BorderColor="{StaticResource DarkGreen2}"
+                                     BorderColorClicked="{StaticResource LightAqua2}"
+                                     BorderThick="2"
+                                     RadiusOfCorner="5" 
+                                     Margin="50,360,0,0" Grid.Column="1"
+                                     TextWrapping="Wrap">
+            <CustomControl:CustomTextbox.Triggers>
+                <EventTrigger RoutedEvent="TextBox.GotFocus">
+                    <BeginStoryboard>
+                        <Storyboard>
+                            <DoubleAnimation Duration="0:0:0.25" Storyboard.TargetProperty="Height" From="40" To="80"/>
+                        </Storyboard>
+                    </BeginStoryboard>
+                </EventTrigger>
+                <EventTrigger RoutedEvent="TextBox.LostFocus">
+                    <BeginStoryboard>
+                        <Storyboard>
+                            <DoubleAnimation Duration="0:0:0.25" Storyboard.TargetProperty="Height" From="80" To="40"/>
+                        </Storyboard>
+                    </BeginStoryboard>
+                </EventTrigger>
+            </CustomControl:CustomTextbox.Triggers>
+        </CustomControl:CustomTextbox>
         <TextBlock Grid.Row="1"
                    HorizontalAlignment="Left"
                    VerticalAlignment="Top" 

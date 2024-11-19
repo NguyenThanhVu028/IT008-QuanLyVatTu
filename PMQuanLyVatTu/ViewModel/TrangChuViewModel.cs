@@ -12,7 +12,7 @@ namespace PMQuanLyVatTu.ViewModel
     {
         private string _now;
         private string _imgIcon;
-        private SolidColorBrush _timeOfDayColor;
+        private LinearGradientBrush _timeOfDayColor;
         public string TimeNow
         {
             get
@@ -30,7 +30,7 @@ namespace PMQuanLyVatTu.ViewModel
             get { return _now; }
             set { _now = value; OnPropertyChanged(); }
         }
-        public SolidColorBrush TimeOfDayColor
+        public LinearGradientBrush TimeOfDayColor
         {
             get => _timeOfDayColor;
             set
@@ -64,19 +64,43 @@ namespace PMQuanLyVatTu.ViewModel
             DateNow = DateTime.Now.ToShortDateString();
             if (DateTime.Now.Hour >= 5 && DateTime.Now.Hour < 6) {
                 ImgIcon = "/Material/Images/Icons/sun_rise.png";
-                TimeOfDayColor = (SolidColorBrush)(new BrushConverter().ConvertFrom("#FFC87B2D"));
+                LinearGradientBrush GradBrush = new LinearGradientBrush();
+                GradBrush.StartPoint = new System.Windows.Point(0.5, 0);
+                GradBrush.EndPoint = new System.Windows.Point(0.5, 1);
+                GradBrush.GradientStops.Add(new GradientStop((Color)(ColorConverter.ConvertFromString("#FF5600FF")), 0.17));
+                GradBrush.GradientStops.Add(new GradientStop((Color)(ColorConverter.ConvertFromString("#FFFFAF00")), 0.85));
+                GradBrush.GradientStops.Add(new GradientStop((Color)(ColorConverter.ConvertFromString("#FFF0FFA0")), 1));
+                TimeOfDayColor = GradBrush;
             } 
             else if (DateTime.Now.Hour > 6 && DateTime.Now.Hour < 17) { 
                 ImgIcon = "/Material/Images/Icons/noon.png";
-                TimeOfDayColor = (SolidColorBrush)(new BrushConverter().ConvertFrom("#FF00B5FF"));
+                LinearGradientBrush GradBrush = new LinearGradientBrush();
+                GradBrush.StartPoint = new System.Windows.Point(0.5, 0);
+                GradBrush.EndPoint = new System.Windows.Point(0.5, 1);
+                GradBrush.GradientStops.Add(new GradientStop((Color)(ColorConverter.ConvertFromString("#FF0062FF")), 0));
+                GradBrush.GradientStops.Add(new GradientStop((Color)(ColorConverter.ConvertFromString("#FF00BEFF")), 0.54));
+                GradBrush.GradientStops.Add(new GradientStop((Color)(ColorConverter.ConvertFromString("#FFA0E7FF")), 1));
+                TimeOfDayColor = GradBrush;
             }
             else if (DateTime.Now.Hour >= 17 && DateTime.Now.Hour < 18) { 
                 ImgIcon = "/Material/Images/Icons/sun_set.png";
-                TimeOfDayColor = (SolidColorBrush)(new BrushConverter().ConvertFrom("#FFC87B2D"));
+                LinearGradientBrush GradBrush = new LinearGradientBrush();
+                GradBrush.StartPoint = new System.Windows.Point(0.5, 0);
+                GradBrush.EndPoint = new System.Windows.Point(0.5, 1);
+                GradBrush.GradientStops.Add(new GradientStop((Color)(ColorConverter.ConvertFromString("#FF5600FF")), 0.17));
+                GradBrush.GradientStops.Add(new GradientStop((Color)(ColorConverter.ConvertFromString("#FFFFAF00")), 0.85));
+                GradBrush.GradientStops.Add(new GradientStop((Color)(ColorConverter.ConvertFromString("#FFF0FFA0")), 1));
+                TimeOfDayColor = GradBrush;
             }
             else { 
                 ImgIcon = "/Material/Images/Icons/moon.png";
-                TimeOfDayColor = (SolidColorBrush)(new BrushConverter().ConvertFrom("#FF002A56"));
+                LinearGradientBrush GradBrush = new LinearGradientBrush();
+                GradBrush.StartPoint = new System.Windows.Point(0.5, 0);
+                GradBrush.EndPoint = new System.Windows.Point(0.5, 1);
+                GradBrush.GradientStops.Add(new GradientStop((Color)(ColorConverter.ConvertFromString("#FF000C7E")), 0.135));
+                GradBrush.GradientStops.Add(new GradientStop((Color)(ColorConverter.ConvertFromString("#FF8400FF")), 0.85));
+                GradBrush.GradientStops.Add(new GradientStop((Color)(ColorConverter.ConvertFromString("#FFBB00FF")), 1));
+                TimeOfDayColor = GradBrush; 
             }
         }
     }

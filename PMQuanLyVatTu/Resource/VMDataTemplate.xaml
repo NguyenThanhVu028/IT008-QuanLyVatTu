@@ -1,0 +1,23 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:viewmodel="clr-namespace:PMQuanLyVatTu.ViewModel"
+                    xmlns:view="clr-namespace:PMQuanLyVatTu.View">
+    <DataTemplate DataType="{x:Type viewmodel:TrangChuViewModel}">
+        <view:TrangChu/>
+    </DataTemplate>
+    <DataTemplate DataType="{x:Type viewmodel:VatTuViewModel}">
+        <view:VatTu/>
+    </DataTemplate>
+    <DataTemplate DataType="{x:Type viewmodel:NhanVienViewModel}">
+        <view:NhanVien/>
+    </DataTemplate>
+    <DataTemplate DataType="{x:Type viewmodel:KhachHangViewModel}">
+        <view:KhachHang/>
+    </DataTemplate>
+    <DataTemplate DataType="{x:Type viewmodel:NhaCungCapViewModel}">
+        <view:NhaCungCap/>
+    </DataTemplate>
+    <DataTemplate DataType="{x:Type viewmodel:KhoViewModel}">
+        <view:Kho/>
+    </DataTemplate>
+</ResourceDictionary>

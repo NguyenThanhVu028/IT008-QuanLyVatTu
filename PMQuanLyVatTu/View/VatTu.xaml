@@ -6,8 +6,20 @@
              xmlns:local="clr-namespace:PMQuanLyVatTu.View"
              xmlns:CustomControl="clr-namespace:PMQuanLyVatTu.CustomControls"
              mc:Ignorable="d" 
-             d:DesignHeight="665" d:DesignWidth="1080"
-             DataContext="{StaticResource VatTuVM}">
+             d:DesignHeight="665" d:DesignWidth="1080">
+    <UserControl.RenderTransform>
+        <TranslateTransform X="0" Y="50"/>
+    </UserControl.RenderTransform>
+    <UserControl.Triggers>
+        <EventTrigger RoutedEvent="Loaded">
+            <BeginStoryboard>
+                <Storyboard>
+                    <DoubleAnimation Duration="0:0:0.25" Storyboard.TargetProperty="Opacity" From="0" To="1"/>
+                    <DoubleAnimation Duration="0:0:0.25" Storyboard.TargetProperty="(UIElement.RenderTransform).(TranslateTransform.Y)" From="50" To="0"/>
+                </Storyboard>
+            </BeginStoryboard>
+        </EventTrigger>
+    </UserControl.Triggers>
     <Grid>
         <Border Background="{StaticResource DarkGreenTransparent1}"
                 CornerRadius="10"

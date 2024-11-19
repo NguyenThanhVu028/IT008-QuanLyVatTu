@@ -5,8 +5,20 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:PMQuanLyVatTu.View"
              mc:Ignorable="d" 
-             d:DesignHeight="665" d:DesignWidth="1080"
-             DataContext="{StaticResource TrangChuVM}">
+             d:DesignHeight="665" d:DesignWidth="1080">
+    <UserControl.RenderTransform>
+        <TranslateTransform X="0" Y="50"/>
+    </UserControl.RenderTransform>
+    <UserControl.Triggers>
+        <EventTrigger RoutedEvent="Loaded">
+            <BeginStoryboard>
+                <Storyboard>
+                    <DoubleAnimation Duration="0:0:0.25" Storyboard.TargetProperty="Opacity" From="0" To="1"/>
+                    <DoubleAnimation Duration="0:0:0.25" Storyboard.TargetProperty="(UIElement.RenderTransform).(TranslateTransform.Y)" From="50" To="0"/>
+                </Storyboard>
+            </BeginStoryboard>
+        </EventTrigger>
+    </UserControl.Triggers>
     <Grid>
         <Grid.Resources>
             <Style TargetType="Border">
@@ -28,7 +40,7 @@
                 </Style.Triggers>
             </Style>
             <Style TargetType="Calendar">
-                <Setter Property="Background" Value="{StaticResource DarkGreenTransparent2}"/>
+                <Setter Property="Background" Value="Transparent"/>
             </Style>
         </Grid.Resources>
         <Border Background="{StaticResource DarkGreenTransparent1}"
@@ -36,10 +48,11 @@
                 Margin="10"/>
         <Grid x:Name="LayoutGrid">
             <Grid.RowDefinitions>
-                <RowDefinition/>
+                <RowDefinition Height="220"/>
                 <RowDefinition/>
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
                 <ColumnDefinition/>
                 <ColumnDefinition/>
                 <ColumnDefinition/>
@@ -52,50 +65,73 @@
                 <RowDefinition/>
                 <RowDefinition/>
             </Grid.RowDefinitions>-->
-            <Border Grid.Row="0"
-                    Grid.ColumnSpan="3"
-                    Background="#4C00FFA3"
-                    HorizontalAlignment="Stretch"
-                    VerticalAlignment="Stretch"
-                    Margin="30,30,30,30"
-                    CornerRadius="30"
-                    BorderThickness="1"
-                    BorderBrush="Aqua">
-                <StackPanel>
-                    <TextBlock Text="Welcome back!"
+            <Grid Grid.Row="1"
+                  Grid.ColumnSpan="4">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+                <Border Grid.RowSpan="2"
+                        Background="{StaticResource BackGroundColorTransparent}"
+                        HorizontalAlignment="Stretch"
+                        VerticalAlignment="Stretch"
+                        Margin="30,0,30,30"
+                        CornerRadius="30"
+                        BorderThickness="1"
+                        BorderBrush="Aqua">
+                    <StackPanel>
+                        <TextBlock Text="Welcome back!"
                                FontFamily="/Material/Fonts/Lexend/#Lexend Regular"
                                FontSize="35"
                                FontWeight="Bold"
                                HorizontalAlignment="Center"
                                Foreground="{StaticResource LightAqua1}"
                                Margin="0, 40"/>
-                    <TextBlock x:Name="UserNameDisplay" 
-                               Text="Trịnh Trần Phương Tuấn"
+                        <TextBlock x:Name="UserNameDisplay" 
+                               Text="HIỂN THỊ TÊN NGƯỜI DÙNG"
                                FontFamily="/Material/Fonts/Lexend/#Lexend Black"
-                               FontSize="60"
+                               FontSize="50"
                                FontWeight="ExtraBlack"
-                               HorizontalAlignment="Center"
+                               HorizontalAlignment="Stretch"
                                Foreground="{StaticResource LightAqua1}"
-                               Margin="0, 0, 0, 0"
+                               Margin="30, 0, 30, 0"
                                TextWrapping="Wrap"
                                TextAlignment="Center"/>
-                </StackPanel>
-            </Border>
-            <Border Grid.Row="1" 
-                    x:Name="TimeOfDayBorder" 
-                    Background="{Binding TimeOfDayColor}"
+                    </StackPanel>
+                </Border>
+                <Border Background="White"
+                        CornerRadius="30"
+                        VerticalAlignment="Stretch"
+                        Margin="0, 0, 20, 30"
+                        Grid.Column="1"></Border>
+                <Border Background="White"
+                        CornerRadius="30"
+                        VerticalAlignment="Stretch"
+                        Margin="0, 0, 20, 30"
+                        Grid.Column="1"
+                        Grid.Row="1"></Border>
+            </Grid>
+            <Border Grid.Row="0" 
+                    x:Name="TimeOfDayBorder"
                     HorizontalAlignment="Stretch"
                     VerticalAlignment="Stretch"
-                    Margin="30,30,20,30"
+                    Margin="30,30,10,30"
                     CornerRadius="30"
-                    BorderThickness="1"
-                    BorderBrush="Aqua">
+                    BorderThickness="0"
+                    BorderBrush="Transparent"
+                    Background="{Binding TimeOfDayColor}">
                 <StackPanel Orientation="Vertical">
                     <Image x:Name="TimeStatus" 
                            Source="{Binding ImgIcon}"
                            HorizontalAlignment="Stretch"
-                           VerticalAlignment="Top"
-                           Margin="90, 40, 90, 0"/>
+                           VerticalAlignment="Stretch"
+                           Width="60"
+                           Height="60"
+                           Margin="0, 10, 0, 0"/>
                     <Label x:Name="TimeDisplayer"
                            Content="{Binding TimeNow}"
                            FontFamily="/Material/Fonts/Lexend/#Lexend Black"
@@ -105,37 +141,61 @@
                            Foreground="{StaticResource LightAqua1}"/>
                 </StackPanel>
             </Border>
-            <Border Grid.Row="1" 
-                    Grid.Column="1" 
-                    Background="#4C600065"
+            <Border Grid.Row="0" 
+                    Grid.Column="1"
                     HorizontalAlignment="Stretch"
                     VerticalAlignment="Stretch"
-                    Margin="20,30,20,30"
+                    Margin="10,30,0,30"
                     CornerRadius="30"
-                    BorderThickness="1"
-                    BorderBrush="Aqua">
+                    BorderThickness="0"
+                    BorderBrush="Transparent">
+                <Border.Background>
+                    <LinearGradientBrush EndPoint="1,1" StartPoint="0.5,0">
+                        <GradientStop Color="#FF620079"/>
+                        <GradientStop Color="#FF1A00FF" Offset="1"/>
+                    </LinearGradientBrush>
+                </Border.Background>
                 <Grid>
-                    <TextBlock Grid.Column="1"
-                                x:Name="DateDisplayer"
-                                Text="{Binding DateNow}"
-                                FontFamily="/Material/Fonts/Lexend/#Lexend Black"
-                                FontSize="20"
-                                FontWeight="Black"
-                                HorizontalAlignment="Center"
-                                VerticalAlignment="Top"
-                                Margin="0, 20"
-                                Foreground="{StaticResource LightAqua1}"/>
                     <Viewbox Stretch="Uniform"
-                         Margin="10, 10, 10, 10">
+                         Margin="0, 0, 0, 0">
                         <Calendar CalendarItemStyle="{DynamicResource CalendarCalendarItemStyle1}" 
                               CalendarDayButtonStyle="{DynamicResource CalendarCalendarDayButtonStyle1}" 
-                              Margin="20, 50, 20, 10"
+                              Margin="0, 0, 0, 0"
                               HorizontalAlignment="Center"
                               VerticalAlignment="Stretch"/>
                     </Viewbox>
                 </Grid>
             </Border>
-
+            <Border Grid.Row="0" 
+                    Grid.Column="2"
+                    HorizontalAlignment="Stretch"
+                    VerticalAlignment="Stretch"
+                    Margin="10,30,0,30"
+                    CornerRadius="30"
+                    BorderThickness="0"
+                    BorderBrush="Transparent">
+                <Border.Background>
+                    <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                        <GradientStop Color="#FFFF0065"/>
+                        <GradientStop Color="#FF0034FF" Offset="1"/>
+                    </LinearGradientBrush>
+                </Border.Background>
+            </Border>
+            <Border Grid.Row="0" 
+                    Grid.Column="3"
+                    HorizontalAlignment="Stretch"
+                    VerticalAlignment="Stretch"
+                    Margin="10,30,20,30"
+                    CornerRadius="30"
+                    BorderThickness="0"
+                    BorderBrush="Transparent">
+                <Border.Background>
+                    <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                        <GradientStop Color="#FF8B00BD"/>
+                        <GradientStop Color="#FF00B5FF" Offset="1"/>
+                    </LinearGradientBrush>
+                </Border.Background>
+            </Border>
         </Grid>
     </Grid>
 </UserControl>

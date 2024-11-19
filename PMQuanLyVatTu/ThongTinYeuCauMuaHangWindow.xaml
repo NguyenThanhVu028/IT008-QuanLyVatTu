@@ -7,7 +7,7 @@
         xmlns:CustomControl="clr-namespace:PMQuanLyVatTu.CustomControls"
         xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
         mc:Ignorable="d"
-        Title="ThongTinYeuCauMuaHangWindow" Height="700" Width="600"
+        Title="ThongTinYeuCauMuaHangWindow" Height="750" Width="600"
         AllowsTransparency="True"
         WindowStyle="None"
         Background="Transparent"
@@ -41,7 +41,7 @@
         <Border Grid.Row="1"
                     HorizontalAlignment="Stretch"
                     VerticalAlignment="Stretch"
-                    Margin="20, 10, 20, 370"
+                    Margin="20, 10, 20, 330"
                     Background="White"
                     CornerRadius="20">
             <Border.BitmapEffect>
@@ -90,11 +90,10 @@
                                      BorderThick="2"
                                      RadiusOfCorner="5" 
                                      Margin="50,120,0,0" Grid.Column="1"/>
-
         <Border Grid.Row="1"
                 HorizontalAlignment="Stretch"
                 VerticalAlignment="Stretch"
-                Margin="20, 330, 20, 80"
+                Margin="20, 420, 20, 80"
                 Background="White"
                 BorderBrush="{StaticResource DarkGreen2}"
                 BorderThickness="2"
@@ -102,7 +101,7 @@
         <CustomControl:CustomButton Grid.Row="1"
                                     VerticalAlignment="Top"
                                     HorizontalAlignment="Right"
-                                    Margin="0, 295, 30, 0"
+                                    Margin="0, 385, 30, 0"
                                     RadiusOfCorner="5"
                                     BorderBackground="{StaticResource DarkGreen2}"
                                     BorderBackgroundClicked="{StaticResource DarkGreen3}"
@@ -116,7 +115,7 @@
         <CustomControl:CustomButton Grid.Row="1"
                                     VerticalAlignment="Top"
                                     HorizontalAlignment="Right"
-                                    Margin="0, 295, 160, 0"
+                                    Margin="0, 385, 160, 0"
                                     RadiusOfCorner="5"
                                     BorderBackground="{StaticResource DarkRed}"
                                     BorderBackgroundClicked="{StaticResource DarkRed2}"
@@ -127,6 +126,44 @@
                                     Width="120"
                                     Height="30"
                                     Command="{Binding DeleteSelectedCommand}"/>
+        <TextBlock Grid.Row="1" 
+                   Text="Ghi chú"
+                   Foreground="{StaticResource DarkGreen2}"
+                   HorizontalAlignment="Left"
+                   VerticalAlignment="Top" 
+                   Margin="50,250,0,0"
+                   FontSize="20"
+                   FontFamily="/Material/Fonts/Lexend/#Lexend Medium"
+                   FontWeight="Medium" Grid.Column="1"/>
+        <CustomControl:CustomTextbox Grid.Row="1"
+                                     Height="40"
+                                     Width="490"
+                                     TextSize="15"
+                                     VerticalAlignment="Top"
+                                     HorizontalAlignment="Left"
+                                     BorderColor="{StaticResource DarkGreen2}"
+                                     BorderColorClicked="{StaticResource LightAqua2}"
+                                     BorderThick="2"
+                                     RadiusOfCorner="5" 
+                                     Margin="50,280,0,0" Grid.Column="1"
+                                     TextWrapping="Wrap">
+            <CustomControl:CustomTextbox.Triggers>
+                <EventTrigger RoutedEvent="TextBox.GotFocus">
+                    <BeginStoryboard>
+                        <Storyboard>
+                            <DoubleAnimation Duration="0:0:0.25" Storyboard.TargetProperty="Height" From="40" To="80"/>
+                        </Storyboard>
+                    </BeginStoryboard>
+                </EventTrigger>
+                <EventTrigger RoutedEvent="TextBox.LostFocus">
+                    <BeginStoryboard>
+                        <Storyboard>
+                            <DoubleAnimation Duration="0:0:0.25" Storyboard.TargetProperty="Height" From="80" To="40"/>
+                        </Storyboard>
+                    </BeginStoryboard>
+                </EventTrigger>
+            </CustomControl:CustomTextbox.Triggers>
+        </CustomControl:CustomTextbox>
         <TextBlock Grid.Row="1"
                    HorizontalAlignment="Left"
                    VerticalAlignment="Top" 

@@ -64,6 +64,17 @@ namespace PMQuanLyVatTu.ErrorMessage
             }
         }
         #endregion
+        #region ReturnValue
+        private bool _returnValue = false;
+        public bool ReturnValue
+        {
+            get { return _returnValue; }
+            set
+            {
+                _returnValue = value; OnPropertyChanged();
+            }
+        }
+        #endregion
         public CustomMessage(string img = "/Material/Images/null_image.jpg", string title = "Default Title", string mess = "Default Message")
         {
             InitializeComponent();
@@ -80,6 +91,16 @@ namespace PMQuanLyVatTu.ErrorMessage
             {
                 PropertyChanged(this,new PropertyChangedEventArgs(propertyName));
             }
+        }
+        void CancelClick(object sender, RoutedEventArgs e)
+        {
+            ReturnValue = false;
+            this.Close();
+        }
+        void OKClick(object sender, RoutedEventArgs e)
+        {
+            ReturnValue= true;
+            this.Close();
         }
     }
 }

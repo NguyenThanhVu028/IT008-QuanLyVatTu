@@ -15,30 +15,21 @@ namespace PMQuanLyVatTu.ViewModel
         public KhachHangViewModel()
         {
             DeleteButtonCommand = new RelayCommand<object>(Delete);
+            EditButtonCommand = new RelayCommand<object>(Edit);
             DeleteSelectedCommand = new RelayCommand<object>(DeleteSelected);
             RefreshCommand = new RelayCommand<object>(Refresh);
-            DanhSachKhachHang.Add(new KhachHang() { Checked = true, MaKH = "KH000", HoTen = "Nguyen Van A", GioiTinh = "Nam", SDT = "0123456789", Email = "stte@gmail.com", NgaySinh = "28/6/1998", DiaChi = "Phường Đông Hòa, Dĩ An" });
-            DanhSachKhachHang.Add(new KhachHang() { Checked = false, MaKH = "KH001", HoTen = "Nguyen Van B", GioiTinh = "Nam", SDT = "0123456789", Email = "stte@gmail.com", NgaySinh = "28/6/1998", DiaChi = "Phường Đông Hòa, Dĩ An" });
-            DanhSachKhachHang.Add(new KhachHang() { Checked = true, MaKH = "KH002", HoTen = "Nguyen Van A", GioiTinh = "Nam", SDT = "0123456789", Email = "stte@gmail.com", NgaySinh = "28/6/1998", DiaChi = "Phường Đông Hòa, Dĩ An" });
-            DanhSachKhachHang.Add(new KhachHang() { Checked = false, MaKH = "KH003", HoTen = "Nguyen Van B", GioiTinh = "Nam", SDT = "0123456789", Email = "stte@gmail.com", NgaySinh = "28/6/1998", DiaChi = "Phường Đông Hòa, Dĩ An" });
-            DanhSachKhachHang.Add(new KhachHang() { Checked = true, MaKH = "KH004", HoTen = "Nguyen Van A", GioiTinh = "Nam", SDT = "0123456789", Email = "stte@gmail.com", NgaySinh = "28/6/1998", DiaChi = "Phường Đông Hòa, Dĩ An" });
-            DanhSachKhachHang.Add(new KhachHang() { Checked = false, MaKH = "KH005", HoTen = "Nguyen Van B", GioiTinh = "Nam", SDT = "0123456789", Email = "stte@gmail.com", NgaySinh = "28/6/1998", DiaChi = "Phường Đông Hòa, Dĩ An" });
-            DanhSachKhachHang.Add(new KhachHang() { Checked = true, MaKH = "KH006", HoTen = "Nguyen Van A", GioiTinh = "Nam", SDT = "0123456789", Email = "stte@gmail.com", NgaySinh = "28/6/1998", DiaChi = "Phường Đông Hòa, Dĩ An" });
-            DanhSachKhachHang.Add(new KhachHang() { Checked = false, MaKH = "KH007", HoTen = "Nguyen Van B", GioiTinh = "Nam", SDT = "0123456789", Email = "stte@gmail.com", NgaySinh = "28/6/1998", DiaChi = "Phường Đông Hòa, Dĩ An" });
-            DanhSachKhachHang.Add(new KhachHang() { Checked = true, MaKH = "KH008", HoTen = "Nguyen Van A", GioiTinh = "Nam", SDT = "0123456789", Email = "stte@gmail.com", NgaySinh = "28/6/1998", DiaChi = "Phường Đông Hòa, Dĩ An" });
-            DanhSachKhachHang.Add(new KhachHang() { Checked = false, MaKH = "KH009", HoTen = "Nguyen Van B", GioiTinh = "Nam", SDT = "0123456789", Email = "stte@gmail.com", NgaySinh = "28/6/1998", DiaChi = "Phường Đông Hòa, Dĩ An" });
-            DanhSachKhachHang.Add(new KhachHang() { Checked = true, MaKH = "KH010", HoTen = "Nguyen Van A", GioiTinh = "Nam", SDT = "0123456789", Email = "stte@gmail.com", NgaySinh = "28/6/1998", DiaChi = "Phường Đông Hòa, Dĩ An" });
-            DanhSachKhachHang.Add(new KhachHang() { Checked = false, MaKH = "KH011", HoTen = "Nguyen Van B", GioiTinh = "Nam", SDT = "0123456789", Email = "stte@gmail.com", NgaySinh = "28/6/1998", DiaChi = "Phường Đông Hòa, Dĩ An" });
         }
-
+        #region Data for SelectionList
         private ObservableCollection<string> _searchFilter = new ObservableCollection<string>() { "Mã khách hàng", "Họ và tên", "Số điện thoại", "Giới tính", "Ngày sinh" };
         public ObservableCollection<string> SearchFilter
         {
             get { return _searchFilter; }
             set { _searchFilter = value; OnPropertyChanged(); }
         }
-        private ObservableCollection<KhachHang> _danhSachKhachHang = new ObservableCollection<KhachHang>();
-        public ObservableCollection<KhachHang> DanhSachKhachHang
+        #endregion
+        #region DanhSachKhachHang
+        private ObservableCollection<Customer> _danhSachKhachHang = new ObservableCollection<Customer>();
+        public ObservableCollection<Customer> DanhSachKhachHang
         {
             get
             {
@@ -49,8 +40,8 @@ namespace PMQuanLyVatTu.ViewModel
                 _danhSachKhachHang = value; OnPropertyChanged();
             }
         }
-        private KhachHang _selectedKhachHang;
-        public KhachHang SelectedKhachHang
+        private Customer _selectedKhachHang;
+        public Customer SelectedKhachHang
         {
             get { return _selectedKhachHang; }
             set
@@ -58,8 +49,19 @@ namespace PMQuanLyVatTu.ViewModel
                 _selectedKhachHang = value; OnPropertyChanged();
             }
         }
+        #endregion
+        #region Command
         public ICommand DeleteButtonCommand { get; set; }
         void Delete(object t)
+        {
+            if (SelectedKhachHang != null)
+            {
+                MessageBox.Show(SelectedKhachHang.HoTen);
+                DanhSachKhachHang.Remove(SelectedKhachHang);
+            }
+        }
+        public ICommand EditButtonCommand {  get; set; }
+        void Edit(object t)
         {
             if (SelectedKhachHang != null)
             {
@@ -69,7 +71,7 @@ namespace PMQuanLyVatTu.ViewModel
         public ICommand DeleteSelectedCommand { get; set; }
         void DeleteSelected(object t)
         {
-            foreach (KhachHang kh in DanhSachKhachHang)
+            foreach (Customer kh in DanhSachKhachHang)
             {
                 if (kh.Checked == true)
                 {
@@ -81,10 +83,24 @@ namespace PMQuanLyVatTu.ViewModel
         void Refresh(object t)
         {
             MessageBox.Show("Refresh command is executed");
+            DanhSachKhachHang.Clear();
+            DanhSachKhachHang.Add(new Customer() { Checked = true, MaKH = "KH000", HoTen = "Nguyen Van A", GioiTinh = "Nam", SDT = "0123456789", Email = "stte@gmail.com", NgaySinh = "28/6/1998", DiaChi = "Phường Đông Hòa, Dĩ An" });
+            DanhSachKhachHang.Add(new Customer() { Checked = false, MaKH = "KH001", HoTen = "Nguyen Van B", GioiTinh = "Nam", SDT = "0123456789", Email = "stte@gmail.com", NgaySinh = "28/6/1998", DiaChi = "Phường Đông Hòa, Dĩ An" });
+            DanhSachKhachHang.Add(new Customer() { Checked = true, MaKH = "KH002", HoTen = "Nguyen Van A", GioiTinh = "Nam", SDT = "0123456789", Email = "stte@gmail.com", NgaySinh = "28/6/1998", DiaChi = "Phường Đông Hòa, Dĩ An" });
+            DanhSachKhachHang.Add(new Customer() { Checked = false, MaKH = "KH003", HoTen = "Nguyen Van B", GioiTinh = "Nam", SDT = "0123456789", Email = "stte@gmail.com", NgaySinh = "28/6/1998", DiaChi = "Phường Đông Hòa, Dĩ An" });
+            DanhSachKhachHang.Add(new Customer() { Checked = true, MaKH = "KH004", HoTen = "Nguyen Van A", GioiTinh = "Nam", SDT = "0123456789", Email = "stte@gmail.com", NgaySinh = "28/6/1998", DiaChi = "Phường Đông Hòa, Dĩ An" });
+            DanhSachKhachHang.Add(new Customer() { Checked = false, MaKH = "KH005", HoTen = "Nguyen Van B", GioiTinh = "Nam", SDT = "0123456789", Email = "stte@gmail.com", NgaySinh = "28/6/1998", DiaChi = "Phường Đông Hòa, Dĩ An" });
+            DanhSachKhachHang.Add(new Customer() { Checked = true, MaKH = "KH006", HoTen = "Nguyen Van A", GioiTinh = "Nam", SDT = "0123456789", Email = "stte@gmail.com", NgaySinh = "28/6/1998", DiaChi = "Phường Đông Hòa, Dĩ An" });
+            DanhSachKhachHang.Add(new Customer() { Checked = false, MaKH = "KH007", HoTen = "Nguyen Van B", GioiTinh = "Nam", SDT = "0123456789", Email = "stte@gmail.com", NgaySinh = "28/6/1998", DiaChi = "Phường Đông Hòa, Dĩ An" });
+            DanhSachKhachHang.Add(new Customer() { Checked = true, MaKH = "KH008", HoTen = "Nguyen Van A", GioiTinh = "Nam", SDT = "0123456789", Email = "stte@gmail.com", NgaySinh = "28/6/1998", DiaChi = "Phường Đông Hòa, Dĩ An" });
+            DanhSachKhachHang.Add(new Customer() { Checked = false, MaKH = "KH009", HoTen = "Nguyen Van B", GioiTinh = "Nam", SDT = "0123456789", Email = "stte@gmail.com", NgaySinh = "28/6/1998", DiaChi = "Phường Đông Hòa, Dĩ An" });
+            DanhSachKhachHang.Add(new Customer() { Checked = true, MaKH = "KH010", HoTen = "Nguyen Van A", GioiTinh = "Nam", SDT = "0123456789", Email = "stte@gmail.com", NgaySinh = "28/6/1998", DiaChi = "Phường Đông Hòa, Dĩ An" });
+            DanhSachKhachHang.Add(new Customer() { Checked = false, MaKH = "KH011", HoTen = "Nguyen Van B", GioiTinh = "Nam", SDT = "0123456789", Email = "stte@gmail.com", NgaySinh = "28/6/1998", DiaChi = "Phường Đông Hòa, Dĩ An" });
         }
+        #endregion
     }
 
-    public class KhachHang
+    public class Customer
     {
         public bool Checked {  get; set; }
         public string MaKH { get; set; }

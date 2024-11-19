@@ -85,6 +85,7 @@
                                       VerticalScrollBarVisibility="Hidden"
                                       Margin="10"/>
                         <TextBlock x:Name="WaterMark"
+                                   Opacity="0.7"
                                    Text="{TemplateBinding WaterMark}"
                                    Foreground="{TemplateBinding TextColor}"
                                    FontFamily="/Material/Fonts/Lexend/#Lexend Regular"

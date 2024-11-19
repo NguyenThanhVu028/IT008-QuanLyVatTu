@@ -78,8 +78,11 @@
                                 Opacity="0.3"/>
                 </Border.Background>
             </Border>
-            <view:TrangChu Grid.Column="1"
-                           Grid.Row="1"/>
+            <ContentControl Grid.Row="1"
+                            Grid.Column="1"
+                            Content="{Binding CurrentPage}"/>
+            <!--<view:TrangChu Grid.Column="1"
+                           Grid.Row="1"/>-->
             <!--<view:NhanVien Grid.Column="1"
                            Grid.Row="1"/>-->
             <!--<view:VatTu Grid.Column="1"
@@ -111,7 +114,8 @@
                                                     TextColor="White"
                                                     BorderColor="Aqua"
                                                     BorderThick="2"
-                                                    Margin="10, 0, 0, 0"/>
+                                                    Margin="10, 0, 0, 0"
+                                                    Command="{Binding TrangChuCommand}"/>
                     <CustomControl:NavigationButton Height="50"
                                                     ImageLocation="/Material/Images/Icons/supply.png"
                                                     BackgroundColor="{StaticResource BackGroundColor}"
@@ -121,7 +125,8 @@
                                                     TextColor="White"
                                                     BorderColor="Aqua"
                                                     BorderThick="2"
-                                                    Margin="10, 5, 0, 0"/>
+                                                    Margin="10, 5, 0, 0"
+                                                    Command="{Binding VatTuCommand}"/>
                     <CustomControl:NavigationButton Height="50"
                                                     ImageLocation="/Material/Images/Icons/employee.png"
                                                     BackgroundColor="{StaticResource BackGroundColor}"
@@ -131,7 +136,8 @@
                                                     TextColor="White"
                                                     BorderColor="Aqua"
                                                     BorderThick="2"
-                                                    Margin="10, 5, 0, 0"/>
+                                                    Margin="10, 5, 0, 0"
+                                                    Command="{Binding NhanVienCommand}"/>
                     <CustomControl:NavigationButton Height="50"
                                                     ImageLocation="/Material/Images/Icons/customer.png"
                                                     BackgroundColor="{StaticResource BackGroundColor}"
@@ -141,7 +147,8 @@
                                                     TextColor="White"
                                                     BorderColor="Aqua"
                                                     BorderThick="2"
-                                                    Margin="10, 5, 0, 0"/>
+                                                    Margin="10, 5, 0, 0"
+                                                    Command="{Binding KhachHangCommand}"/>
                     <CustomControl:NavigationButton Height="50"
                                                     ImageLocation="/Material/Images/Icons/supplier.png"
                                                     BackgroundColor="{StaticResource BackGroundColor}"
@@ -151,7 +158,8 @@
                                                     TextColor="White"
                                                     BorderColor="Aqua"
                                                     BorderThick="2"
-                                                    Margin="10, 5, 0, 0"/>
+                                                    Margin="10, 5, 0, 0"
+                                                    Command="{Binding NhaCungCapCommand}"/>
                     <CustomControl:NavigationButton Height="50"
                                                     ImageLocation="/Material/Images/Icons/warehouse.png"
                                                     BackgroundColor="{StaticResource BackGroundColor}"
@@ -161,7 +169,8 @@
                                                     TextColor="White"
                                                     BorderColor="Aqua"
                                                     BorderThick="2"
-                                                    Margin="10, 5, 0, 0"/>
+                                                    Margin="10, 5, 0, 0"
+                                                    Command="{Binding KhoCommand}"/>
                     <CustomControl:NavigationButton Height="50"
                                                     ImageLocation="/Material/Images/Icons/approve.png"
                                                     BackgroundColor="{StaticResource BackGroundColor}"
@@ -234,7 +243,7 @@
                                                     Margin="10, 5, 0, 0"/>
                 </StackPanel>
             </ScrollViewer>
-            
+
         </Grid>
     </Grid>
 </Window>

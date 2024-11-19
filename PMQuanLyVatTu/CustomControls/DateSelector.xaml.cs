@@ -27,6 +27,7 @@ namespace PMQuanLyVatTu.CustomControls
         public DateSelector()
         {
             InitializeComponent();
+            SelectedValue = (DateTime.Now).ToShortDateString();
             this.DataContext = this;
         }
         void SelectedDateChanged(object sender, RoutedEventArgs e)

@@ -12,6 +12,7 @@
                 <ResourceDictionary Source="Themes/CustomControlsStyles.xaml"/>
                 <ResourceDictionary Source="Material/Styles/DataGridRes.xaml"/>
                 <ResourceDictionary Source="Resource/ConverterRes.xaml"/>
+                <ResourceDictionary Source="Resource/VMDataTemplate.xaml"/>
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Application.Resources>
