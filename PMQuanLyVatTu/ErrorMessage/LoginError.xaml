@@ -5,15 +5,37 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PMQuanLyVatTu.ErrorMessage"
         xmlns:CustomControl="clr-namespace:PMQuanLyVatTu.CustomControls"
+        xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
         mc:Ignorable="d"
         Title="LoginError" Height="150" Width="400"
         AllowsTransparency="True"
         WindowStyle="None"
         Background="Transparent"
-        WindowStartupLocation="CenterScreen">
+        WindowStartupLocation="CenterScreen"
+        DataContext="{StaticResource LoginErrorVM}"
+        Name="ThisWin">
     <Grid>
+        <Grid.RenderTransform>
+            <TranslateTransform X="0" Y="-10"/>
+        </Grid.RenderTransform>
+        <Grid.Triggers>
+            <EventTrigger RoutedEvent="Loaded">
+                <BeginStoryboard>
+                    <Storyboard>
+                        <DoubleAnimation Duration="0:0:0.2" Storyboard.TargetProperty="Opacity" From="0" To="1"/>
+                        <DoubleAnimation Duration="0:0:0.2" Storyboard.TargetProperty="(UIElement.RenderTransform).(TranslateTransform.Y)" From="-10" To="0"/>
+                    </Storyboard>
+                </BeginStoryboard>
+            </EventTrigger>
+        </Grid.Triggers>
         <Border Background="{StaticResource LightAqua1}"
-                CornerRadius="20"/>
+                CornerRadius="20">
+            <i:Interaction.Triggers>
+                <i:EventTrigger EventName="MouseLeftButtonDown">
+                    <i:InvokeCommandAction Command="{Binding MoveWindowCommand}" CommandParameter="{Binding ElementName=ThisWin}"/>
+                </i:EventTrigger>
+            </i:Interaction.Triggers>
+        </Border>
         <StackPanel HorizontalAlignment="Left"
                     VerticalAlignment="Top"
                     Margin="20,20"
@@ -24,7 +46,7 @@
                    Height="50"/>
             <TextBlock Text="Tên đăng nhập hoặc mật khẩu không đúng"
                        FontFamily="/Material/Fonts/Lexend/#Lexend Regular"
-                       FontWeight="Medium"
+                       FontWeight="Regular"
                        FontSize="20"
                        VerticalAlignment="Center"
                        Margin="15, 0"
@@ -39,6 +61,8 @@
                                     BorderBackground="{StaticResource DarkGreen2}"
                                     BorderBackgroundClicked="{StaticResource DarkGreen3}"
                                     BorderColor="{StaticResource LightAqua1}"
-                                    BorderColorHighlight="{StaticResource White}"/>
+                                    BorderColorHighlight="{StaticResource White}"
+                                    Command="{Binding TypeAgainCommand}"
+                                    CommandParameter="{Binding ElementName=ThisWin}"/>
     </Grid>
 </Window>

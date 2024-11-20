@@ -18,6 +18,7 @@ namespace PMQuanLyVatTu.ViewModel
             SaveInfoCommand = new RelayCommand<object>(SaveInfo);
             AddCommand = new RelayCommand<object>(Add);
             DeleteSelectedCommand = new RelayCommand<object>(DeleteSelected);
+            CreateReceiptCommand = new RelayCommand<object>(CreateRecepit);
         }
         public ICommand CloseWindowCommand { get; set; }
         void CloseWindow(Window window)
@@ -42,12 +43,18 @@ namespace PMQuanLyVatTu.ViewModel
         public ICommand AddCommand { get; set; }
         void Add(object t)
         {
-            MessageBox.Show("AddCommand Executed");
+            ThemSuaVatTuWindow themSuaVatTuWindow = new ThemSuaVatTuWindow();
+            themSuaVatTuWindow.ShowDialog();
         }
         public ICommand DeleteSelectedCommand { get; set; }
         void DeleteSelected(object t)
         {
             MessageBox.Show("DeleteSelectedCommand Executed");
+        }
+        public ICommand CreateReceiptCommand {  get; set; }
+        void CreateRecepit(object t)
+        {
+            MessageBox.Show("Created Recepit");
         }
     }
 }

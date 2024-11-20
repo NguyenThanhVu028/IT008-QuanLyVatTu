@@ -334,4 +334,224 @@
         </Setter>
     </Style>
     <!--#endregion-->
+    <!--#region CustomCheckbox-->
+    <Style x:Key="CustomCheckboxStyle" TargetType="CustomControl:CustomCheckbox">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="CheckBox">
+                    <Grid>
+                        <Border BorderBrush="{StaticResource DarkGreen2}"
+                                BorderThickness="2"
+                                CornerRadius="5"
+                                Background="White"/>
+                        <Border x:Name="Tick" 
+                                Background="{StaticResource DarkGreen2}"
+                                CornerRadius="3"
+                                Margin="5, 5, 5, 5"
+                                Visibility="Collapsed"/>
+                    </Grid>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsChecked" Value="True">
+                            <Setter Property="Visibility" Value="Visible" TargetName="Tick"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    <!--#endregion-->
+    <!--#region VatTuDisplayer-->
+    <Style TargetType="CustomControl:VatTuDisplayer">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="CustomControl:VatTuDisplayer">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="35*"/>
+                            <RowDefinition Height="29*"/>
+                        </Grid.RowDefinitions>
+                        <Border x:Name="DisplayBorder" 
+                                Grid.RowSpan="2" 
+                                Background="#B2001E28"
+                                BorderBrush="Aqua"
+                                BorderThickness="2"
+                                CornerRadius="20"/>
+                        <CustomControl:CircleImage Height="150"
+                                                   Width="150"
+                                                   VerticalAlignment="Bottom"
+                                                   HorizontalAlignment="Center"
+                                                   Margin="0, 0, 0, 0"
+                                                   BorderThick="3"
+                                                   ImageLocation="{Binding ImageLocation}"/>
+                        <StackPanel Grid.Row="1"
+                                    Orientation="Vertical">
+                            <TextBlock Grid.Row="1"
+                                       HorizontalAlignment="Center"
+                                       VerticalAlignment="Top"
+                                       Margin="0, 10, 0, 0"
+                                       Text="{Binding MaVT}"
+                                       Foreground="White"
+                                       FontSize="15"
+                                       FontFamily="/Material/Fonts/Lexend/#Lexend Medium"
+                                       FontWeight="Medium"/>
+                            <TextBlock Grid.Row="1"
+                                       HorizontalAlignment="Center"
+                                       VerticalAlignment="Top"
+                                       Margin="0, 5, 0, 0"
+                                       Text="{Binding TenVatTu}"
+                                       Foreground="White"
+                                       FontSize="17"
+                                       FontFamily="/Material/Fonts/Lexend/#Lexend Bold"
+                                       FontWeight="Bold"
+                                       TextWrapping="Wrap"
+                                       TextAlignment="Center"/>
+                            <TextBlock Grid.Row="1"
+                                       HorizontalAlignment="Center"
+                                       VerticalAlignment="Top"
+                                       Margin="0, 5, 0, 0"
+                                       Text="{Binding LoaiVatTu, Converter={StaticResource LoaiVatTuConverter}}"
+                                       Foreground="White"
+                                       FontSize="15"
+                                       FontFamily="/Material/Fonts/Lexend/#Lexend Medium"
+                                       FontWeight="Medium"/>
+                            <StackPanel Orientation="Horizontal"
+                                        Margin="0, 5, 0, 0"
+                                        HorizontalAlignment="Center">
+                                <TextBlock Grid.Row="1"
+                                           HorizontalAlignment="Center"
+                                           VerticalAlignment="Top"
+                                           Text="{Binding GiaXuat}"
+                                           Foreground="White"
+                                           FontSize="15"
+                                           FontFamily="/Material/Fonts/Lexend/#Lexend Medium"
+                                           FontWeight="Medium"/>
+                                <TextBlock Grid.Row="1"
+                                           HorizontalAlignment="Center"
+                                           VerticalAlignment="Top"
+                                           Text=" VNĐ"
+                                           Foreground="White"
+                                           FontSize="15"
+                                           FontFamily="/Material/Fonts/Lexend/#Lexend Medium"
+                                           FontWeight="Medium"/>
+                            </StackPanel>
+                        </StackPanel>
+                    </Grid>
+                    <ControlTemplate.Triggers>
+                        <EventTrigger RoutedEvent="Mouse.MouseEnter">
+                            <BeginStoryboard>
+                                <Storyboard>
+                                    <ColorAnimation Duration="0:0:0.25" Storyboard.TargetName="DisplayBorder" Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)" From="#B2001E28" To="#B200455C"/>
+                                </Storyboard>
+                            </BeginStoryboard>
+                        </EventTrigger>
+                        <EventTrigger RoutedEvent="Mouse.MouseLeave">
+                            <BeginStoryboard>
+                                <Storyboard>
+                                    <ColorAnimation Duration="0:0:0.25" Storyboard.TargetName="DisplayBorder" Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)" From="#B200455C" To="#B2001E28"/>
+                                </Storyboard>
+                            </BeginStoryboard>
+                        </EventTrigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    <!--#endregion-->
+    <!--#region NhanVienDisplayer-->
+    <Style TargetType="CustomControl:NhanVienDisplayer">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="CustomControl:NhanVienDisplayer">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="35*"/>
+                            <RowDefinition Height="29*"/>
+                        </Grid.RowDefinitions>
+                        <Border x:Name="DisplayBorder" 
+                                Grid.RowSpan="2" 
+                                Background="#B2001E28"
+                                BorderBrush="Aqua"
+                                BorderThickness="2"
+                                CornerRadius="20"/>
+                        <CustomControl:CircleImage Height="150"
+                                                   Width="150"
+                                                   VerticalAlignment="Bottom"
+                                                   HorizontalAlignment="Center"
+                                                   Margin="0, 0, 0, 0"
+                                                   BorderThick="3"
+                                                   ImageLocation="{Binding ImageLocation}"/>
+                        <StackPanel Grid.Row="1"
+                                    Orientation="Vertical">
+                            <TextBlock Grid.Row="1"
+                                       HorizontalAlignment="Center"
+                                       VerticalAlignment="Top"
+                                       Margin="0, 10, 0, 0"
+                                       Text="{Binding MaNV}"
+                                       Foreground="White"
+                                       FontSize="15"
+                                       FontFamily="/Material/Fonts/Lexend/#Lexend Medium"
+                                       FontWeight="Medium"/>
+                            <TextBlock Grid.Row="1"
+                                       HorizontalAlignment="Center"
+                                       VerticalAlignment="Top"
+                                       Margin="0, 5, 0, 0"
+                                       Text="{Binding HoTen}"
+                                       Foreground="White"
+                                       FontSize="17"
+                                       FontFamily="/Material/Fonts/Lexend/#Lexend Bold"
+                                       FontWeight="Bold"
+                                       TextWrapping="Wrap"
+                                       TextAlignment="Center"/>
+                            <TextBlock Grid.Row="1"
+                                       HorizontalAlignment="Center"
+                                       VerticalAlignment="Top"
+                                       Margin="0, 5, 0, 0"
+                                       Text="{Binding ChucVu}"
+                                       Foreground="White"
+                                       FontSize="15"
+                                       FontFamily="/Material/Fonts/Lexend/#Lexend Medium"
+                                       FontWeight="Medium"/>
+                            <!--<StackPanel Orientation="Horizontal"
+                                        Margin="0, 5, 0, 0"
+                                        HorizontalAlignment="Center">
+                                <TextBlock Grid.Row="1"
+                                           HorizontalAlignment="Center"
+                                           VerticalAlignment="Top"
+                                           Text="{Binding GiaXuat}"
+                                           Foreground="White"
+                                           FontSize="15"
+                                           FontFamily="/Material/Fonts/Lexend/#Lexend Medium"
+                                           FontWeight="Medium"/>
+                                <TextBlock Grid.Row="1"
+                                           HorizontalAlignment="Center"
+                                           VerticalAlignment="Top"
+                                           Text=" VNĐ"
+                                           Foreground="White"
+                                           FontSize="15"
+                                           FontFamily="/Material/Fonts/Lexend/#Lexend Medium"
+                                           FontWeight="Medium"/>
+                            </StackPanel>-->
+                        </StackPanel>
+                    </Grid>
+                    <ControlTemplate.Triggers>
+                        <EventTrigger RoutedEvent="Mouse.MouseEnter">
+                            <BeginStoryboard>
+                                <Storyboard>
+                                    <ColorAnimation Duration="0:0:0.25" Storyboard.TargetName="DisplayBorder" Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)" From="#B2001E28" To="#B200455C"/>
+                                </Storyboard>
+                            </BeginStoryboard>
+                        </EventTrigger>
+                        <EventTrigger RoutedEvent="Mouse.MouseLeave">
+                            <BeginStoryboard>
+                                <Storyboard>
+                                    <ColorAnimation Duration="0:0:0.25" Storyboard.TargetName="DisplayBorder" Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)" From="#B200455C" To="#B2001E28"/>
+                                </Storyboard>
+                            </BeginStoryboard>
+                        </EventTrigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    <!--#endregion-->
 </ResourceDictionary>

@@ -64,7 +64,7 @@
                                      TextSize="15"
                                      Margin="110,170, 0, 0"
                                      RadiusOfCorner="5"/>
-        <TextBlock Text="VAT:"
+        <TextBlock Text="Thuế VAT:"
                    FontSize="15"
                    Foreground="White"
                    FontFamily="/Material/Fonts/Lexend/#Lexend Regular"
@@ -76,7 +76,7 @@
                                      HorizontalAlignment="Left"
                                      VerticalAlignment="Top"
                                      BackgroundColor="{StaticResource White}"
-                                     WaterMark="Nhập VAT"
+                                     WaterMark="Nhập thuế VAT"
                                      TextSize="15"
                                      Margin="110,220, 0, 0"
                                      RadiusOfCorner="5"/>

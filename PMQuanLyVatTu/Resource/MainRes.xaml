@@ -24,4 +24,5 @@
     <viewmodel:ThemSuaVatTuWindowViewModel x:Key="ThemSuaVatTuWindowVM"/>
     <viewmodel:ChiTietPhieuXuatWindowViewModel x:Key="ChiTietPhieuXuatWindowVM"/>
     <viewmodel:ChiTietPhieuNhapWindowViewModel x:Key="ChiTietPhieuNhapWindowVM"/>
+    <viewmodel:LoginErrorViewModel x:Key="LoginErrorVM"/>
 </ResourceDictionary>

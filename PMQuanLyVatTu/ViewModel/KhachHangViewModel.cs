@@ -18,6 +18,7 @@ namespace PMQuanLyVatTu.ViewModel
             EditButtonCommand = new RelayCommand<object>(Edit);
             DeleteSelectedCommand = new RelayCommand<object>(DeleteSelected);
             RefreshCommand = new RelayCommand<object>(Refresh);
+            Refresh();
         }
         #region Data for SelectionList
         private ObservableCollection<string> _searchFilter = new ObservableCollection<string>() { "Mã khách hàng", "Họ và tên", "Số điện thoại", "Giới tính", "Ngày sinh" };
@@ -80,9 +81,8 @@ namespace PMQuanLyVatTu.ViewModel
             }
         }
         public ICommand RefreshCommand { get; set; }
-        void Refresh(object t)
+        void Refresh(object t = null)
         {
-            MessageBox.Show("Refresh command is executed");
             DanhSachKhachHang.Clear();
             DanhSachKhachHang.Add(new Customer() { Checked = true, MaKH = "KH000", HoTen = "Nguyen Van A", GioiTinh = "Nam", SDT = "0123456789", Email = "stte@gmail.com", NgaySinh = "28/6/1998", DiaChi = "Phường Đông Hòa, Dĩ An" });
             DanhSachKhachHang.Add(new Customer() { Checked = false, MaKH = "KH001", HoTen = "Nguyen Van B", GioiTinh = "Nam", SDT = "0123456789", Email = "stte@gmail.com", NgaySinh = "28/6/1998", DiaChi = "Phường Đông Hòa, Dĩ An" });

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using PMQuanLyVatTu.ErrorMessage;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -12,9 +13,17 @@ namespace PMQuanLyVatTu.ViewModel
     {
         public LoginWindowViewModel()
         {
+            LoginButtonCommand = new RelayCommand<Window>(LoginButton);
+            ForgetPasswordCommand = new RelayCommand<object>(ForgetPassword);
             CloseWindowCommand = new RelayCommand<Window>(CloseWindow);
             MinimizeWindowCommand = new RelayCommand<Window>(MinimizeWindow);
             MoveWindowCommand = new RelayCommand<Window>(MoveWindow);
+        }
+        private bool _returnValue;
+        public bool ReturnValue
+        {
+            get { return _returnValue; }
+            set { _returnValue = value; OnPropertyChanged(); }
         }
         private string _userName = "";
         private string _passWord = "";
@@ -28,9 +37,30 @@ namespace PMQuanLyVatTu.ViewModel
             get { return _passWord; }
             set{ _passWord = value; OnPropertyChanged(); }
         }
+        public ICommand LoginButtonCommand {  get; set; }
+        void LoginButton(Window window)
+        {
+            if (true) //Check tài khoản hợp lệ
+            {
+                ReturnValue = true;
+                window.Close();
+            }
+            else
+            {
+                LoginError lgError = new LoginError();
+                lgError.ShowDialog();
+            }
+        }
+        public ICommand ForgetPasswordCommand { get; set; }
+        void ForgetPassword(object t)
+        {
+            ForgetPasswordWindow forgetPasswordWindow = new ForgetPasswordWindow();
+            forgetPasswordWindow.ShowDialog();
+        }
         public ICommand CloseWindowCommand { get; set; }
         void CloseWindow(Window window)
         {
+            ReturnValue = false;
             window.Close();
         }
         public ICommand MinimizeWindowCommand {  get; set; }

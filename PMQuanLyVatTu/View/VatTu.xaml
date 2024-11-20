@@ -32,6 +32,98 @@
                     BorderBrush="Aqua"
                     BorderThickness="2"
                     CornerRadius="25"/>
+            <ScrollViewer VerticalScrollBarVisibility="Auto"
+                          Margin="50, 160, 50, 80"
+                          Visibility="{Binding ElementName=ModeSwitch, Path=IsChecked, Converter={StaticResource ReverseBoolToVisibilityConverter}}">
+                <ItemsControl ItemsSource="{Binding DanhSachVatTuLargeIcon}">
+                    <ItemsControl.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <WrapPanel IsItemsHost="True"/>
+                        </ItemsPanelTemplate>
+                    </ItemsControl.ItemsPanel>
+                </ItemsControl>
+            </ScrollViewer>
+            <DataGrid x:Name="DisplayDataGRid" 
+                      SelectedItem="{Binding SelectedVatTu}"
+                      Style="{DynamicResource DataGridStyle1}" 
+                      CellStyle="{DynamicResource DataGridCellStyle1}" 
+                      ColumnHeaderStyle="{DynamicResource DataGridColumnHeaderStyle1}" 
+                      RowStyle="{DynamicResource DataGridRowStyle1}" 
+                      HorizontalAlignment="Stretch"
+                      VerticalAlignment="Stretch"
+                      Margin="60, 160, 60, 80"
+                      ItemsSource="{Binding DanhSachVatTu}"
+                      Visibility="{Binding ElementName=ModeSwitch, Path=IsChecked, Converter={StaticResource BoolToVisibilityConverter}}">
+                <DataGrid.Columns>
+                    <DataGridTemplateColumn Width="30">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <CheckBox IsChecked="{Binding Checked, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                    <DataGridTextColumn Header="Mã vật tư"
+                                        Width="150"
+                                        IsReadOnly="True"
+                                        Binding="{Binding MaVT}"/>
+                    <DataGridTextColumn Header="Tên vật tư"
+                                        Width="200"
+                                        IsReadOnly="True"
+                                        Binding="{Binding TenVatTu}"/>
+                    <DataGridTextColumn Header="Loại vật tư"
+                                        Width="150"
+                                        IsReadOnly="True"
+                                        Binding="{Binding LoaiVatTu}"/>
+                    <DataGridTextColumn Header="Đơn vị tính"
+                                        Width="150"
+                                        IsReadOnly="True"
+                                        Binding="{Binding DonViTinh}"/>
+                    <DataGridTextColumn Header="Mã nhà cung cấp"
+                                        Width="150"
+                                        IsReadOnly="True"
+                                        Binding="{Binding MaNCC}"/>
+                    <DataGridTextColumn Header="Mã kho"
+                                        Width="150"
+                                        IsReadOnly="True"
+                                        Binding="{Binding MaKho}"/>
+                    <DataGridTextColumn Header="Giá nhập"
+                                        Width="150"
+                                        IsReadOnly="True"
+                                        Binding="{Binding GiaNhap}"/>
+                    <DataGridTextColumn Header="Giá xuất"
+                                        Width="150"
+                                        IsReadOnly="True"
+                                        Binding="{Binding GiaXuat}"/>
+                    <DataGridTextColumn Header="Số lượng tồn kho"
+                                        Width="150"
+                                        IsReadOnly="True"
+                                        Binding="{Binding SoLuongTonKho}"/>
+                    <DataGridTemplateColumn Header="" IsReadOnly="True">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <StackPanel Orientation="Horizontal">
+                                    <CustomControl:ImageButton x:Name="EditButton" 
+                                                           Width="20"
+                                                           Height="20"
+                                                           ImageLocation="/Material/Images/Icons/edit1.png"
+                                                           BorderBackgroundHightlight="{StaticResource LightRed}"
+                                                           Margin="7, 7, 7, 7"
+                                                           DataContext="{Binding ElementName=ThisWin, Path=DataContext}"
+                                                           Command="{Binding EditButtonCommand}"/>
+                                    <CustomControl:ImageButton x:Name="DeleteButton" 
+                                                           Width="20"
+                                                           Height="20"
+                                                           ImageLocation="/Material/Images/Icons/delete.png"
+                                                           BorderBackgroundHightlight="{StaticResource LightRed}"
+                                                           Margin="7, 7, 7, 7"
+                                                           DataContext="{Binding ElementName=ThisWin, Path=DataContext}"
+                                                           Command="{Binding DeleteButtonCommand}"/>
+                                </StackPanel>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                </DataGrid.Columns>
+            </DataGrid>
             <TextBlock Grid.Row="1" 
                        Height="70"
                        Width="400"
@@ -55,7 +147,7 @@
                                         BorderColorHighlight="{StaticResource DarkGreen3}"
                                         DisplayText="Thêm"
                                         TextSize="15"
-                                        Margin="0, 95, 215, 0"
+                                        Margin="0, 95, 30, 0"
                                         RadiusOfCorner="5"/>
             <CustomControl:CustomButton Width="120"
                                         Height="40"
@@ -67,7 +159,7 @@
                                         BorderColorHighlight="{StaticResource DarkGreen3}"
                                         DisplayText="Xóa gần đây"
                                         TextSize="15"
-                                        Margin="0, 95, 320, 0"
+                                        Margin="0, 95, 135, 0"
                                         RadiusOfCorner="5"/>
             <CustomControl:CustomButton Width="100"
                                         Height="40"
@@ -79,8 +171,10 @@
                                         BorderColorHighlight="{StaticResource DarkGreen3}"
                                         DisplayText="Làm mới"
                                         TextSize="15"
-                                        Margin="0, 95, 445, 0"
-                                        RadiusOfCorner="5"/>
+                                        Margin="0, 95, 260, 0"
+                                        RadiusOfCorner="5"
+                                        Command="{Binding RefreshCommand}"
+                                        CommandParameter="{Binding ElementName=ItemDiplayer}"/>
             <CustomControl:CustomTextbox Width="335"
                                          Height="40"
                                          HorizontalAlignment="Left"
@@ -104,17 +198,18 @@
                                          DataList="{Binding SearchFilter}"/>
             <TextBlock VerticalAlignment="Top"
                        HorizontalAlignment="Right"
-                       Margin="0, 105, 90, 0"
+                       Margin="0, 55, 90, 0"
                        Text="Hiển thị chi tiết:"
                        FontSize="14"
                        Foreground="{StaticResource LightAqua1}"
                        FontFamily="/Material/Fonts/Lexend/#Lexend Medium"
                        FontWeight="Medium"/>
-            <CustomControl:CustomTogglebutton Width="50"
+            <CustomControl:CustomTogglebutton x:Name="ModeSwitch" 
+                                              Width="50"
                                               Height="30"
                                               VerticalAlignment="Top"
                                               HorizontalAlignment="Right"
-                                              Margin="0, 100, 30, 0 "
+                                              Margin="0, 50, 30, 0 "
                                               BorderThick="1"
                                               BorderColor="Aqua"
                                               RadiusOfCorner="10"

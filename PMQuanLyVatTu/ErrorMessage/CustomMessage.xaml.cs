@@ -102,5 +102,9 @@ namespace PMQuanLyVatTu.ErrorMessage
             ReturnValue= true;
             this.Close();
         }
+        void MoveWindow(object sender, RoutedEventArgs e)
+        {
+            this.DragMove();
+        }
     }
 }

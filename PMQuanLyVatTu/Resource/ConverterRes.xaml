@@ -3,4 +3,5 @@
                     xmlns:convert="clr-namespace:PMQuanLyVatTu.Converters">
     <convert:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter"/>
     <convert:ReverseBoolToVisibilityConverter x:Key="ReverseBoolToVisibilityConverter"/>
+    <convert:LoaiVatTuConverter x:Key="LoaiVatTuConverter"/>
 </ResourceDictionary>

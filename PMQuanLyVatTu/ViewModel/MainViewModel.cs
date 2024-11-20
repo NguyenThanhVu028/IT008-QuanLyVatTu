@@ -18,32 +18,35 @@ namespace PMQuanLyVatTu.ViewModel
     {
         public MainViewModel()
         {
-            ThongTinYeuCauMuaHangWindow newWin = new ThongTinYeuCauMuaHangWindow();
-            newWin.ShowDialog();
-
+            #region WindowButtons Command
+            LoadWindowCommand = new RelayCommand<Window>(LoadWindow);
             CloseWindowCommand = new RelayCommand<Window>(CloseWin);
             MaximizeWindowCommand = new RelayCommand<Window>(MaximizeWin);
             MinimizeWindowCommand = new RelayCommand<Window>(MinimizeWin);
             MoveWindowCommand = new RelayCommand<Window>(MoveWindow);
-
+            #endregion
+            #region PageCommand
             TrangChuCommand = new RelayCommand<object>(TrangChu);
             VatTuCommand = new RelayCommand<object>(VatTu);
             NhanVienCommand = new RelayCommand<object>(NhanVien);
             KhachHangCommand = new RelayCommand<object>(KhachHang);
             NhaCungCapCommand = new RelayCommand<object>(NhaCungCap);
             KhoCommand = new RelayCommand<object>(Kho);
-
+            #endregion
+            #region Page ViewModel
+            LoginVM = new LoginWindowViewModel();
             TrangChuVM = new TrangChuViewModel();
             VatTuVM = new VatTuViewModel();
             NhanVienVM = new NhanVienViewModel();
             KhachHangVM = new KhachHangViewModel();
             NhaCungCapVM = new NhaCungCapViewModel();
             KhoVM = new KhoViewModel();
-
-
+            #endregion
+            //Khởi tạo các trang/window ban đầu
             _currentPage = new TrangChu(); (_currentPage as TrangChu).DataContext = TrangChuVM;
-
+            LoginWindow newLogin = new LoginWindow(); newLogin.DataContext = LoginVM; newLogin.ShowDialog();
         }
+        #region CurrentPage
         private object _currentPage;
         public object CurrentPage
         {
@@ -53,7 +56,14 @@ namespace PMQuanLyVatTu.ViewModel
                 _currentPage = value; OnPropertyChanged();
             }
         }
-        #region Commands
+        #endregion
+        #region Command
+        public ICommand LoadWindowCommand {  get; set; }
+        void LoadWindow(Window window)
+        {
+            if (LoginVM.ReturnValue == false) window.Close();
+            else MessageBox.Show("Đã đăng nhập với tên: " + LoginVM.UserName + ", Mật khẩu: " + LoginVM.Password);
+        }
         public ICommand CloseWindowCommand { get; set; }
         void CloseWin(Window window)
         {
@@ -95,6 +105,7 @@ namespace PMQuanLyVatTu.ViewModel
         public ICommand KhoCommand {  get; set; }
         void Kho(object t) { if((CurrentPage as Kho) == null) {CurrentPage = new Kho(); (CurrentPage as Kho).DataContext = KhoVM; } }
 
+        LoginWindowViewModel LoginVM;
         TrangChuViewModel TrangChuVM;
         VatTuViewModel VatTuVM;
         NhanVienViewModel NhanVienVM;

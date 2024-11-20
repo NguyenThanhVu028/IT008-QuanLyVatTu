@@ -10,8 +10,21 @@
         WindowStyle="None"
         Background="Transparent"
         WindowStartupLocation="CenterScreen"
-        Title="CustomMessage" Height="200" Width="400">
-    <Grid>
+        Title="CustomMessage" Height="160" Width="400">
+    <Grid MouseLeftButtonDown="MoveWindow">
+        <Grid.RenderTransform>
+            <TranslateTransform X="0" Y="-10"/>
+        </Grid.RenderTransform>
+        <Grid.Triggers>
+            <EventTrigger RoutedEvent="Loaded">
+                <BeginStoryboard>
+                    <Storyboard>
+                        <DoubleAnimation Duration="0:0:0.2" Storyboard.TargetProperty="Opacity" From="0" To="1"/>
+                        <DoubleAnimation Duration="0:0:0.2" Storyboard.TargetProperty="(UIElement.RenderTransform).(TranslateTransform.Y)" From="-10" To="0"/>
+                    </Storyboard>
+                </BeginStoryboard>
+            </EventTrigger>
+        </Grid.Triggers>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="43*"/>
             <ColumnDefinition Width="157*"/>
@@ -36,10 +49,9 @@
                        TextWrapping="Wrap"/>
         </ScrollViewer>
         <ScrollViewer VerticalScrollBarVisibility="Hidden"
+                      VerticalAlignment="Stretch"
                       Grid.Column="1"
-                      VerticalAlignment="Top"
-                      Height="90"
-                      Margin="0,50,15,0">
+                      Margin="0,50,15,50">
             <TextBlock x:Name="MainMessageText" 
                        Grid.Column="1" 
                        Text="{Binding MainMessage}"
