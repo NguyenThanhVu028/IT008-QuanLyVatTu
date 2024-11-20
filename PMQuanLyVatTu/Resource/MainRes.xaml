@@ -25,4 +25,5 @@
     <viewmodel:ChiTietPhieuXuatWindowViewModel x:Key="ChiTietPhieuXuatWindowVM"/>
     <viewmodel:ChiTietPhieuNhapWindowViewModel x:Key="ChiTietPhieuNhapWindowVM"/>
     <viewmodel:LoginErrorViewModel x:Key="LoginErrorVM"/>
+    <viewmodel:DuyetViewModel x:Key="DuyetVM"/>
 </ResourceDictionary>

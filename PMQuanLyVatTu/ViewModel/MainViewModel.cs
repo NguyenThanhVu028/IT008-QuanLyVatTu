@@ -24,6 +24,7 @@ namespace PMQuanLyVatTu.ViewModel
             MaximizeWindowCommand = new RelayCommand<Window>(MaximizeWin);
             MinimizeWindowCommand = new RelayCommand<Window>(MinimizeWin);
             MoveWindowCommand = new RelayCommand<Window>(MoveWindow);
+            AccountInfoCommand = new RelayCommand<object>(AccountInfo);
             #endregion
             #region PageCommand
             TrangChuCommand = new RelayCommand<object>(TrangChu);
@@ -32,6 +33,10 @@ namespace PMQuanLyVatTu.ViewModel
             KhachHangCommand = new RelayCommand<object>(KhachHang);
             NhaCungCapCommand = new RelayCommand<object>(NhaCungCap);
             KhoCommand = new RelayCommand<object>(Kho);
+            DuyetCommand = new RelayCommand<object>(Duyet);
+            ThongKeCommand = new RelayCommand<object>(ThongKe);
+            YeuCauMuaHangCommand = new RelayCommand<object>(YeuCauMuaHang);
+            YeuCauNhapHangCommand = new RelayCommand<object>(YeuCauNhapHang);
             #endregion
             #region Page ViewModel
             LoginVM = new LoginWindowViewModel();
@@ -41,6 +46,10 @@ namespace PMQuanLyVatTu.ViewModel
             KhachHangVM = new KhachHangViewModel();
             NhaCungCapVM = new NhaCungCapViewModel();
             KhoVM = new KhoViewModel();
+            DuyetVM = new DuyetViewModel();
+            ThongKeVM = new ThongKeViewModel();
+            YeuCauMuaHangVM = new YeuCauMuaHangViewModel();
+            YeuCauNhapHangVM = new YeuCauNhapHangViewModel();
             #endregion
             //Khởi tạo các trang/window ban đầu
             _currentPage = new TrangChu(); (_currentPage as TrangChu).DataContext = TrangChuVM;
@@ -62,7 +71,13 @@ namespace PMQuanLyVatTu.ViewModel
         void LoadWindow(Window window)
         {
             if (LoginVM.ReturnValue == false) window.Close();
-            else MessageBox.Show("Đã đăng nhập với tên: " + LoginVM.UserName + ", Mật khẩu: " + LoginVM.Password);
+            else {
+                window.Hide();
+                CustomMessage popUpMessage = new CustomMessage("/Material/Images/Icons/success.png", "ĐĂNG NHẬP THÀNH CÔNG", "Đã đăng nhập thành công với tên: " + LoginVM.UserName);
+                popUpMessage.ShowDialog();
+                if (popUpMessage.ReturnValue == false) window.Close();
+                window.Show();
+            };
         }
         public ICommand CloseWindowCommand { get; set; }
         void CloseWin(Window window)
@@ -91,6 +106,12 @@ namespace PMQuanLyVatTu.ViewModel
         {
             window.DragMove();
         }
+        public ICommand AccountInfoCommand { get; set; }
+        void AccountInfo(object t)
+        {
+            ThongTinCaNhanWindow AccountWin = new ThongTinCaNhanWindow();
+            AccountWin.ShowDialog();
+        }
 
         public ICommand TrangChuCommand {  get; set; }
         void TrangChu(object t) { if((CurrentPage as TrangChu) == null) {CurrentPage = new TrangChu(); (CurrentPage as TrangChu).DataContext = TrangChuVM; } }
@@ -104,6 +125,14 @@ namespace PMQuanLyVatTu.ViewModel
         void NhaCungCap(object t) { if((CurrentPage as NhaCungCap) == null) {CurrentPage = new NhaCungCap(); (CurrentPage as NhaCungCap).DataContext = NhaCungCapVM; } }
         public ICommand KhoCommand {  get; set; }
         void Kho(object t) { if((CurrentPage as Kho) == null) {CurrentPage = new Kho(); (CurrentPage as Kho).DataContext = KhoVM; } }
+        public ICommand DuyetCommand { get; set; }
+        void Duyet(object t) { if(CurrentPage as Duyet == null) { CurrentPage = new Duyet(); (CurrentPage as Duyet).DataContext = DuyetVM; } }
+        public ICommand ThongKeCommand { get; set; }
+        void ThongKe(object t) { if(CurrentPage as ThongKe == null) { CurrentPage = new ThongKe(); (CurrentPage as ThongKe).DataContext = ThongKeVM; } }
+        public ICommand YeuCauMuaHangCommand { get; set; }
+        void YeuCauMuaHang(object t) { if (CurrentPage as YeuCauMuaHang == null) { CurrentPage = new YeuCauMuaHang(); (CurrentPage as YeuCauMuaHang).DataContext = YeuCauMuaHangVM; } }
+        public ICommand YeuCauNhapHangCommand { get; set; }
+        void YeuCauNhapHang(object t) { if (CurrentPage as YeuCauNhapHang == null) { CurrentPage = new YeuCauNhapHang(); (CurrentPage as YeuCauNhapHang).DataContext = YeuCauMuaHangVM; } }
 
         LoginWindowViewModel LoginVM;
         TrangChuViewModel TrangChuVM;
@@ -112,6 +141,10 @@ namespace PMQuanLyVatTu.ViewModel
         KhachHangViewModel KhachHangVM;
         NhaCungCapViewModel NhaCungCapVM;
         KhoViewModel KhoVM;
+        DuyetViewModel DuyetVM;
+        ThongKeViewModel ThongKeVM;
+        YeuCauMuaHangViewModel YeuCauMuaHangVM;
+        YeuCauNhapHangViewModel YeuCauNhapHangVM;
         #endregion
     }
 }

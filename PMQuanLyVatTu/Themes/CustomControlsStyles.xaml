@@ -39,6 +39,74 @@
         </Setter>
     </Style>
     <!--#endregion-->
+    <!--#region CustomNavigationButtonnExpandable-->
+    <Style x:Key="CustomNavigationButtonExpandable" TargetType="CustomControl:NavigationButton">
+        <Setter Property="Width" Value="120"/>
+        <Setter Property="Height" Value="40"/>
+        <Setter Property="HorizontalAlignment" Value="Stretch"/>
+        <Setter Property="VerticalAlignment" Value="Top"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="CustomControl:NavigationButton">
+                    <Grid>
+                        <Border x:Name="ButtonBorder" 
+                                Background="{TemplateBinding BackgroundColor}"
+                                CornerRadius="{TemplateBinding RadiusOfCorner}"
+                                BorderThickness="{TemplateBinding BorderThick}"/>
+                        <StackPanel Orientation="Horizontal">
+                            <Image Source="{Binding ImageLocation, RelativeSource={RelativeSource TemplatedParent}}"
+                                   HorizontalAlignment="Left"
+                                   VerticalAlignment="Center"
+                                   Margin="7, 8"/>
+                            <TextBlock HorizontalAlignment="Left" 
+                                       VerticalAlignment="Center"
+                                       Text="{TemplateBinding DisplayText}"
+                                       Foreground="{TemplateBinding TextColor}"
+                                       FontFamily="/Material/Fonts/Lexend/#Lexend Bold"
+                                       FontSize="{TemplateBinding TextSize}"
+                                       FontWeight="Bold"/>
+                        </StackPanel>
+                    </Grid>
+                    <ControlTemplate.Triggers>
+                        <!--<Trigger Property="IsChecked" Value="True">
+                            <Setter Property="BorderBrush" Value="White" TargetName="ButtonBorder"/>
+                        </Trigger>-->
+                        <EventTrigger RoutedEvent="Checked">
+                            <BeginStoryboard>
+                                <Storyboard>
+                                    <DoubleAnimation Duration="0:0:0.25" Storyboard.TargetProperty="Height" From="40" To="60"/>
+                                    <ColorAnimation Duration="0:0:0.25" Storyboard.TargetName="ButtonBorder" Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)" To="#FF00FFFF"/>
+                                </Storyboard>
+                            </BeginStoryboard>
+                        </EventTrigger>
+                        <EventTrigger RoutedEvent="Unchecked">
+                            <BeginStoryboard>
+                                <Storyboard>
+                                    <DoubleAnimation Duration="0:0:0.25" Storyboard.TargetProperty="Height" From="60" To="40"/>
+                                    <ColorAnimation Duration="0:0:0.25" Storyboard.TargetName="ButtonBorder" Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)" To="#FF56CDCD"/>
+                                </Storyboard>
+                            </BeginStoryboard>
+                        </EventTrigger>
+                        <!--<EventTrigger RoutedEvent="Mouse.MouseEnter">
+                            <BeginStoryboard>
+                                <Storyboard>
+                                    <ColorAnimation Duration="0:0:0.25" Storyboard.TargetName="ButtonBorder" Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)" From="#FF56CDCD" To="#FF00FFFF"/>
+                                </Storyboard>
+                            </BeginStoryboard>
+                        </EventTrigger>
+                        <EventTrigger RoutedEvent="Mouse.MouseLeave">
+                            <BeginStoryboard>
+                                <Storyboard>
+                                    <ColorAnimation Duration="0:0:0.25" Storyboard.TargetName="ButtonBorder" Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)" From="#FF00FFFF" To="#FF56CDCD"/>
+                                </Storyboard>
+                            </BeginStoryboard>
+                        </EventTrigger>-->
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    <!--#endregion-->
     <!--#region ImageButton-->
     <Style TargetType="CustomControl:ImageButton">
         <Setter Property="Template">

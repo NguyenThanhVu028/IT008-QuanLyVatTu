@@ -4,4 +4,5 @@
     <convert:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter"/>
     <convert:ReverseBoolToVisibilityConverter x:Key="ReverseBoolToVisibilityConverter"/>
     <convert:LoaiVatTuConverter x:Key="LoaiVatTuConverter"/>
+    <convert:BrushToColorConverter x:Key="BrushToColorConverter"/>
 </ResourceDictionary>
