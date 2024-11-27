@@ -157,7 +157,8 @@
                                         TextSize="15"
                                         Margin="0, 0, 80, 40"
                                         RadiusOfCorner="5"
-                                        Command="{Binding DeleteSelectedCommand}"/>
+                                        Command="{Binding DeleteSelectedCommand}"
+                                        Visibility="{Binding Path=IsChecked, ElementName=ModeSwitch, Converter={StaticResource BoolToVisibilityConverter}}"/>
             <CustomControl:CustomButton Width="120"
                                         Height="40"
                                         HorizontalAlignment="Right"

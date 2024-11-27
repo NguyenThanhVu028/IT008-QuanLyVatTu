@@ -25,9 +25,13 @@
                 CornerRadius="10"
                 Margin="10"/>
         <Grid x:Name="LayoutGrid">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="6*"/>
+                <RowDefinition Height="29*"/>
+            </Grid.RowDefinitions>
             <StackPanel HorizontalAlignment="Left"
                         VerticalAlignment="Bottom"
-                        Margin="55, 0, 0, 535"
+                        Margin="55, 0, 0, -10"
                         Orientation="Horizontal">
                 <CustomControl:NavigationButton x:Name="TongQuanButton" 
                                                 Style="{StaticResource CustomNavigationButtonExpandable}"
@@ -81,9 +85,9 @@
                                                 DisplayText="DOANH THU"
                                                 TextColor="{StaticResource DarkGreen2}"/>
             </StackPanel>
-            <Border HorizontalAlignment="Stretch"
-                    VerticalAlignment="Stretch"
-                    Margin="30, 120, 30, 30"
+            <Border Grid.Row="1"
+                    Grid.RowSpan="1"
+                    Margin="30,0,30,30"
                     Background="{StaticResource BackGroundColor}"
                     BorderBrush="Aqua"
                     BorderThickness="2"
@@ -95,25 +99,19 @@
                         CornerRadius="25">
                     <Border.Background>
                         <ImageBrush ImageSource="/Material/Images/BackGround/BackGround2.jpg"
-                                    Opacity="0.4"
                                     Stretch="UniformToFill"/>
                     </Border.Background>
                     <Grid>
                         <Grid x:Name="TongQuanDisplayArea">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="361*"/>
-                                <ColumnDefinition Width="651*"/>
-                            </Grid.ColumnDefinitions>
                         </Grid>
                     </Grid>
                 </Border>
             </Border>
-            <TextBlock Grid.Row="1" 
+            <TextBlock 
                        Height="70"
                        Width="600"
                        HorizontalAlignment="Center"
-                       VerticalAlignment="Top"
-                       Margin="30"
+                       VerticalAlignment="Center"
                        Text="THỐNG KÊ"
                        Foreground="{StaticResource LightAqua1}"
                        FontFamily="/Material/Fonts/Lexend/#Lexend Black"

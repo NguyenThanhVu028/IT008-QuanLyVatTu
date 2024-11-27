@@ -54,6 +54,7 @@ namespace PMQuanLyVatTu.ViewModel
             //Khởi tạo các trang/window ban đầu
             _currentPage = new TrangChu(); (_currentPage as TrangChu).DataContext = TrangChuVM;
             LoginWindow newLogin = new LoginWindow(); newLogin.DataContext = LoginVM; newLogin.ShowDialog();
+            TrangChuVM.DisplayUsername = "Trịnh Trần Phương Tuấn";
         }
         #region CurrentPage
         private object _currentPage;

@@ -26,8 +26,8 @@
             </EventTrigger>
         </Grid.Triggers>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="43*"/>
-            <ColumnDefinition Width="157*"/>
+            <ColumnDefinition Width="35*"/>
+            <ColumnDefinition Width="160*"/>
         </Grid.ColumnDefinitions>
         <Border Background="{StaticResource LightAqua1}"
                 CornerRadius="20"
@@ -35,9 +35,11 @@
         <Image Source="{Binding ImageLocation}"
                Margin="20,10,20,10"/>
         <ScrollViewer VerticalScrollBarVisibility="Hidden"
-                      Grid.Column="1"
+                      Grid.Column="0"
+                      Grid.ColumnSpan="2"
                       VerticalAlignment="Top"
-                      Margin="0,15,15,0" Height="24">
+                      HorizontalAlignment="Stretch"
+                      Margin="15,15,15,0" Height="24">
             <TextBlock x:Name="MainTitleText" 
                        Grid.Column="1" 
                        Text="{Binding MainTitle}"
@@ -58,7 +60,7 @@
                        FontFamily="/Material/Fonts/Lexend/#Lexend Regular"
                        FontWeight="Medium"
                        FontSize="15"
-                       HorizontalAlignment="Center"
+                       HorizontalAlignment="Left"
                        VerticalAlignment="Top"
                        TextWrapping="Wrap"/>
         </ScrollViewer>

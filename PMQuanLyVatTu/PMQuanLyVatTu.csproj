@@ -24,6 +24,7 @@
     <None Remove="Material\Images\BackGround\BackGround.jpg" />
     <None Remove="Material\Images\BackGround\BackGround.png" />
     <None Remove="Material\Images\BackGround\BackGround2.jpg" />
+    <None Remove="Material\Images\BackGround\BackGround3.jpg" />
     <None Remove="Material\Images\BackGround\DefaultBackGround.jpg" />
     <None Remove="Material\Images\Icons\approve.png" />
     <None Remove="Material\Images\Icons\close.png" />
@@ -80,6 +81,7 @@
     <Resource Include="Material\Images\Avatars\user1.jpg" />
     <Resource Include="Material\Images\BackGround\BackGround.jpg" />
     <Resource Include="Material\Images\BackGround\BackGround2.jpg" />
+    <Resource Include="Material\Images\BackGround\BackGround3.jpg" />
     <Resource Include="Material\Images\BackGround\DefaultBackGround.jpg" />
     <Resource Include="Material\Images\Icons\approve.png" />
     <Resource Include="Material\Images\Icons\close.png" />
@@ -126,6 +128,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="LiveCharts.Wpf" Version="0.9.7" />
     <PackageReference Include="System.Windows.Interactivity.WPF" Version="2.0.20525" />
   </ItemGroup>
 
