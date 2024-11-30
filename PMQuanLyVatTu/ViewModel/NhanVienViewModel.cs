@@ -24,6 +24,20 @@ namespace PMQuanLyVatTu.ViewModel
             set { _searchFilter = value; OnPropertyChanged(); }
         }
         #endregion
+        #region SearchBar
+        private string _selectedSearchFilter;
+        public string SelectedSearchFilter
+        {
+            get { return _selectedSearchFilter; }
+            set { _selectedSearchFilter = value; OnPropertyChanged(); }
+        }
+        private string _searchString;
+        public string SearchString
+        {
+            get { return _searchString; }
+            set { _searchString = value; OnPropertyChanged(); }
+        }
+        #endregion
         #region DanhSachNhanVien
         private ObservableCollection<Employee> _danhSachNhanVien = new ObservableCollection<Employee>();
         public ObservableCollection<Employee> DanhSachNhanVien
@@ -48,17 +62,22 @@ namespace PMQuanLyVatTu.ViewModel
         public ICommand RefreshCommand { get; set; }
         void Refresh(object t = null)
         {
-            DanhSachNhanVien.Clear(); DanhSachNhanVienLargeIcon.Clear();
-            DanhSachNhanVien.Add(new Employee() { Checked = true, MaNV = "NV0001", HoTen = "Nguyễn Văn An", ChucVu = "QL", NgaySinh = "19/5/1998", GioiTinh = "Nam", SDT = "0912345678", DiaChi = "Số 354 Phường Linh Xuân, Quận Tân Hiệp Thành", Luong = 35000000, ImageLocation = "/Material/Images/Avatars/user1.jpg" });
-            DanhSachNhanVien.Add(new Employee() { Checked = true, MaNV = "NV0002", HoTen = "Nguyễn Thị Bình", ChucVu = "KT", NgaySinh = "19/5/1998", GioiTinh = "Nữ", SDT = "0912345678", DiaChi = "Số 354 Phường Linh Xuân, Quận Tân Hiệp Thành", Luong = 35000000, ImageLocation = "/Material/Images/Avatars/user1.jpg" });
-            DanhSachNhanVien.Add(new Employee() { Checked = true, MaNV = "NV0003", HoTen = "Nguyễn Trọng Phước Thành Danh", ChucVu = "NX", NgaySinh = "19/5/1998", GioiTinh = "Nam", SDT = "0912345678", DiaChi = "Số 354 Phường Linh Xuân, Quận Tân Hiệp Thành", Luong = 35000000, ImageLocation = "/Material/Images/Avatars/user1.jpg" });
+            DanhSachNhanVien.Clear();
 
+            DanhSachNhanVien.Add(new Employee() { Checked = true, MaNV = "NV0001", HoTen = "Nguyễn Văn An", ChucVu = "QL", NgaySinh = "19/5/1998", GioiTinh = "Nam", SDT = "0912345678", DiaChi = "Số 354 Phường Linh Xuân, Quận Tân Hiệp Thành", Luong = 35000000, ImageLocation = "/Material/Images/Avatars/user1.jpg" });
+            DanhSachNhanVien.Add(new Employee() { Checked = true, MaNV = "NV0002", HoTen = "Nguyễn Thị Bình", ChucVu = "KT", NgaySinh = "19/5/1998", GioiTinh = "Nữ", SDT = "0912345678", DiaChi = "Số 354 Phường Linh Xuân, Quận Tân Hiệp Thành", Luong = 35000000, ImageLocation = "/Material/Images/Avatars/user2.jpg" });
+            DanhSachNhanVien.Add(new Employee() { Checked = true, MaNV = "NV0003", HoTen = "Nguyễn Trọng Phước Thành Danh", ChucVu = "NX", NgaySinh = "19/5/1998", GioiTinh = "Nam", SDT = "0912345678", DiaChi = "Số 354 Phường Linh Xuân, Quận Tân Hiệp Thành", Luong = 35000000, ImageLocation = "/Material/Images/Avatars/user3.jpg" });
+            DanhSachNhanVien.Add(new Employee() { Checked = true, MaNV = "NV0003", HoTen = "Nguyễn Hữu Tính", ChucVu = "TN", NgaySinh = "19/5/1998", GioiTinh = "Nam", SDT = "0912345678", DiaChi = "Số 354 Phường Linh Xuân, Quận Tân Hiệp Thành", Luong = 35000000, ImageLocation = "/Material/Images/Avatars/user4.jpg" });
+            DanhSachNhanVien.Add(new Employee() { Checked = true, MaNV = "NV0003", HoTen = "Nguyễn Trọng Phước Thành Danh", ChucVu = "KT", NgaySinh = "19/5/1998", GioiTinh = "Nam", SDT = "0912345678", DiaChi = "Số 354 Phường Linh Xuân, Quận Tân Hiệp Thành", Luong = 35000000, ImageLocation = "/Material/Images/Avatars/user5.jpg" });
+
+            ObservableCollection<NhanVienDisplayer> temp = new ObservableCollection<NhanVienDisplayer>();
             foreach (Employee emp in DanhSachNhanVien)
             {
                 NhanVienDisplayer newButton = new NhanVienDisplayer();
                 newButton.DataContext = emp; newButton.Margin = new Thickness(10, 10, 10, 10); newButton.Height = 300; newButton.Width = 220;
-                DanhSachNhanVienLargeIcon.Add(newButton);
+                temp.Add(newButton);
             }
+            DanhSachNhanVienLargeIcon = temp;
         }
         #endregion
     }

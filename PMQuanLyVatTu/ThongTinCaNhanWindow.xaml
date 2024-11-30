@@ -12,8 +12,7 @@
         WindowStyle="None"
         Background="Transparent"
         WindowStartupLocation="CenterScreen"
-        Name="ThisWin"
-        DataContext="{StaticResource ThongTinCaNhanWindowVM}">
+        Name="ThisWin">
     <Grid>
         <Border Background="{StaticResource LightAqua1}"
                 CornerRadius="15">
@@ -86,10 +85,12 @@
                                          VerticalAlignment="Top"
                                          HorizontalAlignment="Left"
                                          BorderColor="{StaticResource DarkGreen2}"
-                                         BorderColorClicked="{StaticResource LightAqua2}"
+                                         BorderColorHighlight="{StaticResource LightAqua2}"
+                                         BorderColorClicked="{StaticResource Aqua}"
                                          BorderThick="2"
                                          RadiusOfCorner="5" 
-                                         Margin="60,120,0,0" Grid.Column="1"/>
+                                         Margin="60,120,0,0" Grid.Column="1"
+                                         IsEnabled="{Binding EnableEditing}"/>
             <TextBlock Grid.Row="1" 
                        Text="Họ và tên"
                        Foreground="{StaticResource DarkGreen2}"
@@ -106,10 +107,12 @@
                                          VerticalAlignment="Top"
                                          HorizontalAlignment="Left"
                                          BorderColor="{StaticResource DarkGreen2}"
-                                         BorderColorClicked="{StaticResource LightAqua2}"
+                                         BorderColorHighlight="{StaticResource LightAqua2}"
+                                         BorderColorClicked="{StaticResource Aqua}"
                                          BorderThick="2"
                                          RadiusOfCorner="5" 
-                                         Margin="230,120,0,0" Grid.Column="1"/>
+                                         Margin="230,120,0,0" Grid.Column="1"
+                                         IsEnabled="{Binding EnableEditing}"/>
 
             <TextBlock Grid.Row="1"
                        HorizontalAlignment="Left"
@@ -128,9 +131,11 @@
                                          Width="270"
                                          TextSize="15"
                                          BorderColor="{StaticResource DarkGreen2}"
-                                         BorderColorClicked="{StaticResource LightAqua2}"
+                                         BorderColorHighlight="{StaticResource LightAqua2}"
+                                         BorderColorClicked="{StaticResource Aqua}"
                                          BorderThick="2"
-                                         RadiusOfCorner="5"/>
+                                         RadiusOfCorner="5"
+                                         IsEnabled="{Binding EnableEditing}"/>
             <TextBlock Grid.Row="1"
                        HorizontalAlignment="Left"
                        VerticalAlignment="Top" 
@@ -148,6 +153,13 @@
                                          Margin="500, 120, 0, 0"
                                          DataList="{Binding GioiTinh}"/>
             <TextBlock Grid.Row="1"
+                       VerticalAlignment="Top"
+                       HorizontalAlignment="Left"
+                       Margin="500, 120, 0, 0"
+                       Height="40"
+                       Width="120"
+                       Visibility="{Binding EnableEditing, Converter={StaticResource ReverseBoolToVisibilityConverter}}"/>
+            <TextBlock Grid.Row="1"
                        HorizontalAlignment="Left"
                        VerticalAlignment="Top" 
                        Margin="60,250,0,0"
@@ -164,9 +176,11 @@
                                          Width="270"
                                          TextSize="15"
                                          BorderColor="{StaticResource DarkGreen2}"
-                                         BorderColorClicked="{StaticResource LightAqua2}"
+                                         BorderColorHighlight="{StaticResource LightAqua2}"
+                                         BorderColorClicked="{StaticResource Aqua}"
                                          BorderThick="2"
-                                         RadiusOfCorner="5"/>
+                                         RadiusOfCorner="5"
+                                         IsEnabled="{Binding EnableEditing}"/>
             <TextBlock Grid.Row="1"
                        HorizontalAlignment="Left"
                        VerticalAlignment="Top" 
@@ -184,9 +198,11 @@
                                          Width="270"
                                          TextSize="15"
                                          BorderColor="{StaticResource DarkGreen2}"
-                                         BorderColorClicked="{StaticResource LightAqua2}"
+                                         BorderColorHighlight="{StaticResource LightAqua2}"
+                                         BorderColorClicked="{StaticResource Aqua}"
                                          BorderThick="2"
-                                         RadiusOfCorner="5"/>
+                                         RadiusOfCorner="5"
+                                         IsEnabled="{Binding EnableEditing}"/>
             <CustomControl:CustomButton Grid.Row="1"
                                         Height="50"
                                         Width="200"
@@ -195,12 +211,13 @@
                                         Margin="0, 360, 0, 0"
                                         BorderBackground="{StaticResource DarkGreen2}"
                                         BorderBackgroundClicked="{StaticResource DarkGreen3}"
-                                        BorderColor="White"
+                                        BorderColor="{StaticResource LightAqua1}"
                                         BorderColorHighlight="White"
                                         TextSize="15"
                                         DisplayText="Đổi mật khẩu"
                                         RadiusOfCorner="10"
-                                        Command="{Binding ChangePasswordCommand}"/>
+                                        Command="{Binding ChangePasswordCommand}"
+                                        IsEnabled="{Binding EnableEditing}"/>
             <TextBlock Grid.Row="1"
                        HorizontalAlignment="Left"
                        VerticalAlignment="Top" 
@@ -216,6 +233,13 @@
                                         Margin="60,200,0,0"
                                         Height="200"
                                         Width="270"/>
+            <TextBlock Grid.Row="1"
+                       VerticalAlignment="Top"
+                       HorizontalAlignment="Left"
+                       Margin="60,200,0,0"
+                       Height="40"
+                       Width="270"
+                       Visibility="{Binding EnableEditing, Converter={StaticResource ReverseBoolToVisibilityConverter}}"/>
             <CustomControl:CustomButton Grid.Row="1"
                                         HorizontalAlignment="Left"
                                         VerticalAlignment="Top"

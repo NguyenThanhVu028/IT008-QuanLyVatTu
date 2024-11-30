@@ -18,11 +18,15 @@ using System.Windows.Shapes;
 
 namespace PMQuanLyVatTu.CustomControls
 {
-    /// <summary>
-    /// Interaction logic for SelectionList.xaml
-    /// </summary>
     public partial class SelectionList : UserControl
     {
+        public bool IsAllowed
+        {
+            get { return (bool)GetValue(IsAllowedProperty); }
+            set { SetValue(IsAllowedProperty, value); }
+        }
+        public static readonly DependencyProperty IsAllowedProperty =
+            DependencyProperty.Register("IsAllowed", typeof(bool), typeof(SelectionList), new PropertyMetadata(true));
         public ObservableCollection<string> DataList
         {
             get { return (ObservableCollection<string>)GetValue(DataListProperty); }
@@ -33,22 +37,15 @@ namespace PMQuanLyVatTu.CustomControls
         public string SelectedValue
         {
             get { return (string)GetValue(SelectedValueProperty); }
-            set { SetValue(SelectedValueProperty, value);}
+            set { SetValue(SelectedValueProperty, value); Output.Text = value; }
         }
         public static readonly DependencyProperty SelectedValueProperty =
             DependencyProperty.Register("SelectedValue", typeof(string), typeof(SelectionList), new PropertyMetadata(""));
-        public bool IsAllowed
-        {
-            get { return (bool)GetValue(IsAllowedProperty); }
-            set { SetValue(IsAllowedProperty, value); }
-        }
-        public static readonly DependencyProperty IsAllowedProperty =
-            DependencyProperty.Register("IsAllowed", typeof(bool), typeof(SelectionList), new PropertyMetadata(true));
-
 
         public SelectionList()
         {
             InitializeComponent();
+            Output.DataContext = this;
         }
         void OutputFocused(object sender, RoutedEventArgs e)
         {
@@ -64,11 +61,8 @@ namespace PMQuanLyVatTu.CustomControls
         {
             string temp = (sender as Button).Content.ToString();
             //Container.Visibility = Visibility.Collapsed;
-            if(IsAllowed == true)
-            {
-                SelectedValue = temp;
-                Output.Text = temp;
-            }
+            SelectedValue = temp;
+            //Output.Text = temp;
         }
         void TextChangedEvent(object sender, TextChangedEventArgs e)
         {

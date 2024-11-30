@@ -51,6 +51,15 @@ namespace PMQuanLyVatTu.CustomControls
         public static readonly DependencyProperty BackgroundColorProperty =
             DependencyProperty.Register("BackgroundColor", typeof(SolidColorBrush), typeof(CustomTextbox), new PropertyMetadata(Brushes.White));
         #endregion
+        #region BackgroundColorHighlight
+        public SolidColorBrush BackgroundColorHighlight
+        {
+            get { return (SolidColorBrush)GetValue(BackgroundColorHighlightProperty); }
+            set { SetValue(BackgroundColorHighlightProperty, value); }
+        }
+        public static readonly DependencyProperty BackgroundColorHighlightProperty =
+            DependencyProperty.Register("BackgroundColorHighlight", typeof(SolidColorBrush), typeof(CustomTextbox), new PropertyMetadata(Brushes.White));
+        #endregion
         #region BackgroundColorClicked
         public SolidColorBrush BackgroundColorClicked
         {
@@ -68,6 +77,15 @@ namespace PMQuanLyVatTu.CustomControls
         }
         public static readonly DependencyProperty BorderColorProperty =
             DependencyProperty.Register("BorderColor", typeof(SolidColorBrush), typeof(CustomTextbox), new PropertyMetadata(Brushes.Transparent));
+        #endregion
+        #region BorderColorHighlight
+        public SolidColorBrush BorderColorHighlight
+        {
+            get { return (SolidColorBrush)GetValue(BorderColorHighlightProperty); }
+            set { SetValue(BorderColorHighlightProperty, value); }
+        }
+        public static readonly DependencyProperty BorderColorHighlightProperty =
+            DependencyProperty.Register("BorderColorHighlight", typeof(SolidColorBrush), typeof(CustomTextbox), new PropertyMetadata(Brushes.Aqua));
         #endregion
         #region BorderColorClicked
         public SolidColorBrush BorderColorClicked

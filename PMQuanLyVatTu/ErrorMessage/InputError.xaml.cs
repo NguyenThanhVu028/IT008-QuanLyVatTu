@@ -23,5 +23,13 @@ namespace PMQuanLyVatTu.ErrorMessage
         {
             InitializeComponent();
         }
+        void TryAgainClick(object sender, RoutedEventArgs e)
+        {
+            this.Close();
+        }
+        void MoveWindow(object sender, RoutedEventArgs e)
+        {
+            this.DragMove();
+        }
     }
 }

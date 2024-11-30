@@ -11,13 +11,29 @@
         WindowStyle="None"
         Background="Transparent"
         WindowStartupLocation="CenterScreen"
-        Height="150" Width="400"
-        DataContext="{StaticResource AlreadyExistsErrorVM}"
-        Name="ThisWin"
-        MouseDown="MouseDownEvent">
-    <Grid>
+        Height="170" Width="420"
+        Name="ThisWin">
+    <Grid MouseLeftButtonDown="MoveWindow"
+          Margin="7, 7, 7, 7">
+        <Grid.RenderTransform>
+            <TranslateTransform X="0" Y="-10"/>
+        </Grid.RenderTransform>
+        <Grid.Triggers>
+            <EventTrigger RoutedEvent="Loaded">
+                <BeginStoryboard>
+                    <Storyboard>
+                        <DoubleAnimation Duration="0:0:0.2" Storyboard.TargetProperty="Opacity" From="0" To="1"/>
+                        <DoubleAnimation Duration="0:0:0.2" Storyboard.TargetProperty="(UIElement.RenderTransform).(TranslateTransform.Y)" From="-10" To="0"/>
+                    </Storyboard>
+                </BeginStoryboard>
+            </EventTrigger>
+        </Grid.Triggers>
         <Border Background="{StaticResource LightAqua1}"
-                CornerRadius="20"/>
+                CornerRadius="20">
+            <Border.BitmapEffect>
+                <DropShadowBitmapEffect Opacity="0.5" ShadowDepth="0"/>
+            </Border.BitmapEffect>
+        </Border>
         <StackPanel HorizontalAlignment="Left"
             VerticalAlignment="Top"
             Margin="20,20"
@@ -26,7 +42,7 @@
            Stretch="UniformToFill"
            Width="50"
            Height="50"/>
-            <TextBlock Text="Thông tin đã tồn tại trên hệ thống. Vui lòng nhập lại!"
+            <TextBlock Text="Thông tin đã tồn tại trên hệ thống. Vui lòng nhập lại."
                        FontFamily="/Material/Fonts/Lexend/#Lexend Regular"
                        FontWeight="Medium"
                        FontSize="19"
@@ -43,7 +59,6 @@
                                     BorderBackgroundClicked="{StaticResource DarkGreen3}"
                                     BorderColor="{StaticResource LightAqua1}"
                                     BorderColorHighlight="{StaticResource White}"
-                                    Command="{Binding CloseCommand}"
-                                    CommandParameter="{Binding ElementName=ThisWin}"/>
+                                    Click="TryAgainClick"/>
     </Grid>
 </Window>

@@ -13,10 +13,13 @@
         WindowStyle="None"
         Background="Transparent"
         WindowStartupLocation="CenterScreen"
-        Name="ThisWin"
-        DataContext="{StaticResource ThongTinVatTuWindowVM}">
+        Name="ThisWin">
     <Grid>
-        <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="1007*"/>
+            <ColumnDefinition Width="3*"/>
+        </Grid.ColumnDefinitions>
+        <Grid Grid.ColumnSpan="2">
             <Grid.RowDefinitions>
                 <RowDefinition Height="55"/>
                 <RowDefinition/>
@@ -42,8 +45,9 @@
                                        CommandParameter="{Binding ElementName=ThisWin}"/>
             <Border Grid.Row="1"
                     HorizontalAlignment="Stretch"
-                    VerticalAlignment="Stretch"
-                    Margin="20, 10, 20, 330"
+                    VerticalAlignment="Top"
+                    Margin="20, 10, 20, 0"
+                    Height="300"
                     Background="White"
                     CornerRadius="20">
                 <Border.BitmapEffect>
@@ -65,18 +69,17 @@
                                        Margin="50, 40"
                                        Height="230"
                                        Width="230"
+                                       ImageLocation="{Binding ImageLocation}"
                                        BorderThick="7"
                                        BorderColor="{StaticResource DarkGreen2}"
-                                       ImageLocation="/Material/Images/Supplies/brick.jpg"
                                        Command="{Binding ChangeAvatarCommand}"/>
 
             <TextBlock Grid.Row="1" 
                        Height="70"
-                       Width="400"
-                       HorizontalAlignment="Center"
+                       HorizontalAlignment="Left"
                        VerticalAlignment="Top"
-                       Margin="30"
-                       Text="THÔNG TIN VẬT TƯ"
+                       Margin="300, 30, 0, 0"
+                       Text="{Binding Title}"
                        Foreground="{StaticResource DarkGreen2}"
                        FontFamily="/Material/Fonts/Lexend/#Lexend Black"
                        FontWeight="Black"
@@ -85,10 +88,10 @@
                        TextWrapping="Wrap"/>
             <CustomControl:CustomButton Grid.Row="1" 
                                         HorizontalAlignment="Right"
-                                        VerticalAlignment="Top"
+                                        VerticalAlignment="Bottom"
                                         Height="50"
                                         Width="300"
-                                        Margin="0,570, 150, 0"
+                                        Margin="0,0, 150, 25"
                                         BorderBackground="Transparent"
                                         BorderBackgroundClicked="#E5009191"
                                         BorderColor="#FF009191"
@@ -97,13 +100,14 @@
                                         DisplayText="Lưu"
                                         RadiusOfCorner="10" 
                                         BorderColorHighlight="#FF27C5C5" Grid.Column="1"
-                                        Command="{Binding SaveInfoCommand}"/>
+                                        Command="{Binding SaveInfoCommand}"
+                                        CommandParameter="{Binding ElementName=ThisWin}"/>
             <CustomControl:CustomButton Grid.Row="1"
                                         HorizontalAlignment="Left"
-                                        VerticalAlignment="Top"
+                                        VerticalAlignment="Bottom"
                                         Height="50"
                                         Width="300"
-                                        Margin="150,570,0,0"
+                                        Margin="150,0,0,25"
                                         BorderBackground="Transparent"
                                         BorderBackgroundClicked="{StaticResource RedTransparent1}"
                                         BorderColor="{StaticResource DarkRed}"
@@ -124,12 +128,13 @@
                        FontFamily="/Material/Fonts/Lexend/#Lexend Medium"
                        FontWeight="Medium"/>
             <CustomControl:SelectionList Grid.Row="1"
-                                         Height="115"
+                                         Height="122"
                                          Width="250"
                                          VerticalAlignment="Top"
                                          HorizontalAlignment="Left"
                                          Margin="350, 200"
-                                         DataList="{Binding NhaCungCap}"/>
+                                         DataList="{Binding NhaCungCap}"
+                                         SelectedValue="{Binding MaNCC}"/>
             <TextBlock Grid.Row="1"
                        HorizontalAlignment="Left"
                        VerticalAlignment="Top" 
@@ -140,12 +145,13 @@
                        FontFamily="/Material/Fonts/Lexend/#Lexend Medium"
                        FontWeight="Medium" Grid.Column="1"/>
             <CustomControl:SelectionList Grid.Row="1"
-                                         Height="115"
+                                         Height="122"
                                          Width="250"
                                          VerticalAlignment="Top"
                                          HorizontalAlignment="Left"
                                          Margin="640, 200, 0, 0"
-                                         DataList="{Binding KhoChua}"/>
+                                         DataList="{Binding KhoChua}"
+                                         SelectedValue="{Binding MaKho}"/>
             <TextBlock Grid.Row="1" 
                        Text="Loại vật tư"
                        Foreground="{StaticResource DarkGreen2}"
@@ -156,12 +162,13 @@
                        FontFamily="/Material/Fonts/Lexend/#Lexend Medium"
                        FontWeight="Medium" Grid.Column="1"/>
             <CustomControl:SelectionList Grid.Row="1"
-                                         Height="115"
+                                         Height="122"
                                          Width="250"
                                          VerticalAlignment="Top"
                                          HorizontalAlignment="Left"
                                          Margin="640, 120, 0, 0"
-                                         DataList="{Binding LoaiVatTu}"/>
+                                         DataList="{Binding LoaiVatTu}"
+                                         SelectedValue="{Binding LoaiVT}"/>
             <TextBlock Grid.Row="1" 
                        Text="Mã vật tư"
                        Foreground="{StaticResource DarkGreen2}"
@@ -174,6 +181,7 @@
             <CustomControl:CustomTextbox Grid.Row="1"
                                          Height="40"
                                          Width="250"
+                                         Text="{Binding MaVT}"
                                          TextSize="15"
                                          VerticalAlignment="Top"
                                          HorizontalAlignment="Left"
@@ -181,11 +189,21 @@
                                          BorderColorClicked="{StaticResource LightAqua2}"
                                          BorderThick="2"
                                          RadiusOfCorner="5" 
-                                         Margin="350,120,0,0" Grid.Column="1"/>
+                                         Margin="350,120,0,0" Grid.Column="1"
+                                         IsEnabled="{Binding EnableEditing}"/>
+            <Border Grid.Row="1"
+                    Height="40"
+                    Width="250"
+                    VerticalAlignment="Top"
+                    HorizontalAlignment="Left"
+                    Margin="350, 120, 0, 0"
+                    CornerRadius="5"
+                    Style="{StaticResource TextBoxUnable}"/>
             <Border Grid.Row="1"
                     HorizontalAlignment="Stretch"
-                    VerticalAlignment="Stretch"
-                    Margin="20,320,20,100"
+                    VerticalAlignment="Bottom"
+                    Margin="20,0,20,100"
+                    Height="220"
                     Background="White"
                     CornerRadius="20"
                     Grid.ColumnSpan="2">
@@ -197,102 +215,122 @@
                        Text="Tên vật tư"
                        Foreground="{StaticResource DarkGreen2}"
                        HorizontalAlignment="Left"
-                       VerticalAlignment="Top" 
-                       Margin="50,340,0,0"
+                       VerticalAlignment="Bottom" 
+                       Margin="50,0,0,280"
                        FontSize="20"
                        FontFamily="/Material/Fonts/Lexend/#Lexend Medium"
                        FontWeight="Medium"/>
             <CustomControl:CustomTextbox Grid.Row="1"
                              Height="40"
                              Width="400"
+                             Text="{Binding TenVatTu}"
                              TextSize="15"
-                             VerticalAlignment="Top"
+                             VerticalAlignment="Bottom"
                              HorizontalAlignment="Left"
                              BorderColor="{StaticResource DarkGreen2}"
                              BorderColorClicked="{StaticResource LightAqua2}"
                              BorderThick="2"
                              RadiusOfCorner="5" 
-                             Margin="50,370,0,0" Grid.Column="1"/>
+                             Margin="50,0,0,235" Grid.Column="1"
+                             IsEnabled="{Binding EnableEditing}"/>
             <TextBlock Grid.Row="1" 
                        Text="Đơn vị tính"
                        Foreground="{StaticResource DarkGreen2}"
-                       HorizontalAlignment="Left"
-                       VerticalAlignment="Top" 
-                       Margin="550,340,0,0"
+                       HorizontalAlignment="Right"
+                       VerticalAlignment="Bottom" 
+                       Margin="0,340,345,280"
                        FontSize="20"
                        FontFamily="/Material/Fonts/Lexend/#Lexend Medium"
                        FontWeight="Medium"/>
             <CustomControl:CustomTextbox Grid.Row="1"
                                          Height="40"
                                          Width="400"
+                                         Text="{Binding DonViTinh}"
                                          TextSize="15"
-                                         VerticalAlignment="Top"
-                                         HorizontalAlignment="Left"
+                                         VerticalAlignment="Bottom"
+                                         HorizontalAlignment="Right"
                                          BorderColor="{StaticResource DarkGreen2}"
                                          BorderColorClicked="{StaticResource LightAqua2}"
                                          BorderThick="2"
                                          RadiusOfCorner="5" 
-                                         Margin="550,370,0,0" Grid.Column="1"/>
+                                         Margin="550,0,50,235" Grid.Column="1"
+                                         IsEnabled="{Binding EnableEditing}"/>
             <TextBlock Grid.Row="1" 
                        Text="Giá nhập"
                        Foreground="{StaticResource DarkGreen2}"
                        HorizontalAlignment="Left"
-                       VerticalAlignment="Top" 
-                       Margin="50,420,0,0"
+                       VerticalAlignment="Bottom" 
+                       Margin="50,0,0,200"
                        FontSize="20"
                        FontFamily="/Material/Fonts/Lexend/#Lexend Medium"
                        FontWeight="Medium"/>
             <CustomControl:CustomTextbox Grid.Row="1"
                                          Height="40"
                                          Width="190"
+                                         Text="{Binding GiaNhap}"
                                          TextSize="15"
-                                         VerticalAlignment="Top"
+                                         VerticalAlignment="Bottom"
                                          HorizontalAlignment="Left"
                                          BorderColor="{StaticResource DarkGreen2}"
                                          BorderColorClicked="{StaticResource LightAqua2}"
                                          BorderThick="2"
                                          RadiusOfCorner="5" 
-                                         Margin="50,450,0,0" Grid.Column="1"/>
+                                         Margin="50,0,0,155" Grid.Column="1"
+                                         IsEnabled="{Binding EnableEditing}"/>
             <TextBlock Grid.Row="1" 
                        Text="Giá bán"
                        Foreground="{StaticResource DarkGreen2}"
                        HorizontalAlignment="Left"
-                       VerticalAlignment="Top" 
-                       Margin="260,420,0,0"
+                       VerticalAlignment="Bottom" 
+                       Margin="260,0,0,200"
                        FontSize="20"
                        FontFamily="/Material/Fonts/Lexend/#Lexend Medium"
                        FontWeight="Medium"/>
             <CustomControl:CustomTextbox Grid.Row="1"
                                          Height="40"
                                          Width="190"
+                                         Text="{Binding GiaXuat}"
                                          TextSize="15"
-                                         VerticalAlignment="Top"
+                                         VerticalAlignment="Bottom"
                                          HorizontalAlignment="Left"
                                          BorderColor="{StaticResource DarkGreen2}"
                                          BorderColorClicked="{StaticResource LightAqua2}"
                                          BorderThick="2"
                                          RadiusOfCorner="5" 
-                                         Margin="260,450,0,0" Grid.Column="1"/>
+                                         Margin="260,450,0,155" Grid.Column="1"
+                                         IsEnabled="{Binding EnableEditing}"/>
             <TextBlock Grid.Row="1" 
                        Text="Số lượng tồn kho"
                        Foreground="{StaticResource DarkGreen2}"
-                       HorizontalAlignment="Left"
-                       VerticalAlignment="Top" 
-                       Margin="550,420,0,0"
+                       HorizontalAlignment="Right"
+                       VerticalAlignment="Bottom" 
+                       Margin="0,0,285,200"
                        FontSize="20"
                        FontFamily="/Material/Fonts/Lexend/#Lexend Medium"
                        FontWeight="Medium"/>
             <CustomControl:CustomTextbox Grid.Row="1"
                                          Height="40"
                                          Width="400"
+                                         Text="{Binding SoLuongTonKho}"
                                          TextSize="15"
-                                         VerticalAlignment="Top"
-                                         HorizontalAlignment="Left"
+                                         VerticalAlignment="Bottom"
+                                         HorizontalAlignment="Right"
                                          BorderColor="{StaticResource DarkGreen2}"
                                          BorderColorClicked="{StaticResource LightAqua2}"
                                          BorderThick="2"
                                          RadiusOfCorner="5" 
-                                         Margin="550,450,0,0"/>
+                                         Margin="0,450,50,155"
+                                         IsEnabled="{Binding EnableEditing}"/>
+            <TextBlock Grid.Row="1"
+                       HorizontalAlignment="Stretch"
+                       VerticalAlignment="Stretch"
+                       Margin="30, 20, 100, 350"
+                       Visibility="{Binding EnableEditing, Converter={StaticResource ReverseBoolToVisibilityConverter}}"/>
+            <TextBlock Grid.Row="1"
+                       HorizontalAlignment="Stretch"
+                       VerticalAlignment="Stretch"
+                       Margin="30, 350, 50, 100"
+                       Visibility="{Binding EnableEditing, Converter={StaticResource ReverseBoolToVisibilityConverter}}"/>
 
         </Grid>
     </Grid>

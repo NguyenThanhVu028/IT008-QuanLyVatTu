@@ -4,6 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:PMQuanLyVatTu.View"
+             xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
              xmlns:CustomControl="clr-namespace:PMQuanLyVatTu.CustomControls"
              mc:Ignorable="d" 
              d:DesignHeight="665" d:DesignWidth="1080">
@@ -182,7 +183,8 @@
                                         DisplayText="Làm mới"
                                         TextSize="15"
                                         Margin="0, 95, 260, 0"
-                                        RadiusOfCorner="5"/>
+                                        RadiusOfCorner="5"
+                                        Command="{Binding RefreshCommand}"/>
             <CustomControl:CustomTextbox Width="335"
                                          Height="40"
                                          HorizontalAlignment="Left"
@@ -193,16 +195,25 @@
                                          BorderColorClicked="Aqua"
                                          BorderThick="2"
                                          BackgroundColor="Transparent"
+                                         BackgroundColorHighlight="{StaticResource DarkGreenTransparent2}"
                                          BackgroundColorClicked="{StaticResource DarkGreenTransparent1}"
                                          WaterMark="Tìm kiếm"
+                                         Text="{Binding SearchString, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                                          TextColor="White"
                                          TextSize="15"
-                                         Foreground="White"/>
+                                         Foreground="White">
+                <i:Interaction.Triggers>
+                    <i:EventTrigger EventName="TextChanged">
+                        <i:InvokeCommandAction Command="{Binding RefreshCommand}"/>
+                    </i:EventTrigger>
+                </i:Interaction.Triggers>
+            </CustomControl:CustomTextbox>
             <CustomControl:SelectionList Width="125"
                                          Height="200"
                                          HorizontalAlignment="Left"
                                          VerticalAlignment="Top"
                                          Margin="375, 95, 0, 0"
+                                         SelectedValue="{Binding SelectedSearchFilter, Mode=TwoWay}"
                                          DataList="{Binding SearchFilter}"/>
             <TextBlock VerticalAlignment="Top"
                        HorizontalAlignment="Right"

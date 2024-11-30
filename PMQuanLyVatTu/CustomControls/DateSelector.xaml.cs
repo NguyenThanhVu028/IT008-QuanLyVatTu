@@ -17,6 +17,13 @@ namespace PMQuanLyVatTu.CustomControls
 {
     public partial class DateSelector : UserControl
     {
+        public bool IsAllowed
+        {
+            get { return (bool)GetValue(IsAllowedProperty); }
+            set { SetValue(IsAllowedProperty, value); }
+        }
+        public static readonly DependencyProperty IsAllowedProperty =
+            DependencyProperty.Register("IsAllowed", typeof(bool), typeof(DateSelector), new PropertyMetadata(true));
         public string SelectedValue
         {
             get { return (string)GetValue(SelectedValueProperty); }
@@ -28,7 +35,7 @@ namespace PMQuanLyVatTu.CustomControls
         {
             InitializeComponent();
             SelectedValue = (DateTime.Now).ToShortDateString();
-            this.DataContext = this;
+            Output.DataContext = this;
         }
         void SelectedDateChanged(object sender, RoutedEventArgs e)
         {

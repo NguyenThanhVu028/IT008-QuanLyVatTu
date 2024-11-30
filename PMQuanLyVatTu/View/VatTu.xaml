@@ -4,9 +4,11 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:PMQuanLyVatTu.View"
+             xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
              xmlns:CustomControl="clr-namespace:PMQuanLyVatTu.CustomControls"
              mc:Ignorable="d" 
-             d:DesignHeight="665" d:DesignWidth="1080">
+             d:DesignHeight="665" d:DesignWidth="1080"
+             x:Name="ThisUC">
     <UserControl.RenderTransform>
         <TranslateTransform X="0" Y="50"/>
     </UserControl.RenderTransform>
@@ -102,21 +104,21 @@
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
                                 <StackPanel Orientation="Horizontal">
-                                    <CustomControl:ImageButton x:Name="EditButton" 
+                                    <!--<CustomControl:ImageButton x:Name="EditButton" 
                                                            Width="20"
                                                            Height="20"
                                                            ImageLocation="/Material/Images/Icons/edit1.png"
-                                                           BorderBackgroundHightlight="{StaticResource LightRed}"
+                                                           BorderBackgroundHightlight="{StaticResource DarkGreenTransparent1}"
                                                            Margin="7, 7, 7, 7"
-                                                           DataContext="{Binding ElementName=ThisWin, Path=DataContext}"
-                                                           Command="{Binding EditButtonCommand}"/>
+                                                           DataContext="{Binding ElementName=ThisUC, Path=DataContext}"
+                                                           Command="{Binding EditButtonCommand}"/>-->
                                     <CustomControl:ImageButton x:Name="DeleteButton" 
                                                            Width="20"
                                                            Height="20"
                                                            ImageLocation="/Material/Images/Icons/delete.png"
                                                            BorderBackgroundHightlight="{StaticResource LightRed}"
                                                            Margin="7, 7, 7, 7"
-                                                           DataContext="{Binding ElementName=ThisWin, Path=DataContext}"
+                                                           DataContext="{Binding ElementName=ThisUC, Path=DataContext}"
                                                            Command="{Binding DeleteButtonCommand}"/>
                                 </StackPanel>
                             </DataTemplate>
@@ -162,7 +164,8 @@
                                         DisplayText="Thêm"
                                         TextSize="15"
                                         Margin="0, 95, 30, 0"
-                                        RadiusOfCorner="5"/>
+                                        RadiusOfCorner="5"
+                                        Command="{Binding AddCommand}"/>
             <CustomControl:CustomButton Width="120"
                                         Height="40"
                                         HorizontalAlignment="Right"
@@ -188,7 +191,7 @@
                                         Margin="0, 95, 260, 0"
                                         RadiusOfCorner="5"
                                         Command="{Binding RefreshCommand}"
-                                        CommandParameter="{Binding ElementName=ItemDiplayer}"/>
+                                        CommandParameter="{Binding ElementName=LargeIconDisplayer}"/>
             <CustomControl:CustomTextbox Width="335"
                                          Height="40"
                                          HorizontalAlignment="Left"
@@ -199,16 +202,25 @@
                                          BorderColorClicked="Aqua"
                                          BorderThick="2"
                                          BackgroundColor="Transparent"
+                                         BackgroundColorHighlight="{StaticResource DarkGreenTransparent2}"
                                          BackgroundColorClicked="{StaticResource DarkGreenTransparent1}"
                                          WaterMark="Tìm kiếm"
+                                         Text="{Binding SearchString, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                                          TextColor="White"
                                          TextSize="15"
-                                         Foreground="White"/>
+                                         Foreground="White">
+                <i:Interaction.Triggers>
+                    <i:EventTrigger EventName="TextChanged">
+                        <i:InvokeCommandAction Command="{Binding RefreshCommand}"/>
+                    </i:EventTrigger>
+                </i:Interaction.Triggers>
+            </CustomControl:CustomTextbox>
             <CustomControl:SelectionList Width="155"
                                          Height="200"
                                          HorizontalAlignment="Left"
                                          VerticalAlignment="Top"
                                          Margin="375, 95, 0, 0"
+                                         SelectedValue="{Binding SelectedSearchFilter, Mode=TwoWay}"
                                          DataList="{Binding SearchFilter}"/>
             <TextBlock VerticalAlignment="Top"
                        HorizontalAlignment="Right"

@@ -20,12 +20,13 @@ namespace PMQuanLyVatTu.ErrorMessage
         {
             InitializeComponent();
         }
-        void MouseDownEvent(object sender, MouseButtonEventArgs e)
+        void TryAgainClick(object sender, RoutedEventArgs e)
         {
-            if(e.ChangedButton == MouseButton.Left)
-            {
-                this.DragMove();
-            }
+            this.Close();
+        }
+        void MoveWindow(object sender, RoutedEventArgs e)
+        {
+            this.DragMove();
         }
     }
 }

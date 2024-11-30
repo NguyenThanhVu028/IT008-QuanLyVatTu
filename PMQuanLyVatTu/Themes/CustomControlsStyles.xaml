@@ -170,6 +170,10 @@
                         <Trigger Property="Text" Value="">
                             <Setter Property="Visibility" Value="Visible" TargetName="WaterMark"/>
                         </Trigger>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter Property="Background" Value="{Binding BackgroundColorHighlight, RelativeSource={RelativeSource TemplatedParent}}" TargetName="BoxBorder"/>
+                            <Setter Property="BorderBrush" Value="{Binding BorderColorHighlight, RelativeSource={RelativeSource TemplatedParent}}" TargetName="BoxBorder"/>
+                        </Trigger>
                         <Trigger Property="IsFocused" Value="True">
                             <Setter Property="Background" Value="{Binding BackgroundColorClicked, RelativeSource={RelativeSource TemplatedParent}}" TargetName="BoxBorder"/>
                             <Setter Property="BorderBrush" Value="{Binding BorderColorClicked, RelativeSource={RelativeSource TemplatedParent}}" TargetName="BoxBorder"/>
@@ -571,10 +575,12 @@
                                        TextWrapping="Wrap"
                                        TextAlignment="Center"/>
                             <TextBlock Grid.Row="1"
-                                       HorizontalAlignment="Center"
+                                       HorizontalAlignment="Stretch"
                                        VerticalAlignment="Top"
-                                       Margin="0, 5, 0, 0"
-                                       Text="{Binding ChucVu}"
+                                       Margin="20, 5, 20, 0"
+                                       Text="{Binding ChucVu, Converter={StaticResource ChucVuConverter}}"
+                                       TextWrapping="Wrap"
+                                       TextAlignment="Center"
                                        Foreground="White"
                                        FontSize="15"
                                        FontFamily="/Material/Fonts/Lexend/#Lexend Medium"
@@ -616,6 +622,29 @@
                                 </Storyboard>
                             </BeginStoryboard>
                         </EventTrigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    <!--#endregion-->
+    <!--#region ShowPassword-->
+    <Style x:Key="ShowPasswordToggle" TargetType="ToggleButton">
+        <Setter Property="Background" Value="Transparent"/>
+        <Setter Property="BorderBrush" Value="Transparent"/>
+        <Setter Property="BorderThickness" Value="0"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="ToggleButton">
+                    <Image x:Name="DisplayImage"
+                           Source="/Material/Images/Icons/hide.png"/>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsChecked" Value="True">
+                            <Setter Property="Source" TargetName="DisplayImage" Value="/Material/Images/Icons/show.png"/>
+                        </Trigger>
+                        <Trigger Property="IsChecked" Value="False">
+                            <Setter Property="Source" TargetName="DisplayImage" Value="/Material/Images/Icons/hide.png"/>
+                        </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
             </Setter.Value>

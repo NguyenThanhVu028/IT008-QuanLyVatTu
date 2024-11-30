@@ -7,14 +7,14 @@
         xmlns:CustomControl="clr-namespace:PMQuanLyVatTu.CustomControls"
         xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
         mc:Ignorable="d"
-        Title="LoginError" Height="150" Width="400"
+        Title="LoginError" Height="170" Width="420"
         AllowsTransparency="True"
         WindowStyle="None"
         Background="Transparent"
         WindowStartupLocation="CenterScreen"
-        DataContext="{StaticResource LoginErrorVM}"
         Name="ThisWin">
-    <Grid>
+    <Grid MouseLeftButtonDown="MoveWindow"
+          Margin="7, 7, 7, 7">
         <Grid.RenderTransform>
             <TranslateTransform X="0" Y="-10"/>
         </Grid.RenderTransform>
@@ -30,11 +30,9 @@
         </Grid.Triggers>
         <Border Background="{StaticResource LightAqua1}"
                 CornerRadius="20">
-            <i:Interaction.Triggers>
-                <i:EventTrigger EventName="MouseLeftButtonDown">
-                    <i:InvokeCommandAction Command="{Binding MoveWindowCommand}" CommandParameter="{Binding ElementName=ThisWin}"/>
-                </i:EventTrigger>
-            </i:Interaction.Triggers>
+            <Border.BitmapEffect>
+                <DropShadowBitmapEffect Opacity="0.5" ShadowDepth="0"/>
+            </Border.BitmapEffect>
         </Border>
         <StackPanel HorizontalAlignment="Left"
                     VerticalAlignment="Top"
@@ -44,7 +42,7 @@
                    Stretch="UniformToFill"
                    Width="50"
                    Height="50"/>
-            <TextBlock Text="Tên đăng nhập hoặc mật khẩu không đúng"
+            <TextBlock Text="Tên đăng nhập hoặc mật khẩu không đúng."
                        FontFamily="/Material/Fonts/Lexend/#Lexend Regular"
                        FontWeight="Regular"
                        FontSize="20"
@@ -62,7 +60,6 @@
                                     BorderBackgroundClicked="{StaticResource DarkGreen3}"
                                     BorderColor="{StaticResource LightAqua1}"
                                     BorderColorHighlight="{StaticResource White}"
-                                    Command="{Binding TypeAgainCommand}"
-                                    CommandParameter="{Binding ElementName=ThisWin}"/>
+                                    Click="TryAgainClick"/>
     </Grid>
 </Window>

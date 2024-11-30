@@ -111,6 +111,8 @@ namespace PMQuanLyVatTu.ViewModel
         void AccountInfo(object t)
         {
             ThongTinCaNhanWindow AccountWin = new ThongTinCaNhanWindow();
+            ThongTinCaNhanWindowViewModel TTCNVM = new ThongTinCaNhanWindowViewModel();
+            AccountWin.DataContext = TTCNVM;
             AccountWin.ShowDialog();
         }
 

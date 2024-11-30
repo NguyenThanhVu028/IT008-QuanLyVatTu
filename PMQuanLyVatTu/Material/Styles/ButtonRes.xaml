@@ -70,7 +70,6 @@
             </Setter.Value>
         </Setter>
     </Style>
-
     <!--<Style x:Key="CustomCombobox" TargetType="ComboBox">
         <Setter Property="Background" Value="Transparent"/>
         <Setter Property="Template">
@@ -83,7 +82,6 @@
             </Setter.Value>
         </Setter>
     </Style>-->
-
     <Style x:Key="CalendarCalendarButtonStyle1" TargetType="{x:Type CalendarButton}">
         <Setter Property="Background" Value="#FFBADDE9"/>
         <Setter Property="MinWidth" Value="40"/>
@@ -462,6 +460,10 @@
     </Style>
     <Style TargetType="Calendar">
         <Setter Property="Background" Value="Transparent"/>
+    </Style>
+    <Style x:Key="TextBoxUnable" TargetType="Border">
+        <Setter Property="Background" Value="#4C292929"/>
+        <Setter Property="Visibility" Value="{Binding EditMode, Converter={StaticResource BoolToVisibilityConverter}}"/>
     </Style>
 
 </ResourceDictionary>

@@ -19,12 +19,15 @@ namespace PMQuanLyVatTu.ViewModel
             MinimizeWindowCommand = new RelayCommand<Window>(MinimizeWindow);
             MoveWindowCommand = new RelayCommand<Window>(MoveWindow);
         }
+        #region ReturnValue
         private bool _returnValue;
         public bool ReturnValue
         {
             get { return _returnValue; }
             set { _returnValue = value; OnPropertyChanged(); }
         }
+        #endregion
+        #region UserName Password
         private string _userName = "";
         private string _passWord = "";
         public string UserName
@@ -37,6 +40,8 @@ namespace PMQuanLyVatTu.ViewModel
             get { return _passWord; }
             set{ _passWord = value; OnPropertyChanged(); }
         }
+        #endregion
+        #region Command
         public ICommand LoginButtonCommand {  get; set; }
         void LoginButton(Window window)
         {
@@ -44,6 +49,11 @@ namespace PMQuanLyVatTu.ViewModel
             {
                 ReturnValue = true;
                 window.Close();
+            }
+            else if (UserName == "") //Nếu chưa nhập tên đăng nhập, k check password vì có thể cho tk k có mật khẩu
+            {
+                CustomMessage msg = new CustomMessage("/Material/Images/Icons/wrong.png", "LỖI", "Vui lòng nhập tên đăng nhập.");
+                msg.ShowDialog();
             }
             else
             {
@@ -55,6 +65,8 @@ namespace PMQuanLyVatTu.ViewModel
         void ForgetPassword(object t)
         {
             ForgetPasswordWindow forgetPasswordWindow = new ForgetPasswordWindow();
+            ForgetPasswordWindowViewModel viewModel = new ForgetPasswordWindowViewModel();
+            forgetPasswordWindow.DataContext = viewModel;
             forgetPasswordWindow.ShowDialog();
         }
         public ICommand CloseWindowCommand { get; set; }
@@ -73,5 +85,6 @@ namespace PMQuanLyVatTu.ViewModel
         {
             window.DragMove();
         }
+        #endregion
     }
 }
