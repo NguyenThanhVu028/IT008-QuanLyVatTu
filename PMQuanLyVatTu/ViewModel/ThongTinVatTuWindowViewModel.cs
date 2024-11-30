@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Diagnostics.Eventing.Reader;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -22,6 +23,7 @@ namespace PMQuanLyVatTu.ViewModel
             CloseCommand = new RelayCommand<Window>(CloseWin);
             MoveWindowCommand = new RelayCommand<Window>(MoveWindow);
             EditInfoCommand = new RelayCommand<object>(EditInfo);
+            DeleteButtonCommand = new RelayCommand<Window>(DeleteButton);
             SaveInfoCommand = new RelayCommand<object>(SaveInfo);
             ChangeAvatarCommand = new RelayCommand<object>(ChangeAvatar);
         }
@@ -150,6 +152,19 @@ namespace PMQuanLyVatTu.ViewModel
             msg.ShowDialog();
             if (msg.ReturnValue == true) EnableEditing = true;
         }
+        public ICommand DeleteButtonCommand { get; set; } 
+        void DeleteButton(Window t)
+        {
+            CustomMessage msg = new CustomMessage("/Material/Images/Icons/question.png", "THÔNG BÁO", "Bạn có muốn xóa vật tư đã chọn?");
+            msg.ShowDialog();
+            if (msg.ReturnValue == true)
+            { //Chấp nhận xóa
+                EnableEditing = false;
+                //Xóa
+                t.Close();
+            }
+            else t.Close();
+        }
         public ICommand SaveInfoCommand { get; set; }
         void SaveInfo(object t)
         {
@@ -173,7 +188,6 @@ namespace PMQuanLyVatTu.ViewModel
                 }
                 else // Hợp lệ
                 {
-                    MessageBox.Show(MaVT);
                     EnableEditing = false;
                     CustomMessage msg = new CustomMessage("/Material/Images/Icons/success.png", "THÀNH CÔNG", "Thêm vật tư thành công.");
                     msg.ShowDialog();

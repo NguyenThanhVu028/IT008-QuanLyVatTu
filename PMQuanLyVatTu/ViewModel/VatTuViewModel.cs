@@ -1,4 +1,5 @@
 ﻿using PMQuanLyVatTu.CustomControls;
+using PMQuanLyVatTu.ErrorMessage;
 using PMQuanLyVatTu.View;
 using System;
 using System.Collections.Generic;
@@ -16,8 +17,11 @@ namespace PMQuanLyVatTu.ViewModel
     {
         public VatTuViewModel() {
             AddCommand = new RelayCommand<object>(Add);
+            XoaGanDayCommand = new RelayCommand<object>(XoaGanDay);
             RefreshCommand = new RelayCommand<object>(Refresh);
             EditButtonCommand = new RelayCommand<object>(EditButton);
+            DeleteButtonCommand = new RelayCommand<object>(DeleteButton);
+            DeleteSelectedCommand = new RelayCommand<object>(DeleteSelected);
             Refresh();
         }
         #region Data for SelectionList
@@ -29,7 +33,7 @@ namespace PMQuanLyVatTu.ViewModel
         }
         #endregion
         #region SearchBar
-        private string _selectedSearchFilter;
+        private string _selectedSearchFilter = "Không";
         public string SelectedSearchFilter
         {
             get { return _selectedSearchFilter; }
@@ -39,7 +43,7 @@ namespace PMQuanLyVatTu.ViewModel
         public string SearchString
         {
             get { return _searchString; }
-            set { _searchString = value; OnPropertyChanged(); }
+            set { _searchString = value; OnPropertyChanged(); Refresh();}
         }
         #endregion
         #region DanhSachVatTu
@@ -59,7 +63,7 @@ namespace PMQuanLyVatTu.ViewModel
         public Supply SelectedVatTu
         {
             get { return _selectedVatTu; }
-            set { _selectedVatTu = value; OnPropertyChanged(); EditButton(); }
+            set { _selectedVatTu = value; OnPropertyChanged(); /*EditButton();*/ }
         }
         #endregion
         #region Command
@@ -71,6 +75,14 @@ namespace PMQuanLyVatTu.ViewModel
             AddWindow.DataContext = TTVTVM;
             AddWindow.ShowDialog();
             Refresh(); 
+        }
+        public ICommand XoaGanDayCommand { get; set; }
+        void XoaGanDay(object t)
+        {
+            XoaGanDayWindow xoaGanDayWindow = new XoaGanDayWindow();
+            XoaGanDayWindowViewModel VM = new XoaGanDayWindowViewModel("vt");
+            xoaGanDayWindow.DataContext = VM;
+            xoaGanDayWindow.ShowDialog();
         }
         public ICommand RefreshCommand { get; set; }
         void Refresh(object t=null)
@@ -101,6 +113,39 @@ namespace PMQuanLyVatTu.ViewModel
             AddWindow.DataContext = TTVTVM;
             AddWindow.ShowDialog();
             Refresh();
+        }
+        public ICommand DeleteButtonCommand {  get; set; }
+        void DeleteButton(object t)
+        {
+            CustomMessage msg = new CustomMessage("/Material/Images/Icons/question.png", "THÔNG BÁO", "Bạn có muốn xóa vật tư đã chọn?");
+            msg.ShowDialog();
+            if (msg.ReturnValue == true)
+            {
+                DanhSachVatTu.Remove(SelectedVatTu);
+            }
+            //Xóa trong database
+            //Refresh();
+        }
+        public ICommand DeleteSelectedCommand { get; set; }
+        void DeleteSelected(object t)
+        {
+            int Count = 0;
+            CustomMessage msg = new CustomMessage("/Material/Images/Icons/question.png", "THÔNG BÁO", "Bạn có muốn xóa mục đã chọn?");
+            msg.ShowDialog();
+            if (msg.ReturnValue == true)
+            {
+                foreach (Supply i in DanhSachVatTu)
+                {
+                    if (i.Checked == true)
+                    {
+                        //Xóa
+                        Count++;
+                    }
+                }
+                CustomMessage msg2 = new CustomMessage("/Material/Images/Icons/success.png", "THÀNH CÔNG", "Đã xóa thành công " + Count.ToString() + " mục.");
+                msg2.ShowDialog();
+                Refresh();
+            }
         }
         #endregion
         #region Function

@@ -104,14 +104,14 @@
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
                                 <StackPanel Orientation="Horizontal">
-                                    <!--<CustomControl:ImageButton x:Name="EditButton" 
+                                    <CustomControl:ImageButton x:Name="EditButton" 
                                                            Width="20"
                                                            Height="20"
                                                            ImageLocation="/Material/Images/Icons/edit1.png"
                                                            BorderBackgroundHightlight="{StaticResource DarkGreenTransparent1}"
                                                            Margin="7, 7, 7, 7"
                                                            DataContext="{Binding ElementName=ThisUC, Path=DataContext}"
-                                                           Command="{Binding EditButtonCommand}"/>-->
+                                                           Command="{Binding EditButtonCommand}"/>
                                     <CustomControl:ImageButton x:Name="DeleteButton" 
                                                            Width="20"
                                                            Height="20"
@@ -177,7 +177,8 @@
                                         DisplayText="Xóa gần đây"
                                         TextSize="15"
                                         Margin="0, 95, 135, 0"
-                                        RadiusOfCorner="5"/>
+                                        RadiusOfCorner="5"
+                                        Command="{Binding XoaGanDayCommand}"/>
             <CustomControl:CustomButton Width="100"
                                         Height="40"
                                         HorizontalAlignment="Right"
@@ -202,18 +203,18 @@
                                          BorderColorClicked="Aqua"
                                          BorderThick="2"
                                          BackgroundColor="Transparent"
-                                         BackgroundColorHighlight="{StaticResource DarkGreenTransparent2}"
-                                         BackgroundColorClicked="{StaticResource DarkGreenTransparent1}"
+                                         BackgroundColorHighlight="{StaticResource DarkGreenTransparent1}"
+                                         BackgroundColorClicked="{StaticResource DarkGreenTransparent2}"
                                          WaterMark="Tìm kiếm"
                                          Text="{Binding SearchString, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                                          TextColor="White"
                                          TextSize="15"
                                          Foreground="White">
-                <i:Interaction.Triggers>
+                <!--<i:Interaction.Triggers>
                     <i:EventTrigger EventName="TextChanged">
                         <i:InvokeCommandAction Command="{Binding RefreshCommand}"/>
                     </i:EventTrigger>
-                </i:Interaction.Triggers>
+                </i:Interaction.Triggers>-->
             </CustomControl:CustomTextbox>
             <CustomControl:SelectionList Width="155"
                                          Height="200"

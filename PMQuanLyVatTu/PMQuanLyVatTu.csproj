@@ -51,6 +51,7 @@
     <None Remove="Material\Images\Icons\password_login.png" />
     <None Remove="Material\Images\Icons\printer1.png" />
     <None Remove="Material\Images\Icons\printer2.png" />
+    <None Remove="Material\Images\Icons\question.png" />
     <None Remove="Material\Images\Icons\receipt.png" />
     <None Remove="Material\Images\Icons\report.png" />
     <None Remove="Material\Images\Icons\request.png" />
@@ -116,6 +117,7 @@
     <Resource Include="Material\Images\Icons\password_login.png" />
     <Resource Include="Material\Images\Icons\printer1.png" />
     <Resource Include="Material\Images\Icons\printer2.png" />
+    <Resource Include="Material\Images\Icons\question.png" />
     <Resource Include="Material\Images\Icons\receipt.png" />
     <Resource Include="Material\Images\Icons\report.png" />
     <Resource Include="Material\Images\Icons\request.png" />

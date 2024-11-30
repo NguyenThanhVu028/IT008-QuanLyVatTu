@@ -111,7 +111,8 @@
                 <StackPanel Grid.Row="1"
                             VerticalAlignment="Top"
                             Orientation="Vertical">
-                    <CustomControl:NavigationButton Height="50"
+                    <CustomControl:NavigationButton x:Name="TrangChu" 
+                                                    Height="50"
                                                     IsChecked="True"
                                                     ImageLocation="/Material/Images/Icons/home.png"
                                                     BackgroundColor="{StaticResource BackGroundColor}"
@@ -123,7 +124,8 @@
                                                     BorderThick="2"
                                                     Margin="10, 0, 0, 0"
                                                     Command="{Binding TrangChuCommand}"/>
-                    <CustomControl:NavigationButton Height="50"
+                    <CustomControl:NavigationButton x:Name="VatTu" 
+                                                    Height="50"
                                                     ImageLocation="/Material/Images/Icons/supply.png"
                                                     BackgroundColor="{StaticResource BackGroundColor}"
                                                     RadiusOfCorner="10"
@@ -134,7 +136,8 @@
                                                     BorderThick="2"
                                                     Margin="10, 5, 0, 0"
                                                     Command="{Binding VatTuCommand}"/>
-                    <CustomControl:NavigationButton Height="50"
+                    <CustomControl:NavigationButton x:Name="NhanVien" 
+                                                    Height="50"
                                                     ImageLocation="/Material/Images/Icons/employee.png"
                                                     BackgroundColor="{StaticResource BackGroundColor}"
                                                     RadiusOfCorner="10"
@@ -145,7 +148,8 @@
                                                     BorderThick="2"
                                                     Margin="10, 5, 0, 0"
                                                     Command="{Binding NhanVienCommand}"/>
-                    <CustomControl:NavigationButton Height="50"
+                    <CustomControl:NavigationButton x:Name="KhachHang" 
+                                                    Height="50"
                                                     ImageLocation="/Material/Images/Icons/customer.png"
                                                     BackgroundColor="{StaticResource BackGroundColor}"
                                                     RadiusOfCorner="10"
@@ -156,7 +160,8 @@
                                                     BorderThick="2"
                                                     Margin="10, 5, 0, 0"
                                                     Command="{Binding KhachHangCommand}"/>
-                    <CustomControl:NavigationButton Height="50"
+                    <CustomControl:NavigationButton x:Name="NhaCungCap" 
+                                                    Height="50"
                                                     ImageLocation="/Material/Images/Icons/supplier.png"
                                                     BackgroundColor="{StaticResource BackGroundColor}"
                                                     RadiusOfCorner="10"
@@ -167,7 +172,8 @@
                                                     BorderThick="2"
                                                     Margin="10, 5, 0, 0"
                                                     Command="{Binding NhaCungCapCommand}"/>
-                    <CustomControl:NavigationButton Height="50"
+                    <CustomControl:NavigationButton x:Name="Kho" 
+                                                    Height="50"
                                                     ImageLocation="/Material/Images/Icons/warehouse.png"
                                                     BackgroundColor="{StaticResource BackGroundColor}"
                                                     RadiusOfCorner="10"
@@ -178,7 +184,8 @@
                                                     BorderThick="2"
                                                     Margin="10, 5, 0, 0"
                                                     Command="{Binding KhoCommand}"/>
-                    <CustomControl:NavigationButton Height="50"
+                    <CustomControl:NavigationButton x:Name="Duyet" 
+                                                    Height="50"
                                                     ImageLocation="/Material/Images/Icons/approve.png"
                                                     BackgroundColor="{StaticResource BackGroundColor}"
                                                     RadiusOfCorner="10"
@@ -189,7 +196,8 @@
                                                     BorderThick="2"
                                                     Margin="10, 5, 0, 0"
                                                     Command="{Binding DuyetCommand}"/>
-                    <CustomControl:NavigationButton Height="50"
+                    <CustomControl:NavigationButton x:Name="ThongKe" 
+                                                    Height="50"
                                                     ImageLocation="/Material/Images/Icons/report.png"
                                                     BackgroundColor="{StaticResource BackGroundColor}"
                                                     RadiusOfCorner="10"
@@ -200,7 +208,8 @@
                                                     BorderThick="2"
                                                     Margin="10, 5, 0, 0"
                                                     Command="{Binding ThongKeCommand}"/>
-                    <CustomControl:NavigationButton Height="50"
+                    <CustomControl:NavigationButton x:Name="YeuCauMua" 
+                                                    Height="50"
                                                     ImageLocation="/Material/Images/Icons/request.png"
                                                     BackgroundColor="{StaticResource BackGroundColor}"
                                                     RadiusOfCorner="10"
@@ -211,7 +220,8 @@
                                                     BorderThick="2"
                                                     Margin="10, 5, 0, 0"
                                                     Command="{Binding YeuCauMuaHangCommand}"/>
-                    <CustomControl:NavigationButton Height="50"
+                    <CustomControl:NavigationButton x:Name="YeuCauNhap" 
+                                                    Height="50"
                                                     ImageLocation="/Material/Images/Icons/request.png"
                                                     BackgroundColor="{StaticResource BackGroundColor}"
                                                     RadiusOfCorner="10"
@@ -232,7 +242,8 @@
                                                     BorderColor="Aqua"
                                                     BorderThick="2"
                                                     Margin="10, 5, 0, 0"/>-->
-                    <CustomControl:NavigationButton Height="50"
+                    <CustomControl:NavigationButton x:Name="PhieuNhap" 
+                                                    Height="50"
                                                     ImageLocation="/Material/Images/Icons/receipt.png"
                                                     BackgroundColor="{StaticResource BackGroundColor}"
                                                     RadiusOfCorner="10"
@@ -242,7 +253,8 @@
                                                     BorderColor="Aqua"
                                                     BorderThick="2"
                                                     Margin="10, 5, 0, 0"/>
-                    <CustomControl:NavigationButton Height="50"
+                    <CustomControl:NavigationButton x:Name="PhieuXuat" 
+                                                    Height="50"
                                                     ImageLocation="/Material/Images/Icons/receipt.png"
                                                     BackgroundColor="{StaticResource BackGroundColor}"
                                                     RadiusOfCorner="10"

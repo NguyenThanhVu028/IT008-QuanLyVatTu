@@ -7,13 +7,12 @@
         xmlns:CustomControl="clr-namespace:PMQuanLyVatTu.CustomControls"
         xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
         mc:Ignorable="d"
-        Title="XoaGanDayWindow" Height="665" Width="1010"
+        Title="XoaGanDayWindow" Height="665" Width="770"
         WindowStartupLocation="CenterScreen"
         Background="Transparent"
         AllowsTransparency="True"
         WindowStyle="None"
-        Name="DaXoaGanDayWin"
-        DataContext="{StaticResource XoaGanDayVM}">
+        Name="DaXoaGanDayWin">
     <Grid>
         <Border Background="{StaticResource DarkGreen2}"
                 CornerRadius="20" Margin="0,0,0,0">
@@ -46,7 +45,10 @@
                    FontSize="30"
                    TextAlignment="Center"
                    TextWrapping="Wrap"/>
-        <CustomControl:CustomButton Width="160"
+        <StackPanel HorizontalAlignment="Right"
+                    VerticalAlignment="Top"
+                    Margin="0, 140, 30, 0">
+            <CustomControl:CustomButton Width="110"
                                     Height="40"
                                     HorizontalAlignment="Right"
                                     VerticalAlignment="Top"
@@ -54,24 +56,25 @@
                                     BorderBackgroundClicked="{StaticResource Aqua}"
                                     BorderColor="{StaticResource DarkGreen2}"
                                     BorderColorHighlight="{StaticResource DarkGreen3}"
-                                    DisplayText="Khôi phục đã chọn"
+                                    DisplayText="Làm mới"
                                     TextSize="15"
-                                    Margin="0, 95, 30, 0"
-                                    RadiusOfCorner="5"/>
-        <CustomControl:CustomButton Width="110"
-                                    Height="40"
-                                    HorizontalAlignment="Right"
-                                    VerticalAlignment="Top"
-                                    BorderBackground="{StaticResource LightRed}"
-                                    BorderBackgroundClicked="Red"
-                                    BorderColor="{StaticResource DarkRed}"
-                                    BorderColorHighlight="{StaticResource LightRed2}"
-                                    DisplayText="Xóa tất cả"
-                                    TextSize="15"
-                                    Margin="0, 95, 310, 0"
+                                    Margin="0, 5, 0, 0"
                                     RadiusOfCorner="5"
-                                    Command="{Binding DeleteAllCommand}"/>
-        <CustomControl:CustomButton Width="110"
+                                    Command="{Binding RefreshCommand}"/>
+            <CustomControl:CustomButton Width="110"
+                                        Height="40"
+                                        HorizontalAlignment="Right"
+                                        VerticalAlignment="Top"
+                                        BorderBackground="{StaticResource LightAqua3}"
+                                        BorderBackgroundClicked="{StaticResource Aqua}"
+                                        BorderColor="{StaticResource DarkGreen2}"
+                                        BorderColorHighlight="{StaticResource DarkGreen3}"
+                                        DisplayText="Khôi phục"
+                                        TextSize="15"
+                                        Margin="0, 5, 0, 0"
+                                        RadiusOfCorner="5"
+                                        Command="{Binding RecoverCommand}"/>
+            <CustomControl:CustomButton Width="110"
                                     Height="40"
                                     HorizontalAlignment="Right"
                                     VerticalAlignment="Top"
@@ -81,16 +84,76 @@
                                     BorderColorHighlight="{StaticResource LightRed2}"
                                     DisplayText="Xóa đã chọn"
                                     TextSize="15"
-                                    Margin="0, 95, 195, 0"
+                                    Margin="0, 5, 0, 0"
+                                    RadiusOfCorner="5"
+                                    Command="{Binding DeleteSelectedCommand}"/>
+            <CustomControl:CustomButton Width="110"
+                                    Height="40"
+                                    HorizontalAlignment="Right"
+                                    VerticalAlignment="Top"
+                                    BorderBackground="{StaticResource LightRed}"
+                                    BorderBackgroundClicked="Red"
+                                    BorderColor="{StaticResource DarkRed}"
+                                    BorderColorHighlight="{StaticResource LightRed2}"
+                                    DisplayText="Xóa tất cả"
+                                    TextSize="15"
+                                    Margin="0, 5, 0, 0"
                                     RadiusOfCorner="5"
                                     Command="{Binding DeleteAllCommand}"/>
+        </StackPanel>
+
         <Border HorizontalAlignment="Stretch"
                 VerticalAlignment="Stretch"
-                Margin="30, 140, 30, 30"
-                Background="{StaticResource LightAqua1}"
+                Margin="30, 140, 150, 30"
+                Background="{StaticResource White}"
                 BorderBrush="Aqua"
                 BorderThickness="2"
-                CornerRadius="25"/>
+                CornerRadius="25">
+            <DataGrid x:Name="DisplayDataGRid" 
+                      SelectedItem="{Binding SelectedDaXoa}"
+                      Style="{DynamicResource DataGridStyle1}" 
+                      CellStyle="{DynamicResource DataGridCellStyle1}" 
+                      ColumnHeaderStyle="{DynamicResource DataGridColumnHeaderStyle1}" 
+                      RowStyle="{DynamicResource DataGridRowStyle1}" 
+                      HorizontalAlignment="Stretch"
+                      VerticalAlignment="Stretch"
+                      Margin="20, 10, 20, 10"
+                      ItemsSource="{Binding DanhSachDaXoa}">
+                <DataGrid.Columns>
+                    <DataGridTemplateColumn Width="30">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <CheckBox IsChecked="{Binding Checked, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                    <DataGridTextColumn Header="Mã đã xóa"
+                                        Width="150"
+                                        IsReadOnly="True"
+                                        Binding="{Binding MaDaXoa}"/>
+                    <DataGridTextColumn Header="Thời gian xóa"
+                                        Width="330"
+                                        IsReadOnly="True"
+                                        Binding="{Binding ThoiGianXoa}"/>
+                    <DataGridTemplateColumn Header="" IsReadOnly="True">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <StackPanel Orientation="Horizontal">
+                                    <CustomControl:ImageButton x:Name="DeleteButton" 
+                                                               Width="20"
+                                                               Height="20"
+                                                               ImageLocation="/Material/Images/Icons/delete.png"
+                                                               BorderBackgroundHightlight="{StaticResource LightRed}"
+                                                               Margin="7, 7, 7, 7"
+                                                               DataContext="{Binding ElementName=DaXoaGanDayWin, Path=DataContext}"
+                                                               Command="{Binding DeleteButtonCommand}"/>
+                                </StackPanel>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                </DataGrid.Columns>
+            </DataGrid>
+        </Border>
         <CustomControl:CustomTextbox Width="335"
                                      Height="40"
                                      HorizontalAlignment="Left"
@@ -101,16 +164,19 @@
                                      BorderColorClicked="Aqua"
                                      BorderThick="2"
                                      BackgroundColor="Transparent"
-                                     BackgroundColorClicked="{StaticResource DarkGreenTransparent1}"
+                                     BackgroundColorHighlight="{StaticResource DarkGreenTransparent1}"
+                                     BackgroundColorClicked="{StaticResource DarkGreenTransparent2}"
                                      WaterMark="Tìm kiếm"
                                      TextColor="White"
                                      TextSize="15"
+                                     Text="{Binding SearchString, UpdateSourceTrigger=PropertyChanged}"
                                      Foreground="White"/>
         <CustomControl:SelectionList Width="125"
-                                     Height="200"
+                                     Height="150"
                                      HorizontalAlignment="Left"
                                      VerticalAlignment="Top"
-                                     Margin="375, 95, 0, 0"
-                                     DataList="{Binding SearchFilter}"/>
+                                     Margin="370, 95, 0, 0"
+                                     DataList="{Binding SearchFilter}"
+                                     SelectedValue="{Binding SelectedSearchFilter, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
     </Grid>
 </Window>

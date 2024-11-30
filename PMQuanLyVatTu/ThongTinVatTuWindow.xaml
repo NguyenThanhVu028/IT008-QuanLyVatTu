@@ -54,15 +54,26 @@
                     <DropShadowBitmapEffect/>
                 </Border.BitmapEffect>
             </Border>
-            <CustomControl:ImageButton Grid.Row="1"
-                                   HorizontalAlignment="Right"
-                                   VerticalAlignment="Top"
-                                   Margin="0, 25, 35, 0"
-                                   Width="30"
-                                   Height="30"
-                                   ImageLocation="/Material/Images/Icons/edit1.png"
-                                   BorderBackgroundHightlight="{StaticResource LightAqua1}"
-                                   Command="{Binding EditInfoCommand}"/>
+            <StackPanel Grid.Row="1"
+                        HorizontalAlignment="Right"
+                        VerticalAlignment="Top"
+                        Margin="0, 25, 35, 0"
+                        Orientation="Horizontal">
+                <CustomControl:ImageButton Width="30"
+                                           Height="30"
+                                           Margin="0, 0, 10, 0"
+                                           ImageLocation="/Material/Images/Icons/edit1.png"
+                                           BorderBackgroundHightlight="{StaticResource LightAqua1}"
+                                           Command="{Binding EditInfoCommand}"/>
+                <CustomControl:ImageButton Width="30"
+                                           Height="30"
+                                           ImageLocation="/Material/Images/Icons/delete.png"
+                                           BorderBackgroundHightlight="{StaticResource LightRed}"
+                                           Visibility="{Binding EditMode, Converter={StaticResource BoolToVisibilityConverter}}"
+                                           Command="{Binding DeleteButtonCommand}"
+                                           CommandParameter="{Binding ElementName=ThisWin}"/>
+            </StackPanel>
+
             <CustomControl:CircleImage Grid.Row="1"
                                        HorizontalAlignment="Left"
                                        VerticalAlignment="Top"
