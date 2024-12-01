@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <OutputType>WinExe</OutputType>
-    <TargetFramework>net8.0-windows</TargetFramework>
+    <TargetFramework>net8.0-windows7.0</TargetFramework>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
     <UseWPF>true</UseWPF>
@@ -42,8 +42,10 @@
     <None Remove="Material\Images\Icons\edit2.png" />
     <None Remove="Material\Images\Icons\edit3.png" />
     <None Remove="Material\Images\Icons\employee.png" />
+    <None Remove="Material\Images\Icons\export_request.png" />
     <None Remove="Material\Images\Icons\hide.png" />
     <None Remove="Material\Images\Icons\home.png" />
+    <None Remove="Material\Images\Icons\import_request.png" />
     <None Remove="Material\Images\Icons\maximize.png" />
     <None Remove="Material\Images\Icons\minimize.png" />
     <None Remove="Material\Images\Icons\moon.png" />
@@ -108,8 +110,10 @@
     <Resource Include="Material\Images\Icons\edit2.png" />
     <Resource Include="Material\Images\Icons\edit3.png" />
     <Resource Include="Material\Images\Icons\employee.png" />
+    <Resource Include="Material\Images\Icons\export_request.png" />
     <Resource Include="Material\Images\Icons\hide.png" />
     <Resource Include="Material\Images\Icons\home.png" />
+    <Resource Include="Material\Images\Icons\import_request.png" />
     <Resource Include="Material\Images\Icons\maximize.png" />
     <Resource Include="Material\Images\Icons\minimize.png" />
     <Resource Include="Material\Images\Icons\moon.png" />

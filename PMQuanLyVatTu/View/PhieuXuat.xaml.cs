@@ -13,13 +13,16 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace PMQuanLyVatTu.CustomControls
+namespace PMQuanLyVatTu.View
 {
-    public class NhanVienDisplayer : Button
+    /// <summary>
+    /// Interaction logic for PhieuXuat.xaml
+    /// </summary>
+    public partial class PhieuXuat : UserControl
     {
-        static NhanVienDisplayer()
+        public PhieuXuat()
         {
-            DefaultStyleKeyProperty.OverrideMetadata(typeof(NhanVienDisplayer), new FrameworkPropertyMetadata(typeof(NhanVienDisplayer)));
+            InitializeComponent();
         }
     }
 }

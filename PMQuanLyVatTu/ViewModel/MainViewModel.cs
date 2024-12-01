@@ -37,6 +37,8 @@ namespace PMQuanLyVatTu.ViewModel
             ThongKeCommand = new RelayCommand<object>(ThongKe);
             YeuCauMuaHangCommand = new RelayCommand<object>(YeuCauMuaHang);
             YeuCauNhapHangCommand = new RelayCommand<object>(YeuCauNhapHang);
+            PhieuNhapCommand = new RelayCommand<object>(PhieuNhap);
+            PhieuXuatCommand = new RelayCommand<object> (PhieuXuat);
             #endregion
             #region Page ViewModel
             LoginVM = new LoginWindowViewModel();
@@ -50,6 +52,8 @@ namespace PMQuanLyVatTu.ViewModel
             ThongKeVM = new ThongKeViewModel();
             YeuCauMuaHangVM = new YeuCauMuaHangViewModel();
             YeuCauNhapHangVM = new YeuCauNhapHangViewModel();
+            PhieuNhapVM = new PhieuNhapViewModel();
+            PhieuXuatVM = new PhieuXuatViewModel();
             #endregion
             //Khởi tạo các trang/window ban đầu
             _currentPage = new TrangChu(); (_currentPage as TrangChu).DataContext = TrangChuVM;
@@ -111,7 +115,7 @@ namespace PMQuanLyVatTu.ViewModel
         void AccountInfo(object t)
         {
             ThongTinCaNhanWindow AccountWin = new ThongTinCaNhanWindow();
-            ThongTinCaNhanWindowViewModel TTCNVM = new ThongTinCaNhanWindowViewModel();
+            ThongTinCaNhanWindowViewModel TTCNVM = new ThongTinCaNhanWindowViewModel("NV0001");
             AccountWin.DataContext = TTCNVM;
             AccountWin.ShowDialog();
         }
@@ -136,6 +140,10 @@ namespace PMQuanLyVatTu.ViewModel
         void YeuCauMuaHang(object t) { if (CurrentPage as YeuCauMuaHang == null) { CurrentPage = new YeuCauMuaHang(); (CurrentPage as YeuCauMuaHang).DataContext = YeuCauMuaHangVM; } }
         public ICommand YeuCauNhapHangCommand { get; set; }
         void YeuCauNhapHang(object t) { if (CurrentPage as YeuCauNhapHang == null) { CurrentPage = new YeuCauNhapHang(); (CurrentPage as YeuCauNhapHang).DataContext = YeuCauMuaHangVM; } }
+        public ICommand PhieuNhapCommand { get; set; }
+        void PhieuNhap(object t) { if(CurrentPage as PhieuNhap == null) { CurrentPage = new PhieuNhap(); (CurrentPage as PhieuNhap).DataContext = PhieuNhapVM; } }
+        public ICommand PhieuXuatCommand { get; set; }
+        void PhieuXuat(object t) { if(CurrentPage as PhieuXuat == null) { CurrentPage = new PhieuXuat(); (CurrentPage as PhieuXuat).DataContext = PhieuXuatVM; } }
 
         LoginWindowViewModel LoginVM;
         TrangChuViewModel TrangChuVM;
@@ -148,6 +156,8 @@ namespace PMQuanLyVatTu.ViewModel
         ThongKeViewModel ThongKeVM;
         YeuCauMuaHangViewModel YeuCauMuaHangVM;
         YeuCauNhapHangViewModel YeuCauNhapHangVM;
+        PhieuNhapViewModel PhieuNhapVM;
+        PhieuXuatViewModel PhieuXuatVM;
         #endregion
     }
 }

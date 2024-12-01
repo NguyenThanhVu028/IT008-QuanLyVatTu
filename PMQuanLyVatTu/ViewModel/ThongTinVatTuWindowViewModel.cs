@@ -17,8 +17,8 @@ namespace PMQuanLyVatTu.ViewModel
     {
         public ThongTinVatTuWindowViewModel(string mavt = null)
         {
-            if(mavt != null) { EditMode = true; Title = "CHỈNH SỬA THÔNG TIN VẬT TƯ"; LoadData(mavt); }
-            else { EditMode = false; Title = "THÊM THÔNG TIN VẬT TƯ"; }
+            if(mavt != null) { EditMode = true; Title = "CHỈNH SỬA VẬT TƯ"; LoadData(mavt); }
+            else { EditMode = false; Title = "THÊM VẬT TƯ"; }
 
             CloseCommand = new RelayCommand<Window>(CloseWin);
             MoveWindowCommand = new RelayCommand<Window>(MoveWindow);
@@ -183,7 +183,7 @@ namespace PMQuanLyVatTu.ViewModel
                 }
                 else if (false) //Trùng mã vật tư
                 {
-                    InputError msg = new InputError();
+                    AlreadyExistsError msg = new AlreadyExistsError();
                     msg.ShowDialog();
                 }
                 else // Hợp lệ

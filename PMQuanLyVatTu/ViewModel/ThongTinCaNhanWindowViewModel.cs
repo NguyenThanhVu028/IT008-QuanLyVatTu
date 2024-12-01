@@ -12,7 +12,7 @@ namespace PMQuanLyVatTu.ViewModel
 {
     public class ThongTinCaNhanWindowViewModel : BaseViewModel
     {
-        public ThongTinCaNhanWindowViewModel()
+        public ThongTinCaNhanWindowViewModel(string MaNV)
         {
             CloseWindowCommand = new RelayCommand<Window>(CloseWindow);
             MoveWindowCommand = new RelayCommand<Window>(MoveWindow);
@@ -68,5 +68,9 @@ namespace PMQuanLyVatTu.ViewModel
             changePasswordWindows.ShowDialog();
         }
         #endregion
+        class Employee
+        {
+
+        }
     }
 }

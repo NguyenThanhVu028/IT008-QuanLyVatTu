@@ -83,6 +83,7 @@ namespace PMQuanLyVatTu.ViewModel
             XoaGanDayWindowViewModel VM = new XoaGanDayWindowViewModel("vt");
             xoaGanDayWindow.DataContext = VM;
             xoaGanDayWindow.ShowDialog();
+            Refresh();
         }
         public ICommand RefreshCommand { get; set; }
         void Refresh(object t=null)
@@ -156,21 +157,22 @@ namespace PMQuanLyVatTu.ViewModel
             ThongTinVatTuWindow AddWindow = new ThongTinVatTuWindow();
             AddWindow.DataContext = TTVTVM;
             AddWindow.ShowDialog();
+            Refresh();
         }
         #endregion
-    }
-    public class Supply
-    {
-        public bool Checked { get; set; }
-        public string MaVT { get; set; }
-        public string TenVatTu { get; set; }
-        public string LoaiVatTu { get; set; }
-        public string DonViTinh { get; set; }
-        public string MaNCC { get; set; }
-        public string MaKho { get; set; }
-        public int GiaNhap { get; set; }
-        public int GiaXuat { get; set; }
-        public int SoLuongTonKho { get; set; }
-        public string ImageLocation {  get; set; }
+        public class Supply
+        {
+            public bool Checked { get; set; }
+            public string MaVT { get; set; }
+            public string TenVatTu { get; set; }
+            public string LoaiVatTu { get; set; }
+            public string DonViTinh { get; set; }
+            public string MaNCC { get; set; }
+            public string MaKho { get; set; }
+            public int GiaNhap { get; set; }
+            public int GiaXuat { get; set; }
+            public int SoLuongTonKho { get; set; }
+            public string ImageLocation { get; set; }
+        }
     }
 }

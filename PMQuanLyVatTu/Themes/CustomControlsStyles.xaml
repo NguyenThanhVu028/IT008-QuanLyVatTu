@@ -162,9 +162,19 @@
                                    VerticalAlignment="Center"
                                    Margin="12, 0, 0, 0"
                                    Visibility="Collapsed"/>
-                        <TextBlock x:Name="HideArea"
-                                   Background="Gray"
-                                   Visibility="{TemplateBinding IsShow, Converter={StaticResource ConvertVisibility}}"/>
+                        <Border x:Name="HideArea"
+                                Background="LightGray"
+                                CornerRadius="{TemplateBinding RadiusOfCorner}"
+                                Visibility="{TemplateBinding IsShow, Converter={StaticResource ConvertVisibility}}">
+                            <TextBlock Text="Thông tin được bảo mật."
+                                       Foreground="Gray"
+                                       FontSize="15"
+                                       FontWeight="Medium"
+                                       FontFamily="/Material/Fonts/Lexend/#Lexend Medium"
+                                       VerticalAlignment="Center"
+                                       HorizontalAlignment="Left"
+                                       Margin="12, 0, 0, 0"/>
+                        </Border>
                     </Grid>
                     <ControlTemplate.Triggers>
                         <Trigger Property="Text" Value="">
