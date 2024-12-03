@@ -10,7 +10,8 @@
         WindowStyle="None"
         Background="Transparent"
         WindowStartupLocation="CenterScreen"
-        Title="CustomMessage" Height="180" Width="400">
+        Title="CustomMessage" Height="180" Width="400"
+        x:Name="ThisWin">
     <Grid MouseLeftButtonDown="MoveWindow"
           Margin="7, 7, 7, 7">
         <Grid.RenderTransform>
@@ -70,10 +71,31 @@
                        VerticalAlignment="Top"
                        TextWrapping="Wrap"/>
         </ScrollViewer>
-        <CustomControl:CustomButton Grid.Column="1"
+
+        <StackPanel Grid.Column="0"
+                    Grid.ColumnSpan="2"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Bottom"
+                    Margin="0, 0, 0, 10"
+                    Orientation="Horizontal">
+            <CustomControl:CustomButton Grid.Column="1"
+                                    HorizontalAlignment="Left"
+                                    VerticalAlignment="Bottom"
+                                    Margin="0, 0, 60, 0"
+                                    Height="30"
+                                    Width="80"
+                                    RadiusOfCorner="10"
+                                    DisplayText="Cancel"
+                                    BorderBackground="{StaticResource DarkRed}"
+                                    BorderBackgroundClicked="{StaticResource DarkRed2}"
+                                    BorderColor="{StaticResource White}"
+                                    BorderColorHighlight="{StaticResource LightRed}"
+                                    Click="CancelClick"
+                                    Visibility="{Binding EnableCancel, Converter={StaticResource BoolToVisibilityConverter}, UpdateSourceTrigger=PropertyChanged}"/>
+            <CustomControl:CustomButton Grid.Column="1"
                                     HorizontalAlignment="Right"
                                     VerticalAlignment="Bottom"
-                                    Margin="0, 0, 80, 10"
+                                    Margin="0, 0, 0, 0"
                                     Height="30"
                                     Width="80"
                                     RadiusOfCorner="10"
@@ -83,19 +105,7 @@
                                     BorderColor="{StaticResource LightAqua1}"
                                     BorderColorHighlight="{StaticResource White}"
                                     Click="OKClick"/>
-        <CustomControl:CustomButton Grid.Column="1"
-                                    HorizontalAlignment="Left"
-                                    VerticalAlignment="Bottom"
-                                    Margin="0, 0, 0, 10"
-                                    Height="30"
-                                    Width="80"
-                                    RadiusOfCorner="10"
-                                    DisplayText="Cancel"
-                                    BorderBackground="{StaticResource DarkRed}"
-                                    BorderBackgroundClicked="{StaticResource DarkRed2}"
-                                    BorderColor="{StaticResource White}"
-                                    BorderColorHighlight="{StaticResource LightRed}"
-                                    Click="CancelClick"/>
+        </StackPanel>
 
     </Grid>
 </Window>

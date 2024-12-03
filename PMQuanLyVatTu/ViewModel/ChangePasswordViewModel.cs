@@ -12,12 +12,23 @@ namespace PMQuanLyVatTu.ViewModel
 {
     public class ChangePasswordViewModel : BaseViewModel
     {
-        public ChangePasswordViewModel()
+        public ChangePasswordViewModel(string manv)
         {
+            MaNV = manv;
+
             ConfirmCommand = new RelayCommand<object>(Confirm);
             CancelCommand = new RelayCommand<Window>(CloseWindow);
             MoveWindowCommand = new RelayCommand<Window>(MoveWindow);
         }
+        #region CurrentUser
+        private string _maNV;
+        public string MaNV
+        {
+            get { return _maNV; }
+            set { _maNV = value; OnPropertyChanged(); }
+        }
+        #endregion
+        #region Command
         public ICommand ConfirmCommand { get; set; }
         void Confirm(object t)
         {
@@ -52,5 +63,6 @@ namespace PMQuanLyVatTu.ViewModel
         {
             window.DragMove();
         }
+        #endregion
     }
 }

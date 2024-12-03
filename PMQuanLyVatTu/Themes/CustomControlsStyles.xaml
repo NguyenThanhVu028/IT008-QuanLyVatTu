@@ -268,6 +268,7 @@
                             <Image Source="{Binding ImageLocation, RelativeSource={RelativeSource TemplatedParent}}"
                                    HorizontalAlignment="Left"
                                    VerticalAlignment="Center"
+                                   Width="40"
                                    Margin="7, 8"/>
                             <TextBlock HorizontalAlignment="Left" 
                                        VerticalAlignment="Center"
@@ -277,6 +278,48 @@
                                        FontSize="{TemplateBinding TextSize}"
                                        FontWeight="Bold"/>
                         </StackPanel>
+                    </Grid>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsChecked" Value="True">
+                            <Setter Property="BorderBrush" Value="{Binding BorderColor, RelativeSource={RelativeSource TemplatedParent}}" TargetName="ButtonBorder"/>
+                        </Trigger>
+                        <EventTrigger RoutedEvent="Mouse.MouseEnter">
+                            <BeginStoryboard>
+                                <Storyboard>
+                                    <ColorAnimation Duration="0:0:0.25" Storyboard.TargetName="ButtonBorder" Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)" To="#FF009191"/>
+                                </Storyboard>
+                            </BeginStoryboard>
+                        </EventTrigger>
+                        <EventTrigger RoutedEvent="Mouse.MouseLeave">
+                            <BeginStoryboard>
+                                <Storyboard>
+                                    <ColorAnimation Duration="0:0:0.25" Storyboard.TargetName="ButtonBorder" Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)" To="#FF001E28"/>
+                                </Storyboard>
+                            </BeginStoryboard>
+                        </EventTrigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    <Style x:Key="ImagelessNavigationButton" TargetType="CustomControl:NavigationButton">
+        <Setter Property="HorizontalAlignment" Value="Stretch"/>
+        <Setter Property="VerticalAlignment" Value="Top"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="CustomControl:NavigationButton">
+                    <Grid>
+                        <Border x:Name="ButtonBorder" 
+                                Background="{TemplateBinding BackgroundColor}"
+                                CornerRadius="{TemplateBinding RadiusOfCorner}"
+                                BorderThickness="{TemplateBinding BorderThick}"/>
+                        <TextBlock HorizontalAlignment="Center" 
+                                       VerticalAlignment="Center"
+                                       Text="{TemplateBinding DisplayText}"
+                                       Foreground="{TemplateBinding TextColor}"
+                                       FontFamily="/Material/Fonts/Lexend/#Lexend Bold"
+                                       FontSize="{TemplateBinding TextSize}"
+                                       FontWeight="Bold"/>
                     </Grid>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsChecked" Value="True">

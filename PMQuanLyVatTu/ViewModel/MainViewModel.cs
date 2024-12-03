@@ -35,7 +35,7 @@ namespace PMQuanLyVatTu.ViewModel
             KhoCommand = new RelayCommand<object>(Kho);
             DuyetCommand = new RelayCommand<object>(Duyet);
             ThongKeCommand = new RelayCommand<object>(ThongKe);
-            YeuCauMuaHangCommand = new RelayCommand<object>(YeuCauMuaHang);
+            YeuCauXuatHangCommand = new RelayCommand<object>(YeuCauXuatHang);
             YeuCauNhapHangCommand = new RelayCommand<object>(YeuCauNhapHang);
             PhieuNhapCommand = new RelayCommand<object>(PhieuNhap);
             PhieuXuatCommand = new RelayCommand<object> (PhieuXuat);
@@ -50,7 +50,7 @@ namespace PMQuanLyVatTu.ViewModel
             KhoVM = new KhoViewModel();
             DuyetVM = new DuyetViewModel();
             ThongKeVM = new ThongKeViewModel();
-            YeuCauMuaHangVM = new YeuCauMuaHangViewModel();
+            YeuCauXuatHangVM = new YeuCauXuatHangViewModel();
             YeuCauNhapHangVM = new YeuCauNhapHangViewModel();
             PhieuNhapVM = new PhieuNhapViewModel();
             PhieuXuatVM = new PhieuXuatViewModel();
@@ -136,10 +136,10 @@ namespace PMQuanLyVatTu.ViewModel
         void Duyet(object t) { if(CurrentPage as Duyet == null) { CurrentPage = new Duyet(); (CurrentPage as Duyet).DataContext = DuyetVM; } }
         public ICommand ThongKeCommand { get; set; }
         void ThongKe(object t) { if(CurrentPage as ThongKe == null) { CurrentPage = new ThongKe(); (CurrentPage as ThongKe).DataContext = ThongKeVM; } }
-        public ICommand YeuCauMuaHangCommand { get; set; }
-        void YeuCauMuaHang(object t) { if (CurrentPage as YeuCauMuaHang == null) { CurrentPage = new YeuCauMuaHang(); (CurrentPage as YeuCauMuaHang).DataContext = YeuCauMuaHangVM; } }
+        public ICommand YeuCauXuatHangCommand { get; set; }
+        void YeuCauXuatHang(object t) { if (CurrentPage as YeuCauXuatHang == null) { CurrentPage = new YeuCauXuatHang(); (CurrentPage as YeuCauXuatHang).DataContext = YeuCauXuatHangVM; } }
         public ICommand YeuCauNhapHangCommand { get; set; }
-        void YeuCauNhapHang(object t) { if (CurrentPage as YeuCauNhapHang == null) { CurrentPage = new YeuCauNhapHang(); (CurrentPage as YeuCauNhapHang).DataContext = YeuCauMuaHangVM; } }
+        void YeuCauNhapHang(object t) { if (CurrentPage as YeuCauNhapHang == null) { CurrentPage = new YeuCauNhapHang(); (CurrentPage as YeuCauNhapHang).DataContext = YeuCauNhapHangVM; } }
         public ICommand PhieuNhapCommand { get; set; }
         void PhieuNhap(object t) { if(CurrentPage as PhieuNhap == null) { CurrentPage = new PhieuNhap(); (CurrentPage as PhieuNhap).DataContext = PhieuNhapVM; } }
         public ICommand PhieuXuatCommand { get; set; }
@@ -154,7 +154,7 @@ namespace PMQuanLyVatTu.ViewModel
         KhoViewModel KhoVM;
         DuyetViewModel DuyetVM;
         ThongKeViewModel ThongKeVM;
-        YeuCauMuaHangViewModel YeuCauMuaHangVM;
+        YeuCauXuatHangViewModel YeuCauXuatHangVM;
         YeuCauNhapHangViewModel YeuCauNhapHangVM;
         PhieuNhapViewModel PhieuNhapVM;
         PhieuXuatViewModel PhieuXuatVM;

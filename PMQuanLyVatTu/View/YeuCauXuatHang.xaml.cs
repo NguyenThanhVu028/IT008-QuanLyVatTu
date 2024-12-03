@@ -16,11 +16,11 @@ using System.Windows.Shapes;
 namespace PMQuanLyVatTu.View
 {
     /// <summary>
-    /// Interaction logic for YeuCauMuaHang.xaml
+    /// Interaction logic for YeuCauXuatHang.xaml
     /// </summary>
-    public partial class YeuCauMuaHang : UserControl
+    public partial class YeuCauXuatHang : UserControl
     {
-        public YeuCauMuaHang()
+        public YeuCauXuatHang()
         {
             InitializeComponent();
         }

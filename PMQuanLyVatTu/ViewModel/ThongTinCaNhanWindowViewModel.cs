@@ -14,12 +14,58 @@ namespace PMQuanLyVatTu.ViewModel
     {
         public ThongTinCaNhanWindowViewModel(string MaNV)
         {
+            LoadData(MaNV);
+
             CloseWindowCommand = new RelayCommand<Window>(CloseWindow);
             MoveWindowCommand = new RelayCommand<Window>(MoveWindow);
             EditInfoCommand = new RelayCommand<object>(EditInfo);
             SaveInfoCommand = new RelayCommand<object>(SaveInfo);
             ChangePasswordCommand = new RelayCommand<object>(ChangePassword);
         }
+        #region Info
+        private string _maNV;
+        private string _hoTen;
+        private string _gTinh;
+        private string _ngaySinh;
+        private string _sDT;
+        private string _email;
+        private string _diaChi;
+        public string MaNV
+        {
+            get { return _maNV; }
+            set { _maNV = value; OnPropertyChanged(); }
+        }
+        public string HoTen
+        {
+            get { return _hoTen; }
+            set { _hoTen = value; OnPropertyChanged(); }
+        }
+        public string GTinh
+        {
+            get { return _gTinh; }
+            set { _gTinh = value; OnPropertyChanged(); }
+        }
+        public string NgaySinh
+        {
+            get { return _ngaySinh; }
+            set { _ngaySinh = value; OnPropertyChanged(); }
+        }
+        public string SDT
+        {
+            get { return _sDT; }
+            set { _sDT = value; OnPropertyChanged(); }
+        }
+        public string Email
+        {
+            get { return _email; }
+            set { _email = value; OnPropertyChanged(); }
+        }
+        public string DiaChi
+        {
+            get { return _diaChi; }
+            set { _diaChi = value; OnPropertyChanged(); }
+        }
+        #endregion
         #region EnableEditing
         private bool _enableEditing = false;
         public bool EnableEditing
@@ -65,12 +111,23 @@ namespace PMQuanLyVatTu.ViewModel
         void ChangePassword(object t)
         {
             ChangePasswordWindows changePasswordWindows = new ChangePasswordWindows();
+            ChangePasswordViewModel VM = new ChangePasswordViewModel(MaNV);
+            changePasswordWindows.DataContext = VM;
             changePasswordWindows.ShowDialog();
         }
         #endregion
-        class Employee
+        #region Function
+        void LoadData(string manv)
         {
-
+            //Đổ thông tin NV vào info
+            MaNV = manv;
+            HoTen = "Nguyễn Văn A";
+            GTinh = "Nam";
+            NgaySinh = "23/12/2970";
+            SDT = "0123456789";
+            Email = "Default@gmail.com";
+            DiaChi = "123 Phố Mỹ Hạnh";
         }
+        #endregion
     }
 }

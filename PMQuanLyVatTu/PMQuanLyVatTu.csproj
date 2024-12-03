@@ -37,6 +37,7 @@
     <None Remove="Material\Images\Icons\close2.png" />
     <None Remove="Material\Images\Icons\customer.png" />
     <None Remove="Material\Images\Icons\delete.png" />
+    <None Remove="Material\Images\Icons\delivery_note.png" />
     <None Remove="Material\Images\Icons\denied_request.png" />
     <None Remove="Material\Images\Icons\edit1.png" />
     <None Remove="Material\Images\Icons\edit2.png" />
@@ -55,6 +56,7 @@
     <None Remove="Material\Images\Icons\printer2.png" />
     <None Remove="Material\Images\Icons\question.png" />
     <None Remove="Material\Images\Icons\receipt.png" />
+    <None Remove="Material\Images\Icons\received_note.png" />
     <None Remove="Material\Images\Icons\report.png" />
     <None Remove="Material\Images\Icons\request.png" />
     <None Remove="Material\Images\Icons\show.png" />
@@ -105,6 +107,7 @@
     <Resource Include="Material\Images\Icons\close2.png" />
     <Resource Include="Material\Images\Icons\customer.png" />
     <Resource Include="Material\Images\Icons\delete.png" />
+    <Resource Include="Material\Images\Icons\delivery_note.png" />
     <Resource Include="Material\Images\Icons\denied_request.png" />
     <Resource Include="Material\Images\Icons\edit1.png" />
     <Resource Include="Material\Images\Icons\edit2.png" />
@@ -122,7 +125,7 @@
     <Resource Include="Material\Images\Icons\printer1.png" />
     <Resource Include="Material\Images\Icons\printer2.png" />
     <Resource Include="Material\Images\Icons\question.png" />
-    <Resource Include="Material\Images\Icons\receipt.png" />
+    <Resource Include="Material\Images\Icons\received_note.png" />
     <Resource Include="Material\Images\Icons\report.png" />
     <Resource Include="Material\Images\Icons\request.png" />
     <Resource Include="Material\Images\Icons\show.png" />

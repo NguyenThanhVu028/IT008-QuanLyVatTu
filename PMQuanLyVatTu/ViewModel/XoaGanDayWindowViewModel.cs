@@ -105,8 +105,8 @@ namespace PMQuanLyVatTu.ViewModel
                 case "kho":
                     DanhSachDaXoa.Add(new DeletedItem() { Checked = false, MaDaXoa = "KHO0009", ThoiGianXoa = DateTime.Now.ToString() });
                     break;
-                case "ycm":
-                    DanhSachDaXoa.Add(new DeletedItem() { Checked = false, MaDaXoa = "YCM0001", ThoiGianXoa = DateTime.Now.ToString() });
+                case "ycx":
+                    DanhSachDaXoa.Add(new DeletedItem() { Checked = false, MaDaXoa = "YCX0001", ThoiGianXoa = DateTime.Now.ToString() });
                     break;
                 case "ycn":
                     DanhSachDaXoa.Add(new DeletedItem() { Checked = false, MaDaXoa = "YCN0006", ThoiGianXoa = DateTime.Now.ToString() });

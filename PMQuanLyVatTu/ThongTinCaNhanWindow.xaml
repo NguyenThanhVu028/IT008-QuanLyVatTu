@@ -81,6 +81,7 @@
             <CustomControl:CustomTextbox Grid.Row="1"
                                          Height="40"
                                          Width="150"
+                                         Text="{Binding MaNV}"
                                          TextSize="15"
                                          VerticalAlignment="Top"
                                          HorizontalAlignment="Left"
@@ -112,6 +113,7 @@
             <CustomControl:CustomTextbox Grid.Row="1"
                                          Height="40"
                                          Width="250"
+                                         Text="{Binding HoTen}"
                                          TextSize="15"
                                          VerticalAlignment="Top"
                                          HorizontalAlignment="Left"
@@ -138,6 +140,7 @@
                                          Margin="350,200,0,0"
                                          Height="40"
                                          Width="270"
+                                         Text="{Binding SDT}"
                                          TextSize="15"
                                          BorderColor="{StaticResource DarkGreen2}"
                                          BorderColorHighlight="{StaticResource LightAqua2}"
@@ -160,14 +163,8 @@
                                          VerticalAlignment="Top"
                                          HorizontalAlignment="Left"
                                          Margin="500, 120, 0, 0"
-                                         DataList="{Binding GioiTinh}"/>
-            <TextBlock Grid.Row="1"
-                       VerticalAlignment="Top"
-                       HorizontalAlignment="Left"
-                       Margin="500, 120, 0, 0"
-                       Height="40"
-                       Width="120"
-                       Visibility="{Binding EnableEditing, Converter={StaticResource ReverseBoolToVisibilityConverter}}"/>
+                                         DataList="{Binding GioiTinh}"
+                                         SelectedValue="{Binding GTinh}"/>
             <TextBlock Grid.Row="1"
                        HorizontalAlignment="Left"
                        VerticalAlignment="Top" 
@@ -183,6 +180,7 @@
                                          Margin="60,280,0,0"
                                          Height="40"
                                          Width="270"
+                                         Text="{Binding Email}"
                                          TextSize="15"
                                          BorderColor="{StaticResource DarkGreen2}"
                                          BorderColorHighlight="{StaticResource LightAqua2}"
@@ -205,6 +203,7 @@
                                          Margin="350,280,0,0"
                                          Height="40"
                                          Width="270"
+                                         Text="{Binding DiaChi}"
                                          TextSize="15"
                                          BorderColor="{StaticResource DarkGreen2}"
                                          BorderColorHighlight="{StaticResource LightAqua2}"
@@ -241,7 +240,8 @@
                                         HorizontalAlignment="Left"
                                         Margin="60,200,0,0"
                                         Height="200"
-                                        Width="270"/>
+                                        Width="270"
+                                        SelectedValue="{Binding NgaySinh}"/>
             <TextBlock Grid.Row="1"
                        VerticalAlignment="Top"
                        HorizontalAlignment="Left"
@@ -249,6 +249,10 @@
                        Height="40"
                        Width="270"
                        Visibility="{Binding EnableEditing, Converter={StaticResource ReverseBoolToVisibilityConverter}}"/>
+            <Border Grid.Row="1"
+                    Background="Transparent"
+                    Margin="50, 100, 50, 120"
+                    Visibility="{Binding EnableEditing, Converter={StaticResource ReverseBoolToVisibilityConverter}}"/>
             <CustomControl:CustomButton Grid.Row="1"
                                         HorizontalAlignment="Left"
                                         VerticalAlignment="Top"

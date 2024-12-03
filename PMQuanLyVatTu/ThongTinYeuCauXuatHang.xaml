@@ -1,4 +1,4 @@
-﻿<Window x:Class="PMQuanLyVatTu.ThongTinYeuCauMuaHangWindow"
+﻿<Window x:Class="PMQuanLyVatTu.ThongTinYeuCauXuatHang"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -7,13 +7,12 @@
         xmlns:CustomControl="clr-namespace:PMQuanLyVatTu.CustomControls"
         xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
         mc:Ignorable="d"
-        Title="ThongTinYeuCauMuaHangWindow" Height="750" Width="600"
+        Title="ThongTinYeuCauXuatHang" Height="750" Width="600"
         AllowsTransparency="True"
         WindowStyle="None"
         Background="Transparent"
         WindowStartupLocation="CenterScreen"
-        Name="ThisWin"
-        DataContext="{StaticResource ThongTinYeuCauMuaHangWindowVM}">
+        Name="ThisWin">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="55"/>
@@ -50,28 +49,38 @@
         </Border>
         <TextBlock Grid.Row="1" 
                        Height="70"
-                       Width="420"
                        HorizontalAlignment="Center"
                        VerticalAlignment="Top"
                        Margin="30"
-                       Text="THÔNG TIN YÊU CẦU MUA"
+                       Text="{Binding Title}"
                        Foreground="{StaticResource DarkGreen2}"
                        FontFamily="/Material/Fonts/Lexend/#Lexend Black"
                        FontWeight="Black"
                        FontSize="27"
                        TextAlignment="Center"
                        TextWrapping="Wrap"/>
-        <CustomControl:ImageButton Grid.Row="1"
-                                   HorizontalAlignment="Right"
-                                   VerticalAlignment="Top"
-                                   Margin="0, 25, 35, 0"
-                                   Width="30"
-                                   Height="30"
-                                   ImageLocation="/Material/Images/Icons/edit1.png"
-                                   BorderBackgroundHightlight="{StaticResource LightAqua1}"
-                                   Command="{Binding EditInfoCommand}"/>
+        <StackPanel Grid.Row="1"
+                        HorizontalAlignment="Right"
+                        VerticalAlignment="Top"
+                        Margin="0, 25, 35, 0"
+                        Orientation="Vertical">
+            <CustomControl:ImageButton Width="30"
+                                       Height="30"
+                                       Margin="0, 0, 0, 10"
+                                       ImageLocation="/Material/Images/Icons/edit1.png"
+                                       BorderBackgroundHightlight="{StaticResource LightAqua1}"
+                                       Visibility="{Binding EditMode, Converter={StaticResource BoolToVisibilityConverter}}"
+                                       Command="{Binding EditInfoCommand}"/>
+            <CustomControl:ImageButton Width="30"
+                                       Height="30"
+                                       ImageLocation="/Material/Images/Icons/delete.png"
+                                       BorderBackgroundHightlight="{StaticResource LightRed}"
+                                       Visibility="{Binding EditMode, Converter={StaticResource BoolToVisibilityConverter}}"
+                                       Command="{Binding DeleteButtonCommand}"
+                                       CommandParameter="{Binding ElementName=ThisWin}"/>
+        </StackPanel>
         <TextBlock Grid.Row="1" 
-                   Text="Mã yêu cầu mua hàng"
+                   Text="Mã yêu cầu xuất hàng"
                    Foreground="{StaticResource DarkGreen2}"
                    HorizontalAlignment="Left"
                    VerticalAlignment="Top" 
@@ -82,6 +91,7 @@
         <CustomControl:CustomTextbox Grid.Row="1"
                                      Height="40"
                                      Width="230"
+                                     Text="{Binding MaYCX}"
                                      TextSize="15"
                                      VerticalAlignment="Top"
                                      HorizontalAlignment="Left"
@@ -91,13 +101,57 @@
                                      RadiusOfCorner="5" 
                                      Margin="50,120,0,0" Grid.Column="1"/>
         <Border Grid.Row="1"
+                Height="40"
+                Width="230"
+                VerticalAlignment="Top"
+                HorizontalAlignment="Left"
+                Margin="50, 120, 0, 0"
+                CornerRadius="5"
+                Style="{StaticResource TextBoxUnable}"/>
+        <Border Grid.Row="1"
                 HorizontalAlignment="Stretch"
                 VerticalAlignment="Stretch"
                 Margin="20, 420, 20, 80"
                 Background="White"
                 BorderBrush="{StaticResource DarkGreen2}"
                 BorderThickness="2"
-                CornerRadius="20"/>
+                CornerRadius="20">
+            <DataGrid x:Name="DisplayDataGRid" 
+                      Style="{DynamicResource DataGridStyle1}" 
+                      CellStyle="{DynamicResource DataGridCellStyle1}" 
+                      ColumnHeaderStyle="{DynamicResource DataGridColumnHeaderStyle1}" 
+                      RowStyle="{DynamicResource DataGridRowStyle1}" 
+                      HorizontalAlignment="Stretch"
+                      VerticalAlignment="Stretch"
+                      Margin="10, 0, 10, 10"
+                      ItemsSource="{Binding DanhSachVatTuYeuCau}">
+                <DataGrid.Columns>
+                    <DataGridTemplateColumn Width="30">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <CheckBox IsChecked="{Binding Checked, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                    <DataGridTextColumn Header="Mã vật tư"
+                                        Width="150"
+                                        IsReadOnly="True"
+                                        Binding="{Binding MaVT}"/>
+                    <DataGridTextColumn Header="Số lượng"
+                                        Width="100"
+                                        IsReadOnly="True"
+                                        Binding="{Binding SoLuong}"/>
+                    <DataGridTextColumn Header="Chiết khấu"
+                                        Width="100"
+                                        IsReadOnly="True"
+                                        Binding="{Binding ChietKhau}"/>
+                    <DataGridTextColumn Header="Thuế VAT"
+                                        Width="100"
+                                        IsReadOnly="True"
+                                        Binding="{Binding VAT}"/>
+                </DataGrid.Columns>
+            </DataGrid>
+        </Border>
         <CustomControl:CustomButton Grid.Row="1"
                                     VerticalAlignment="Top"
                                     HorizontalAlignment="Right"
@@ -152,6 +206,7 @@
         <CustomControl:CustomTextbox Grid.Row="1"
                                      Height="40"
                                      Width="490"
+                                     Text="{Binding GhiChu}"
                                      TextSize="15"
                                      VerticalAlignment="Top"
                                      HorizontalAlignment="Left"
@@ -193,7 +248,8 @@
                                      VerticalAlignment="Top"
                                      HorizontalAlignment="Left"
                                      Margin="50, 200, 0, 0"
-                                     DataList="{Binding ChucVu}"/>
+                                     DataList="{Binding NhanVien}"
+                                     SelectedValue="{Binding MaNV}"/>
         <TextBlock Grid.Row="1"
                    HorizontalAlignment="Left"
                    VerticalAlignment="Top" 
@@ -209,7 +265,8 @@
                                      VerticalAlignment="Top"
                                      HorizontalAlignment="Left"
                                      Margin="310, 200, 0, 0"
-                                     DataList="{Binding ChucVu}"/>
+                                     DataList="{Binding KhachHang}"
+                                     SelectedValue="{Binding MaKH}"/>
         <TextBlock Grid.Row="1"
                    HorizontalAlignment="Left"
                    VerticalAlignment="Top" 
@@ -224,7 +281,12 @@
                                     HorizontalAlignment="Left"
                                     Margin="310,120,0,0"
                                     Height="200"
-                                    Width="230"/>
+                                    Width="230"
+                                    SelectedValue="{Binding NgayLap}"/>
+        <Border Grid.Row="1"
+                Background="Transparent"
+                Margin="20, 90, 20, 270"
+                Visibility="{Binding EnableEditing, Converter={StaticResource ReverseBoolToVisibilityConverter}}"/>
         <CustomControl:CustomButton Grid.Row="1"
                                     HorizontalAlignment="Left"
                                     VerticalAlignment="Bottom"

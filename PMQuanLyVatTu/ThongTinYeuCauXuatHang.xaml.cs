@@ -15,11 +15,11 @@ using System.Windows.Shapes;
 namespace PMQuanLyVatTu
 {
     /// <summary>
-    /// Interaction logic for ThongTinYeuCauMuaHangWindow.xaml
+    /// Interaction logic for ThongTinYeuCauXuatHang.xaml
     /// </summary>
-    public partial class ThongTinYeuCauMuaHangWindow : Window
+    public partial class ThongTinYeuCauXuatHang : Window
     {
-        public ThongTinYeuCauMuaHangWindow()
+        public ThongTinYeuCauXuatHang()
         {
             InitializeComponent();
         }

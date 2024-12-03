@@ -75,13 +75,22 @@ namespace PMQuanLyVatTu.ErrorMessage
             }
         }
         #endregion
-        public CustomMessage(string img = "/Material/Images/null_image.jpg", string title = "Default Title", string mess = "Default Message")
+        #region EnableCancel
+        private bool _enableCancel;
+        public bool EnableCancel
+        {
+            get { return _enableCancel; }
+            set { _enableCancel = value; OnPropertyChanged(); }
+        }
+        #endregion
+        public CustomMessage(string img = "/Material/Images/null_image.jpg", string title = "Default Title", string mess = "Default Message", bool enableCancel = true)
         {
             InitializeComponent();
             this.DataContext = this;
             ImageLocation = img;
             MainTitle = title;
             MainMessage = mess;
+            EnableCancel = enableCancel;
         }
 
         public event PropertyChangedEventHandler? PropertyChanged;

@@ -261,7 +261,8 @@
                                                 TextColor="{StaticResource LightAqua2}"
                                                 TextSize="13"
                                                 ImageLocation=""
-                                                IsChecked="True"/>
+                                                IsChecked="True"
+                                                Style="{StaticResource ImagelessNavigationButton}"/>
                 <CustomControl:NavigationButton Width="100"
                                                 Height="40"
                                                 HorizontalAlignment="Center"
@@ -272,7 +273,8 @@
                                                 TextColor="{StaticResource LightAqua2}"
                                                 TextSize="13"
                                                 ImageLocation=""
-                                                IsChecked="False"/>
+                                                IsChecked="False"
+                                                Style="{StaticResource ImagelessNavigationButton}"/>
             </StackPanel>
             <CustomControl:CustomTextbox Width="335"
                                          Height="40"

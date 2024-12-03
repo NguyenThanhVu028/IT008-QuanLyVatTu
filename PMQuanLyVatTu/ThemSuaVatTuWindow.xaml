@@ -7,13 +7,12 @@
         xmlns:CustomControl="clr-namespace:PMQuanLyVatTu.CustomControls"
         xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
         mc:Ignorable="d"
-        Title="ThemSuaVatTuWindow" Height="320" Width="360"
+        Title="ThemSuaVatTuWindow" Height="340" Width="360"
         WindowStartupLocation="CenterScreen"
         Background="Transparent"
         AllowsTransparency="True"
         WindowStyle="None"
-        Name="ChangePasswordWin"
-        DataContext="{StaticResource ThemSuaVatTuWindowVM}">
+        Name="ChangePasswordWin">
     <Grid>
         <Border Background="{StaticResource DarkGreen2}"
                 CornerRadius="20" Margin="0,0,0,0">
@@ -24,9 +23,9 @@
                 </i:EventTrigger>
             </i:Interaction.Triggers>
         </Border>
-        <TextBlock Text="THÊM / SỬA VẬT TƯ"
+        <TextBlock Text="THÊM VẬT TƯ"
                    Foreground="White"
-                   FontFamily="/Material/Fonts/Lexend/#Lexend Regular"
+                   FontFamily="/Material/Fonts/Lexend/#Lexend Black"
                    FontWeight="Black"
                    FontSize="22"
                    HorizontalAlignment="Center"
@@ -45,6 +44,7 @@
                                      VerticalAlignment="Top"
                                      BackgroundColor="{StaticResource White}"
                                      WaterMark="Nhập số lượng"
+                                     Text="{Binding SoLuong}"
                                      TextSize="15"
                                      Margin="110,120, 0, 0"
                                      RadiusOfCorner="5"/>
@@ -61,6 +61,7 @@
                                      VerticalAlignment="Top"
                                      BackgroundColor="{StaticResource White}"
                                      WaterMark="Nhập chiết khấu"
+                                     Text="{Binding ChietKhau}"
                                      TextSize="15"
                                      Margin="110,170, 0, 0"
                                      RadiusOfCorner="5"/>
@@ -77,6 +78,7 @@
                                      VerticalAlignment="Top"
                                      BackgroundColor="{StaticResource White}"
                                      WaterMark="Nhập thuế VAT"
+                                     Text="{Binding VAT}"
                                      TextSize="15"
                                      Margin="110,220, 0, 0"
                                      RadiusOfCorner="5"/>
@@ -91,7 +93,8 @@
                                     Margin="200, 0, 0, 20"
                                     Width="120"
                                     Height="30"
-                                    Command="{Binding ConfirmCommand}"/>
+                                    Command="{Binding ConfirmCommand}"
+                                    CommandParameter="{Binding ElementName=ChangePasswordWin}"/>
         <CustomControl:CustomButton VerticalAlignment="Bottom"
                                     HorizontalAlignment="Left"
                                     RadiusOfCorner="10"
@@ -118,6 +121,7 @@
                                      VerticalAlignment="Top"
                                      HorizontalAlignment="Left"
                                      Margin="110, 70, 0, 0"
-                                     DataList="{Binding GioiTinh}"/>
+                                     DataList="{Binding DanhSachVatTu}"
+                                     SelectedValue="{Binding MaVT, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
     </Grid>
 </Window>
