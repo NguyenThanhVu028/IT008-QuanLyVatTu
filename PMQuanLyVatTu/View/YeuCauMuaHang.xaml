@@ -105,17 +105,20 @@
                                          BorderColorClicked="Aqua"
                                          BorderThick="2"
                                          BackgroundColor="Transparent"
-                                         BackgroundColorClicked="{StaticResource DarkGreenTransparent1}"
+                                         BackgroundColorHighlight="{StaticResource DarkGreenTransparent1}"
+                                         BackgroundColorClicked="{StaticResource DarkGreenTransparent2}"
                                          WaterMark="Tìm kiếm"
+                                         Text="{Binding SearchString}"
                                          TextColor="White"
                                          TextSize="15"
                                          Foreground="White"/>
-            <CustomControl:SelectionList Width="145"
+            <CustomControl:SelectionList Width="155"
                                          Height="200"
                                          HorizontalAlignment="Left"
                                          VerticalAlignment="Top"
                                          Margin="375, 95, 0, 0"
-                                         DataList="{Binding SearchFilter}"/>
+                                         DataList="{Binding SearchFilter}"
+                                         SelectedValue="{Binding SelectedSearchFilter}"/>
         </Grid>
     </Grid>
 </UserControl>

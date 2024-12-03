@@ -88,6 +88,10 @@
                                         Width="150"
                                         IsReadOnly="True"
                                         Binding="{Binding SDT}"/>
+                    <DataGridTextColumn Header="Email"
+                                        Width="250"
+                                        IsReadOnly="True"
+                                        Binding="{Binding Email}"/>
                     <DataGridTextColumn Header="Địa chỉ"
                                         Width="350"
                                         IsReadOnly="True"
@@ -216,7 +220,7 @@
                                          HorizontalAlignment="Left"
                                          VerticalAlignment="Top"
                                          Margin="375, 95, 0, 0"
-                                         SelectedValue="{Binding SelectedSearchFilter, Mode=TwoWay}"
+                                         SelectedValue="{Binding SelectedSearchFilter, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                                          DataList="{Binding SearchFilter}"/>
             <TextBlock VerticalAlignment="Top"
                        HorizontalAlignment="Right"

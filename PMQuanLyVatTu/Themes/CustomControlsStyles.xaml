@@ -552,7 +552,7 @@
                         <Border x:Name="DisplayBorder" 
                                 Grid.RowSpan="2" 
                                 Background="#B2001E28"
-                                BorderBrush="Aqua"
+                                BorderBrush="{Binding BorderBrush, RelativeSource={RelativeSource TemplatedParent}}"
                                 BorderThickness="2"
                                 CornerRadius="20"/>
                         <CustomControl:CircleImage Height="150"

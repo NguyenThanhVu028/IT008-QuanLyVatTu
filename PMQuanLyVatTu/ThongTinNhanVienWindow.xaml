@@ -61,6 +61,7 @@
                                            Margin="0, 0, 10, 0"
                                            ImageLocation="/Material/Images/Icons/edit1.png"
                                            BorderBackgroundHightlight="{StaticResource LightAqua1}"
+                                           Visibility="{Binding EditMode, Converter={StaticResource BoolToVisibilityConverter}}"
                                            Command="{Binding EditInfoCommand}"/>
                 <CustomControl:ImageButton Width="30"
                                            Height="30"
@@ -169,7 +170,7 @@
                                          Margin="590,120,0,0"
                                          Height="40"
                                          Width="250"
-                                         Text="{Binding HoVaTen}"
+                                         Text="{Binding HoTen}"
                                          TextSize="15"
                                          BorderColor="{StaticResource DarkGreen2}"
                                          BorderColorClicked="{StaticResource LightAqua2}"

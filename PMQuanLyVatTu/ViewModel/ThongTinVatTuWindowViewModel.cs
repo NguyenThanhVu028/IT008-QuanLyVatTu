@@ -18,7 +18,7 @@ namespace PMQuanLyVatTu.ViewModel
         public ThongTinVatTuWindowViewModel(string mavt = null)
         {
             if(mavt != null) { EditMode = true; Title = "CHỈNH SỬA VẬT TƯ"; LoadData(mavt); }
-            else { EditMode = false; Title = "THÊM VẬT TƯ"; }
+            else { EditMode = false; EnableEditing = true; Title = "THÊM VẬT TƯ"; }
 
             CloseCommand = new RelayCommand<Window>(CloseWin);
             MoveWindowCommand = new RelayCommand<Window>(MoveWindow);
@@ -36,7 +36,7 @@ namespace PMQuanLyVatTu.ViewModel
         }
         #endregion
         #region Info
-        private string _maVT="";
+        private string _maVT = "";
         private string _tenVatTu;
         private string _loaiVT;
         private string _donViTinh;
@@ -163,7 +163,6 @@ namespace PMQuanLyVatTu.ViewModel
                 //Xóa
                 t.Close();
             }
-            else t.Close();
         }
         public ICommand SaveInfoCommand { get; set; }
         void SaveInfo(object t)

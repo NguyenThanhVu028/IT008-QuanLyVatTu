@@ -12,8 +12,7 @@
         WindowStyle="None"
         Background="Transparent"
         WindowStartupLocation="CenterScreen"
-        Name="ThisWin"
-        DataContext="{StaticResource ThongTinKhoWindowVM}">
+        Name="ThisWin">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="55"/>
@@ -50,26 +49,36 @@
         </Border>
         <TextBlock Grid.Row="1" 
                        Height="70"
-                       Width="400"
                        HorizontalAlignment="Center"
                        VerticalAlignment="Top"
                        Margin="30"
-                       Text="THÔNG TIN KHO"
+                       Text="{Binding Title}"
                        Foreground="{StaticResource DarkGreen2}"
                        FontFamily="/Material/Fonts/Lexend/#Lexend Black"
                        FontWeight="Black"
                        FontSize="30"
                        TextAlignment="Center"
                        TextWrapping="Wrap"/>
-        <CustomControl:ImageButton Grid.Row="1"
-                                   HorizontalAlignment="Right"
-                                   VerticalAlignment="Top"
-                                   Margin="0, 25, 35, 0"
-                                   Width="30"
-                                   Height="30"
-                                   ImageLocation="/Material/Images/Icons/edit1.png"
-                                   BorderBackgroundHightlight="{StaticResource LightAqua1}"
-                                   Command="{Binding EditInfoCommand}"/>
+        <StackPanel Grid.Row="1"
+                        HorizontalAlignment="Right"
+                        VerticalAlignment="Top"
+                        Margin="0, 25, 35, 0"
+                        Orientation="Vertical">
+            <CustomControl:ImageButton Width="30"
+                                       Height="30"
+                                       Margin="0, 0, 0, 10"
+                                       ImageLocation="/Material/Images/Icons/edit1.png"
+                                       BorderBackgroundHightlight="{StaticResource LightAqua1}"
+                                       Visibility="{Binding EditMode, Converter={StaticResource BoolToVisibilityConverter}}"
+                                       Command="{Binding EditInfoCommand}"/>
+            <CustomControl:ImageButton Width="30"
+                                       Height="30"
+                                       ImageLocation="/Material/Images/Icons/delete.png"
+                                       BorderBackgroundHightlight="{StaticResource LightRed}"
+                                       Visibility="{Binding EditMode, Converter={StaticResource BoolToVisibilityConverter}}"
+                                       Command="{Binding DeleteButtonCommand}"
+                                       CommandParameter="{Binding ElementName=ThisWin}"/>
+        </StackPanel>
         <TextBlock Grid.Row="1" 
                        Text="Mã kho"
                        Foreground="{StaticResource DarkGreen2}"
@@ -82,6 +91,7 @@
         <CustomControl:CustomTextbox Grid.Row="1"
                                      Height="40"
                                      Width="300"
+                                     Text="{Binding MaKho}"
                                      TextSize="15"
                                      VerticalAlignment="Top"
                                      HorizontalAlignment="Left"
@@ -90,6 +100,15 @@
                                      BorderThick="2"
                                      RadiusOfCorner="5" 
                                      Margin="100,120,0,0" Grid.Column="1"/>
+        <Border VerticalAlignment="Top"
+                HorizontalAlignment="Left"
+                Margin="100, 120, 0, 0"
+                CornerRadius="5"
+                Grid.Row="1"
+                Height="40"
+                Width="300"
+                Style="{StaticResource TextBoxUnable}"
+                Visibility="{Binding EditMode, Converter={StaticResource BoolToVisibilityConverter}}"/>
         <TextBlock Grid.Row="1" 
                        Text="Địa chỉ"
                        Foreground="{StaticResource DarkGreen2}"
@@ -102,6 +121,7 @@
         <CustomControl:CustomTextbox Grid.Row="1"
                                      Height="40"
                                      Width="300"
+                                     Text="{Binding DiaChi}"
                                      TextSize="15"
                                      VerticalAlignment="Top"
                                      HorizontalAlignment="Left"
@@ -125,7 +145,12 @@
                                      VerticalAlignment="Top"
                                      HorizontalAlignment="Left"
                                      Margin="100, 200, 0, 0"
-                                     DataList="{Binding LoaiVatTu}"/>
+                                     DataList="{Binding LoaiVatTu}"
+                                     SelectedValue="{Binding LoaiVT}"/>
+        <Border Grid.Row="1"
+                Background="Transparent"
+                Margin="100, 90, 100, 150"
+                Visibility="{Binding EnableEditing, Converter={StaticResource ReverseBoolToVisibilityConverter}}"/>
         <CustomControl:CustomButton Grid.Row="1"
                                     HorizontalAlignment="Left"
                                     VerticalAlignment="Bottom"

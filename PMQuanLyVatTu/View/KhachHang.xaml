@@ -130,7 +130,8 @@
                                         DisplayText="Thêm"
                                         TextSize="15"
                                         Margin="0, 95, 30, 0"
-                                        RadiusOfCorner="5"/>
+                                        RadiusOfCorner="5"
+                                        Command="{Binding AddCommand}"/>
             <CustomControl:CustomButton Width="110"
                                         Height="30"
                                         HorizontalAlignment="Right"
@@ -155,7 +156,8 @@
                                         DisplayText="Xóa gần đây"
                                         TextSize="15"
                                         Margin="0, 95, 135, 0"
-                                        RadiusOfCorner="5"/>
+                                        RadiusOfCorner="5"
+                                        Command="{Binding XoaGanDayCommand}"/>
             <CustomControl:CustomButton Width="100"
                                         Height="40"
                                         HorizontalAlignment="Right"
@@ -179,8 +181,10 @@
                                          BorderColorClicked="Aqua"
                                          BorderThick="2"
                                          BackgroundColor="Transparent"
-                                         BackgroundColorClicked="{StaticResource DarkGreenTransparent1}"
+                                         BackgroundColorHighlight="{StaticResource DarkGreenTransparent1}"
+                                         BackgroundColorClicked="{StaticResource DarkGreenTransparent2}"
                                          WaterMark="Tìm kiếm"
+                                         Text="{Binding SearchString, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                                          TextColor="White"
                                          TextSize="15"
                                          Foreground="White"/>
@@ -189,7 +193,8 @@
                                          HorizontalAlignment="Left"
                                          VerticalAlignment="Top"
                                          Margin="375, 95, 0, 0"
-                                         DataList="{Binding SearchFilter}"/>
+                                         DataList="{Binding SearchFilter}"
+                                         SelectedValue="{Binding SelectedSearchFilter, Mode=TwoWay}"/>
         </Grid>
     </Grid>
 </UserControl>

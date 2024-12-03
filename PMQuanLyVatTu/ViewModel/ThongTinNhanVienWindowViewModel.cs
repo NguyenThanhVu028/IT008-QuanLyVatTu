@@ -16,11 +16,12 @@ namespace PMQuanLyVatTu.ViewModel
         public ThongTinNhanVienWindowViewModel(string manv = null)
         {
             if(manv != null) { EditMode = true; Title = "CHỈNH SỬA NHÂN VIÊN"; LoadData(manv); }
-            else { EditMode = false; Title = "THÊM NHÂN VIÊN"; }
+            else { EnableEditing = true; EditMode = false; Title = "THÊM NHÂN VIÊN"; }
 
             CloseCommand = new RelayCommand<Window>(CloseWindow);
             MoveWindowCommand = new RelayCommand<Window>(MoveWindow);
             EditInfoCommand = new RelayCommand<object>(EditInfo);
+            DeleteButtonCommand = new RelayCommand<Window>(DeleteButton);
             SaveInfoCommand = new RelayCommand<object>(SaveInfo);
             ChangeAvatarCommand = new RelayCommand<object>(ChangeAvatar);
         }
@@ -50,7 +51,7 @@ namespace PMQuanLyVatTu.ViewModel
             get { return _maNV; }
             set { _maNV = value; OnPropertyChanged(); }
         }
-        public string HoVaTen
+        public string HoTen
         {
             get { return _hoVaTen; }
             set { _hoVaTen = value; OnPropertyChanged(); }
@@ -148,10 +149,23 @@ namespace PMQuanLyVatTu.ViewModel
             window.DragMove();
         }
         public ICommand EditInfoCommand { get; set; }
-        void EditInfo(object t) {
+        void EditInfo(object t) 
+        {
             CustomMessage msg = new CustomMessage("/Material/Images/Icons/success.png", "THÀNH CÔNG", "Đã vào chế độ chỉnh sửa thông tin.");
             msg.ShowDialog();
             if (msg.ReturnValue == true) EnableEditing = true;
+        }
+        public ICommand DeleteButtonCommand { get; set; }
+        void DeleteButton(Window t)
+        {
+            CustomMessage msg = new CustomMessage("/Material/Images/Icons/question.png", "THÔNG BÁO", "Bạn có muốn xóa vật tư đã chọn?");
+            msg.ShowDialog();
+            if (msg.ReturnValue == true)
+            { //Chấp nhận xóa
+                EnableEditing = false;
+                //Xóa
+                t.Close();
+            }
         }
         public ICommand SaveInfoCommand { get; set; }
         void SaveInfo(object t)
@@ -199,7 +213,7 @@ namespace PMQuanLyVatTu.ViewModel
         {
             //Dùng manv để load dữ liệu từ database
             MaNV = manv;
-            HoVaTen = "Nguyễn Văn A";
+            HoTen = "Nguyễn Văn A";
             CVu = "QL";
             GTinh = "Nam";
             NgaySinh = "23/09/1998";

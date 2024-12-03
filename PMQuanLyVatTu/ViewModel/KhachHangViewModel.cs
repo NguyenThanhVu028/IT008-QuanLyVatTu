@@ -1,12 +1,15 @@
-﻿using System;
+﻿using PMQuanLyVatTu.ErrorMessage;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.IO.Packaging;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using static PMQuanLyVatTu.ViewModel.NhanVienViewModel;
 
 namespace PMQuanLyVatTu.ViewModel
 {
@@ -14,10 +17,12 @@ namespace PMQuanLyVatTu.ViewModel
     {
         public KhachHangViewModel()
         {
-            DeleteButtonCommand = new RelayCommand<object>(Delete);
-            EditButtonCommand = new RelayCommand<object>(Edit);
-            DeleteSelectedCommand = new RelayCommand<object>(DeleteSelected);
+            AddCommand = new RelayCommand<object>(Add);
+            XoaGanDayCommand = new RelayCommand<object>(XoaGanDay);
             RefreshCommand = new RelayCommand<object>(Refresh);
+            DeleteButtonCommand = new RelayCommand<object>(DeleteButton);
+            EditButtonCommand = new RelayCommand<object>(EditButton);
+            DeleteSelectedCommand = new RelayCommand<object>(DeleteSelected);
             Refresh();
         }
         #region Data for SelectionList
@@ -26,6 +31,20 @@ namespace PMQuanLyVatTu.ViewModel
         {
             get { return _searchFilter; }
             set { _searchFilter = value; OnPropertyChanged(); }
+        }
+        #endregion
+        #region SearchBar
+        private string _selectedSearchFilter = "Không";
+        public string SelectedSearchFilter
+        {
+            get { return _selectedSearchFilter; }
+            set { _selectedSearchFilter = value; OnPropertyChanged(); }
+        }
+        private string _searchString;
+        public string SearchString
+        {
+            get { return _searchString; }
+            set { _searchString = value; OnPropertyChanged(); Refresh(); }
         }
         #endregion
         #region DanhSachKhachHang
@@ -52,33 +71,23 @@ namespace PMQuanLyVatTu.ViewModel
         }
         #endregion
         #region Command
-        public ICommand DeleteButtonCommand { get; set; }
-        void Delete(object t)
+        public ICommand AddCommand {  get; set; }
+        void Add(object t)
         {
-            if (SelectedKhachHang != null)
-            {
-                MessageBox.Show(SelectedKhachHang.HoTen);
-                DanhSachKhachHang.Remove(SelectedKhachHang);
-            }
+            ThongTinKhachHangWindow AddWindow = new ThongTinKhachHangWindow();
+            ThongTinKhachHangWindowViewModel TTNVVM = new ThongTinKhachHangWindowViewModel();
+            AddWindow.DataContext = TTNVVM;
+            AddWindow.ShowDialog();
+            Refresh();
         }
-        public ICommand EditButtonCommand {  get; set; }
-        void Edit(object t)
+        public ICommand XoaGanDayCommand { get; set; }
+        void XoaGanDay(object t)
         {
-            if (SelectedKhachHang != null)
-            {
-                MessageBox.Show(SelectedKhachHang.HoTen);
-            }
-        }
-        public ICommand DeleteSelectedCommand { get; set; }
-        void DeleteSelected(object t)
-        {
-            foreach (Customer kh in DanhSachKhachHang)
-            {
-                if (kh.Checked == true)
-                {
-                    MessageBox.Show(kh.HoTen);
-                }
-            }
+            XoaGanDayWindow xoaGanDayWindow = new XoaGanDayWindow();
+            XoaGanDayWindowViewModel VM = new XoaGanDayWindowViewModel("kh");
+            xoaGanDayWindow.DataContext = VM;
+            xoaGanDayWindow.ShowDialog();
+            Refresh();
         }
         public ICommand RefreshCommand { get; set; }
         void Refresh(object t = null)
@@ -96,6 +105,47 @@ namespace PMQuanLyVatTu.ViewModel
             DanhSachKhachHang.Add(new Customer() { Checked = false, MaKH = "KH009", HoTen = "Nguyen Van B", GioiTinh = "Nam", SDT = "0123456789", Email = "stte@gmail.com", NgaySinh = "28/6/1998", DiaChi = "Phường Đông Hòa, Dĩ An" });
             DanhSachKhachHang.Add(new Customer() { Checked = true, MaKH = "KH010", HoTen = "Nguyen Van A", GioiTinh = "Nam", SDT = "0123456789", Email = "stte@gmail.com", NgaySinh = "28/6/1998", DiaChi = "Phường Đông Hòa, Dĩ An" });
             DanhSachKhachHang.Add(new Customer() { Checked = false, MaKH = "KH011", HoTen = "Nguyen Van B", GioiTinh = "Nam", SDT = "0123456789", Email = "stte@gmail.com", NgaySinh = "28/6/1998", DiaChi = "Phường Đông Hòa, Dĩ An" });
+        }
+        public ICommand DeleteButtonCommand { get; set; }
+        void DeleteButton(object t)
+        {
+            CustomMessage msg = new CustomMessage("/Material/Images/Icons/question.png", "THÔNG BÁO", "Bạn có muốn xóa vật tư đã chọn?");
+            msg.ShowDialog();
+            if (msg.ReturnValue == true)
+            {
+                DanhSachKhachHang.Remove(SelectedKhachHang);
+            }
+        }
+        public ICommand EditButtonCommand {  get; set; }
+        void EditButton(object t)
+        {
+            string s = SelectedKhachHang.MaKH;
+            ThongTinKhachHangWindowViewModel TTVTVM = new ThongTinKhachHangWindowViewModel(s);
+            ThongTinKhachHangWindow AddWindow = new ThongTinKhachHangWindow();
+            AddWindow.DataContext = TTVTVM;
+            AddWindow.ShowDialog();
+            Refresh();
+        }
+        public ICommand DeleteSelectedCommand { get; set; }
+        void DeleteSelected(object t)
+        {
+            int Count = 0;
+            CustomMessage msg = new CustomMessage("/Material/Images/Icons/question.png", "THÔNG BÁO", "Bạn có muốn xóa mục đã chọn?");
+            msg.ShowDialog();
+            if (msg.ReturnValue == true)
+            {
+                foreach (Customer i in DanhSachKhachHang)
+                {
+                    if (i.Checked == true)
+                    {
+                        //Xóa
+                        Count++;
+                    }
+                }
+                CustomMessage msg2 = new CustomMessage("/Material/Images/Icons/success.png", "THÀNH CÔNG", "Đã xóa thành công " + Count.ToString() + " mục.");
+                msg2.ShowDialog();
+                Refresh();
+            }
         }
         #endregion
     }

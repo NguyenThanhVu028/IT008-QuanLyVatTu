@@ -100,7 +100,7 @@ namespace PMQuanLyVatTu.ViewModel
                     DanhSachDaXoa.Add(new DeletedItem() { Checked = false, MaDaXoa = "KH0007", ThoiGianXoa = DateTime.Now.ToString() });
                     break;
                 case "ncc":
-                    DanhSachDaXoa.Add(new DeletedItem() { Checked = false, MaDaXoa = "NCC0002", ThoiGianXoa = DateTime.Now.ToString() });
+                    DanhSachDaXoa.Add(new DeletedItem() { Checked = true, MaDaXoa = "NCC0002", ThoiGianXoa = DateTime.Now.ToString() });
                     break;
                 case "kho":
                     DanhSachDaXoa.Add(new DeletedItem() { Checked = false, MaDaXoa = "KHO0009", ThoiGianXoa = DateTime.Now.ToString() });
@@ -161,6 +161,7 @@ namespace PMQuanLyVatTu.ViewModel
                     case "vt":
                         foreach (DeletedItem i in DanhSachDaXoa)
                         {
+                            MessageBox.Show(i.Checked + i.MaDaXoa);
                             if (i.Checked == true)
                             {
                                 //Xóa

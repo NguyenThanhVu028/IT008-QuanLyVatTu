@@ -65,6 +65,7 @@
                                            Height="30"
                                            Margin="0, 0, 10, 0"
                                            ImageLocation="/Material/Images/Icons/edit1.png"
+                                           Visibility="{Binding EditMode, Converter={StaticResource BoolToVisibilityConverter}}"
                                            BorderBackgroundHightlight="{StaticResource LightAqua1}"
                                            Command="{Binding EditInfoCommand}"/>
                 <CustomControl:ImageButton Width="30"

@@ -6,7 +6,8 @@
              xmlns:local="clr-namespace:PMQuanLyVatTu.View"
              xmlns:CustomControl="clr-namespace:PMQuanLyVatTu.CustomControls"
              mc:Ignorable="d" 
-             d:DesignHeight="665" d:DesignWidth="1080">
+             d:DesignHeight="665" d:DesignWidth="1080"
+             x:Name="ThisWin">
     <UserControl.RenderTransform>
         <TranslateTransform X="0" Y="50"/>
     </UserControl.RenderTransform>
