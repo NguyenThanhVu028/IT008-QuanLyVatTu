@@ -1,5 +1,6 @@
 ﻿using PMQuanLyVatTu.CustomControls;
 using PMQuanLyVatTu.ErrorMessage;
+using PMQuanLyVatTu.Models;
 using PMQuanLyVatTu.View;
 using System;
 using System.Collections.Generic;
@@ -21,7 +22,7 @@ namespace PMQuanLyVatTu.ViewModel
             RefreshCommand = new RelayCommand<object>(Refresh);
             EditButtonCommand = new RelayCommand<object>(EditButton);
             DeleteButtonCommand = new RelayCommand<object>(DeleteButton);
-            DeleteSelectedCommand = new RelayCommand<object>(DeleteSelected);
+            //DeleteSelectedCommand = new RelayCommand<object>(DeleteSelected);
             Refresh();
         }
         #region Data for SelectionList
@@ -59,6 +60,7 @@ namespace PMQuanLyVatTu.ViewModel
             get{ return _danhSachVatTuLargeIcon; }
             set{ _danhSachVatTuLargeIcon = value; }
         }
+        public ObservableCollection<VatTuDisplayer> DisplayDanhSachVatTuLargeIcon { get; set; }
         private Supply _selectedVatTu;
         public Supply SelectedVatTu
         {
@@ -86,29 +88,62 @@ namespace PMQuanLyVatTu.ViewModel
             Refresh();
         }
         public ICommand RefreshCommand { get; set; }
-        void Refresh(object t=null)
+        //void Refresh(object t=null)
+        //{
+        //    //Đổ dữ liệu, bao gồm DanhSachVatTu (danh sách chi tiết) và DanhSachVatTuLargeIcon (danh sách thu gọn, dùng ds tạm temp)
+        //    DanhSachVatTu.Clear();
+
+        //    DanhSachVatTu.Add(new Supply() { MaVT = "VT0001", TenVatTu = "Gạch 529", LoaiVatTu = "NVL", DonViTinh = "Viên", MaNCC = "NCC0002", MaKho = "KHO0001", GiaNhap = 9500, GiaXuat = 11000, SoLuongTonKho = 123, ImageLocation = "/Material/Images/Supplies/brick.jpg" });
+        //    DanhSachVatTu.Add(new Supply() { MaVT = "VT0002", TenVatTu = "Búa", LoaiVatTu = "CC", DonViTinh = "Chiếc", MaNCC = "NCC0002", MaKho = "KHO0001", GiaNhap = 9500, GiaXuat = 11000, SoLuongTonKho = 123, ImageLocation = "/Material/Images/Supplies/hammer.jpg" });
+        //    DanhSachVatTu.Add(new Supply() { MaVT = "VT0003", TenVatTu = "Máy khoan Mĩ Kim", LoaiVatTu = "TB", DonViTinh = "Máy", MaNCC = "NCC0002", MaKho = "KHO0001", GiaNhap = 9500, GiaXuat = 11000, SoLuongTonKho = 123, ImageLocation = "/Material/Images/Supplies/drill.jpg" });
+
+        //    ObservableCollection<VatTuDisplayer> temp = new ObservableCollection<VatTuDisplayer>();
+        //    foreach (Supply sup in DanhSachVatTu)
+        //    {
+        //        VatTuDisplayer newButton = new VatTuDisplayer();
+        //        newButton.DataContext = sup; newButton.Margin = new Thickness(10, 10, 10, 10); newButton.Height = 300; newButton.Width = 220; newButton.Click += VatTuDisplayerButtonClick;
+        //        temp.Add(newButton); 
+        //    }
+
+        //    DanhSachVatTuLargeIcon = temp;
+        //}
+        void Refresh(object t = null)
         {
             //Đổ dữ liệu, bao gồm DanhSachVatTu (danh sách chi tiết) và DanhSachVatTuLargeIcon (danh sách thu gọn, dùng ds tạm temp)
             DanhSachVatTu.Clear();
 
-            DanhSachVatTu.Add(new Supply() { MaVT = "VT0001", TenVatTu = "Gạch 529", LoaiVatTu = "NVL", DonViTinh = "Viên", MaNCC = "NCC0002", MaKho = "KHO0001", GiaNhap = 9500, GiaXuat = 11000, SoLuongTonKho = 123, ImageLocation = "/Material/Images/Supplies/brick.jpg" });
-            DanhSachVatTu.Add(new Supply() { MaVT = "VT0002", TenVatTu = "Búa", LoaiVatTu = "CC", DonViTinh = "Chiếc", MaNCC = "NCC0002", MaKho = "KHO0001", GiaNhap = 9500, GiaXuat = 11000, SoLuongTonKho = 123, ImageLocation = "/Material/Images/Supplies/hammer.jpg" });
-            DanhSachVatTu.Add(new Supply() { MaVT = "VT0003", TenVatTu = "Máy khoan Mĩ Kim", LoaiVatTu = "TB", DonViTinh = "Máy", MaNCC = "NCC0002", MaKho = "KHO0001", GiaNhap = 9500, GiaXuat = 11000, SoLuongTonKho = 123, ImageLocation = "/Material/Images/Supplies/drill.jpg" });
-
-            ObservableCollection<VatTuDisplayer> temp = new ObservableCollection<VatTuDisplayer>();
-            foreach (Supply sup in DanhSachVatTu)
+            var ListFromDB = DataProvider.Instance.DB.Supplies.ToList();
+            foreach ( var item in ListFromDB)
             {
-                VatTuDisplayer newButton = new VatTuDisplayer();
-                newButton.DataContext = sup; newButton.Margin = new Thickness(10, 10, 10, 10); newButton.Height = 300; newButton.Width = 220; newButton.Click += VatTuDisplayerButtonClick;
-                temp.Add(newButton); 
+                DanhSachVatTu.Add(item);
             }
 
-            DanhSachVatTuLargeIcon = temp;
+            //DanhSachVatTu.Add(new Supply() { MaVt = "VT0001", TenVatTu = "Gạch 529", LoaiVatTu = "NVL", DonViTinh = "Viên", MaNcc = "NCC0002", MaKho = "KHO0001", GiaNhap = 9500, GiaXuat = 11000, SoLuongTonKho = 123, ImageLocation = "/Material/Images/Supplies/brick.jpg" });
+            //DanhSachVatTu.Add(new Supply() { MaVt = "VT0002", TenVatTu = "Búa", LoaiVatTu = "CC", DonViTinh = "Chiếc", MaNcc = "NCC0002", MaKho = "KHO0001", GiaNhap = 9500, GiaXuat = 11000, SoLuongTonKho = 123, ImageLocation = "/Material/Images/Supplies/hammer.jpg" });
+            //DanhSachVatTu.Add(new Supply() { MaVt = "VT0003", TenVatTu = "Máy khoan Mĩ Kim", LoaiVatTu = "TB", DonViTinh = "Máy", MaNcc = "NCC0002", MaKho = "KHO0001", GiaNhap = 9500, GiaXuat = 11000, SoLuongTonKho = 123, ImageLocation = "/Material/Images/Supplies/drill.jpg" });
+
+            if(DanhSachVatTuLargeIcon.Count() < DanhSachVatTu.Count())
+            {
+                int temp1 = DanhSachVatTu.Count(), temp2 = DanhSachVatTuLargeIcon.Count();
+                for (int i=0; i< temp1 - temp2; i++)
+                {
+                    VatTuDisplayer newButton = new VatTuDisplayer();
+                    newButton.Margin = new Thickness(10, 10, 10, 10); newButton.Height = 300; newButton.Width = 220; newButton.Click += VatTuDisplayerButtonClick;
+                    DanhSachVatTuLargeIcon.Add(newButton);
+                }
+            }
+            ObservableCollection<VatTuDisplayer> temp = new ObservableCollection<VatTuDisplayer>();
+            for(int i=0; i<DanhSachVatTu.Count(); i++)
+            {
+                DanhSachVatTuLargeIcon[i].DataContext = DanhSachVatTu[i];
+                temp.Add(DanhSachVatTuLargeIcon[i]);
+            }
+            DisplayDanhSachVatTuLargeIcon = temp;
         }
         public ICommand EditButtonCommand {  get; set; }
         void EditButton(object t=null)
         {
-            string s = SelectedVatTu.MaVT;
+            string s = SelectedVatTu.MaVt;
             ThongTinVatTuWindowViewModel TTVTVM = new ThongTinVatTuWindowViewModel(s);
             ThongTinVatTuWindow AddWindow = new ThongTinVatTuWindow();
             AddWindow.DataContext = TTVTVM;
@@ -127,52 +162,54 @@ namespace PMQuanLyVatTu.ViewModel
             //Xóa trong database
             //Refresh();
         }
-        public ICommand DeleteSelectedCommand { get; set; }
-        void DeleteSelected(object t)
-        {
-            int Count = 0;
-            CustomMessage msg = new CustomMessage("/Material/Images/Icons/question.png", "THÔNG BÁO", "Bạn có muốn xóa mục đã chọn?");
-            msg.ShowDialog();
-            if (msg.ReturnValue == true)
-            {
-                foreach (Supply i in DanhSachVatTu)
-                {
-                    if (i.Checked == true)
-                    {
-                        //Xóa
-                        Count++;
-                    }
-                }
-                CustomMessage msg2 = new CustomMessage("/Material/Images/Icons/success.png", "THÀNH CÔNG", "Đã xóa thành công " + Count.ToString() + " mục.");
-                msg2.ShowDialog();
-                Refresh();
-            }
-        }
+        //public ICommand DeleteSelectedCommand { get; set; }
+        //void DeleteSelected(object t)
+        //{
+        //    int Count = 0;
+        //    CustomMessage msg = new CustomMessage("/Material/Images/Icons/question.png", "THÔNG BÁO", "Bạn có muốn xóa mục đã chọn?");
+        //    msg.ShowDialog();
+        //    if (msg.ReturnValue == true)
+        //    {
+        //        foreach (Supply i in DanhSachVatTu)
+        //        {
+        //            if (i.Checked == true)
+        //            {
+        //                //Xóa
+        //                Count++;
+        //            }
+        //        }
+        //        CustomMessage msg2 = new CustomMessage("/Material/Images/Icons/success.png", "THÀNH CÔNG", "Đã xóa thành công " + Count.ToString() + " mục.");
+        //        msg2.ShowDialog();
+        //        Refresh();
+        //    }
+        //}
         #endregion
         #region Function
         void VatTuDisplayerButtonClick(object sender, RoutedEventArgs e)
         {
-            string mavt = ((sender as VatTuDisplayer).DataContext as Supply).MaVT;
+            string mavt = ((sender as VatTuDisplayer).DataContext as Supply).MaVt;
             ThongTinVatTuWindowViewModel TTVTVM = new ThongTinVatTuWindowViewModel(mavt);
             ThongTinVatTuWindow AddWindow = new ThongTinVatTuWindow();
             AddWindow.DataContext = TTVTVM;
             AddWindow.ShowDialog();
             Refresh();
+
+            DataProvider.Instance.DB.SaveChanges();
         }
         #endregion
-        public class Supply
-        {
-            public bool Checked { get; set; }
-            public string MaVT { get; set; }
-            public string TenVatTu { get; set; }
-            public string LoaiVatTu { get; set; }
-            public string DonViTinh { get; set; }
-            public string MaNCC { get; set; }
-            public string MaKho { get; set; }
-            public int GiaNhap { get; set; }
-            public int GiaXuat { get; set; }
-            public int SoLuongTonKho { get; set; }
-            public string ImageLocation { get; set; }
-        }
+        //public class Supply
+        //{
+        //    public bool Checked { get; set; }
+        //    public string MaVT { get; set; }
+        //    public string TenVatTu { get; set; }
+        //    public string LoaiVatTu { get; set; }
+        //    public string DonViTinh { get; set; }
+        //    public string MaNCC { get; set; }
+        //    public string MaKho { get; set; }
+        //    public int GiaNhap { get; set; }
+        //    public int GiaXuat { get; set; }
+        //    public int SoLuongTonKho { get; set; }
+        //    public string ImageLocation { get; set; }
+        //}
     }
 }

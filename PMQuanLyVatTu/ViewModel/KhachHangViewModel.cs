@@ -1,4 +1,6 @@
-﻿using PMQuanLyVatTu.ErrorMessage;
+﻿using Microsoft.EntityFrameworkCore.Metadata;
+using PMQuanLyVatTu.ErrorMessage;
+using PMQuanLyVatTu.Models;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -22,7 +24,7 @@ namespace PMQuanLyVatTu.ViewModel
             RefreshCommand = new RelayCommand<object>(Refresh);
             DeleteButtonCommand = new RelayCommand<object>(DeleteButton);
             EditButtonCommand = new RelayCommand<object>(EditButton);
-            DeleteSelectedCommand = new RelayCommand<object>(DeleteSelected);
+            //DeleteSelectedCommand = new RelayCommand<object>(DeleteSelected);
             Refresh();
         }
         #region Data for SelectionList
@@ -93,18 +95,26 @@ namespace PMQuanLyVatTu.ViewModel
         void Refresh(object t = null)
         {
             DanhSachKhachHang.Clear();
-            DanhSachKhachHang.Add(new Customer() { Checked = true, MaKH = "KH000", HoTen = "Nguyen Van A", GioiTinh = "Nam", SDT = "0123456789", Email = "stte@gmail.com", NgaySinh = "28/6/1998", DiaChi = "Phường Đông Hòa, Dĩ An" });
-            DanhSachKhachHang.Add(new Customer() { Checked = false, MaKH = "KH001", HoTen = "Nguyen Van B", GioiTinh = "Nam", SDT = "0123456789", Email = "stte@gmail.com", NgaySinh = "28/6/1998", DiaChi = "Phường Đông Hòa, Dĩ An" });
-            DanhSachKhachHang.Add(new Customer() { Checked = true, MaKH = "KH002", HoTen = "Nguyen Van A", GioiTinh = "Nam", SDT = "0123456789", Email = "stte@gmail.com", NgaySinh = "28/6/1998", DiaChi = "Phường Đông Hòa, Dĩ An" });
-            DanhSachKhachHang.Add(new Customer() { Checked = false, MaKH = "KH003", HoTen = "Nguyen Van B", GioiTinh = "Nam", SDT = "0123456789", Email = "stte@gmail.com", NgaySinh = "28/6/1998", DiaChi = "Phường Đông Hòa, Dĩ An" });
-            DanhSachKhachHang.Add(new Customer() { Checked = true, MaKH = "KH004", HoTen = "Nguyen Van A", GioiTinh = "Nam", SDT = "0123456789", Email = "stte@gmail.com", NgaySinh = "28/6/1998", DiaChi = "Phường Đông Hòa, Dĩ An" });
-            DanhSachKhachHang.Add(new Customer() { Checked = false, MaKH = "KH005", HoTen = "Nguyen Van B", GioiTinh = "Nam", SDT = "0123456789", Email = "stte@gmail.com", NgaySinh = "28/6/1998", DiaChi = "Phường Đông Hòa, Dĩ An" });
-            DanhSachKhachHang.Add(new Customer() { Checked = true, MaKH = "KH006", HoTen = "Nguyen Van A", GioiTinh = "Nam", SDT = "0123456789", Email = "stte@gmail.com", NgaySinh = "28/6/1998", DiaChi = "Phường Đông Hòa, Dĩ An" });
-            DanhSachKhachHang.Add(new Customer() { Checked = false, MaKH = "KH007", HoTen = "Nguyen Van B", GioiTinh = "Nam", SDT = "0123456789", Email = "stte@gmail.com", NgaySinh = "28/6/1998", DiaChi = "Phường Đông Hòa, Dĩ An" });
-            DanhSachKhachHang.Add(new Customer() { Checked = true, MaKH = "KH008", HoTen = "Nguyen Van A", GioiTinh = "Nam", SDT = "0123456789", Email = "stte@gmail.com", NgaySinh = "28/6/1998", DiaChi = "Phường Đông Hòa, Dĩ An" });
-            DanhSachKhachHang.Add(new Customer() { Checked = false, MaKH = "KH009", HoTen = "Nguyen Van B", GioiTinh = "Nam", SDT = "0123456789", Email = "stte@gmail.com", NgaySinh = "28/6/1998", DiaChi = "Phường Đông Hòa, Dĩ An" });
-            DanhSachKhachHang.Add(new Customer() { Checked = true, MaKH = "KH010", HoTen = "Nguyen Van A", GioiTinh = "Nam", SDT = "0123456789", Email = "stte@gmail.com", NgaySinh = "28/6/1998", DiaChi = "Phường Đông Hòa, Dĩ An" });
-            DanhSachKhachHang.Add(new Customer() { Checked = false, MaKH = "KH011", HoTen = "Nguyen Van B", GioiTinh = "Nam", SDT = "0123456789", Email = "stte@gmail.com", NgaySinh = "28/6/1998", DiaChi = "Phường Đông Hòa, Dĩ An" });
+
+            var ListFromDB = DataProvider.Instance.DB.Customers.ToList();
+
+            foreach ( var item in ListFromDB)
+            {
+                DanhSachKhachHang.Add(item);
+            }
+
+            //DanhSachKhachHang.Add(new Customer() { Checked = true, MaKh = "KH000", HoTen = "Nguyen Van A", GioiTinh = "Nam", SDT = "0123456789", Email = "stte@gmail.com", NgaySinh = "28/6/1998", DiaChi = "Phường Đông Hòa, Dĩ An" });
+            //DanhSachKhachHang.Add(new Customer() { Checked = false, MaKh = "KH001", HoTen = "Nguyen Van B", GioiTinh = "Nam", SDT = "0123456789", Email = "stte@gmail.com", NgaySinh = "28/6/1998", DiaChi = "Phường Đông Hòa, Dĩ An" });
+            //DanhSachKhachHang.Add(new Customer() { Checked = true, MaKh = "KH002", HoTen = "Nguyen Van A", GioiTinh = "Nam", SDT = "0123456789", Email = "stte@gmail.com", NgaySinh = "28/6/1998", DiaChi = "Phường Đông Hòa, Dĩ An" });
+            //DanhSachKhachHang.Add(new Customer() { Checked = false, MaKh = "KH003", HoTen = "Nguyen Van B", GioiTinh = "Nam", SDT = "0123456789", Email = "stte@gmail.com", NgaySinh = "28/6/1998", DiaChi = "Phường Đông Hòa, Dĩ An" });
+            //DanhSachKhachHang.Add(new Customer() { Checked = true, MaKh = "KH004", HoTen = "Nguyen Van A", GioiTinh = "Nam", SDT = "0123456789", Email = "stte@gmail.com", NgaySinh = "28/6/1998", DiaChi = "Phường Đông Hòa, Dĩ An" });
+            //DanhSachKhachHang.Add(new Customer() { Checked = false, MaKh = "KH005", HoTen = "Nguyen Van B", GioiTinh = "Nam", SDT = "0123456789", Email = "stte@gmail.com", NgaySinh = "28/6/1998", DiaChi = "Phường Đông Hòa, Dĩ An" });
+            //DanhSachKhachHang.Add(new Customer() { Checked = true, MaKh = "KH006", HoTen = "Nguyen Van A", GioiTinh = "Nam", SDT = "0123456789", Email = "stte@gmail.com", NgaySinh = "28/6/1998", DiaChi = "Phường Đông Hòa, Dĩ An" });
+            //DanhSachKhachHang.Add(new Customer() { Checked = false, MaKh = "KH007", HoTen = "Nguyen Van B", GioiTinh = "Nam", SDT = "0123456789", Email = "stte@gmail.com", NgaySinh = "28/6/1998", DiaChi = "Phường Đông Hòa, Dĩ An" });
+            //DanhSachKhachHang.Add(new Customer() { Checked = true, MaKh = "KH008", HoTen = "Nguyen Van A", GioiTinh = "Nam", SDT = "0123456789", Email = "stte@gmail.com", NgaySinh = "28/6/1998", DiaChi = "Phường Đông Hòa, Dĩ An" });
+            //DanhSachKhachHang.Add(new Customer() { Checked = false, MaKh = "KH009", HoTen = "Nguyen Van B", GioiTinh = "Nam", SDT = "0123456789", Email = "stte@gmail.com", NgaySinh = "28/6/1998", DiaChi = "Phường Đông Hòa, Dĩ An" });
+            //DanhSachKhachHang.Add(new Customer() { Checked = true, MaKh = "KH010", HoTen = "Nguyen Van A", GioiTinh = "Nam", SDT = "0123456789", Email = "stte@gmail.com", NgaySinh = "28/6/1998", DiaChi = "Phường Đông Hòa, Dĩ An" });
+            //DanhSachKhachHang.Add(new Customer() { Checked = false, MaKh = "KH011", HoTen = "Nguyen Van B", GioiTinh = "Nam", SDT = "0123456789", Email = "stte@gmail.com", NgaySinh = "28/6/1998", DiaChi = "Phường Đông Hòa, Dĩ An" });
         }
         public ICommand DeleteButtonCommand { get; set; }
         void DeleteButton(object t)
@@ -119,46 +129,46 @@ namespace PMQuanLyVatTu.ViewModel
         public ICommand EditButtonCommand {  get; set; }
         void EditButton(object t)
         {
-            string s = SelectedKhachHang.MaKH;
+            string s = SelectedKhachHang.MaKh;
             ThongTinKhachHangWindowViewModel TTVTVM = new ThongTinKhachHangWindowViewModel(s);
             ThongTinKhachHangWindow AddWindow = new ThongTinKhachHangWindow();
             AddWindow.DataContext = TTVTVM;
             AddWindow.ShowDialog();
             Refresh();
         }
-        public ICommand DeleteSelectedCommand { get; set; }
-        void DeleteSelected(object t)
-        {
-            int Count = 0;
-            CustomMessage msg = new CustomMessage("/Material/Images/Icons/question.png", "THÔNG BÁO", "Bạn có muốn xóa mục đã chọn?");
-            msg.ShowDialog();
-            if (msg.ReturnValue == true)
-            {
-                foreach (Customer i in DanhSachKhachHang)
-                {
-                    if (i.Checked == true)
-                    {
-                        //Xóa
-                        Count++;
-                    }
-                }
-                CustomMessage msg2 = new CustomMessage("/Material/Images/Icons/success.png", "THÀNH CÔNG", "Đã xóa thành công " + Count.ToString() + " mục.");
-                msg2.ShowDialog();
-                Refresh();
-            }
-        }
+        //public ICommand DeleteSelectedCommand { get; set; }
+        //void DeleteSelected(object t)
+        //{
+        //    int Count = 0;
+        //    CustomMessage msg = new CustomMessage("/Material/Images/Icons/question.png", "THÔNG BÁO", "Bạn có muốn xóa mục đã chọn?");
+        //    msg.ShowDialog();
+        //    if (msg.ReturnValue == true)
+        //    {
+        //        foreach (Customer i in DanhSachKhachHang)
+        //        {
+        //            if (i.Checked == true)
+        //            {
+        //                //Xóa
+        //                Count++;
+        //            }
+        //        }
+        //        CustomMessage msg2 = new CustomMessage("/Material/Images/Icons/success.png", "THÀNH CÔNG", "Đã xóa thành công " + Count.ToString() + " mục.");
+        //        msg2.ShowDialog();
+        //        Refresh();
+        //    }
+        //}
         #endregion
     }
 
-    public class Customer
-    {
-        public bool Checked {  get; set; }
-        public string MaKH { get; set; }
-        public string HoTen { get; set; }
-        public string GioiTinh { get; set; }
-        public string SDT { get; set; }
-        public string Email { get; set; }
-        public string NgaySinh { get; set; }
-        public string DiaChi { get; set; }
-    }
+    //public class Customer
+    //{
+    //    public bool Checked {  get; set; }
+    //    public string MaKH { get; set; }
+    //    public string HoTen { get; set; }
+    //    public string GioiTinh { get; set; }
+    //    public string SDT { get; set; }
+    //    public string Email { get; set; }
+    //    public string NgaySinh { get; set; }
+    //    public string DiaChi { get; set; }
+    //}
 }

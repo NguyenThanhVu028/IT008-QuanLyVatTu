@@ -45,17 +45,17 @@
                       Margin="60, 160, 60, 80"
                       ItemsSource="{Binding DanhSachKhachHang}">
                 <DataGrid.Columns>
-                    <DataGridTemplateColumn Width="30">
+                    <!--<DataGridTemplateColumn Width="30">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
                                 <CheckBox IsChecked="{Binding Checked, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
-                    </DataGridTemplateColumn>
+                    </DataGridTemplateColumn>-->
                     <DataGridTextColumn Header="Mã khách hàng"
                                         Width="150"
                                         IsReadOnly="True"
-                                        Binding="{Binding MaKH}"/>
+                                        Binding="{Binding MaKh}"/>
                     <DataGridTextColumn Header="Họ và tên"
                                         Width="200"
                                         IsReadOnly="True"
@@ -67,7 +67,7 @@
                     <DataGridTextColumn Header="Số điện thoại"
                                         Width="150"
                                         IsReadOnly="True"
-                                        Binding="{Binding SDT}"/>
+                                        Binding="{Binding Sdt}"/>
                     <DataGridTextColumn Header="Email"
                                         Width="150"
                                         IsReadOnly="True"
@@ -132,7 +132,7 @@
                                         Margin="0, 95, 30, 0"
                                         RadiusOfCorner="5"
                                         Command="{Binding AddCommand}"/>
-            <CustomControl:CustomButton Width="110"
+            <!--<CustomControl:CustomButton Width="110"
                                         Height="30"
                                         HorizontalAlignment="Right"
                                         VerticalAlignment="Bottom"
@@ -144,7 +144,7 @@
                                         TextSize="15"
                                         Margin="0, 0, 80, 40"
                                         RadiusOfCorner="5"
-                                        Command="{Binding DeleteSelectedCommand}"/>
+                                        Command="{Binding DeleteSelectedCommand}"/>-->
             <CustomControl:CustomButton Width="120"
                                         Height="40"
                                         HorizontalAlignment="Right"

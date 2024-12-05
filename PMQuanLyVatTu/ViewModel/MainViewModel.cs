@@ -1,4 +1,5 @@
 ﻿using PMQuanLyVatTu.ErrorMessage;
+using PMQuanLyVatTu.Models;
 using PMQuanLyVatTu.View;
 using System;
 using System.Collections.Generic;
@@ -59,6 +60,7 @@ namespace PMQuanLyVatTu.ViewModel
             _currentPage = new TrangChu(); (_currentPage as TrangChu).DataContext = TrangChuVM;
             LoginWindow newLogin = new LoginWindow(); newLogin.DataContext = LoginVM; newLogin.ShowDialog();
             TrangChuVM.DisplayUsername = "Trịnh Trần Phương Tuấn";
+
         }
         #region CurrentPage
         private object _currentPage;

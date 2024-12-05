@@ -38,7 +38,7 @@
             <Grid.Resources>
                 <Style TargetType="Button">
                     <Setter Property="FontFamily" Value="/Material/Fonts/Lexend/#Lexend Regular"/>
-                    <Setter Property="FontSize" Value="{Binding SizeOfFont}"/>
+                    <Setter Property="FontSize" Value="15"/>
                     <Setter Property="Background" Value="Transparent"/>
                     <Setter Property="FontWeight" Value="Medium"/>
                     <Setter Property="BorderBrush" Value="{StaticResource DarkGreen2}"/>

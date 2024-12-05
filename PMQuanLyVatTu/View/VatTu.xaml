@@ -37,7 +37,7 @@
             <ScrollViewer VerticalScrollBarVisibility="Auto"
                           Margin="50, 160, 50, 80"
                           Visibility="{Binding ElementName=ModeSwitch, Path=IsChecked, Converter={StaticResource ReverseBoolToVisibilityConverter}}">
-                <ItemsControl ItemsSource="{Binding DanhSachVatTuLargeIcon}">
+                <ItemsControl ItemsSource="{Binding DisplayDanhSachVatTuLargeIcon}">
                     <ItemsControl.ItemsPanel>
                         <ItemsPanelTemplate>
                             <WrapPanel IsItemsHost="True"/>
@@ -57,17 +57,17 @@
                       ItemsSource="{Binding DanhSachVatTu}"
                       Visibility="{Binding ElementName=ModeSwitch, Path=IsChecked, Converter={StaticResource BoolToVisibilityConverter}}">
                 <DataGrid.Columns>
-                    <DataGridTemplateColumn Width="30">
+                    <!--<DataGridTemplateColumn Width="30">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
                                 <CheckBox IsChecked="{Binding Checked, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
-                    </DataGridTemplateColumn>
+                    </DataGridTemplateColumn>-->
                     <DataGridTextColumn Header="Mã vật tư"
                                         Width="150"
                                         IsReadOnly="True"
-                                        Binding="{Binding MaVT}"/>
+                                        Binding="{Binding MaVt}"/>
                     <DataGridTextColumn Header="Tên vật tư"
                                         Width="200"
                                         IsReadOnly="True"
@@ -83,7 +83,7 @@
                     <DataGridTextColumn Header="Mã nhà cung cấp"
                                         Width="150"
                                         IsReadOnly="True"
-                                        Binding="{Binding MaNCC}"/>
+                                        Binding="{Binding MaNcc}"/>
                     <DataGridTextColumn Header="Mã kho"
                                         Width="150"
                                         IsReadOnly="True"
@@ -139,7 +139,7 @@
                        FontSize="30"
                        TextAlignment="Center"
                        TextWrapping="Wrap"/>
-            <CustomControl:CustomButton Width="110"
+            <!--<CustomControl:CustomButton Width="110"
                                         Height="30"
                                         HorizontalAlignment="Right"
                                         VerticalAlignment="Bottom"
@@ -152,7 +152,7 @@
                                         Margin="0, 0, 80, 40"
                                         RadiusOfCorner="5"
                                         Command="{Binding DeleteSelectedCommand}"
-                                        Visibility="{Binding Path=IsChecked, ElementName=ModeSwitch, Converter={StaticResource BoolToVisibilityConverter}}"/>
+                                        Visibility="{Binding Path=IsChecked, ElementName=ModeSwitch, Converter={StaticResource BoolToVisibilityConverter}}"/>-->
             <CustomControl:CustomButton Width="100"
                                         Height="40"
                                         HorizontalAlignment="Right"

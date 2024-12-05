@@ -37,7 +37,7 @@
             <ScrollViewer VerticalScrollBarVisibility="Auto"
                           Margin="50, 160, 50, 80"
                           Visibility="{Binding ElementName=ModeSwitch, Path=IsChecked, Converter={StaticResource ReverseBoolToVisibilityConverter}}">
-                <ItemsControl ItemsSource="{Binding DanhSachNhanVienLargeIcon}">
+                <ItemsControl ItemsSource="{Binding DisplayDanhSachNhanVienLargeIcon}">
                     <ItemsControl.ItemsPanel>
                         <ItemsPanelTemplate>
                             <WrapPanel IsItemsHost="True"/>

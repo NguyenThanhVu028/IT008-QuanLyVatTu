@@ -36,17 +36,18 @@
         </Border>
         <Grid x:Name="MW_LayoutGrid">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="200"/>
+                <ColumnDefinition Width="160.828"/>
+                <ColumnDefinition Width="39.172"/>
                 <ColumnDefinition/>
             </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
                 <RowDefinition Height="55"/>
                 <RowDefinition/>
             </Grid.RowDefinitions>
-            <Image Source="Material/Images/AppLogo/logo.png"/>
+            <Image Source="Material/Images/AppLogo/logo.png" Grid.ColumnSpan="2"/>
             <StackPanel x:Name="Stackpanel_WindowsButton"
-                        Grid.Column="1"
-                        Margin="10"
+                        Grid.Column="2"
+                        Margin="0,0,20,0"
                         HorizontalAlignment="Right"
                         VerticalAlignment="Center"
                         Orientation="Horizontal">
@@ -74,18 +75,18 @@
             </StackPanel>
             <Border x:Name="PageDispayArea"
                     Grid.Row="1"
-                    Grid.Column="1"
+                    Grid.Column="2"
                     BorderBrush="Aqua"
                     BorderThickness="1"
                     CornerRadius="10"
-                    Margin="10">
+                    Margin="10,10,10,10">
                 <Border.Background>
                     <ImageBrush ImageSource="Material/Images/BackGround/DefaultBackGround.jpg"
                                 Opacity="0.3"/>
                 </Border.Background>
             </Border>
             <ContentControl Grid.Row="1"
-                            Grid.Column="1"
+                            Grid.Column="2"
                             Content="{Binding CurrentPage}"/>
             <!--<view:TrangChu Grid.Column="1"
                            Grid.Row="1"/>-->
@@ -102,12 +103,12 @@
             <CustomControl:AccountButton Grid.Row="1" 
                                          VerticalAlignment="Top"
                                          Height="70"
-                                         Margin="10, 10, 0, 10"
+                                         Margin="10,10,0,0"
                                          ImageLocation="/Material/Images/Avatars/user1.jpg"
-                                         Command="{Binding AccountInfoCommand}"/>
+                                         Command="{Binding AccountInfoCommand}" Grid.ColumnSpan="2"/>
             <ScrollViewer Grid.Row="1"
                           VerticalScrollBarVisibility="Hidden"
-                          Margin="0, 100, 0, 50">
+                          Margin="0,100,0,50" Grid.ColumnSpan="2">
                 <StackPanel Grid.Row="1"
                             VerticalAlignment="Top"
                             Orientation="Vertical">

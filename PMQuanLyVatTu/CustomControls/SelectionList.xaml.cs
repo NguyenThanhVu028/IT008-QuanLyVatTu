@@ -47,9 +47,6 @@ namespace PMQuanLyVatTu.CustomControls
         // Using a DependencyProperty as the backing store for WaterMark.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty WaterMarkProperty =
             DependencyProperty.Register("WaterMark", typeof(string), typeof(SelectionList), new PropertyMetadata("Chọn"));
-
-
-
         public bool IsAllowed
         {
             get { return (bool)GetValue(IsAllowedProperty); }
