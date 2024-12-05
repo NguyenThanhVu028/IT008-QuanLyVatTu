@@ -63,6 +63,10 @@
                                         Width="150"
                                         IsReadOnly="True"
                                         Binding="{Binding MaKH}"/>
+                    <DataGridTextColumn Header="Kho xuất"
+                                        Width="150"
+                                        IsReadOnly="True"
+                                        Binding="{Binding MaKho}"/>
                     <DataGridTextColumn Header="Ngày lập yêu cầu"
                                         Width="150"
                                         IsReadOnly="True"
@@ -79,6 +83,29 @@
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
                                 <StackPanel Orientation="Horizontal">
+                                    <CustomControl:CustomButton Width="100"
+                                                                Height="30"
+                                                                RadiusOfCorner="3"
+                                                                DisplayText="Đã tiếp nhận"
+                                                                TextSize="12"
+                                                                BorderBackground="LawnGreen"
+                                                                BorderBackgroundClicked="Green"
+                                                                BorderColor="{StaticResource DarkGreen2}"
+                                                                BorderColorHighlight="{StaticResource DarkGreen3}"
+                                                                BorderThick="0"
+                                                                Command="{Binding DaTiepNhanCommand}"/>
+                                    <CustomControl:CustomButton Width="70"
+                                                                Height="30"
+                                                                Margin="10, 0, 0, 0"
+                                                                RadiusOfCorner="3"
+                                                                DisplayText="Từ chối"
+                                                                TextSize="12"
+                                                                BorderBackground="Red"
+                                                                BorderBackgroundClicked="{StaticResource DarkRed2}"
+                                                                BorderColor="{StaticResource White}"
+                                                                BorderColorHighlight="{StaticResource LightRed}"
+                                                                BorderThick="0"
+                                                                Command="{Binding TuChoiCommand}"/>
                                     <CustomControl:ImageButton x:Name="EditButton" 
                                                            Width="20"
                                                            Height="20"

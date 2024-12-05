@@ -11,6 +11,7 @@ using System.Threading.Tasks.Sources;
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media;
+using System.Windows.Media.Media3D;
 using static PMQuanLyVatTu.ViewModel.NhanVienViewModel;
 
 namespace PMQuanLyVatTu.ViewModel
@@ -24,6 +25,7 @@ namespace PMQuanLyVatTu.ViewModel
 
             NhanVien.Add("NV0001"); NhanVien.Add("NV0002"); NhanVien.Add("NV0003");
             KhachHang.Add("KH0001"); KhachHang.Add("KH0002");
+            Kho.Add("KHO0002"); Kho.Add("KHO0003"); Kho.Add("KHO0007");
 
             CloseWindowCommand = new RelayCommand<Window>(CloseWindow);
             MoveWindowCommand = new RelayCommand<Window>(MoveWindow);
@@ -47,6 +49,7 @@ namespace PMQuanLyVatTu.ViewModel
         private string _maYCX = "";
         private string _maNV;
         private string _maKH;
+        public string _maKho;
         private string _ngayLap;
         private string _ghiChu;
         public string MaYCX
@@ -64,6 +67,11 @@ namespace PMQuanLyVatTu.ViewModel
             get { return _maKH; }
             set { _maKH = value; OnPropertyChanged(); }
         }
+        public string MaKho
+        {
+            get { return _maKho; }
+            set { _maKho = value; OnPropertyChanged(); DanhSachVatTuYeuCau.Clear(); }
+        }
         public string NgayLap
         {
             get { return _ngayLap; }
@@ -73,6 +81,14 @@ namespace PMQuanLyVatTu.ViewModel
         {
             get { return _ghiChu; }
             set { _ghiChu = value; OnPropertyChanged(); }
+        }
+        #endregion
+        #region ListEmpty
+        private bool _listEmpty = true;
+        public bool ListEmpty
+        {
+            get { return _listEmpty; }
+            set { _listEmpty = value; OnPropertyChanged();}
         }
         #endregion
         #region EditMode
@@ -104,10 +120,17 @@ namespace PMQuanLyVatTu.ViewModel
             get { return _khachHang; }
             set { _khachHang = value; OnPropertyChanged(); }
         }
+        private ObservableCollection<string> _kho = new ObservableCollection<string>();
+        public ObservableCollection<string> Kho
+        {
+            get { return _kho; }
+            set { _kho = value; OnPropertyChanged(); }
+        }
+
         #endregion
         #region DanhSachVatTuYeuCau
-        private ObservableCollection<VatTuYeuCau> _danhSachVatTuYeuCau = new ObservableCollection<VatTuYeuCau>();
-        public ObservableCollection<VatTuYeuCau> DanhSachVatTuYeuCau
+        private ObservableCollection<VatTu> _danhSachVatTuYeuCau = new ObservableCollection<VatTu>();
+        public ObservableCollection<VatTu> DanhSachVatTuYeuCau
         {
             get { return _danhSachVatTuYeuCau; }
             set { _danhSachVatTuYeuCau = value; OnPropertyChanged(); }
@@ -156,7 +179,7 @@ namespace PMQuanLyVatTu.ViewModel
             {
                 if (MaYCX == "") //Chưa nhập mã 
                 {
-                    CustomMessage msg = new CustomMessage("/Material/Images/Icons/wrong.png", "LỖI", "Vui lòng nhập mã yêu cầu xuất hàng.");
+                    CustomMessage msg = new CustomMessage("/Material/Images/Icons/wrong.png", "LỖI", "Vui lòng nhập mã yêu cầu xuất hàng.", false);
                     msg.ShowDialog();
                 }
                 else if (true) //Trùng mã 
@@ -176,12 +199,22 @@ namespace PMQuanLyVatTu.ViewModel
         public ICommand AddCommand { get; set; }
         void Add(object t)
         {
-            ThemSuaVatTuWindow themSuaVatTuWindow = new ThemSuaVatTuWindow();
-            ThemSuaVatTuWindowViewModel VM = new ThemSuaVatTuWindowViewModel();
-            themSuaVatTuWindow.DataContext = VM;
-            themSuaVatTuWindow.ShowDialog();
+            if (MaKho == null || MaKho == "")
+            {
+                CustomMessage msg = new CustomMessage("/Material/Images/Icons/wrong.png", "LỖI", "Vui lòng chọn kho để yêu cầu xuất hàng.", false);
+                msg.ShowDialog();
+            }
+            else
+            {
+                ThemSuaVatTuWindow themSuaVatTuWindow = new ThemSuaVatTuWindow();
+                ThemSuaVatTuWindowViewModel VM = new ThemSuaVatTuWindowViewModel(MaKho);
+                themSuaVatTuWindow.DataContext = VM;
+                themSuaVatTuWindow.ShowDialog();
 
-            DanhSachVatTuYeuCau.Add(new VatTuYeuCau() { MaVT = VM.MaVT, SoLuong = VM.SoLuong, ChietKhau = VM.ChietKhau, VAT = VM.VAT });
+                if (VM.ReturnValue == true) DanhSachVatTuYeuCau.Add(new VatTu() { MaVT = VM.MaVT, SoLuong = VM.SoLuong, ChietKhau = VM.ChietKhau, VAT = VM.VAT });
+                if (DanhSachVatTuYeuCau.Count() > 0) { ListEmpty = false; }
+                else ListEmpty = true;
+            }
         }
         public ICommand DeleteSelectedCommand { get; set; }
         void DeleteSelected(object t)
@@ -191,8 +224,8 @@ namespace PMQuanLyVatTu.ViewModel
             msg.ShowDialog();
             if (msg.ReturnValue == true)
             {
-                List<VatTuYeuCau> NeedDeleting = new List<VatTuYeuCau>();
-                foreach (VatTuYeuCau i in DanhSachVatTuYeuCau)
+                List<VatTu> NeedDeleting = new List<VatTu>();
+                foreach (VatTu i in DanhSachVatTuYeuCau)
                 {
                     if (i.Checked == true)
                     {
@@ -212,8 +245,10 @@ namespace PMQuanLyVatTu.ViewModel
                 if(EditMode == true) { LoadDanhSach(); }
                 else
                 {
-                    foreach(VatTuYeuCau v in NeedDeleting) DanhSachVatTuYeuCau.Remove(v);
+                    foreach(VatTu v in NeedDeleting) DanhSachVatTuYeuCau.Remove(v);
                 }
+                if (DanhSachVatTuYeuCau.Count() > 0) { ListEmpty = false; }
+                else ListEmpty = true;
             }
         }
         public ICommand CreateReceiptCommand {  get; set; }
@@ -235,12 +270,22 @@ namespace PMQuanLyVatTu.ViewModel
         {
             DanhSachVatTuYeuCau.Clear();
 
-            DanhSachVatTuYeuCau.Add(new VatTuYeuCau() { Checked = false, MaVT = "VT00001", SoLuong = 50, ChietKhau = 0.6, VAT = 0.7 });
-            DanhSachVatTuYeuCau.Add(new VatTuYeuCau() { Checked = true, MaVT = "VT00002", SoLuong = 10, ChietKhau = 0.2, VAT = 0.3 });
-            DanhSachVatTuYeuCau.Add(new VatTuYeuCau() { Checked = false, MaVT = "VT00005", SoLuong = 5, ChietKhau = 0.9, VAT = 0.1 });
+            DanhSachVatTuYeuCau.Add(new VatTu() { Checked = false, MaVT = "VT00001", SoLuong = 50, ChietKhau = 0.6, VAT = 0.7 });
+            DanhSachVatTuYeuCau.Add(new VatTu() { Checked = true, MaVT = "VT00002", SoLuong = 10, ChietKhau = 0.2, VAT = 0.3 });
+            DanhSachVatTuYeuCau.Add(new VatTu() { Checked = false, MaVT = "VT00005", SoLuong = 5, ChietKhau = 0.9, VAT = 0.1 });
+
+            if(DanhSachVatTuYeuCau.Count() > 0) { ListEmpty = false; }
         }
         #endregion
-        public class VatTuYeuCau
+        //public class VatTuYeuCau
+        //{
+        //    public bool Checked { get; set; }
+        //    public string MaVT { get; set; }
+        //    public int SoLuong { get; set; }
+        //    public double ChietKhau { get; set; }
+        //    public double VAT { get; set; }
+        //}
+        public class VatTu
         {
             public bool Checked { get; set; }
             public string MaVT { get; set; }

@@ -17,9 +17,9 @@ namespace PMQuanLyVatTu
     /// <summary>
     /// Interaction logic for ThongTinYeuCauXuatHang.xaml
     /// </summary>
-    public partial class ThongTinYeuCauXuatHang : Window
+    public partial class ThongTinYeuCauXuatHangWindow : Window
     {
-        public ThongTinYeuCauXuatHang()
+        public ThongTinYeuCauXuatHangWindow()
         {
             InitializeComponent();
         }

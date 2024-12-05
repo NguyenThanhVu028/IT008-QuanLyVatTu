@@ -146,7 +146,7 @@
                                      HorizontalAlignment="Left"
                                      Margin="100, 200, 0, 0"
                                      DataList="{Binding LoaiVatTu}"
-                                     SelectedValue="{Binding LoaiVT}"/>
+                                     SelectedValue="{Binding LoaiVT, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
         <Border Grid.Row="1"
                 Background="Transparent"
                 Margin="100, 90, 100, 150"

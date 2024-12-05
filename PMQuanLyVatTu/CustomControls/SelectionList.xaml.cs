@@ -20,6 +20,36 @@ namespace PMQuanLyVatTu.CustomControls
 {
     public partial class SelectionList : UserControl
     {
+        public double BoxHeight
+        {
+            get { return (double)GetValue(BoxHeightProperty); }
+            set { SetValue(BoxHeightProperty, value); }
+        }
+
+        // Using a DependencyProperty as the backing store for BoxHeight.  This enables animation, styling, binding, etc...
+        public static readonly DependencyProperty BoxHeightProperty =
+            DependencyProperty.Register("BoxHeight", typeof(double), typeof(SelectionList), new PropertyMetadata(40.0));
+        public double SizeOfFont
+        {
+            get { return (double)GetValue(SizeOfFontProperty); }
+            set { SetValue(SizeOfFontProperty, value); }
+        }
+
+        // Using a DependencyProperty as the backing store for SizeOfFont.  This enables animation, styling, binding, etc...
+        public static readonly DependencyProperty SizeOfFontProperty =
+            DependencyProperty.Register("SizeOfFont", typeof(double), typeof(SelectionList), new PropertyMetadata(15.0));
+        public string WaterMark
+        {
+            get { return (string)GetValue(WaterMarkProperty); }
+            set { SetValue(WaterMarkProperty, value); }
+        }
+
+        // Using a DependencyProperty as the backing store for WaterMark.  This enables animation, styling, binding, etc...
+        public static readonly DependencyProperty WaterMarkProperty =
+            DependencyProperty.Register("WaterMark", typeof(string), typeof(SelectionList), new PropertyMetadata("Chọn"));
+
+
+
         public bool IsAllowed
         {
             get { return (bool)GetValue(IsAllowedProperty); }
@@ -62,6 +92,7 @@ namespace PMQuanLyVatTu.CustomControls
             string temp = (sender as Button).Content.ToString();
             //Container.Visibility = Visibility.Collapsed;
             SelectedValue = temp;
+            Output.FontSize = SizeOfFont;
             //Output.Text = temp;
         }
         void TextChangedEvent(object sender, TextChangedEventArgs e)

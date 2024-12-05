@@ -172,7 +172,7 @@
                                          VerticalAlignment="Top"
                                          Margin="375, 95, 0, 0"
                                          DataList="{Binding SearchFilter}"
-                                         SelectedValue="{Binding SelectedSearchFilter}"/>
+                                         SelectedValue="{Binding SelectedSearchFilter, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
             <CustomControl:CustomButton Width="110"
                                         Height="30"
                                         HorizontalAlignment="Right"

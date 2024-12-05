@@ -29,7 +29,7 @@ namespace PMQuanLyVatTu.ViewModel
         public ObservableCollection<string> SearchFilter
         {
             get { return _searchFilter; }
-            set { _searchFilter = value; OnPropertyChanged(); }
+            set { _searchFilter = value; OnPropertyChanged(); Refresh(); }
         }
         #endregion
         #region SearchBar

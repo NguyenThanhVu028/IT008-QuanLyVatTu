@@ -207,7 +207,7 @@
                                      VerticalAlignment="Top"
                                      HorizontalAlignment="Left"
                                      Margin="320, 120, 0, 0"
-                                     SelectedValue="{Binding GTinh}"
+                                     SelectedValue="{Binding GTinh, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                                      DataList="{Binding GioiTinh}"/>
         <TextBlock Grid.Row="1"
                        HorizontalAlignment="Left"
@@ -224,7 +224,7 @@
                                     Margin="430,120,0,0"
                                     Height="200"
                                     Width="240"
-                                    SelectedValue="{Binding NgaySinh}"/>
+                                    SelectedValue="{Binding NgaySinh, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
         <Border Background="Transparent"
                 Grid.Row="1"
                 HorizontalAlignment="Stretch"

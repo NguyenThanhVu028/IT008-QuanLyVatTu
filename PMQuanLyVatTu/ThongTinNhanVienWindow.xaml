@@ -276,7 +276,7 @@
                                          HorizontalAlignment="Left"
                                          Margin="430, 200, 0, 0"
                                          DataList="{Binding GioiTinh}"
-                                         SelectedValue="{Binding GTinh}"/>
+                                         SelectedValue="{Binding GTinh, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
             <TextBlock Grid.Row="1"
                        HorizontalAlignment="Left"
                        VerticalAlignment="Top" 
@@ -293,7 +293,7 @@
                                          HorizontalAlignment="Left"
                                          Margin="300, 200, 0, 0"
                                          DataList="{Binding ChucVu}"
-                                         SelectedValue="{Binding CVu}"/>
+                                         SelectedValue="{Binding CVu, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
             <TextBlock Grid.Row="1"
                        HorizontalAlignment="Left"
                        VerticalAlignment="Top" 
@@ -309,7 +309,7 @@
                                         Margin="590,200,0,0"
                                         Height="200"
                                         Width="250"
-                                        SelectedValue="{Binding NgaySinh}"/>
+                                        SelectedValue="{Binding NgaySinh, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
             <Border Background="Transparent"
                     Grid.Row="1"
                     Margin="40, 100, 30, 230"

@@ -148,7 +148,7 @@
                                          HorizontalAlignment="Left"
                                          Margin="320, 200, 0, 0"
                                          DataList="{Binding NhaCungCap}"
-                                         SelectedValue="{Binding MaNCC}"/>
+                                         SelectedValue="{Binding MaNCC, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
             <TextBlock Grid.Row="1"
                        HorizontalAlignment="Left"
                        VerticalAlignment="Top" 
@@ -165,7 +165,7 @@
                                          HorizontalAlignment="Left"
                                          Margin="610, 200, 0, 0"
                                          DataList="{Binding KhoChua}"
-                                         SelectedValue="{Binding MaKho}"/>
+                                         SelectedValue="{Binding MaKho, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
             <TextBlock Grid.Row="1" 
                        Text="Loại vật tư"
                        Foreground="{StaticResource DarkGreen2}"
@@ -182,7 +182,7 @@
                                          HorizontalAlignment="Left"
                                          Margin="610, 120, 0, 0"
                                          DataList="{Binding LoaiVatTu}"
-                                         SelectedValue="{Binding LoaiVT}"/>
+                                         SelectedValue="{Binding LoaiVT, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
             <TextBlock Grid.Row="1" 
                        Text="Mã vật tư"
                        Foreground="{StaticResource DarkGreen2}"

@@ -7,13 +7,12 @@
         xmlns:CustomControl="clr-namespace:PMQuanLyVatTu.CustomControls"
         xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
         mc:Ignorable="d"
-        Title="ThongTinYeuCauNhapHangWindow"  Height="600" Width="600"
+        Title="ThongTinYeuCauNhapHangWindow"  Height="600" Width="590"
         AllowsTransparency="True"
         WindowStyle="None"
         Background="Transparent"
         WindowStartupLocation="CenterScreen"
-        Name="ThisWin"
-        DataContext="{StaticResource ThongTinYeuCauNhapHangWindowVM}">
+        Name="ThisWin">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="55"/>
@@ -54,22 +53,33 @@
                        HorizontalAlignment="Center"
                        VerticalAlignment="Top"
                        Margin="30"
-                       Text="THÔNG TIN YÊU CẦU NHẬP HÀNG"
+                       Text="{Binding Title}"
                        Foreground="{StaticResource DarkGreen2}"
                        FontFamily="/Material/Fonts/Lexend/#Lexend Black"
                        FontWeight="Black"
                        FontSize="24"
                        TextAlignment="Center"
                        TextWrapping="Wrap"/>
-        <CustomControl:ImageButton Grid.Row="1"
-                                   HorizontalAlignment="Right"
-                                   VerticalAlignment="Top"
-                                   Margin="0, 25, 35, 0"
-                                   Width="30"
-                                   Height="30"
-                                   ImageLocation="/Material/Images/Icons/edit1.png"
-                                   BorderBackgroundHightlight="{StaticResource LightAqua1}"
-                                   Command="{Binding EditInfoCommand}"/>
+        <StackPanel Grid.Row="1"
+                        HorizontalAlignment="Right"
+                        VerticalAlignment="Top"
+                        Margin="0, 25, 35, 0"
+                        Orientation="Vertical">
+            <CustomControl:ImageButton Width="30"
+                                       Height="30"
+                                       Margin="0, 0, 0, 10"
+                                       ImageLocation="/Material/Images/Icons/edit1.png"
+                                       BorderBackgroundHightlight="{StaticResource LightAqua1}"
+                                       Visibility="{Binding EditMode, Converter={StaticResource BoolToVisibilityConverter}}"
+                                       Command="{Binding EditInfoCommand}"/>
+            <CustomControl:ImageButton Width="30"
+                                       Height="30"
+                                       ImageLocation="/Material/Images/Icons/delete.png"
+                                       BorderBackgroundHightlight="{StaticResource LightRed}"
+                                       Visibility="{Binding EditMode, Converter={StaticResource BoolToVisibilityConverter}}"
+                                       Command="{Binding DeleteButtonCommand}"
+                                       CommandParameter="{Binding ElementName=ThisWin}"/>
+        </StackPanel>
         <TextBlock Grid.Row="1" 
                    Text="Mã yêu cầu nhập hàng"
                    Foreground="{StaticResource DarkGreen2}"
@@ -82,6 +92,7 @@
         <CustomControl:CustomTextbox Grid.Row="1"
                                      Height="40"
                                      Width="230"
+                                     Text="{Binding MaYCN}"
                                      TextSize="15"
                                      VerticalAlignment="Top"
                                      HorizontalAlignment="Left"
@@ -90,28 +101,16 @@
                                      BorderThick="2"
                                      RadiusOfCorner="5" 
                                      Margin="50,120,0,0" Grid.Column="1"/>
+        <Border Grid.Row="1"
+                Height="40"
+                Width="230"
+                VerticalAlignment="Top"
+                HorizontalAlignment="Left"
+                Margin="50, 120, 0, 0"
+                CornerRadius="5"
+                Style="{StaticResource TextBoxUnable}"/>
         <TextBlock Grid.Row="1" 
                    Text="Số lượng"
-                   Foreground="{StaticResource DarkGreen2}"
-                   HorizontalAlignment="Left"
-                   VerticalAlignment="Top" 
-                   Margin="250,250,0,0"
-                   FontSize="20"
-                   FontFamily="/Material/Fonts/Lexend/#Lexend Medium"
-                   FontWeight="Medium" Grid.Column="1"/>
-        <CustomControl:CustomTextbox Grid.Row="1"
-                                     Height="40"
-                                     Width="230"
-                                     TextSize="15"
-                                     VerticalAlignment="Top"
-                                     HorizontalAlignment="Left"
-                                     BorderColor="{StaticResource DarkGreen2}"
-                                     BorderColorClicked="{StaticResource LightAqua2}"
-                                     BorderThick="2"
-                                     RadiusOfCorner="5" 
-                                     Margin="180,280,0,0" Grid.Column="1"/>
-        <TextBlock Grid.Row="1" 
-                   Text="Ghi chú"
                    Foreground="{StaticResource DarkGreen2}"
                    HorizontalAlignment="Left"
                    VerticalAlignment="Top" 
@@ -121,7 +120,8 @@
                    FontWeight="Medium" Grid.Column="1"/>
         <CustomControl:CustomTextbox Grid.Row="1"
                                      Height="40"
-                                     Width="490"
+                                     Width="230"
+                                     Text="{Binding SoLuong}"
                                      TextSize="15"
                                      VerticalAlignment="Top"
                                      HorizontalAlignment="Left"
@@ -129,25 +129,63 @@
                                      BorderColorClicked="{StaticResource LightAqua2}"
                                      BorderThick="2"
                                      RadiusOfCorner="5" 
-                                     Margin="50,360,0,0" Grid.Column="1"
+                                     Margin="50,360,0,0" Grid.Column="1"/>
+        <TextBlock Grid.Row="1" 
+                   Text="Ghi chú"
+                   Foreground="{StaticResource DarkGreen2}"
+                   HorizontalAlignment="Left"
+                   VerticalAlignment="Top" 
+                   Margin="310,170,0,0"
+                   FontSize="20"
+                   FontFamily="/Material/Fonts/Lexend/#Lexend Medium"
+                   FontWeight="Medium" Grid.Column="1"/>
+        <CustomControl:CustomTextbox Grid.Row="1"
+                                     Height="40"
+                                     Width="230"
+                                     Text="{Binding GhiChu}"
+                                     TextSize="15"
+                                     VerticalAlignment="Top"
+                                     HorizontalAlignment="Left"
+                                     BorderColor="{StaticResource DarkGreen2}"
+                                     BorderColorClicked="{StaticResource LightAqua2}"
+                                     BorderThick="2"
+                                     RadiusOfCorner="5" 
+                                     Margin="310,200,0,0" Grid.Column="1"
                                      TextWrapping="Wrap">
             <CustomControl:CustomTextbox.Triggers>
                 <EventTrigger RoutedEvent="TextBox.GotFocus">
                     <BeginStoryboard>
                         <Storyboard>
-                            <DoubleAnimation Duration="0:0:0.25" Storyboard.TargetProperty="Height" From="40" To="80"/>
+                            <DoubleAnimation Duration="0:0:0.25" Storyboard.TargetProperty="Height" From="40" To="200"/>
                         </Storyboard>
                     </BeginStoryboard>
                 </EventTrigger>
                 <EventTrigger RoutedEvent="TextBox.LostFocus">
                     <BeginStoryboard>
                         <Storyboard>
-                            <DoubleAnimation Duration="0:0:0.25" Storyboard.TargetProperty="Height" From="80" To="40"/>
+                            <DoubleAnimation Duration="0:0:0.25" Storyboard.TargetProperty="Height" From="200" To="40"/>
                         </Storyboard>
                     </BeginStoryboard>
                 </EventTrigger>
             </CustomControl:CustomTextbox.Triggers>
         </CustomControl:CustomTextbox>
+        <TextBlock Grid.Row="1"
+                   HorizontalAlignment="Left"
+                   VerticalAlignment="Top" 
+                   Margin="50,250,0,0"
+                   Text="Mã vật tư"
+                   Foreground="{StaticResource DarkGreen2}"
+                   FontSize="20"
+                   FontFamily="/Material/Fonts/Lexend/#Lexend Medium"
+                   FontWeight="Medium" Grid.Column="1"/>
+        <CustomControl:SelectionList Grid.Row="1"
+                                     Height="115"
+                                     Width="230"
+                                     VerticalAlignment="Top"
+                                     HorizontalAlignment="Left"
+                                     Margin="50, 280, 0, 0"
+                                     DataList="{Binding VatTu}"
+                                     SelectedValue="{Binding MaVT, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
         <TextBlock Grid.Row="1"
                    HorizontalAlignment="Left"
                    VerticalAlignment="Top" 
@@ -163,23 +201,8 @@
                                      VerticalAlignment="Top"
                                      HorizontalAlignment="Left"
                                      Margin="50, 200, 0, 0"
-                                     DataList="{Binding ChucVu}"/>
-        <TextBlock Grid.Row="1"
-                   HorizontalAlignment="Left"
-                   VerticalAlignment="Top" 
-                   Margin="310,170,0,0"
-                   Text="Mã vật tư"
-                   Foreground="{StaticResource DarkGreen2}"
-                   FontSize="20"
-                   FontFamily="/Material/Fonts/Lexend/#Lexend Medium"
-                   FontWeight="Medium" Grid.Column="1"/>
-        <CustomControl:SelectionList Grid.Row="1"
-                                     Height="115"
-                                     Width="230"
-                                     VerticalAlignment="Top"
-                                     HorizontalAlignment="Left"
-                                     Margin="310, 200, 0, 0"
-                                     DataList="{Binding ChucVu}"/>
+                                     DataList="{Binding NhanVien}"
+                                     SelectedValue="{Binding MaNV, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
         <TextBlock Grid.Row="1"
                    HorizontalAlignment="Left"
                    VerticalAlignment="Top" 
@@ -194,7 +217,12 @@
                                     HorizontalAlignment="Left"
                                     Margin="310,120,0,0"
                                     Height="200"
-                                    Width="230"/>
+                                    Width="230"
+                                    SelectedValue="{Binding NgayLap, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+        <Border Grid.Row="1"
+                Background="Transparent"
+                Margin="40, 110, 40, 140"
+                Visibility="{Binding EnableEditing, Converter={StaticResource ReverseBoolToVisibilityConverter}}"/>
         <CustomControl:CustomButton Grid.Row="1"
                                     HorizontalAlignment="Left"
                                     VerticalAlignment="Bottom"

@@ -194,7 +194,7 @@
                                          VerticalAlignment="Top"
                                          Margin="375, 95, 0, 0"
                                          DataList="{Binding SearchFilter}"
-                                         SelectedValue="{Binding SelectedSearchFilter, Mode=TwoWay}"/>
+                                         SelectedValue="{Binding SelectedSearchFilter, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
         </Grid>
     </Grid>
 </UserControl>
