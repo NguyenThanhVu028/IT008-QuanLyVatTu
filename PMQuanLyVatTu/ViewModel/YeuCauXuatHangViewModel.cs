@@ -1,4 +1,5 @@
 ﻿using PMQuanLyVatTu.ErrorMessage;
+using PMQuanLyVatTu.Models;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -20,7 +21,7 @@ namespace PMQuanLyVatTu.ViewModel
             RefreshCommand = new RelayCommand<object>(Refresh);
             EditButtonCommand = new RelayCommand<object>(EditButton);
             DeleteButtonCommand = new RelayCommand<object>(DeleteButton);
-            DeleteSelectedCommand = new RelayCommand<object>(DeleteSelected);
+            //DeleteSelectedCommand = new RelayCommand<object>(DeleteSelected);
             Refresh();
         }
         #region Data for SelectionList
@@ -83,14 +84,19 @@ namespace PMQuanLyVatTu.ViewModel
         {
             DanhSachYeuCauXuat.Clear();
 
-            DanhSachYeuCauXuat.Add(new ExportRequest() { Checked = false, MaYCX = "YCX0001", MaNV = "NV0003", MaKH = "KH0002", MaKho = "KHO0003", NgayLap = "02/12/2024", GhiChu = "Giao gấp trong tuần tiếp theo kể từ ngày lập yêu cầu.", TrangThai = "Đã tiếp nhận" });
-            DanhSachYeuCauXuat.Add(new ExportRequest() { Checked = false, MaYCX = "YCX0002", MaNV = "NV0005", MaKH = "KH0001", MaKho = "KHO0001", NgayLap = "02/12/2024", GhiChu = "Giao gấp trong tuần tiếp theo kể từ ngày lập yêu cầu.", TrangThai = "Đã tiếp nhận" });
-            DanhSachYeuCauXuat.Add(new ExportRequest() { Checked = false, MaYCX = "YCX0003", MaNV = "NV0001", MaKH = "KH0005", MaKho = "KHO0009", NgayLap = "02/12/2024", GhiChu = "Giao gấp trong tuần tiếp theo kể từ ngày lập yêu cầu.", TrangThai = "Đã tiếp nhận" });
+            var ListFromDB = DataProvider.Instance.DB.ExportRequests.ToList();
+            foreach( var list in ListFromDB)
+            {
+                DanhSachYeuCauXuat.Add(list);
+            }
+            //DanhSachYeuCauXuat.Add(new ExportRequest() { Checked = false, MaYCX = "YCX0001", MaNV = "NV0003", MaKH = "KH0002", MaKho = "KHO0003", NgayLap = "02/12/2024", GhiChu = "Giao gấp trong tuần tiếp theo kể từ ngày lập yêu cầu.", TrangThai = "Đã tiếp nhận" });
+            //DanhSachYeuCauXuat.Add(new ExportRequest() { Checked = false, MaYCX = "YCX0002", MaNV = "NV0005", MaKH = "KH0001", MaKho = "KHO0001", NgayLap = "02/12/2024", GhiChu = "Giao gấp trong tuần tiếp theo kể từ ngày lập yêu cầu.", TrangThai = "Đã tiếp nhận" });
+            //DanhSachYeuCauXuat.Add(new ExportRequest() { Checked = false, MaYCX = "YCX0003", MaNV = "NV0001", MaKH = "KH0005", MaKho = "KHO0009", NgayLap = "02/12/2024", GhiChu = "Giao gấp trong tuần tiếp theo kể từ ngày lập yêu cầu.", TrangThai = "Đã tiếp nhận" });
         }
         public ICommand EditButtonCommand { get; set; }
         void EditButton(object t)
         {
-            string s = SelectedYeuCauXuat.MaYCX;
+            string s = SelectedYeuCauXuat.MaYcx;
             ThongTinYeuCauXuatHangWindowViewModel TTVTVM = new ThongTinYeuCauXuatHangWindowViewModel(s);
             ThongTinYeuCauXuatHangWindow AddWindow = new ThongTinYeuCauXuatHangWindow();
             AddWindow.DataContext = TTVTVM;
@@ -109,38 +115,38 @@ namespace PMQuanLyVatTu.ViewModel
             //Xóa trong database
             //Refresh();
         }
-        public ICommand DeleteSelectedCommand {  get; set; }
-        void DeleteSelected(object t)
-        {
-            int Count = 0;
-            CustomMessage msg = new CustomMessage("/Material/Images/Icons/question.png", "THÔNG BÁO", "Bạn có muốn xóa mục đã chọn?");
-            msg.ShowDialog();
-            if (msg.ReturnValue == true)
-            {
-                foreach (ExportRequest i in DanhSachYeuCauXuat)
-                {
-                    if (i.Checked == true)
-                    {
-                        //Xóa
-                        Count++;
-                    }
-                }
-                CustomMessage msg2 = new CustomMessage("/Material/Images/Icons/success.png", "THÀNH CÔNG", "Đã xóa thành công " + Count.ToString() + " mục.");
-                msg2.ShowDialog();
-                Refresh();
-            }
-        }
+        //public ICommand DeleteSelectedCommand {  get; set; }
+        //void DeleteSelected(object t)
+        //{
+        //    int Count = 0;
+        //    CustomMessage msg = new CustomMessage("/Material/Images/Icons/question.png", "THÔNG BÁO", "Bạn có muốn xóa mục đã chọn?");
+        //    msg.ShowDialog();
+        //    if (msg.ReturnValue == true)
+        //    {
+        //        foreach (ExportRequest i in DanhSachYeuCauXuat)
+        //        {
+        //            if (i.Checked == true)
+        //            {
+        //                //Xóa
+        //                Count++;
+        //            }
+        //        }
+        //        CustomMessage msg2 = new CustomMessage("/Material/Images/Icons/success.png", "THÀNH CÔNG", "Đã xóa thành công " + Count.ToString() + " mục.");
+        //        msg2.ShowDialog();
+        //        Refresh();
+        //    }
+        //}
         #endregion
     }
-    public class ExportRequest
-    {
-        public bool Checked { get; set; }
-        public string MaYCX { get; set; }
-        public string MaNV { get; set; }
-        public string MaKH { get; set; }
-        public string MaKho {  get; set; }
-        public string NgayLap { get; set; }
-        public string GhiChu { get; set; }
-        public string TrangThai { get; set; }
-    }
+    //public class ExportRequest
+    //{
+    //    public bool Checked { get; set; }
+    //    public string MaYCX { get; set; }
+    //    public string MaNV { get; set; }
+    //    public string MaKH { get; set; }
+    //    public string MaKho {  get; set; }
+    //    public string NgayLap { get; set; }
+    //    public string GhiChu { get; set; }
+    //    public string TrangThai { get; set; }
+    //}
 }

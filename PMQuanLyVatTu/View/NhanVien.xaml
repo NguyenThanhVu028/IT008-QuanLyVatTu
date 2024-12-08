@@ -57,17 +57,10 @@
                       ItemsSource="{Binding DanhSachNhanVien}"
                       Visibility="{Binding ElementName=ModeSwitch, Path=IsChecked, Converter={StaticResource BoolToVisibilityConverter}}">
                 <DataGrid.Columns>
-                    <DataGridTemplateColumn Width="30">
-                        <DataGridTemplateColumn.CellTemplate>
-                            <DataTemplate>
-                                <CheckBox IsChecked="{Binding Checked, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
-                            </DataTemplate>
-                        </DataGridTemplateColumn.CellTemplate>
-                    </DataGridTemplateColumn>
                     <DataGridTextColumn Header="Mã vật tư"
                                         Width="150"
                                         IsReadOnly="True"
-                                        Binding="{Binding MaNV}"/>
+                                        Binding="{Binding MaNv}"/>
                     <DataGridTextColumn Header="Họ tên"
                                         Width="200"
                                         IsReadOnly="True"
@@ -87,7 +80,7 @@
                     <DataGridTextColumn Header="Số điện thoại"
                                         Width="150"
                                         IsReadOnly="True"
-                                        Binding="{Binding SDT}"/>
+                                        Binding="{Binding Sdt}"/>
                     <DataGridTextColumn Header="Email"
                                         Width="250"
                                         IsReadOnly="True"
@@ -152,7 +145,7 @@
                                         Margin="0, 95, 30, 0"
                                         RadiusOfCorner="5"
                                         Command="{Binding AddCommand}"/>
-            <CustomControl:CustomButton Width="110"
+            <!--<CustomControl:CustomButton Width="110"
                                         Height="30"
                                         HorizontalAlignment="Right"
                                         VerticalAlignment="Bottom"
@@ -165,7 +158,7 @@
                                         Margin="0, 0, 80, 40"
                                         RadiusOfCorner="5"
                                         Command="{Binding DeleteSelectedCommand}"
-                                        Visibility="{Binding Path=IsChecked, ElementName=ModeSwitch, Converter={StaticResource BoolToVisibilityConverter}}"/>
+                                        Visibility="{Binding Path=IsChecked, ElementName=ModeSwitch, Converter={StaticResource BoolToVisibilityConverter}}"/>-->
             <CustomControl:CustomButton Width="120"
                                         Height="40"
                                         HorizontalAlignment="Right"

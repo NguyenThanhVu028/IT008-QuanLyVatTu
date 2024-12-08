@@ -119,12 +119,13 @@ namespace PMQuanLyVatTu.ViewModel
         public ICommand DeleteButtonCommand { get; set; }
         void DeleteButton(object t)
         {
-            CustomMessage msg = new CustomMessage("/Material/Images/Icons/question.png", "THÔNG BÁO", "Bạn có muốn xóa vật tư đã chọn?");
+            CustomMessage msg = new CustomMessage("/Material/Images/Icons/question.png", "THÔNG BÁO", "Bạn có muốn xóa khách hàng đã chọn?", true);
             msg.ShowDialog();
             if (msg.ReturnValue == true)
             {
-                DanhSachKhachHang.Remove(SelectedKhachHang);
+                //Xóa trong database
             }
+            Refresh();
         }
         public ICommand EditButtonCommand {  get; set; }
         void EditButton(object t)

@@ -54,7 +54,7 @@
                         Orientation="Horizontal">
             <CustomControl:ImageButton Width="30"
                                            Height="30"
-                                           Margin="0, 0, 10, 0"
+                                           Margin="0, 0, 20, 0"
                                            ImageLocation="/Material/Images/Icons/printer1.png"
                                            BorderBackgroundHightlight="{StaticResource LightAqua1}"
                                            Visibility="{Binding EditMode, Converter={StaticResource BoolToVisibilityConverter}}"
@@ -147,7 +147,9 @@
                                      BorderColorClicked="{StaticResource LightAqua2}"
                                      BorderThick="2"
                                      RadiusOfCorner="5" 
-                                     Margin="50,120,0,0" Grid.Column="1"/>
+                                     Margin="50,120,0,0" 
+                                     Grid.Column="1"
+                                     Text="{Binding MaPN, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
         <Border Grid.Row="1"
                 Height="40"
                 Width="230"
@@ -171,7 +173,9 @@
                                      VerticalAlignment="Top"
                                      HorizontalAlignment="Left"
                                      Margin="310, 200, 0, 0"
-                                     DataList="{Binding ChucVu}"/>
+                                     DataList="{Binding Kho}"
+                                     SelectedValue="{Binding KhoNhap, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                     IsEnabled="{Binding ListEmpty}"/>
         <TextBlock Grid.Row="1" 
                    Text="Tổng số tiền:"
                    Foreground="{StaticResource DarkGreen2}"
@@ -233,7 +237,7 @@
                                      IsEnabled="False"
                                      Height="40"
                                      Width="250"
-                                     Text ="{Binding ChietSuat}"
+                                     Text ="{Binding ChietKhau}"
                                      TextSize="15"
                                      WaterMark="Chiết khấu"
                                      VerticalAlignment="Bottom"
@@ -310,7 +314,8 @@
                                     HorizontalAlignment="Left"
                                     Margin="50,200,0,0"
                                     Height="200"
-                                    Width="230"/>
+                                    Width="230"
+                                    SelectedValue="{Binding NgayLap, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
         <TextBlock Grid.Row="1"
                    HorizontalAlignment="Left"
                    VerticalAlignment="Top" 
@@ -330,7 +335,8 @@
                                      BorderColorClicked="{StaticResource LightAqua2}"
                                      BorderThick="2"
                                      RadiusOfCorner="5" 
-                                     Margin="570, 200, 0, 0"/>
+                                     Margin="570, 200, 0, 0"
+                                     Text="{Binding LyDoNhap}"/>
         <TextBlock Grid.Row="1"
                    HorizontalAlignment="Left"
                    VerticalAlignment="Top" 
@@ -346,7 +352,8 @@
                                      VerticalAlignment="Top"
                                      HorizontalAlignment="Left"
                                      Margin="310, 120, 0, 0"
-                                     DataList="{Binding ChucVu}"/>
+                                     DataList="{Binding NhanVien}"
+                                     SelectedValue="{Binding MaNV, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
         <TextBlock Grid.Row="1"
                    HorizontalAlignment="Left"
                    VerticalAlignment="Top" 
@@ -362,7 +369,9 @@
                                      VerticalAlignment="Top"
                                      HorizontalAlignment="Left"
                                      Margin="570, 120, 0, 0"
-                                     DataList="{Binding ChucVu}"/>
+                                     DataList="{Binding NhaCungCap}"
+                                     SelectedValue="{Binding MaNCC, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                     IsEnabled="{Binding ListEmpty}"/>
         <Border Grid.Row="1"
                 Background="Transparent"
                 Margin="20, 90, 20, 390"

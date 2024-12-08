@@ -1,5 +1,6 @@
 ﻿using PMQuanLyVatTu.CustomControls;
 using PMQuanLyVatTu.ErrorMessage;
+using PMQuanLyVatTu.Models;
 using PMQuanLyVatTu.View;
 using System;
 using System.Collections.Generic;
@@ -22,7 +23,7 @@ namespace PMQuanLyVatTu.ViewModel
             RefreshCommand = new RelayCommand<object>(Refresh);
             EditButtonCommand = new RelayCommand<object>(EditButton);
             DeleteButtonCommand = new RelayCommand<object>(DeleteButton);
-            DeleteSelectedCommand = new RelayCommand<object>(DeleteSelected);
+            //DeleteSelectedCommand = new RelayCommand<object>(DeleteSelected);
             Refresh();
         }
         #region Data for SelectionList
@@ -114,11 +115,17 @@ namespace PMQuanLyVatTu.ViewModel
         {
             DanhSachNhanVien.Clear();
 
-            DanhSachNhanVien.Add(new Employee() { Checked = true, MaNV = "NV0001", HoTen = "Nguyễn Văn An", ChucVu = "QL", NgaySinh = "19/5/1998", GioiTinh = "Nam", SDT = "0912345678", Email = "de@gmqaial.com", DiaChi = "Số 354 Phường Linh Xuân, Quận Tân Hiệp Thành", Luong = 35000000, ImageLocation = "/Material/Images/Avatars/user1.jpg" });
-            DanhSachNhanVien.Add(new Employee() { Checked = true, MaNV = "NV0002", HoTen = "Nguyễn Thị Bình", ChucVu = "KT", NgaySinh = "19/5/1998", GioiTinh = "Nữ", SDT = "0912345678", Email = "de@gmqaial.com", DiaChi = "Số 354 Phường Linh Xuân, Quận Tân Hiệp Thành", Luong = 35000000, ImageLocation = "/Material/Images/Avatars/user2.jpg" });
-            DanhSachNhanVien.Add(new Employee() { Checked = true, MaNV = "NV0003", HoTen = "Nguyễn Trọng Phước Thành Danh", ChucVu = "NX", NgaySinh = "19/5/1998", GioiTinh = "Nam", SDT = "0912345678", Email = "de@gmqaial.com", DiaChi = "Số 354 Phường Linh Xuân, Quận Tân Hiệp Thành", Luong = 35000000, ImageLocation = "/Material/Images/Avatars/user3.jpg" });
-            DanhSachNhanVien.Add(new Employee() { Checked = true, MaNV = "NV0003", HoTen = "Nguyễn Hữu Tính", ChucVu = "TN", NgaySinh = "19/5/1998", GioiTinh = "Nam", SDT = "0912345678", Email = "de@gmqaial.com", DiaChi = "Số 354 Phường Linh Xuân, Quận Tân Hiệp Thành", Luong = 35000000, ImageLocation = "/Material/Images/Avatars/user4.jpg" });
-            DanhSachNhanVien.Add(new Employee() { Checked = true, MaNV = "NV0003", HoTen = "Nguyễn Trọng Phước Thành Danh", ChucVu = "KT", NgaySinh = "19/5/1998", GioiTinh = "Nam", SDT = "0912345678", Email = "de@gmqaial.com", DiaChi = "Số 354 Phường Linh Xuân, Quận Tân Hiệp Thành", Luong = 35000000, ImageLocation = "/Material/Images/Avatars/user5.jpg" });
+            var ListFromDB = DataProvider.Instance.DB.Employees.ToList();
+            foreach(var item in  ListFromDB)
+            {
+                DanhSachNhanVien.Add(item);
+            }
+
+            //DanhSachNhanVien.Add(new Employee() { Checked = true, MaNV = "NV0001", HoTen = "Nguyễn Văn An", ChucVu = "QL", NgaySinh = "19/5/1998", GioiTinh = "Nam", SDT = "0912345678", Email = "de@gmqaial.com", DiaChi = "Số 354 Phường Linh Xuân, Quận Tân Hiệp Thành", Luong = 35000000, ImageLocation = "/Material/Images/Avatars/user1.jpg" });
+            //DanhSachNhanVien.Add(new Employee() { Checked = true, MaNV = "NV0002", HoTen = "Nguyễn Thị Bình", ChucVu = "KT", NgaySinh = "19/5/1998", GioiTinh = "Nữ", SDT = "0912345678", Email = "de@gmqaial.com", DiaChi = "Số 354 Phường Linh Xuân, Quận Tân Hiệp Thành", Luong = 35000000, ImageLocation = "/Material/Images/Avatars/user2.jpg" });
+            //DanhSachNhanVien.Add(new Employee() { Checked = true, MaNV = "NV0003", HoTen = "Nguyễn Trọng Phước Thành Danh", ChucVu = "NX", NgaySinh = "19/5/1998", GioiTinh = "Nam", SDT = "0912345678", Email = "de@gmqaial.com", DiaChi = "Số 354 Phường Linh Xuân, Quận Tân Hiệp Thành", Luong = 35000000, ImageLocation = "/Material/Images/Avatars/user3.jpg" });
+            //DanhSachNhanVien.Add(new Employee() { Checked = true, MaNV = "NV0003", HoTen = "Nguyễn Hữu Tính", ChucVu = "TN", NgaySinh = "19/5/1998", GioiTinh = "Nam", SDT = "0912345678", Email = "de@gmqaial.com", DiaChi = "Số 354 Phường Linh Xuân, Quận Tân Hiệp Thành", Luong = 35000000, ImageLocation = "/Material/Images/Avatars/user4.jpg" });
+            //DanhSachNhanVien.Add(new Employee() { Checked = true, MaNV = "NV0003", HoTen = "Nguyễn Trọng Phước Thành Danh", ChucVu = "KT", NgaySinh = "19/5/1998", GioiTinh = "Nam", SDT = "0912345678", Email = "de@gmqaial.com", DiaChi = "Số 354 Phường Linh Xuân, Quận Tân Hiệp Thành", Luong = 35000000, ImageLocation = "/Material/Images/Avatars/user5.jpg" });
 
             if(DanhSachNhanVien.Count() > DanhSachNhanVienLargeIcon.Count())
             {
@@ -135,7 +142,7 @@ namespace PMQuanLyVatTu.ViewModel
             for(int i=0; i<DanhSachNhanVien.Count(); i++)
             {
                 DanhSachNhanVienLargeIcon[i].DataContext = DanhSachNhanVien[i];
-                if (DanhSachNhanVien[i].ChucVu == "QL") DanhSachNhanVienLargeIcon[i].BorderBrush = Brushes.Yellow;
+                if (DanhSachNhanVien[i].ChucVu == "Quản Lý") DanhSachNhanVienLargeIcon[i].BorderBrush = Brushes.Yellow;
                 else if (false) DanhSachNhanVienLargeIcon[i].BorderBrush = Brushes.Green;               //Nếu là ng đang dùng
                 else DanhSachNhanVienLargeIcon[i].BorderBrush = Brushes.Aqua;
                 temp.Add(DanhSachNhanVienLargeIcon[i]);
@@ -145,7 +152,7 @@ namespace PMQuanLyVatTu.ViewModel
         public ICommand EditButtonCommand { get; set; }
         void EditButton(object t = null)
         {
-            string s = SelectedNhanVien.MaNV;
+            string s = SelectedNhanVien.MaNv;
             ThongTinNhanVienWindowViewModel TTVTVM = new ThongTinNhanVienWindowViewModel(s);
             ThongTinNhanVienWindow AddWindow = new ThongTinNhanVienWindow();
             AddWindow.DataContext = TTVTVM;
@@ -155,41 +162,40 @@ namespace PMQuanLyVatTu.ViewModel
         public ICommand DeleteButtonCommand { get; set; }
         void DeleteButton(object t)
         {
-            CustomMessage msg = new CustomMessage("/Material/Images/Icons/question.png", "THÔNG BÁO", "Bạn có muốn xóa vật tư đã chọn?");
+            CustomMessage msg = new CustomMessage("/Material/Images/Icons/question.png", "THÔNG BÁO", "Bạn có muốn xóa nhân viên đã chọn?");
             msg.ShowDialog();
             if (msg.ReturnValue == true)
             {
-                DanhSachNhanVien.Remove(SelectedNhanVien);
+                //Xóa trong database theo SelectedNhanVien
             }
-            //Xóa trong database
-            //Refresh();
+            Refresh();
         }
-        public ICommand DeleteSelectedCommand { get; set; }
-        void DeleteSelected(object t)
-        {
-            int Count = 0;
-            CustomMessage msg = new CustomMessage("/Material/Images/Icons/question.png", "THÔNG BÁO", "Bạn có muốn xóa mục đã chọn?");
-            msg.ShowDialog();
-            if (msg.ReturnValue == true)
-            {
-                foreach (Employee i in DanhSachNhanVien)
-                {
-                    if (i.Checked == true)
-                    {
-                        //Xóa
-                        Count++;
-                    }
-                }
-                CustomMessage msg2 = new CustomMessage("/Material/Images/Icons/success.png", "THÀNH CÔNG", "Đã xóa thành công " + Count.ToString() + " mục.");
-                msg2.ShowDialog();
-                Refresh();
-            }
-        }
+        //public ICommand DeleteSelectedCommand { get; set; }
+        //void DeleteSelected(object t)
+        //{
+        //    int Count = 0;
+        //    CustomMessage msg = new CustomMessage("/Material/Images/Icons/question.png", "THÔNG BÁO", "Bạn có muốn xóa mục đã chọn?");
+        //    msg.ShowDialog();
+        //    if (msg.ReturnValue == true)
+        //    {
+        //        foreach (Employee i in DanhSachNhanVien)
+        //        {
+        //            if (i.Checked == true)
+        //            {
+        //                //Xóa
+        //                Count++;
+        //            }
+        //        }
+        //        CustomMessage msg2 = new CustomMessage("/Material/Images/Icons/success.png", "THÀNH CÔNG", "Đã xóa thành công " + Count.ToString() + " mục.");
+        //        msg2.ShowDialog();
+        //        Refresh();
+        //    }
+        //}
         #endregion
         #region Function
         void NhanVienDisplayerClicked(object sender, EventArgs e)
         {
-            string manv = ((sender as NhanVienDisplayer).DataContext as Employee).MaNV;
+            string manv = ((sender as NhanVienDisplayer).DataContext as Employee).MaNv;
             ThongTinNhanVienWindowViewModel TTVTVM = new ThongTinNhanVienWindowViewModel(manv);
             ThongTinNhanVienWindow AddWindow = new ThongTinNhanVienWindow();
             AddWindow.DataContext = TTVTVM;
@@ -197,19 +203,19 @@ namespace PMQuanLyVatTu.ViewModel
             Refresh();
         }
         #endregion
-        public class Employee
-        {
-            public bool Checked { get; set; }
-            public string MaNV { get; set; }
-            public string HoTen { get; set; }
-            public string ChucVu { get; set; }
-            public string NgaySinh { get; set; }
-            public string GioiTinh { get; set; }
-            public string SDT { get; set; }
-            public string Email { get; set; }
-            public string DiaChi { get; set; }
-            public int Luong { get; set; }
-            public string ImageLocation { get; set; }
-        }
+        //public class Employee
+        //{
+        //    public bool Checked { get; set; }
+        //    public string MaNV { get; set; }
+        //    public string HoTen { get; set; }
+        //    public string ChucVu { get; set; }
+        //    public string NgaySinh { get; set; }
+        //    public string GioiTinh { get; set; }
+        //    public string SDT { get; set; }
+        //    public string Email { get; set; }
+        //    public string DiaChi { get; set; }
+        //    public int Luong { get; set; }
+        //    public string ImageLocation { get; set; }
+        //}
     }
 }

@@ -338,7 +338,12 @@
             <TextBlock Grid.Row="1"
                        HorizontalAlignment="Stretch"
                        VerticalAlignment="Stretch"
-                       Margin="30, 20, 60, 350"
+                       Margin="30, 100, 60, 350"
+                       Visibility="{Binding EnableEditing, Converter={StaticResource ReverseBoolToVisibilityConverter}}"/>
+            <TextBlock Grid.Row="1"
+                       HorizontalAlignment="Stretch"
+                       VerticalAlignment="Stretch"
+                       Margin="30, 20, 600, 350"
                        Visibility="{Binding EnableEditing, Converter={StaticResource ReverseBoolToVisibilityConverter}}"/>
             <TextBlock Grid.Row="1"
                        HorizontalAlignment="Stretch"

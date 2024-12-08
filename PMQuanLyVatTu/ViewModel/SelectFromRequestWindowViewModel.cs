@@ -1,4 +1,5 @@
 ﻿using PMQuanLyVatTu.ErrorMessage;
+using PMQuanLyVatTu.Models;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -29,29 +30,17 @@ namespace PMQuanLyVatTu.ViewModel
         }
         #endregion
         #region DanhSachYeuCau
-        private ObservableCollection<ImportRequest> _danhSachYeuCauNhap = new ObservableCollection<ImportRequest>();
-        public ObservableCollection<ImportRequest> DanhSachYeuCauNhap
+        private ObservableCollection<Request> _danhSachYeuCau = new ObservableCollection<Request>();
+        public ObservableCollection<Request> DanhSachYeuCau
         {
-            get { return _danhSachYeuCauNhap; }
-            set { _danhSachYeuCauNhap = value; OnPropertyChanged(); }
+            get { return _danhSachYeuCau; }
+            set { _danhSachYeuCau = value; OnPropertyChanged(); }
         }
-        private ObservableCollection<ImportRequest> _selectedYeuCauNhap = new ObservableCollection<ImportRequest>();
-        public ObservableCollection<ImportRequest> SelectedYeuCauNhap
+        private ObservableCollection<string> _selectedYeuCau = new ObservableCollection<string>();
+        public ObservableCollection<string> SelectedYeuCau
         {
-            get { return _selectedYeuCauNhap; }
-            set { _selectedYeuCauNhap = value; OnPropertyChanged(); }
-        }
-        private ObservableCollection<ExportRequest> _danhSachYeuCauXuat = new ObservableCollection<ExportRequest>();
-        public ObservableCollection<ExportRequest> DanhSachYeuCauXuat
-        {
-            get { return _danhSachYeuCauXuat; }
-            set { _danhSachYeuCauXuat = value; OnPropertyChanged(); }
-        }
-        private ObservableCollection<ExportRequest> _selectedYeuCauXuat = new ObservableCollection<ExportRequest>();
-        public ObservableCollection<ExportRequest> SelectedYeuCauXuat
-        {
-            get { return _selectedYeuCauXuat; }
-            set { _selectedYeuCauXuat = value; OnPropertyChanged(); }
+            get { return _selectedYeuCau; }
+            set { _selectedYeuCau = value; OnPropertyChanged(); }
         }
         #endregion
         #region Command
@@ -63,17 +52,13 @@ namespace PMQuanLyVatTu.ViewModel
         public ICommand ConfirmCommand { get; set; }
         void Confirm(Window t)
         {
-            CustomMessage msg = new CustomMessage("/Material/Images/Icons/question.png", "THÔNG BÁO", "Bạn có muốn lưu các mục đã chọn?");
+            CustomMessage msg = new CustomMessage("/Material/Images/Icons/question.png", "THÔNG BÁO", "Bạn có muốn lưu các mục đã chọn?", true);
             msg.ShowDialog();
             if(msg.ReturnValue == true)
             {
-                foreach (ImportRequest i in DanhSachYeuCauNhap)
+                foreach (Request i in DanhSachYeuCau)
                 {
-                    if (i.Checked == true) SelectedYeuCauNhap.Add(i);
-                }
-                foreach (ExportRequest i in DanhSachYeuCauXuat)
-                {
-                    if (i.Checked == true) SelectedYeuCauXuat.Add(i);
+                    if (i.Checked == true) SelectedYeuCau.Add(i.MaYC);
                 }
                 t.Close();
             }
@@ -81,22 +66,47 @@ namespace PMQuanLyVatTu.ViewModel
         public ICommand CancelCommand { get; set; }
         void Cancel(Window t)
         {
-            SelectedYeuCauNhap.Clear();
-            SelectedYeuCauXuat.Clear();
+            SelectedYeuCau.Clear();
+            SelectedYeuCau.Clear();
             t.Close();
         }
         #endregion
         #region Function
         void LoadData()
         {
-            DanhSachYeuCauNhap.Add(new ImportRequest() { MaYCN = "YCN0001", NgayLap = "Friday,06/12/2024"});
-            DanhSachYeuCauNhap.Add(new ImportRequest() { MaYCN = "YCN0002", NgayLap = "Friday,06/12/2024" });
-            DanhSachYeuCauNhap.Add(new ImportRequest() { MaYCN = "YCN0003", NgayLap = "Friday,06/12/2024" });
+            if (IsYCN)
+            {
+                var ListFromDB = DataProvider.Instance.DB.ImportRequests.ToList();
+                foreach(var request in ListFromDB)
+                {
+                    Request temp = new Request(); temp.MaYC = request.MaYcn; temp.NgayLap = request.NgayLap;
+                    DanhSachYeuCau.Add(temp);
+                }
+            }
+            else
+            {
+                var ListFromDB = DataProvider.Instance.DB.ExportRequests.ToList();
+                foreach (var request in ListFromDB)
+                {
+                    Request temp = new Request(); temp.MaYC = request.MaYcx; temp.NgayLap = request.NgayLap;
+                    DanhSachYeuCau.Add(temp);
+                }
+            }
 
-            DanhSachYeuCauXuat.Add(new ExportRequest() { MaYCX = "YCN0001", NgayLap = "Friday,06/12/2024" });
-            DanhSachYeuCauXuat.Add(new ExportRequest() { MaYCX = "YCN0002", NgayLap = "Friday,06/12/2024" });
-            DanhSachYeuCauXuat.Add(new ExportRequest() { MaYCX = "YCN0003", NgayLap = "Friday,06/12/2024" });
+            //DanhSachYeuCauNhap.Add(new ImportRequest() { MaYCN = "YCN0001", NgayLap = "Friday,06/12/2024"});
+            //DanhSachYeuCauNhap.Add(new ImportRequest() { MaYCN = "YCN0002", NgayLap = "Friday,06/12/2024" });
+            //DanhSachYeuCauNhap.Add(new ImportRequest() { MaYCN = "YCN0003", NgayLap = "Friday,06/12/2024" });
+
+            //DanhSachYeuCauXuat.Add(new ExportRequest() { MaYCX = "YCN0001", NgayLap = "Friday,06/12/2024" });
+            //DanhSachYeuCauXuat.Add(new ExportRequest() { MaYCX = "YCN0002", NgayLap = "Friday,06/12/2024" });
+            //DanhSachYeuCauXuat.Add(new ExportRequest() { MaYCX = "YCN0003", NgayLap = "Friday,06/12/2024" });
         }
         #endregion
+        public class Request
+        {
+            public bool Checked { get; set; }
+            public string MaYC { get; set; }
+            public DateTime? NgayLap { get; set; }
+        }
     }
 }

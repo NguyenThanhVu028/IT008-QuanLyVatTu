@@ -230,9 +230,9 @@
             <Trigger Property="IsMouseOver" Value="false">
                 <Setter Property="Background" Value="{StaticResource LightAqua1}"/>
             </Trigger>
-            <Trigger Property="IsSelected" Value="True">
-                <Setter Property="Background" Value="{StaticResource LightAqua2}"/>
-            </Trigger>
+            <!--<Trigger Property="IsSelected" Value="True">
+                <Setter Property="Background" Value="{StaticResource LightAqua3}"/>
+            </Trigger>-->
         </Style.Triggers>
     </Style>
 

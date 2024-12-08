@@ -1,4 +1,5 @@
 ﻿using PMQuanLyVatTu.ErrorMessage;
+using PMQuanLyVatTu.Models;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -19,7 +20,7 @@ namespace PMQuanLyVatTu.ViewModel
             RefreshCommand = new RelayCommand<object>(Refresh);
             EditButtonCommand = new RelayCommand<object>(EditButton);
             DeleteButtonCommand = new RelayCommand<object>(DeleteButton);
-            DeleteSelectedCommand = new RelayCommand<object>(DeleteSelected);
+            //DeleteSelectedCommand = new RelayCommand<object>(DeleteSelected);
             Refresh();
         }
         #region Data for SelectionList
@@ -82,15 +83,20 @@ namespace PMQuanLyVatTu.ViewModel
         {
             DanhSachNhaCungCap.Clear();
 
-            DanhSachNhaCungCap.Add(new Supplier() { Checked = true, MaNCC = "NCC0001", TenNCC = "Đại lý bán hàng A", SDT = "0123456789", Email = "DLA@gmail.com", DiaChi = "123 Phường Đồng Xuân An" });
-            DanhSachNhaCungCap.Add(new Supplier() { Checked = true, MaNCC = "NCC0002", TenNCC = "Đại lý bán hàng B", SDT = "0123456789", Email = "DLB@gmail.com", DiaChi = "123 Phường Đồng Xuân An" });
-            DanhSachNhaCungCap.Add(new Supplier() { Checked = true, MaNCC = "NCC0003", TenNCC = "Đại lý bán hàng C", SDT = "0123456789", Email = "DLC@gmail.com", DiaChi = "123 Phường Đồng Xuân An" });
-            DanhSachNhaCungCap.Add(new Supplier() { Checked = true, MaNCC = "NCC0004", TenNCC = "Đại lý bán hàng D", SDT = "0123456789", Email = "DLD@gmail.com", DiaChi = "123 Phường Đồng Xuân An" });
+            var ListFromDB = DataProvider.Instance.DB.Suppliers.ToList();
+            foreach(var item in ListFromDB) 
+            { 
+                DanhSachNhaCungCap.Add(item);
+            }
+            //DanhSachNhaCungCap.Add(new Supplier() { Checked = true, MaNCC = "NCC0001", TenNCC = "Đại lý bán hàng A", SDT = "0123456789", Email = "DLA@gmail.com", DiaChi = "123 Phường Đồng Xuân An" });
+            //DanhSachNhaCungCap.Add(new Supplier() { Checked = true, MaNCC = "NCC0002", TenNCC = "Đại lý bán hàng B", SDT = "0123456789", Email = "DLB@gmail.com", DiaChi = "123 Phường Đồng Xuân An" });
+            //DanhSachNhaCungCap.Add(new Supplier() { Checked = true, MaNCC = "NCC0003", TenNCC = "Đại lý bán hàng C", SDT = "0123456789", Email = "DLC@gmail.com", DiaChi = "123 Phường Đồng Xuân An" });
+            //DanhSachNhaCungCap.Add(new Supplier() { Checked = true, MaNCC = "NCC0004", TenNCC = "Đại lý bán hàng D", SDT = "0123456789", Email = "DLD@gmail.com", DiaChi = "123 Phường Đồng Xuân An" });
         }
         public ICommand EditButtonCommand { get; set; }
         void EditButton(object t = null)
         {
-            string s = SelectedNhaCungCap.MaNCC;
+            string s = SelectedNhaCungCap.MaNcc;
             ThongTinNhaCungCapWindowViewModel TTVTVM = new ThongTinNhaCungCapWindowViewModel(s);
             ThongTinNhaCungCapWindow AddWindow = new ThongTinNhaCungCapWindow();
             AddWindow.DataContext = TTVTVM;
@@ -100,45 +106,44 @@ namespace PMQuanLyVatTu.ViewModel
         public ICommand DeleteButtonCommand { get; set; }
         void DeleteButton(object t)
         {
-            CustomMessage msg = new CustomMessage("/Material/Images/Icons/question.png", "THÔNG BÁO", "Bạn có muốn xóa nhà cung cấp đã chọn?");
+            CustomMessage msg = new CustomMessage("/Material/Images/Icons/question.png", "THÔNG BÁO", "Bạn có muốn xóa nhà cung cấp đã chọn?", true);
             msg.ShowDialog();
             if (msg.ReturnValue == true)
             {
-                DanhSachNhaCungCap.Remove(SelectedNhaCungCap);
+                //Xóa trong database
             }
-            //Xóa trong database
-            //Refresh();
+            Refresh();
         }
-        public ICommand DeleteSelectedCommand { get; set; }
-        void DeleteSelected(object t)
-        {
-            int Count = 0;
-            CustomMessage msg = new CustomMessage("/Material/Images/Icons/question.png", "THÔNG BÁO", "Bạn có muốn xóa mục đã chọn?");
-            msg.ShowDialog();
-            if (msg.ReturnValue == true)
-            {
-                foreach (Supplier i in DanhSachNhaCungCap)
-                {
-                    if (i.Checked == true)
-                    {
-                        //Xóa
-                        Count++;
-                    }
-                }
-                CustomMessage msg2 = new CustomMessage("/Material/Images/Icons/success.png", "THÀNH CÔNG", "Đã xóa thành công " + Count.ToString() + " mục.");
-                msg2.ShowDialog();
-                Refresh();
-            }
-        }
+        //public ICommand DeleteSelectedCommand { get; set; }
+        //void DeleteSelected(object t)
+        //{
+        //    int Count = 0;
+        //    CustomMessage msg = new CustomMessage("/Material/Images/Icons/question.png", "THÔNG BÁO", "Bạn có muốn xóa mục đã chọn?");
+        //    msg.ShowDialog();
+        //    if (msg.ReturnValue == true)
+        //    {
+        //        foreach (Supplier i in DanhSachNhaCungCap)
+        //        {
+        //            if (i.Checked == true)
+        //            {
+        //                //Xóa
+        //                Count++;
+        //            }
+        //        }
+        //        CustomMessage msg2 = new CustomMessage("/Material/Images/Icons/success.png", "THÀNH CÔNG", "Đã xóa thành công " + Count.ToString() + " mục.");
+        //        msg2.ShowDialog();
+        //        Refresh();
+        //    }
+        //}
         #endregion
-        public class Supplier
-        {
-            public bool Checked { get; set; }
-            public string MaNCC {  get; set; }
-            public string TenNCC {  get; set; }
-            public string SDT {  get; set; }
-            public string Email {  get; set; }
-            public string DiaChi { get; set; }
-        }
+        //public class Supplier
+        //{
+        //    public bool Checked { get; set; }
+        //    public string MaNCC {  get; set; }
+        //    public string TenNCC {  get; set; }
+        //    public string SDT {  get; set; }
+        //    public string Email {  get; set; }
+        //    public string DiaChi { get; set; }
+        //}
     }
 }

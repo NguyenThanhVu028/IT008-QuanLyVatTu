@@ -136,26 +136,30 @@
                     <DataGridTextColumn Header="Mã vật tư"
                                         Width="150"
                                         IsReadOnly="True"
-                                        Binding="{Binding MaVT}"/>
+                                        Binding="{Binding MaVT}"
+                                        CanUserResize="False"/>
                     <DataGridTextColumn Header="Số lượng"
                                         Width="100"
                                         IsReadOnly="True"
-                                        Binding="{Binding SoLuong}"/>
+                                        Binding="{Binding SoLuong}"
+                                        CanUserResize="False"/>
                     <DataGridTextColumn Header="Chiết khấu"
                                         Width="100"
                                         IsReadOnly="True"
-                                        Binding="{Binding ChietKhau}"/>
+                                        Binding="{Binding ChietKhau}"
+                                        CanUserResize="False"/>
                     <DataGridTextColumn Header="Thuế VAT"
                                         Width="100"
                                         IsReadOnly="True"
-                                        Binding="{Binding VAT}"/>
+                                        Binding="{Binding VAT}"
+                                        CanUserResize="False"/>
                 </DataGrid.Columns>
             </DataGrid>
         </Border>
         <CustomControl:CustomButton Grid.Row="1"
                                     VerticalAlignment="Top"
                                     HorizontalAlignment="Right"
-                                    Margin="0, 385, 130, 0"
+                                    Margin="0, 385, 150, 0"
                                     RadiusOfCorner="5"
                                     BorderBackground="{StaticResource DarkGreen2}"
                                     BorderBackgroundClicked="{StaticResource DarkGreen3}"
@@ -169,7 +173,7 @@
         <CustomControl:CustomButton Grid.Row="1"
                                     VerticalAlignment="Top"
                                     HorizontalAlignment="Right"
-                                    Margin="0, 385, 260, 0"
+                                    Margin="0, 385, 280, 0"
                                     RadiusOfCorner="5"
                                     BorderBackground="{StaticResource DarkRed}"
                                     BorderBackgroundClicked="{StaticResource DarkRed2}"
@@ -182,7 +186,7 @@
                                     Command="{Binding DeleteSelectedCommand}"/>
         <CustomControl:SelectionList Grid.Row="1"
                                      BoxHeight="35"
-                                     Width="90"
+                                     Width="110"
                                      Height="120"
                                      VerticalAlignment="Top"
                                      HorizontalAlignment="Right"
@@ -329,6 +333,7 @@
                                     DisplayText="Lưu"
                                     RadiusOfCorner="10" 
                                     BorderColorHighlight="#FF27C5C5" Grid.Column="1"
-                                    Command="{Binding SaveInfoCommand}"/>
+                                    Command="{Binding SaveInfoCommand}"
+                                    CommandParameter="{Binding ElementName=ThisWin}"/>
     </Grid>
 </Window>

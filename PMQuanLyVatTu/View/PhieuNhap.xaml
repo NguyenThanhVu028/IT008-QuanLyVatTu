@@ -45,27 +45,20 @@
                       Margin="60, 160, 60, 80"
                       ItemsSource="{Binding DanhSachPhieuNhap}">
                 <DataGrid.Columns>
-                    <DataGridTemplateColumn Width="30">
-                        <DataGridTemplateColumn.CellTemplate>
-                            <DataTemplate>
-                                <CheckBox IsChecked="{Binding Checked, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
-                            </DataTemplate>
-                        </DataGridTemplateColumn.CellTemplate>
-                    </DataGridTemplateColumn>
                     <DataGridTextColumn Header="Mã phiếu nhập"
                                         Width="150"
                                         IsReadOnly="True"
-                                        Binding="{Binding MaPN}"/>
+                                        Binding="{Binding MaPn}"/>
                     <DataGridTextColumn Header="Nhân viên tiếp nhận"
                                         Width="200"
                                         IsReadOnly="True"
-                                        Binding="{Binding MaNV}"/>
+                                        Binding="{Binding MaNv}"/>
                     <DataGridTextColumn Header="Nhà cung cấp"
-                                        Width="200"
-                                        IsReadOnly="True"
-                                        Binding="{Binding MaNCC}"/>
-                    <DataGridTextColumn Header="Ngày lập yêu cầu"
                                         Width="150"
+                                        IsReadOnly="True"
+                                        Binding="{Binding MaNcc}"/>
+                    <DataGridTextColumn Header="Ngày lập yêu cầu"
+                                        Width="200"
                                         IsReadOnly="True"
                                         Binding="{Binding NgayLap}"/>
                     <DataGridTextColumn Header="Kho nhập"
@@ -76,19 +69,19 @@
                                         Width="250"
                                         IsReadOnly="True"
                                         Binding="{Binding LyDoNhap}"/>
-                    <DataGridTextColumn Header="Chiết suất"
+                    <DataGridTextColumn Header="Chiết khấu"
                                         Width="100"
                                         IsReadOnly="True"
-                                        Binding="{Binding ChietSuat}"/>
+                                        Binding="{Binding ChietKhau}"/>
                     <DataGridTextColumn Header="VAT"
                                         Width="100"
                                         IsReadOnly="True"
-                                        Binding="{Binding VAT}"/>
+                                        Binding="{Binding Vat}"/>
                     <DataGridTextColumn Header="Tổng giá"
                                         Width="150"
                                         IsReadOnly="True"
                                         Binding="{Binding TongGia}"/>
-                    <DataGridTextColumn Header="TrangThai"
+                    <DataGridTextColumn Header="Trạng thái"
                                         Width="150"
                                         IsReadOnly="True"
                                         Binding="{Binding TrangThai}"/>
@@ -96,7 +89,7 @@
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
                                 <StackPanel Orientation="Horizontal">
-                                    <CustomControl:CustomButton Width="70"
+                                    <!--<CustomControl:CustomButton Width="70"
                                                                 Height="30"
                                                                 RadiusOfCorner="3"
                                                                 DisplayText="Duyệt"
@@ -118,7 +111,7 @@
                                                                 BorderColor="{StaticResource White}"
                                                                 BorderColorHighlight="{StaticResource LightRed}"
                                                                 BorderThick="0"
-                                                                Command="{Binding TuChoiCommand}"/>
+                                                                Command="{Binding TuChoiCommand}"/>-->
                                     <CustomControl:ImageButton x:Name="EditButton" 
                                                            Width="20"
                                                            Height="20"
@@ -167,20 +160,6 @@
                                         Margin="0, 95, 30, 0"
                                         RadiusOfCorner="5"
                                         Command="{Binding AddCommand}"/>
-            <CustomControl:CustomButton Width="110"
-                                        Height="30"
-                                        HorizontalAlignment="Right"
-                                        VerticalAlignment="Bottom"
-                                        BorderBackground="{StaticResource DarkRed}"
-                                        BorderBackgroundClicked="{StaticResource DarkRed2}"
-                                        BorderColor="{StaticResource White}"
-                                        BorderColorHighlight="{StaticResource LightRed}"
-                                        DisplayText="Xóa đã chọn"
-                                        TextSize="15"
-                                        Margin="0, 0, 80, 40"
-                                        RadiusOfCorner="5"
-                                        Command="{Binding DeleteSelectedCommand}"
-                                        Visibility="{Binding Path=IsChecked, ElementName=ModeSwitch, Converter={StaticResource BoolToVisibilityConverter}}"/>
             <CustomControl:CustomButton Width="120"
                                         Height="40"
                                         HorizontalAlignment="Right"

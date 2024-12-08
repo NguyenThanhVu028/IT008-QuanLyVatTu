@@ -1,4 +1,5 @@
 ﻿using PMQuanLyVatTu.ErrorMessage;
+using PMQuanLyVatTu.Models;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -23,9 +24,9 @@ namespace PMQuanLyVatTu.ViewModel
             if(maycx != null) { EditMode = true; Title = "CHỈNH SỬA YÊU CẦU XUẤT"; LoadData(maycx); LoadDanhSach(); }
             else { EnableEditing = true; EditMode = false; Title = "THÊM YÊU CẦU XUẤT"; }
 
-            NhanVien.Add("NV0001"); NhanVien.Add("NV0002"); NhanVien.Add("NV0003");
-            KhachHang.Add("KH0001"); KhachHang.Add("KH0002");
-            Kho.Add("KHO0002"); Kho.Add("KHO0003"); Kho.Add("KHO0007");
+            LoadNhanVien();
+            LoadKhachHang();
+            LoadKho();
 
             CloseWindowCommand = new RelayCommand<Window>(CloseWindow);
             MoveWindowCommand = new RelayCommand<Window>(MoveWindow);
@@ -258,6 +259,30 @@ namespace PMQuanLyVatTu.ViewModel
         }
         #endregion
         #region Function
+        void LoadNhanVien()
+        {
+            var ListFromDB = DataProvider.Instance.DB.Employees.ToList();
+            foreach (var item in ListFromDB)
+            {
+                if(item.ChucVu == "Tiếp Nhận") NhanVien.Add(item.MaNv);
+            }
+        }
+        void LoadKhachHang()
+        {
+            var ListFromDB = DataProvider.Instance.DB.Customers.ToList();
+            foreach(var item in ListFromDB)
+            {
+                KhachHang.Add(item.MaKh);
+            }
+        }
+        void LoadKho()
+        {
+            var ListFromDB = DataProvider.Instance.DB.Warehouses.ToList();
+            foreach(var item in ListFromDB)
+            {
+                Kho.Add(item.MaKho);
+            }
+        }
         void LoadData(string maycx)
         {
             MaYCX = maycx;

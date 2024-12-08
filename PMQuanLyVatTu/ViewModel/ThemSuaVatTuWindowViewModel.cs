@@ -1,4 +1,6 @@
 ﻿using PMQuanLyVatTu.ErrorMessage;
+using PMQuanLyVatTu.Models;
+using PMQuanLyVatTu.View;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -12,11 +14,11 @@ namespace PMQuanLyVatTu.ViewModel
 {
     public class ThemSuaVatTuWindowViewModel : BaseViewModel
     {
-        public ThemSuaVatTuWindowViewModel(string makho = null)
+        public ThemSuaVatTuWindowViewModel(string makho = "")
         {
             if(makho != null) Makho = makho;
-            //Danh sach vat tu lay theo ma kho
-            DanhSachVatTu.Add("VT0001"); DanhSachVatTu.Add("VT0002"); DanhSachVatTu.Add("VT0003"); DanhSachVatTu.Add("VT0004");
+            
+            LoadVatTu();
 
             MoveWindowCommand = new RelayCommand<Window>(MoveWindow);
             CancelCommand = new RelayCommand<Window>(Cancel);
@@ -85,17 +87,32 @@ namespace PMQuanLyVatTu.ViewModel
         void Confirm(Window t) {
             if(MaVT == "")
             {
-                CustomMessage msg = new CustomMessage("/Material/Images/Icons/wrong.png", "LỖI", "Vui lòng chọn mã vật tư.", false);
-                msg.ShowDialog();
+                CustomMessage msg1 = new CustomMessage("/Material/Images/Icons/wrong.png", "LỖI", "Vui lòng chọn mã vật tư.", false);
+                msg1.ShowDialog();
             }
-            else
+            //Kiểm tra số lượng có <= Tồn kho của VT hay không
+            if (false)
             {
-                CustomMessage msg = new CustomMessage("/Material/Images/Icons/success.png", "THÀNH CÔNG", "Đã lưu thông tin.", false);
-                msg.ShowDialog();
-                ReturnValue = true;
-                t.Close();
+                CustomMessage msg1 = new CustomMessage("/Material/Images/Icons/wrong.png", "LỖI", "Số lượng tồn kho không đủ.", false);
+                msg1.ShowDialog();
             }
+            //Nhớ kiểm tra kiểu dữ liệu nhập vào, không được nhập số âm
+            CustomMessage msg = new CustomMessage("/Material/Images/Icons/success.png", "THÀNH CÔNG", "Đã lưu thông tin.", false);
+            msg.ShowDialog();
+            ReturnValue = true;
+            t.Close();
+
         }
         #endregion
+        #region Function
+        void LoadVatTu()
+        {
+            var ListFromDB = DataProvider.Instance.DB.Supplies.ToList();
+            foreach (var item in ListFromDB)
+            {
+                if(item.MaKho.Contains(Makho)) DanhSachVatTu.Add(item.MaVt);
+            }
+        }
+        #endregion  
     }
 }

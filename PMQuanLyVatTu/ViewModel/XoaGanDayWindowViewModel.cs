@@ -91,31 +91,31 @@ namespace PMQuanLyVatTu.ViewModel
             {
                 //Kiểm tra loại đã xóa và đổ dữ liệu tương ứng lên
                 case "vt":
-                    DanhSachDaXoa.Add(new DeletedItem() { Checked = true, MaDaXoa = "VT0008", ThoiGianXoa = DateTime.Now.ToString() });
+                    
                     break;
                 case "nv":
-                    DanhSachDaXoa.Add(new DeletedItem() { Checked = false, MaDaXoa = "NV0003", ThoiGianXoa = DateTime.Now.ToString() });
+                    
                     break;
                 case "kh":
-                    DanhSachDaXoa.Add(new DeletedItem() { Checked = false, MaDaXoa = "KH0007", ThoiGianXoa = DateTime.Now.ToString() });
+                    
                     break;
                 case "ncc":
-                    DanhSachDaXoa.Add(new DeletedItem() { Checked = true, MaDaXoa = "NCC0002", ThoiGianXoa = DateTime.Now.ToString() });
+                    
                     break;
                 case "kho":
-                    DanhSachDaXoa.Add(new DeletedItem() { Checked = false, MaDaXoa = "KHO0009", ThoiGianXoa = DateTime.Now.ToString() });
+                    
                     break;
                 case "ycx":
-                    DanhSachDaXoa.Add(new DeletedItem() { Checked = false, MaDaXoa = "YCX0001", ThoiGianXoa = DateTime.Now.ToString() });
+                    
                     break;
                 case "ycn":
-                    DanhSachDaXoa.Add(new DeletedItem() { Checked = false, MaDaXoa = "YCN0006", ThoiGianXoa = DateTime.Now.ToString() });
+                    
                     break;
                 case "pn":
-                    DanhSachDaXoa.Add(new DeletedItem() { Checked = false, MaDaXoa = "PN0012", ThoiGianXoa = DateTime.Now.ToString() });
+                    
                     break;
                 case "px":
-                    DanhSachDaXoa.Add(new DeletedItem() { Checked = false, MaDaXoa = "PX0034", ThoiGianXoa = DateTime.Now.ToString() });
+                    
                     break;
             }
             
@@ -136,10 +136,34 @@ namespace PMQuanLyVatTu.ViewModel
                         {
                             if(i.Checked == true)
                             {
-                                //Khôi phục
+                                //Khôi phục bằng MaDaXoa, sửa DaXoa thành 0;
                                 Count++;
                             }
                         }
+                        break;
+                    case "nv":
+
+                        break;
+                    case "kh":
+
+                        break;
+                    case "ncc":
+
+                        break;
+                    case "kho":
+
+                        break;
+                    case "ycx":
+
+                        break;
+                    case "ycn":
+
+                        break;
+                    case "pn":
+
+                        break;
+                    case "px":
+
                         break;
                 }
                 CustomMessage msg2 = new CustomMessage("/Material/Images/Icons/success.png", "THÀNH CÔNG", "Đã khôi phục thành công " + Count.ToString() + " mục.");
@@ -169,6 +193,30 @@ namespace PMQuanLyVatTu.ViewModel
                             }
                         }
                         break;
+                    case "nv":
+
+                        break;
+                    case "kh":
+
+                        break;
+                    case "ncc":
+
+                        break;
+                    case "kho":
+
+                        break;
+                    case "ycx":
+
+                        break;
+                    case "ycn":
+
+                        break;
+                    case "pn":
+
+                        break;
+                    case "px":
+
+                        break;
                 }
                 CustomMessage msg2 = new CustomMessage("/Material/Images/Icons/success.png", "THÀNH CÔNG", "Đã xóa thành công " + Count.ToString() + " mục.");
                 msg2.ShowDialog();
@@ -192,6 +240,30 @@ namespace PMQuanLyVatTu.ViewModel
                             //Xóa
                         }
                         break;
+                    case "nv":
+
+                        break;
+                    case "kh":
+
+                        break;
+                    case "ncc":
+
+                        break;
+                    case "kho":
+
+                        break;
+                    case "ycx":
+
+                        break;
+                    case "ycn":
+
+                        break;
+                    case "pn":
+
+                        break;
+                    case "px":
+
+                        break;
                 }
                 CustomMessage msg2 = new CustomMessage("/Material/Images/Icons/success.png", "THÀNH CÔNG", "Đã xóa tất cả thành công.");
                 msg2.ShowDialog();
@@ -201,13 +273,40 @@ namespace PMQuanLyVatTu.ViewModel
         public ICommand DeleteButtonCommand { get; set; }
         void DeleteButton(object t)
         {
+            //Xóa theo SelectedDaXoa;
             CustomMessage msg = new CustomMessage("/Material/Images/Icons/question.png", "THÔNG BÁO", "Bạn có muốn xóa mục đã chọn?");
             msg.ShowDialog();
             if (msg.ReturnValue == true)
             {
                 switch(LoaiDaXoa)
                 {
-                    //Kiểm tra loại đã xóa và xóa trong database tương ứng
+                    case "vt":
+
+                        break;
+                    case "nv":
+
+                        break;
+                    case "kh":
+
+                        break;
+                    case "ncc":
+
+                        break;
+                    case "kho":
+
+                        break;
+                    case "ycx":
+
+                        break;
+                    case "ycn":
+
+                        break;
+                    case "pn":
+
+                        break;
+                    case "px":
+
+                        break;
                 }
                 Refresh();
             }

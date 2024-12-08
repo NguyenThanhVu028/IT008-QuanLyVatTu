@@ -157,10 +157,9 @@ namespace PMQuanLyVatTu.ViewModel
             msg.ShowDialog();
             if (msg.ReturnValue == true)
             {
-                DanhSachVatTu.Remove(SelectedVatTu);
+                //Xóa trong database
             }
-            //Xóa trong database
-            //Refresh();
+            Refresh();
         }
         //public ICommand DeleteSelectedCommand { get; set; }
         //void DeleteSelected(object t)

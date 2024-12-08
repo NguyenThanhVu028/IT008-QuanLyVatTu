@@ -34,6 +34,106 @@
                     BorderBrush="Aqua"
                     BorderThickness="2"
                     CornerRadius="25"/>
+            <DataGrid x:Name="DisplayDataGRid" 
+                      SelectedItem="{Binding SelectedPhieuXuat}"
+                      Style="{DynamicResource DataGridStyle1}" 
+                      CellStyle="{DynamicResource DataGridCellStyle1}" 
+                      ColumnHeaderStyle="{DynamicResource DataGridColumnHeaderStyle1}" 
+                      RowStyle="{DynamicResource DataGridRowStyle1}" 
+                      HorizontalAlignment="Stretch"
+                      VerticalAlignment="Stretch"
+                      Margin="60, 160, 60, 80"
+                      ItemsSource="{Binding DanhSachPhieuXuat}">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="Mã phiếu xuất"
+                                        Width="150"
+                                        IsReadOnly="True"
+                                        Binding="{Binding MaPx}"/>
+                    <DataGridTextColumn Header="Nhân viên tiếp nhận"
+                                        Width="200"
+                                        IsReadOnly="True"
+                                        Binding="{Binding MaNv}"/>
+                    <DataGridTextColumn Header="Khách hàng"
+                                        Width="150"
+                                        IsReadOnly="True"
+                                        Binding="{Binding MaKh}"/>
+                    <DataGridTextColumn Header="Ngày lập yêu cầu"
+                                        Width="200"
+                                        IsReadOnly="True"
+                                        Binding="{Binding NgayLap}"/>
+                    <DataGridTextColumn Header="Kho xuất"
+                                        Width="150"
+                                        IsReadOnly="True"
+                                        Binding="{Binding KhoXuat}"/>
+                    <DataGridTextColumn Header="Lý do xuất"
+                                        Width="250"
+                                        IsReadOnly="True"
+                                        Binding="{Binding LyDoXuat}"/>
+                    <DataGridTextColumn Header="Chiết khấu"
+                                        Width="100"
+                                        IsReadOnly="True"
+                                        Binding="{Binding ChietKhau}"/>
+                    <DataGridTextColumn Header="VAT"
+                                        Width="100"
+                                        IsReadOnly="True"
+                                        Binding="{Binding Vat}"/>
+                    <DataGridTextColumn Header="Tổng giá"
+                                        Width="150"
+                                        IsReadOnly="True"
+                                        Binding="{Binding TongGia}"/>
+                    <DataGridTextColumn Header="Trạng thái"
+                                        Width="150"
+                                        IsReadOnly="True"
+                                        Binding="{Binding TrangThai}"/>
+                    <DataGridTemplateColumn Header="" IsReadOnly="True">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <StackPanel Orientation="Horizontal">
+                                    <!--<CustomControl:CustomButton Width="70"
+                                                                Height="30"
+                                                                RadiusOfCorner="3"
+                                                                DisplayText="Duyệt"
+                                                                TextSize="12"
+                                                                BorderBackground="LawnGreen"
+                                                                BorderBackgroundClicked="Green"
+                                                                BorderColor="{StaticResource DarkGreen2}"
+                                                                BorderColorHighlight="{StaticResource DarkGreen3}"
+                                                                BorderThick="0"
+                                                                Command="{Binding DuyetCommand}"/>
+                                    <CustomControl:CustomButton Width="70"
+                                                                Height="30"
+                                                                Margin="10, 0, 0, 0"
+                                                                RadiusOfCorner="3"
+                                                                DisplayText="Từ chối"
+                                                                TextSize="12"
+                                                                BorderBackground="Red"
+                                                                BorderBackgroundClicked="{StaticResource DarkRed2}"
+                                                                BorderColor="{StaticResource White}"
+                                                                BorderColorHighlight="{StaticResource LightRed}"
+                                                                BorderThick="0"
+                                                                Command="{Binding TuChoiCommand}"/>-->
+                                    <CustomControl:ImageButton x:Name="EditButton" 
+                                                           Width="20"
+                                                           Height="20"
+                                                           ImageLocation="/Material/Images/Icons/edit1.png"
+                                                           BorderBackgroundHightlight="{StaticResource LightRed}"
+                                                           Margin="7, 7, 7, 7"
+                                                           DataContext="{Binding ElementName=ThisWin, Path=DataContext}"
+                                                           Command="{Binding EditButtonCommand}"/>
+                                    <CustomControl:ImageButton x:Name="DeleteButton" 
+                                                           Width="20"
+                                                           Height="20"
+                                                           ImageLocation="/Material/Images/Icons/delete.png"
+                                                           BorderBackgroundHightlight="{StaticResource LightRed}"
+                                                           Margin="7, 7, 7, 7"
+                                                           DataContext="{Binding ElementName=ThisWin, Path=DataContext}"
+                                                           Command="{Binding DeleteButtonCommand}"/>
+                                </StackPanel>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                </DataGrid.Columns>
+            </DataGrid>
             <TextBlock Grid.Row="1" 
                        Height="70"
                        Width="400"
@@ -60,20 +160,6 @@
                                         Margin="0, 95, 30, 0"
                                         RadiusOfCorner="5"
                                         Command="{Binding AddCommand}"/>
-            <CustomControl:CustomButton Width="110"
-                                        Height="30"
-                                        HorizontalAlignment="Right"
-                                        VerticalAlignment="Bottom"
-                                        BorderBackground="{StaticResource DarkRed}"
-                                        BorderBackgroundClicked="{StaticResource DarkRed2}"
-                                        BorderColor="{StaticResource White}"
-                                        BorderColorHighlight="{StaticResource LightRed}"
-                                        DisplayText="Xóa đã chọn"
-                                        TextSize="15"
-                                        Margin="0, 0, 80, 40"
-                                        RadiusOfCorner="5"
-                                        Command="{Binding DeleteSelectedCommand}"
-                                        Visibility="{Binding Path=IsChecked, ElementName=ModeSwitch, Converter={StaticResource BoolToVisibilityConverter}}"/>
             <CustomControl:CustomButton Width="120"
                                         Height="40"
                                         HorizontalAlignment="Right"
@@ -123,12 +209,12 @@
                     </i:EventTrigger>
                 </i:Interaction.Triggers>
             </CustomControl:CustomTextbox>
-            <CustomControl:SelectionList Width="125"
+            <CustomControl:SelectionList Width="140"
                                          Height="200"
                                          HorizontalAlignment="Left"
                                          VerticalAlignment="Top"
                                          Margin="375, 95, 0, 0"
-                                         SelectedValue="{Binding SelectedSearchFilter, Mode=TwoWay}"
+                                         SelectedValue="{Binding SelectedSearchFilter, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                                          DataList="{Binding SearchFilter}"/>
         </Grid>
     </Grid>

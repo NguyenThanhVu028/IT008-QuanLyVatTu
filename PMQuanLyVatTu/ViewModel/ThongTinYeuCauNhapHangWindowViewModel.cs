@@ -1,4 +1,5 @@
 ﻿using PMQuanLyVatTu.ErrorMessage;
+using PMQuanLyVatTu.Models;
 using PMQuanLyVatTu.View;
 using System;
 using System.Collections.Generic;
@@ -21,8 +22,8 @@ namespace PMQuanLyVatTu.ViewModel
             if (maycn != null) { EditMode = true; Title = "CHỈNH SỬA YÊU CẦU NHẬP"; LoadData(maycn);}
             else { EnableEditing = true; EditMode = false; Title = "THÊM YÊU CẦU NHẬP"; }
 
-            NhanVien.Add("NV0001"); NhanVien.Add("NV0002"); NhanVien.Add("NV0003");
-            VatTu.Add("VT0001"); VatTu.Add("VT0005");
+            LoadNhanVien();
+            LoadVatTu();
 
             CloseWindowCommand = new RelayCommand<Window>(CloseWindow);
             MoveWindowCommand = new RelayCommand<Window>(MoveWindow);
@@ -127,7 +128,7 @@ namespace PMQuanLyVatTu.ViewModel
         public ICommand DeleteButtonCommand { get; set; }
         void DeleteButton(Window t)
         {
-            CustomMessage msg = new CustomMessage("/Material/Images/Icons/question.png", "THÔNG BÁO", "Bạn có muốn xóa vật tư đã chọn?");
+            CustomMessage msg = new CustomMessage("/Material/Images/Icons/question.png", "THÔNG BÁO", "Bạn có muốn xóa yêu cầu đã chọn?", true);
             msg.ShowDialog();
             if (msg.ReturnValue == true)
             { //Chấp nhận xóa
@@ -149,7 +150,7 @@ namespace PMQuanLyVatTu.ViewModel
             {
                 if (MaYCN == "") //Chưa nhập mã 
                 {
-                    CustomMessage msg = new CustomMessage("/Material/Images/Icons/wrong.png", "LỖI", "Vui lòng nhập mã yêu cầu xuất hàng.");
+                    CustomMessage msg = new CustomMessage("/Material/Images/Icons/wrong.png", "LỖI", "Vui lòng nhập mã yêu cầu nhập hàng.");
                     msg.ShowDialog();
                 }
                 else if (true) //Trùng mã 
@@ -160,7 +161,7 @@ namespace PMQuanLyVatTu.ViewModel
                 else // Hợp lệ
                 {
                     EnableEditing = false;
-                    CustomMessage msg = new CustomMessage("/Material/Images/Icons/success.png", "THÀNH CÔNG", "Thêm nhân viên thành công.", false);
+                    CustomMessage msg = new CustomMessage("/Material/Images/Icons/success.png", "THÀNH CÔNG", "Thêm yêu cầu thành công.", false);
                     msg.ShowDialog();
                     (t as Window).Close();
                 }
@@ -168,6 +169,22 @@ namespace PMQuanLyVatTu.ViewModel
         }
         #endregion
         #region Function
+        void LoadNhanVien()
+        {
+            var ListFromDB = DataProvider.Instance.DB.Employees.ToList();
+            foreach(var item in ListFromDB)
+            {
+                if(item.ChucVu == "Kế Toán" && item.DaXoa == false) NhanVien.Add(item.MaNv);
+            }
+        }
+        void LoadVatTu()
+        {
+            var ListFromDB = DataProvider.Instance.DB.Supplies.ToList();
+            foreach(var item in ListFromDB)
+            {
+                if(item.DaXoa == false) VatTu.Add(item.MaVt);
+            }
+        }
         void LoadData(string maycn)
         {
             MaYCN = maycn;

@@ -181,6 +181,7 @@
                                     DisplayText="Lưu"
                                     RadiusOfCorner="10" 
                                     BorderColorHighlight="#FF27C5C5" Grid.Column="1"
-                                    Command="{Binding SaveInfoCommand}"/>
+                                    Command="{Binding SaveInfoCommand}"
+                                    CommandParameter="{Binding ElementName=ThisWin}"/>
     </Grid>
 </Window>

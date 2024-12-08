@@ -593,7 +593,7 @@
                             <RowDefinition Height="29*"/>
                         </Grid.RowDefinitions>
                         <Border x:Name="DisplayBorder" 
-                                Grid.RowSpan="2" 
+                                Grid.RowSpan="2"
                                 Background="#B2001E28"
                                 BorderBrush="{Binding BorderBrush, RelativeSource={RelativeSource TemplatedParent}}"
                                 BorderThickness="2"
@@ -611,7 +611,7 @@
                                        HorizontalAlignment="Center"
                                        VerticalAlignment="Top"
                                        Margin="0, 10, 0, 0"
-                                       Text="{Binding MaNV}"
+                                       Text="{Binding MaNv}"
                                        Foreground="White"
                                        FontSize="15"
                                        FontFamily="/Material/Fonts/Lexend/#Lexend Medium"
@@ -631,7 +631,7 @@
                                        HorizontalAlignment="Stretch"
                                        VerticalAlignment="Top"
                                        Margin="20, 5, 20, 0"
-                                       Text="{Binding ChucVu, Converter={StaticResource ChucVuConverter}}"
+                                       Text="{Binding ChucVu}"
                                        TextWrapping="Wrap"
                                        TextAlignment="Center"
                                        Foreground="White"

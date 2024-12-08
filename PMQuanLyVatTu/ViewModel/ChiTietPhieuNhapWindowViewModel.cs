@@ -1,4 +1,5 @@
 ﻿using PMQuanLyVatTu.ErrorMessage;
+using PMQuanLyVatTu.Models;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -18,8 +19,10 @@ namespace PMQuanLyVatTu.ViewModel
     {
         public ChiTietPhieuNhapWindowViewModel(string mapn = null) 
         {
-            if(mapn != null) { EditMode = true; Title = "CHỈNH SỬA PHIẾU NHẬP"; LoadData(mapn); LoadDanhSach(); }
+            if(mapn != null) { EditMode = true; Title = "CHỈNH SỬA PHIẾU NHẬP"; LoadData(mapn); LoadDanhSach();}
             else { EditMode = false; EnableEditing = true; Title = "THÊM PHIẾU NHẬP"; }
+
+            LoadNhaCungCap(); LoadKho(); LoadNhanVien();
 
             CloseWindowCommand = new RelayCommand<Window>(CloseWindow);
             MoveWindowCommand = new RelayCommand<Window>(MoveWindow);
@@ -42,9 +45,9 @@ namespace PMQuanLyVatTu.ViewModel
         #region Info
         private string _maPN = "";
         private string _maNV;
-        private string _maNCC;
+        private string _maNCC = "";
         private string _ngayLap;
-        private string _khoNhap;
+        private string _khoNhap = "";
         private string _lyDoNhap;
         private int _chietSuat;
         private int _vAT;
@@ -62,7 +65,7 @@ namespace PMQuanLyVatTu.ViewModel
         public string MaNCC
         {
             get { return _maNCC; }
-            set { _maNCC = value; OnPropertyChanged(); }
+            set { _maNCC = value; OnPropertyChanged(); LoadKho(); }
         }
         public string NgayLap
         {
@@ -79,7 +82,7 @@ namespace PMQuanLyVatTu.ViewModel
             get { return _lyDoNhap; }
             set { _lyDoNhap = value; OnPropertyChanged(); }
         }
-        public int ChietSuat
+        public int ChietKhau
         {
             get { return _chietSuat; }
             set { _chietSuat = value; OnPropertyChanged(); }
@@ -93,6 +96,14 @@ namespace PMQuanLyVatTu.ViewModel
         {
             get { return _tongGia; }
             set { _tongGia = value; OnPropertyChanged(); }
+        }
+        #endregion
+        #region ListEmpty
+        private bool _listEmpty = true;
+        public bool ListEmpty
+        {
+            get { return _listEmpty; }
+            set { _listEmpty = value; OnPropertyChanged(); }
         }
         #endregion
         #region EditMode
@@ -217,6 +228,12 @@ namespace PMQuanLyVatTu.ViewModel
         public ICommand AddCommand { get; set; }
         void Add(object t)
         {
+            if (MaNCC == "" || KhoNhap == "")
+            {
+                CustomMessage msg = new CustomMessage("/Material/Images/Icons/wrong.png", "LỖI", "Vui lòng nhập đầy đủ nhà cung cấp và kho nhập hàng.");
+                msg.ShowDialog();
+                return;
+            }
             ThemSuaVatTuWindow themSuaVatTuWindow = new ThemSuaVatTuWindow();
             ThemSuaVatTuWindowViewModel VM = new ThemSuaVatTuWindowViewModel();
             themSuaVatTuWindow.DataContext = VM;
@@ -225,6 +242,8 @@ namespace PMQuanLyVatTu.ViewModel
             if(VM.ReturnValue == true)
             {
                 DanhSachVatTu.Add(new VatTu() { MaVT = VM.MaVT, SoLuong = VM.SoLuong, ChietKhau = VM.ChietKhau, VAT = VM.VAT }); Calculate();
+                if (DanhSachVatTu.Count() > 0) { ListEmpty = false; }
+                else ListEmpty = true;
             }
                 
         }
@@ -259,18 +278,67 @@ namespace PMQuanLyVatTu.ViewModel
                 {
                     foreach (VatTu v in NeedDeleting) DanhSachVatTu.Remove(v);
                 }
+                if (DanhSachVatTu.Count() > 0) { ListEmpty = false; }
+                else ListEmpty = true;
             }
         }
         public ICommand SelectFromRequestCommand { get; set; }
         void SelectFromRequest(object t)
         {
+            if (MaNCC == "" || KhoNhap == "")
+            {
+                CustomMessage msg = new CustomMessage("/Material/Images/Icons/wrong.png", "LỖI", "Vui lòng nhập đầy đủ nhà cung cấp và kho nhập hàng.");
+                msg.ShowDialog();
+                return;
+            }
             SelectFromRequestWindow SelectWin = new SelectFromRequestWindow();
-            SelectFromRequestWindowViewModel VM = new SelectFromRequestWindowViewModel();
+            SelectFromRequestWindowViewModel VM = new SelectFromRequestWindowViewModel(true);
             SelectWin.DataContext = VM;
             SelectWin.ShowDialog();
         }
         #endregion
         #region Function
+        void LoadNhaCungCap()
+        {
+            NhaCungCap.Clear();
+
+            var ListFromDB = DataProvider.Instance.DB.Supplies.ToList();
+            foreach(var item in ListFromDB)
+            {
+                if(item.DaXoa == false)
+                {
+                    if(item.MaKho.Contains(KhoNhap)) NhaCungCap.Add(item.MaNcc);
+                }
+            }
+            NhaCungCap = new ObservableCollection<string>(NhaCungCap.Distinct().ToList().OrderBy(q=>q));
+        }
+        void LoadKho()
+        {
+            Kho.Clear();
+
+            var ListFromDB = DataProvider.Instance.DB.Supplies.ToList();
+            foreach (var item in ListFromDB)
+            {
+                if (item.DaXoa == false)
+                {
+                    if(item.MaNcc.Contains(MaNCC)) Kho.Add(item.MaKho);
+                }
+            }
+            Kho = new ObservableCollection<string>(Kho.Distinct().ToList().OrderBy(q => q));
+        }
+        void LoadNhanVien()
+        {
+            NhanVien.Clear();
+
+            var ListFromDB = DataProvider.Instance.DB.Employees.ToList();
+            foreach (var item in ListFromDB)
+            {
+                if (item.DaXoa == false)
+                {
+                    if(item.ChucVu == "Nhập Xuất") NhanVien.Add(item.MaNv);
+                }
+            }
+        }
         void LoadData(string maycx)
         {
             MaPN = maycx;
@@ -284,15 +352,24 @@ namespace PMQuanLyVatTu.ViewModel
         {
             DanhSachVatTu.Clear();
 
-            DanhSachVatTu.Add(new VatTu() { Checked = false, MaVT = "VT00001", SoLuong = 50, ChietKhau = 0.6, VAT = 0.7 });
-            DanhSachVatTu.Add(new VatTu() { Checked = true, MaVT = "VT00002", SoLuong = 10, ChietKhau = 0.2, VAT = 0.3 });
-            DanhSachVatTu.Add(new VatTu() { Checked = false, MaVT = "VT00005", SoLuong = 5, ChietKhau = 0.9, VAT = 0.1 });
+            var ListFromDB = DataProvider.Instance.DB.GoodsReceivedNoteInfos.ToList();
+            foreach(var item in ListFromDB)
+            {
+                if(item.MaPn == MaPN)
+                {
+                    VatTu temp = new VatTu(item);
+                    DanhSachVatTu.Add(temp);
+                }
+            }
+
+            if (DanhSachVatTu.Count() > 0) { ListEmpty = false; }
+            else ListEmpty = true;
 
             Calculate();
         }
         void Calculate()
         {
-            ChietSuat = 0;
+            ChietKhau = 0;
             VAT = 0;
             TongGia = 0;
             foreach (VatTu i in DanhSachVatTu)
@@ -302,18 +379,30 @@ namespace PMQuanLyVatTu.ViewModel
                 //VAT += GiaNHap(i) * SoLuong * VAT
                 //TongGia += GiaNhap(i) * SoLuong
             }
-            TongGia = TongGia - ChietSuat + VAT;
+            TongGia = TongGia - ChietKhau + VAT;
         }
         #endregion
         public class VatTu
         {
+            public VatTu() { }
+            public VatTu(GoodsReceivedNoteInfo t) 
+            {
+                Checked = false;
+                MaVT = t.MaVt; SoLuong = t.SoLuong; ChietKhau = t.ChietKhau; VAT = t.Vat;
+                var ListFromDB = DataProvider.Instance.DB.Supplies.ToList();
+                foreach(var item in ListFromDB)
+                {
+                    if(item.MaVt == t.MaVt) { GiaNiemYet = item.GiaXuat; break; }
+                }
+                ThanhTien = (int?)(GiaNiemYet * SoLuong - (GiaNiemYet * SoLuong * ChietKhau) + GiaNiemYet * SoLuong + VAT);
+            }
             public bool Checked { get; set; }
             public string MaVT { get; set; }
-            public int SoLuong { get; set; }
-            public double ChietKhau { get; set; }
-            public double VAT { get; set; }
-            public int GiaNiemYet {  get; set; }
-            public int ThanhTien {  get; set; }
+            public int? SoLuong { get; set; }
+            public double? ChietKhau { get; set; }
+            public double? VAT { get; set; }
+            public int? GiaNiemYet {  get; set; }
+            public int? ThanhTien {  get; set; }
         }
     }
 }

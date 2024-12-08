@@ -83,7 +83,7 @@ namespace PMQuanLyVatTu.ErrorMessage
             set { _enableCancel = value; OnPropertyChanged(); }
         }
         #endregion
-        public CustomMessage(string img = "/Material/Images/null_image.jpg", string title = "Default Title", string mess = "Default Message", bool enableCancel = true)
+        public CustomMessage(string img = "/Material/Images/null_image.jpg", string title = "Default Title", string mess = "Default Message", bool enableCancel = false)
         {
             InitializeComponent();
             this.DataContext = this;

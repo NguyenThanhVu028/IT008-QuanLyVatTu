@@ -114,7 +114,7 @@ namespace PMQuanLyVatTu.ViewModel
         public ICommand DeleteButtonCommand { get; set; }
         void DeleteButton(Window t)
         {
-            CustomMessage msg = new CustomMessage("/Material/Images/Icons/question.png", "THÔNG BÁO", "Bạn có muốn xóa vật tư đã chọn?");
+            CustomMessage msg = new CustomMessage("/Material/Images/Icons/question.png", "THÔNG BÁO", "Bạn có muốn xóa khách hàng đã chọn?");
             msg.ShowDialog();
             if (msg.ReturnValue == true)
             { //Chấp nhận xóa
@@ -142,7 +142,7 @@ namespace PMQuanLyVatTu.ViewModel
             {
                 if (false) //Chưa nhập mã nhân viên
                 {
-                    CustomMessage msg = new CustomMessage("/Material/Images/Icons/wrong.png", "LỖI", "Vui lòng nhập mã nhân viên.");
+                    CustomMessage msg = new CustomMessage("/Material/Images/Icons/wrong.png", "LỖI", "Vui lòng nhập mã khách hàng.");
                     msg.ShowDialog();
                 }
                 else if (false) //Trùng mã nhân viên
@@ -153,7 +153,7 @@ namespace PMQuanLyVatTu.ViewModel
                 else // Hợp lệ
                 {
                     EnableEditing = false;
-                    CustomMessage msg = new CustomMessage("/Material/Images/Icons/success.png", "THÀNH CÔNG", "Thêm nhân viên thành công.");
+                    CustomMessage msg = new CustomMessage("/Material/Images/Icons/success.png", "THÀNH CÔNG", "Thêm khách hàng thành công.");
                     msg.ShowDialog();
                     (t as Window).Close();
                 }

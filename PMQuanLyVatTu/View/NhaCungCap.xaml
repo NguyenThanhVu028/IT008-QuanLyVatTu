@@ -44,31 +44,24 @@
                       Margin="60, 160, 60, 80"
                       ItemsSource="{Binding DanhSachNhaCungCap}">
                 <DataGrid.Columns>
-                    <DataGridTemplateColumn Width="30">
-                        <DataGridTemplateColumn.CellTemplate>
-                            <DataTemplate>
-                                <CheckBox IsChecked="{Binding Checked, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
-                            </DataTemplate>
-                        </DataGridTemplateColumn.CellTemplate>
-                    </DataGridTemplateColumn>
                     <DataGridTextColumn Header="Mã nhà cung cấp"
                                         Width="150"
                                         IsReadOnly="True"
-                                        Binding="{Binding MaNCC}"/>
+                                        Binding="{Binding MaNcc}"/>
                     <DataGridTextColumn Header="Tên nhà cung cấp"
-                                        Width="200"
+                                        Width="350"
                                         IsReadOnly="True"
-                                        Binding="{Binding TenNCC}"/>
+                                        Binding="{Binding TenNcc}"/>
                     <DataGridTextColumn Header="Số điện thoại"
                                         Width="150"
                                         IsReadOnly="True"
-                                        Binding="{Binding SDT}"/>
+                                        Binding="{Binding Sdt}"/>
                     <DataGridTextColumn Header="Email"
                                         Width="150"
                                         IsReadOnly="True"
                                         Binding="{Binding Email}"/>
                     <DataGridTextColumn Header="Địa chỉ"
-                                        Width="250"
+                                        Width="400"
                                         IsReadOnly="True"
                                         Binding="{Binding DiaChi}"/>
                     <DataGridTemplateColumn Header="" IsReadOnly="True">
@@ -173,19 +166,6 @@
                                          Margin="375, 95, 0, 0"
                                          DataList="{Binding SearchFilter}"
                                          SelectedValue="{Binding SelectedSearchFilter, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
-            <CustomControl:CustomButton Width="110"
-                                        Height="30"
-                                        HorizontalAlignment="Right"
-                                        VerticalAlignment="Bottom"
-                                        BorderBackground="{StaticResource DarkRed}"
-                                        BorderBackgroundClicked="{StaticResource DarkRed2}"
-                                        BorderColor="{StaticResource White}"
-                                        BorderColorHighlight="{StaticResource LightRed}"
-                                        DisplayText="Xóa đã chọn"
-                                        TextSize="15"
-                                        Margin="0, 0, 80, 40"
-                                        RadiusOfCorner="5"
-                                        Command="{Binding DeleteSelectedCommand}"/>
         </Grid>
     </Grid>
 </UserControl>

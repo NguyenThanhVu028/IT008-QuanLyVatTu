@@ -49,7 +49,7 @@
             </Border.Background>
         </Border>
         <Grid x:Name="LayoutGrid">
-            <Grid.RowDefinitions>
+            <!--<Grid.RowDefinitions>
                 <RowDefinition/>
                 <RowDefinition Height="0.8*"/>
                 <RowDefinition/>
@@ -57,7 +57,32 @@
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="2.5*"/>
                 <ColumnDefinition/>
-            </Grid.ColumnDefinitions>
+            </Grid.ColumnDefinitions>-->
+            <!--<Grid HorizontalAlignment="Right"
+                  VerticalAlignment="Top"
+                  Margin="0, 20, 20, 0"
+                  Height="50"
+                  Width="50">
+                <Border Margin="0, 0, 0, 0"
+                        Background="{StaticResource BackGroundColorTransparent}"
+                        BorderBrush="Aqua"
+                        BorderThickness="3"
+                        VerticalAlignment="Stretch"
+                        HorizontalAlignment="Stretch"
+                        CornerRadius="25">
+                    <Border.Triggers>
+                        <EventTrigger RoutedEvent="MouseEnter">
+                            <BeginStoryboard>
+                                <Storyboard>
+                                    --><!--<ObjectAnimationUsingKeyFrames Storyboard.TargetName="WelcomeSection" Storyboard.TargetProperty="Visibility">
+                                    <DiscreteObjectKeyFrame KeyTime="0:0:0.25" Value="{x:Static Visibility.Collapsed}"/>
+                                </ObjectAnimationUsingKeyFrames>--><!--
+                                </Storyboard>
+                            </BeginStoryboard>
+                        </EventTrigger>
+                    </Border.Triggers>
+                </Border>
+            </Grid>-->
             <StackPanel Grid.RowSpan="3"
                         VerticalAlignment="Center">
                 <TextBlock Text="PHẦN MỀM QUẢN LÝ VẬT TƯ"
@@ -65,32 +90,35 @@
                            Grid.RowSpan="3"
                            TextWrapping="Wrap"
                            Foreground="White"
-                           FontFamily="/Material/Fonts/Lexend/#Lexend Regular"
-                           FontWeight="Regular"
+                           FontFamily="/Material/Fonts/Lexend/#Lexend Me    "
+                           FontWeight="Medium"
                            FontSize="40"/>
-                <Grid Height="150">
+                <Grid Height="200">
                     <Image Source="/Material/Images/AppLogo/logo.png" Stretch="UniformToFill" VerticalAlignment="Center"/>
                 </Grid>
             </StackPanel>
-            <Grid Grid.Row="0"
+            <!--<Grid Grid.Row="0"
                   Grid.Column="1"
                   Grid.ColumnSpan="1">
-                <!--<Grid.ColumnDefinitions>
+                --><!--<Grid.ColumnDefinitions>
                     <ColumnDefinition/>
                     <ColumnDefinition/>
                 </Grid.ColumnDefinitions>
                 <Grid.RowDefinitions>
                     <RowDefinition/>
                     <RowDefinition/>
-                </Grid.RowDefinitions>-->
+                </Grid.RowDefinitions>--><!--
                 <Border Grid.RowSpan="2"
                         HorizontalAlignment="Stretch"
                         VerticalAlignment="Stretch"
+                        Width="300"
+                        Height="200"
                         Margin="20,20,20,20"
                         CornerRadius="30"
                         BorderThickness="2"
                         BorderBrush="Aqua"
-                        Style="{StaticResource ShrinkBorder}">
+                        Style="{StaticResource ShrinkBorder}"
+                        x:Name="WelcomeSection">
                     <Border.Background>
                         <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0" Opacity="0.7">
                             <GradientStop Color="#FF1600FF" Offset="0.006"/>
@@ -106,23 +134,26 @@
                                Foreground="{StaticResource LightAqua1}"
                                Margin="0, 15"/>
                         <TextBlock x:Name="UserNameDisplay" 
-                               Text="{Binding DisplayUsername}"
-                               FontFamily="/Material/Fonts/Lexend/#Lexend Black"
-                               FontSize="27"
-                               FontWeight="ExtraBlack"
-                               HorizontalAlignment="Stretch"
-                               Foreground="{StaticResource LightAqua1}"
-                               Margin="30, 0, 30, 0"
-                               TextWrapping="Wrap"
-                               TextAlignment="Center"/>
+                                   Text="{Binding DisplayUsername}"
+                                   FontFamily="/Material/Fonts/Lexend/#Lexend Black"
+                                   FontSize="27"
+                                   FontWeight="ExtraBlack"
+                                   HorizontalAlignment="Stretch"
+                                   VerticalAlignment="Top"
+                                   Foreground="{StaticResource LightAqua1}"
+                                   Margin="30, 0, 30, 0"
+                                   TextWrapping="Wrap"
+                                   TextAlignment="Center"/>
                     </StackPanel>
                 </Border>
-            </Grid>
-            <Border Grid.Row="1"
+            </Grid>-->
+            <!--<Border Grid.Row="1"
                     Grid.Column="1"
                     x:Name="TimeOfDayBorder"
                     HorizontalAlignment="Stretch"
                     VerticalAlignment="Stretch"
+                    Width="300"
+                    Height="200"
                     Margin="20,0,20,0"
                     CornerRadius="30"
                     BorderThickness="2"
@@ -145,16 +176,19 @@
                            HorizontalAlignment="Center"
                            Foreground="{StaticResource LightAqua1}"/>
                 </StackPanel>
-            </Border>
-            <Border Grid.Row="2" 
+            </Border>-->
+            <!--<Border Grid.Row="2" 
                     Grid.Column="1"
                     HorizontalAlignment="Stretch"
                     VerticalAlignment="Stretch"
+                    Width="300"
+                    Height="200"
                     Margin="20,20,20,20"
                     CornerRadius="30"
                     BorderThickness="2"
                     BorderBrush="Aqua"
-                    Style="{StaticResource ShrinkBorder}">
+                    Style="{StaticResource ShrinkBorder}"
+                    x:Name="CalendarSection">
                 <Border.Background>
                     <LinearGradientBrush EndPoint="1,1" StartPoint="0.5,0" Opacity="0.7">
                         <GradientStop Color="#FF620079"/>
@@ -172,7 +206,7 @@
                                   VerticalAlignment="Stretch"/>
                     </Viewbox>
                 </Grid>
-            </Border>
+            </Border>-->
             <!--<Border Grid.Row="0" 
                     Grid.Column="2"
                     HorizontalAlignment="Stretch"

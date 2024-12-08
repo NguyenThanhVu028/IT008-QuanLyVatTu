@@ -155,12 +155,12 @@ namespace PMQuanLyVatTu.ViewModel
         public ICommand DeleteButtonCommand { get; set; } 
         void DeleteButton(Window t)
         {
-            CustomMessage msg = new CustomMessage("/Material/Images/Icons/question.png", "THÔNG BÁO", "Bạn có muốn xóa vật tư đã chọn?");
+            CustomMessage msg = new CustomMessage("/Material/Images/Icons/question.png", "THÔNG BÁO", "Bạn có muốn xóa vật tư đã chọn?", true);
             msg.ShowDialog();
             if (msg.ReturnValue == true)
-            { //Chấp nhận xóa
+            {
                 EnableEditing = false;
-                //Xóa
+                //Dùng MaVT để xóa trong database
                 t.Close();
             }
         }
@@ -170,6 +170,7 @@ namespace PMQuanLyVatTu.ViewModel
             if(EditMode == true) //Nếu đang chế độ chỉnh sửa
             {
                 EnableEditing = false;
+                //Lưu thông tin trên database theo MaVT
                 CustomMessage msg = new CustomMessage("/Material/Images/Icons/success.png", "THÀNH CÔNG", "Đã lưu thông tin chỉnh sửa.");
                 msg.ShowDialog();
             }
@@ -177,21 +178,21 @@ namespace PMQuanLyVatTu.ViewModel
             {
                 if(MaVT == "") //Chưa nhập mã vật tư
                 {
-                    CustomMessage msg = new CustomMessage("/Material/Images/Icons/wrong.png", "LỖI", "Vui lòng nhập mã vật tư.");
-                    msg.ShowDialog();
+                    CustomMessage msg1 = new CustomMessage("/Material/Images/Icons/wrong.png", "LỖI", "Vui lòng nhập mã vật tư.");
+                    msg1.ShowDialog();
+                    return;
                 }
-                else if (false) //Trùng mã vật tư
+                if (false) //Trùng mã vật tư
                 {
-                    AlreadyExistsError msg = new AlreadyExistsError();
-                    msg.ShowDialog();
+                    AlreadyExistsError msg2 = new AlreadyExistsError();
+                    msg2.ShowDialog();
+                    return;
                 }
-                else // Hợp lệ
-                {
-                    EnableEditing = false;
-                    CustomMessage msg = new CustomMessage("/Material/Images/Icons/success.png", "THÀNH CÔNG", "Thêm vật tư thành công.");
-                    msg.ShowDialog();
-                    (t as Window).Close();
-                }
+                // Hợp lệ
+                EnableEditing = false;
+                CustomMessage msg = new CustomMessage("/Material/Images/Icons/success.png", "THÀNH CÔNG", "Thêm vật tư thành công.");
+                msg.ShowDialog();
+                (t as Window).Close();
             }
         }
         public ICommand ChangeAvatarCommand {  get; set; }
@@ -208,7 +209,7 @@ namespace PMQuanLyVatTu.ViewModel
         #region Function
         void LoadData(string mavt)
         {
-            //Dùng mavt để load dữ liệu từ database
+            //Dùng mavt để load dữ liệu từ database, dùng các property trong "Info" để hiện thông tin
             MaVT = mavt;
             TenVatTu = "Máy hàn chịu nhiệt";
             LoaiVT = "TB";
