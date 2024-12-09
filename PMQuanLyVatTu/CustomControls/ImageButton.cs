@@ -40,5 +40,20 @@ namespace PMQuanLyVatTu.CustomControls
         public static readonly DependencyProperty BorderBackgroundHightlightProperty =
             DependencyProperty.Register("BorderBackgroundHightlight", typeof(SolidColorBrush), typeof(CustomButton), new PropertyMetadata(Brushes.Aqua));
         #endregion
+        #region BorderBackgroundClicked
+
+
+        public SolidColorBrush BorderBackgroundClicked
+        {
+            get { return (SolidColorBrush)GetValue(BorderBackgroundClickedProperty); }
+            set { SetValue(BorderBackgroundClickedProperty, value); }
+        }
+
+        // Using a DependencyProperty as the backing store for BorderBackgroundClicked.  This enables animation, styling, binding, etc...
+        public static readonly DependencyProperty BorderBackgroundClickedProperty =
+            DependencyProperty.Register("BorderBackgroundClicked", typeof(SolidColorBrush), typeof(ImageButton), new PropertyMetadata(Brushes.DarkGreen));
+
+
+        #endregion
     }
 }

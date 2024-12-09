@@ -1,6 +1,7 @@
 ﻿using Microsoft.Win32;
 using PMQuanLyVatTu.ErrorMessage;
 using PMQuanLyVatTu.Models;
+using PMQuanLyVatTu.User;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -27,6 +28,16 @@ namespace PMQuanLyVatTu.ViewModel
 
             Refresh();
         }
+        #region Info
+        public string MaNV
+        {
+            get { return CurrentUser.Instance.MaNv; }
+        }
+        public string ChucVu
+        {
+            get { return CurrentUser.Instance.ChucVu; }
+        }
+        #endregion
         #region Data for SelectionList
         private ObservableCollection<string> _searchFilter = new ObservableCollection<string>() { "Mã kho", "Loại vật tư", "Địa chỉ" };
         public ObservableCollection<string> SearchFilter

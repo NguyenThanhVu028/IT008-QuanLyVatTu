@@ -6,4 +6,16 @@
     <convert:LoaiVatTuConverter x:Key="LoaiVatTuConverter"/>
     <convert:ChucVuConverter x:Key="ChucVuConverter"/>
     <convert:BrushToColorConverter x:Key="BrushToColorConverter"/>
+    <convert:Position1 x:Key="Allow1"/>
+    <convert:Position2 x:Key="Allow2"/>
+    <convert:Position3 x:Key="Allow3"/>
+    <convert:Position4 x:Key="Allow4"/>
+    <convert:Position12 x:Key="Allow12"/>
+    <convert:Position13 x:Key="Allow13"/>
+    <convert:Position14 x:Key="Allow14"/>
+    <convert:Position24 x:Key="Allow24"/>
+    <convert:Position34 x:Key="Allow34"/>
+    <convert:Position124 x:Key="Allow124"/>
+    <convert:Position134 x:Key="Allow134"/>
+    <convert:TrangThaiConverter x:Key="TrangThaiConverter"/>
 </ResourceDictionary>

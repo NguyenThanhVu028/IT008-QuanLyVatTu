@@ -45,7 +45,7 @@
                     </ItemsControl.ItemsPanel>
                 </ItemsControl>
             </ScrollViewer>
-            <DataGrid x:Name="DisplayDataGRid" 
+            <DataGrid x:Name="DisplayDataGRid"
                       SelectedItem="{Binding SelectedVatTu}"
                       Style="{DynamicResource DataGridStyle1}" 
                       CellStyle="{DynamicResource DataGridCellStyle1}" 
@@ -91,15 +91,15 @@
                     <DataGridTextColumn Header="Giá nhập"
                                         Width="150"
                                         IsReadOnly="True"
-                                        Binding="{Binding GiaNhap}"/>
+                                        Binding="{Binding GiaNhap, StringFormat={}{0:n0}}"/>
                     <DataGridTextColumn Header="Giá xuất"
                                         Width="150"
                                         IsReadOnly="True"
-                                        Binding="{Binding GiaXuat}"/>
+                                        Binding="{Binding GiaXuat, StringFormat={}{0:n0}}"/>
                     <DataGridTextColumn Header="Số lượng tồn kho"
                                         Width="150"
                                         IsReadOnly="True"
-                                        Binding="{Binding SoLuongTonKho}"/>
+                                        Binding="{Binding SoLuongTonKho, StringFormat={}{0:n0}}"/>
                     <DataGridTemplateColumn Header="" IsReadOnly="True">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
@@ -153,33 +153,11 @@
                                         RadiusOfCorner="5"
                                         Command="{Binding DeleteSelectedCommand}"
                                         Visibility="{Binding Path=IsChecked, ElementName=ModeSwitch, Converter={StaticResource BoolToVisibilityConverter}}"/>-->
-            <CustomControl:CustomButton Width="100"
-                                        Height="40"
-                                        HorizontalAlignment="Right"
-                                        VerticalAlignment="Top"
-                                        BorderBackground="{StaticResource LightAqua3}"
-                                        BorderBackgroundClicked="{StaticResource Aqua}"
-                                        BorderColor="{StaticResource DarkGreen2}"
-                                        BorderColorHighlight="{StaticResource DarkGreen3}"
-                                        DisplayText="Thêm"
-                                        TextSize="15"
-                                        Margin="0, 95, 30, 0"
-                                        RadiusOfCorner="5"
-                                        Command="{Binding AddCommand}"/>
-            <CustomControl:CustomButton Width="120"
-                                        Height="40"
-                                        HorizontalAlignment="Right"
-                                        VerticalAlignment="Top"
-                                        BorderBackground="{StaticResource LightAqua3}"
-                                        BorderBackgroundClicked="{StaticResource Aqua}"
-                                        BorderColor="{StaticResource DarkGreen2}"
-                                        BorderColorHighlight="{StaticResource DarkGreen3}"
-                                        DisplayText="Xóa gần đây"
-                                        TextSize="15"
-                                        Margin="0, 95, 135, 0"
-                                        RadiusOfCorner="5"
-                                        Command="{Binding XoaGanDayCommand}"/>
-            <CustomControl:CustomButton Width="100"
+            <StackPanel HorizontalAlignment="Right"
+                        VerticalAlignment="Top"
+                        Margin="0, 95, 30, 0"
+                        Orientation="Horizontal">
+                <!--<CustomControl:CustomButton Width="100"
                                         Height="40"
                                         HorizontalAlignment="Right"
                                         VerticalAlignment="Top"
@@ -189,10 +167,48 @@
                                         BorderColorHighlight="{StaticResource DarkGreen3}"
                                         DisplayText="Làm mới"
                                         TextSize="15"
-                                        Margin="0, 95, 260, 0"
+                                        Margin="5, 0, 0, 0"
                                         RadiusOfCorner="5"
                                         Command="{Binding RefreshCommand}"
-                                        CommandParameter="{Binding ElementName=LargeIconDisplayer}"/>
+                                        CommandParameter="{Binding ElementName=LargeIconDisplayer}"/>-->
+                <CustomControl:CustomButton Width="120"
+                                            Height="40"
+                                            HorizontalAlignment="Right"
+                                            VerticalAlignment="Top"
+                                            BorderBackground="{StaticResource LightAqua3}"
+                                            BorderBackgroundClicked="{StaticResource Aqua}"
+                                            BorderColor="{StaticResource DarkGreen2}"
+                                            BorderColorHighlight="{StaticResource DarkGreen3}"
+                                            DisplayText="Xóa gần đây"
+                                            TextSize="15"
+                                            Margin="5, 0, 0, 0"
+                                            RadiusOfCorner="5"
+                                            Command="{Binding XoaGanDayCommand}"
+                                            Visibility="{Binding ChucVu, Mode=OneWay, Converter={StaticResource Allow1}}"/>
+                <CustomControl:CustomButton Width="100"
+                                            Height="40"
+                                            HorizontalAlignment="Right"
+                                            VerticalAlignment="Top"
+                                            BorderBackground="{StaticResource LightAqua3}"
+                                            BorderBackgroundClicked="{StaticResource Aqua}"
+                                            BorderColor="{StaticResource DarkGreen2}"
+                                            BorderColorHighlight="{StaticResource DarkGreen3}"
+                                            DisplayText="Thêm"
+                                            TextSize="15"
+                                            Margin="5, 0, 0, 0"
+                                            RadiusOfCorner="5"
+                                            Command="{Binding AddCommand}"
+                                            Visibility="{Binding ChucVu, Mode=OneWay, Converter={StaticResource Allow1}}"/>
+                <CustomControl:ImageButton ImageLocation="/Material/Images/Icons/refresh.png"
+                                           VerticalAlignment="Top"
+                                           HorizontalAlignment="Right"
+                                           Margin="5, 0, 0, 0"
+                                           Width="35"
+                                           Height="35"
+                                           BorderBackgroundHightlight="Transparent"
+                                           Command="{Binding RefreshCommand}"/>
+
+            </StackPanel>
             <CustomControl:CustomTextbox Width="335"
                                          Height="40"
                                          HorizontalAlignment="Left"
@@ -230,7 +246,8 @@
                        FontSize="14"
                        Foreground="{StaticResource LightAqua1}"
                        FontFamily="/Material/Fonts/Lexend/#Lexend Medium"
-                       FontWeight="Medium"/>
+                       FontWeight="Medium"
+                       Visibility="{Binding ChucVu, Mode=OneWay, Converter={StaticResource Allow1}}"/>
             <CustomControl:CustomTogglebutton x:Name="ModeSwitch" 
                                               Width="50"
                                               Height="30"
@@ -241,7 +258,8 @@
                                               BorderColor="Aqua"
                                               RadiusOfCorner="10"
                                               SliderHeight="25"
-                                              SliderWidth="25"/>
+                                              SliderWidth="25"
+                                              Visibility="{Binding ChucVu, Mode=OneWay, Converter={StaticResource Allow1}}"/>
         </Grid>
     </Grid>
 </UserControl>

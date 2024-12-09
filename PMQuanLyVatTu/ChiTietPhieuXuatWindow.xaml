@@ -47,6 +47,33 @@
                 <DropShadowBitmapEffect/>
             </Border.BitmapEffect>
         </Border>
+        <StackPanel Grid.Row="1"
+                        HorizontalAlignment="Right"
+                        VerticalAlignment="Top"
+                        Margin="0, 25, 35, 0"
+                        Orientation="Horizontal">
+            <CustomControl:ImageButton Width="30"
+                                           Height="30"
+                                           Margin="0, 0, 20, 0"
+                                           ImageLocation="/Material/Images/Icons/printer1.png"
+                                           BorderBackgroundHightlight="{StaticResource LightAqua1}"
+                                           Visibility="{Binding EditMode, Converter={StaticResource BoolToVisibilityConverter}}"
+                                           Command="{Binding InPhieuCommand}"/>
+            <CustomControl:ImageButton Width="30"
+                                           Height="30"
+                                           Margin="0, 0, 10, 0"
+                                           ImageLocation="/Material/Images/Icons/edit1.png"
+                                           BorderBackgroundHightlight="{StaticResource LightAqua1}"
+                                           Visibility="{Binding EditMode, Converter={StaticResource BoolToVisibilityConverter}}"
+                                           Command="{Binding EditInfoCommand}"/>
+            <CustomControl:ImageButton Width="30"
+                                           Height="30"
+                                           ImageLocation="/Material/Images/Icons/delete.png"
+                                           BorderBackgroundHightlight="{StaticResource LightRed}"
+                                           Visibility="{Binding EditMode, Converter={StaticResource BoolToVisibilityConverter}}"
+                                           Command="{Binding DeleteButtonCommand}"
+                                           CommandParameter="{Binding ElementName=ThisWin}"/>
+        </StackPanel>
         <CustomControl:CustomButton Grid.Row="1"
                                     VerticalAlignment="Top"
                                     HorizontalAlignment="Right"
@@ -74,6 +101,7 @@
                                     DisplayText="Chọn từ yêu cầu xuất"
                                     Width="200"
                                     Height="30"
+                                    IsEnabled="{Binding ListEmpty}"
                                     Command="{Binding SelectFromRequestCommand}"/>
         <CustomControl:CustomButton Grid.Row="1"
                                     VerticalAlignment="Top"
@@ -90,12 +118,46 @@
                                     Height="30"
                                     Command="{Binding DeleteSelectedCommand}"/>
         <TextBlock Grid.Row="1" 
+                   Text="Kho xuất"
+                   Foreground="{StaticResource DarkGreen2}"
+                   HorizontalAlignment="Left"
+                   VerticalAlignment="Top" 
+                   Margin="310,170,0,0"
+                   FontSize="20"
+                   FontFamily="/Material/Fonts/Lexend/#Lexend Medium"
+                   FontWeight="Medium" Grid.Column="1"/>
+        <CustomControl:SelectionList Grid.Row="1"
+                                     Height="115"
+                                     Width="230"
+                                     VerticalAlignment="Top"
+                                     HorizontalAlignment="Left"
+                                     Margin="310, 200, 0, 0"
+                                     IsEnabled="{Binding ListEmpty}"
+                                     DataList="{Binding Kho}"
+                                     SelectedValue="{Binding KhoXuat, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+        <TextBlock Grid.Row="1"
+                   HorizontalAlignment="Left"
+                   VerticalAlignment="Top" 
+                   Margin="310,90,0,0"
+                   Text="Mã nhân viên"
+                   Foreground="{StaticResource DarkGreen2}"
+                   FontSize="20"
+                   FontFamily="/Material/Fonts/Lexend/#Lexend Medium"
+                   FontWeight="Medium" Grid.Column="1"/>
+        <CustomControl:SelectionList Grid.Row="1"
+                                     Height="115"
+                                     Width="230"
+                                     VerticalAlignment="Top"
+                                     HorizontalAlignment="Left"
+                                     Margin="310, 120, 0, 0"
+                                     DataList="{Binding NhanVien}"
+                                     SelectedValue="{Binding MaNV, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+        <TextBlock Grid.Row="1" 
                    Height="70"
-                   Width="420"
                    HorizontalAlignment="Center"
                    VerticalAlignment="Top"
                    Margin="30"
-                   Text="CHI TIẾT PHIẾU XUẤT"
+                   Text="{Binding Title}"
                    Foreground="{StaticResource DarkGreen2}"
                    FontFamily="/Material/Fonts/Lexend/#Lexend Black"
                    FontWeight="Black"
@@ -114,6 +176,7 @@
         <CustomControl:CustomTextbox Grid.Row="1"
                                      Height="40"
                                      Width="230"
+                                     Text="{Binding MaPX}"
                                      TextSize="15"
                                      VerticalAlignment="Top"
                                      HorizontalAlignment="Left"
@@ -122,6 +185,14 @@
                                      BorderThick="2"
                                      RadiusOfCorner="5" 
                                      Margin="50,120,0,0" Grid.Column="1"/>
+        <Border Grid.Row="1"
+                Height="40"
+                Width="230"
+                VerticalAlignment="Top"
+                HorizontalAlignment="Left"
+                Margin="50, 120, 0, 0"
+                CornerRadius="5"
+                Style="{StaticResource TextBoxUnable}"/>
         <TextBlock Grid.Row="1" 
                    Text="Tổng số tiền:"
                    Foreground="{StaticResource DarkGreen2}"
@@ -135,6 +206,7 @@
                                      IsEnabled="False"
                                      Height="40"
                                      Width="250"
+                                     Text="{Binding TongGia, StringFormat={}{0:n0}}"
                                      TextSize="15"
                                      WaterMark="Tổng giá"
                                      VerticalAlignment="Bottom"
@@ -158,6 +230,7 @@
                                      IsEnabled="False"
                                      Height="40"
                                      Width="250"
+                                     Text="{Binding VAT, StringFormat={}{0:n0}}"
                                      TextSize="15"
                                      WaterMark="Thuế VAT"
                                      VerticalAlignment="Bottom"
@@ -169,7 +242,7 @@
                                      RadiusOfCorner="5" 
                                      Margin="0,0,300,90" Grid.Column="1"/>
         <TextBlock Grid.Row="1" 
-                   Text="Chiết suất:"
+                   Text="Chiết khấu:"
                    Foreground="{StaticResource DarkGreen2}"
                    HorizontalAlignment="Right"
                    VerticalAlignment="Bottom" 
@@ -181,6 +254,7 @@
                                      IsEnabled="False"
                                      Height="40"
                                      Width="250"
+                                     Text="{Binding ChietKhau, StringFormat={}{0:n0}}"
                                      TextSize="15"
                                      WaterMark="Chiết khấu"
                                      VerticalAlignment="Bottom"
@@ -198,39 +272,51 @@
                 Background="White"
                 BorderBrush="{StaticResource DarkGreen2}"
                 BorderThickness="2"
-                CornerRadius="20"/>
-        <TextBlock Grid.Row="1"
-                   HorizontalAlignment="Left"
-                   VerticalAlignment="Top" 
-                   Margin="310,90,0,0"
-                   Text="Mã nhân viên"
-                   Foreground="{StaticResource DarkGreen2}"
-                   FontSize="20"
-                   FontFamily="/Material/Fonts/Lexend/#Lexend Medium"
-                   FontWeight="Medium" Grid.Column="1"/>
-        <CustomControl:SelectionList Grid.Row="1"
-                                     Height="115"
-                                     Width="230"
-                                     VerticalAlignment="Top"
-                                     HorizontalAlignment="Left"
-                                     Margin="310, 120, 0, 0"
-                                     DataList="{Binding ChucVu}"/>
-        <TextBlock Grid.Row="1"
-                   HorizontalAlignment="Left"
-                   VerticalAlignment="Top" 
-                   Margin="570,90,0,0"
-                   Text="Mã khách hàng"
-                   Foreground="{StaticResource DarkGreen2}"
-                   FontSize="20"
-                   FontFamily="/Material/Fonts/Lexend/#Lexend Medium"
-                   FontWeight="Medium" Grid.Column="1"/>
-        <CustomControl:SelectionList Grid.Row="1"
-                                     Height="115"
-                                     Width="230"
-                                     VerticalAlignment="Top"
-                                     HorizontalAlignment="Left"
-                                     Margin="570, 120, 0, 0"
-                                     DataList="{Binding ChucVu}"/>
+                CornerRadius="20">
+            <DataGrid x:Name="DisplayDataGRid" 
+                      Style="{DynamicResource DataGridStyle1}" 
+                      CellStyle="{DynamicResource DataGridCellStyle1}" 
+                      ColumnHeaderStyle="{DynamicResource DataGridColumnHeaderStyle1}" 
+                      RowStyle="{DynamicResource DataGridRowStyle1}" 
+                      HorizontalAlignment="Stretch"
+                      VerticalAlignment="Stretch"
+                      Margin="10, 0, 10, 10"
+                      ItemsSource="{Binding DanhSachVatTu}">
+                <DataGrid.Columns>
+                    <DataGridTemplateColumn Width="30">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <CheckBox IsChecked="{Binding Checked, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                    <DataGridTextColumn Header="Mã vật tư"
+                                        Width="175"
+                                        IsReadOnly="True"
+                                        Binding="{Binding MaVT}"/>
+                    <DataGridTextColumn Header="Số lượng"
+                                        Width="175"
+                                        IsReadOnly="True"
+                                        Binding="{Binding SoLuong, StringFormat={}{0:n0}}"/>
+                    <DataGridTextColumn Header="Chiết khấu"
+                                        Width="175"
+                                        IsReadOnly="True"
+                                        Binding="{Binding ChietKhau}"/>
+                    <DataGridTextColumn Header="Thuế VAT"
+                                        Width="175"
+                                        IsReadOnly="True"
+                                        Binding="{Binding VAT}"/>
+                    <DataGridTextColumn Header="Giá niêm yết"
+                                        Width="175"
+                                        IsReadOnly="True"
+                                        Binding="{Binding GiaNiemYet, StringFormat={}{0:n0}}"/>
+                    <DataGridTextColumn Header="Thành tiền"
+                                        Width="175"
+                                        IsReadOnly="True"
+                                        Binding="{Binding ThanhTien, StringFormat={}{0:n0}}"/>
+                </DataGrid.Columns>
+            </DataGrid>
+        </Border>
         <TextBlock Grid.Row="1"
                    HorizontalAlignment="Left"
                    VerticalAlignment="Top" 
@@ -245,23 +331,8 @@
                                     HorizontalAlignment="Left"
                                     Margin="50,200,0,0"
                                     Height="200"
-                                    Width="230"/>
-        <TextBlock Grid.Row="1" 
-                   Text="Kho xuất"
-                   Foreground="{StaticResource DarkGreen2}"
-                   HorizontalAlignment="Left"
-                   VerticalAlignment="Top" 
-                   Margin="310,170,0,0"
-                   FontSize="20"
-                   FontFamily="/Material/Fonts/Lexend/#Lexend Medium"
-                   FontWeight="Medium" Grid.Column="1"/>
-        <CustomControl:SelectionList Grid.Row="1"
-                                     Height="115"
-                                     Width="230"
-                                     VerticalAlignment="Top"
-                                     HorizontalAlignment="Left"
-                                     Margin="310, 200, 0, 0"
-                                     DataList="{Binding ChucVu}"/>
+                                    Width="230"
+                                    SelectedValue="{Binding NgayLap, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
         <TextBlock Grid.Row="1"
                    HorizontalAlignment="Left"
                    VerticalAlignment="Top" 
@@ -274,6 +345,8 @@
         <CustomControl:CustomTextbox Grid.Row="1"
                                      Height="40"
                                      Width="230"
+                                     Text="{Binding LyDoXuat}"
+                                     TextWrapping="Wrap"
                                      TextSize="15"
                                      VerticalAlignment="Top"
                                      HorizontalAlignment="Left"
@@ -281,7 +354,46 @@
                                      BorderColorClicked="{StaticResource LightAqua2}"
                                      BorderThick="2"
                                      RadiusOfCorner="5" 
-                                     Margin="570, 200, 0, 0"/>
+                                     Margin="570, 200, 0, 0">
+            <CustomControl:CustomTextbox.Triggers>
+                <EventTrigger RoutedEvent="TextBox.GotFocus">
+                    <BeginStoryboard>
+                        <Storyboard>
+                            <DoubleAnimation Duration="0:0:0.25" Storyboard.TargetProperty="Height" From="40" To="90"/>
+                        </Storyboard>
+                    </BeginStoryboard>
+                </EventTrigger>
+                <EventTrigger RoutedEvent="TextBox.LostFocus">
+                    <BeginStoryboard>
+                        <Storyboard>
+                            <DoubleAnimation Duration="0:0:0.25" Storyboard.TargetProperty="Height" From="110" To="90"/>
+                        </Storyboard>
+                    </BeginStoryboard>
+                </EventTrigger>
+            </CustomControl:CustomTextbox.Triggers>
+        </CustomControl:CustomTextbox>
+        <TextBlock Grid.Row="1"
+                   HorizontalAlignment="Left"
+                   VerticalAlignment="Top" 
+                   Margin="570,90,0,0"
+                   Text="Mã khách hàng"
+                   Foreground="{StaticResource DarkGreen2}"
+                   FontSize="20"
+                   FontFamily="/Material/Fonts/Lexend/#Lexend Medium"
+                   FontWeight="Medium" Grid.Column="1"/>
+        <Border Grid.Row="1"
+                Background="Transparent"
+                Margin="20, 90, 20, 390"
+                Visibility="{Binding EnableEditing, Converter={StaticResource ReverseBoolToVisibilityConverter}}"/>
+        <CustomControl:SelectionList Grid.Row="1"
+                                     Height="115"
+                                     Width="230"
+                                     VerticalAlignment="Top"
+                                     HorizontalAlignment="Left"
+                                     Margin="570, 120, 0, 0"
+                                     IsEnabled="{Binding ListEmpty}"
+                                     DataList="{Binding KhachHang}"
+                                     SelectedValue="{Binding MaKH, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
         <CustomControl:CustomButton Grid.Row="1"
                                     HorizontalAlignment="Left"
                                     VerticalAlignment="Bottom"
@@ -312,7 +424,8 @@
                                     DisplayText="Lưu"
                                     RadiusOfCorner="10" 
                                     BorderColorHighlight="#FF27C5C5" Grid.Column="1"
-                                    Command="{Binding SaveInfoCommand}"/>
+                                    Command="{Binding SaveInfoCommand}"
+                                    CommandParameter="{Binding ElementName=ThisWin}"/>
 
     </Grid>
 </Window>

@@ -13,6 +13,8 @@
     <SolidColorBrush x:Key="DarkGreen4"                         Color="Red"/>
     <SolidColorBrush x:Key="DarkGreenTransparent1"              Color="#4C005B5B"/>
     <SolidColorBrush x:Key="DarkGreenTransparent2"              Color="#7F003547"/>
+    <SolidColorBrush x:Key="DarkGreenTransparent3"              Color="#CC003547"/>
+    <SolidColorBrush x:Key="DarkGreenTransparent4"              Color="#E500506C"/>
     <SolidColorBrush x:Key="LightRed"                           Color="#FFF4CCCC"/>
     <SolidColorBrush x:Key="LightRed2"                          Color="#FFFF4B4B"/>
     <SolidColorBrush x:Key="DarkRed"                            Color="#FFCC0000"/>

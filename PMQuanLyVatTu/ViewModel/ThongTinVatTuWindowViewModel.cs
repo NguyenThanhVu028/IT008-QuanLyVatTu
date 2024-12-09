@@ -42,9 +42,9 @@ namespace PMQuanLyVatTu.ViewModel
         private string _donViTinh;
         private string _maNCC;
         private string _maKho;
-        private string _giaNhap;
-        private string _giaXuat;
-        private string _soLuongTonKho;
+        private int _giaNhap;
+        private int _giaXuat;
+        private int _soLuongTonKho;
         private string _imageLocation;
         public string MaVT
         {
@@ -76,17 +76,17 @@ namespace PMQuanLyVatTu.ViewModel
             get { return _maKho; }
             set { _maKho = value; OnPropertyChanged(); }
         }
-        public string GiaNhap
+        public int GiaNhap
         {
             get { return _giaNhap; }
             set { _giaNhap = value; OnPropertyChanged(); }
         }
-        public string GiaXuat
+        public int GiaXuat
         {
             get { return _giaXuat; }
             set { _giaXuat = value; OnPropertyChanged(); }
         }
-        public string SoLuongTonKho
+        public int SoLuongTonKho
         {
             get { return _soLuongTonKho; }
             set { _soLuongTonKho = value; OnPropertyChanged(); }
@@ -216,9 +216,9 @@ namespace PMQuanLyVatTu.ViewModel
             DonViTinh = "Chiếc";
             MaNCC = "NCC0001";
             MaKho = "KHO0002";
-            GiaNhap = "10000000";
-            GiaXuat = "12000000";
-            SoLuongTonKho = "30";
+            GiaNhap = 10000000;
+            GiaXuat = 12000000;
+            SoLuongTonKho = 30;
             ImageLocation = "/Material/Images/Supplies/welding_machine.jpg";
         }
         #endregion

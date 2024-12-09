@@ -141,7 +141,7 @@
                     <DataGridTextColumn Header="Số lượng"
                                         Width="100"
                                         IsReadOnly="True"
-                                        Binding="{Binding SoLuong}"
+                                        Binding="{Binding SoLuong, StringFormat={}{0:n0}}"
                                         CanUserResize="False"/>
                     <DataGridTextColumn Header="Chiết khấu"
                                         Width="100"

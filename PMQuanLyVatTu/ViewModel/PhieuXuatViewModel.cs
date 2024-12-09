@@ -61,12 +61,20 @@ namespace PMQuanLyVatTu.ViewModel
         public ICommand AddCommand {  get; set; }
         void Add(object t)
         {
-
+            ChiTietPhieuXuatWindow newWin = new ChiTietPhieuXuatWindow();
+            ChiTietPhieuXuatWindowViewModel VM = new ChiTietPhieuXuatWindowViewModel();
+            newWin.DataContext = VM;
+            newWin.ShowDialog();
+            Refresh();
         }
         public ICommand XoaGanDayCommand {  get; set; }
         void XoaGanDay(object t)
         {
-
+            XoaGanDayWindow newWin = new XoaGanDayWindow();
+            XoaGanDayWindowViewModel VM = new XoaGanDayWindowViewModel("px");
+            newWin.DataContext = VM;
+            newWin.ShowDialog();
+            Refresh();
         }
         public ICommand RefreshCommand { get; set; }
         void Refresh(object t = null)

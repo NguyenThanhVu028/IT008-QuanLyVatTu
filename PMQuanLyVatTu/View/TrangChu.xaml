@@ -83,8 +83,8 @@
                     </Border.Triggers>
                 </Border>
             </Grid>-->
-            <StackPanel Grid.RowSpan="3"
-                        VerticalAlignment="Center">
+            <Grid Grid.RowSpan="3"
+                  VerticalAlignment="Center">
                 <TextBlock Text="PHẦN MỀM QUẢN LÝ VẬT TƯ"
                            TextAlignment="Center"
                            Grid.RowSpan="3"
@@ -93,10 +93,12 @@
                            FontFamily="/Material/Fonts/Lexend/#Lexend Me    "
                            FontWeight="Medium"
                            FontSize="40"/>
-                <Grid Height="200">
-                    <Image Source="/Material/Images/AppLogo/logo.png" Stretch="UniformToFill" VerticalAlignment="Center"/>
-                </Grid>
-            </StackPanel>
+                <Image Source="/Material/Images/AppLogo/logo.png" 
+                       VerticalAlignment="Center"
+                       HorizontalAlignment="Stretch"
+                       Margin="0, 0, 0, 0"/>
+
+            </Grid>
             <!--<Grid Grid.Row="0"
                   Grid.Column="1"
                   Grid.ColumnSpan="1">

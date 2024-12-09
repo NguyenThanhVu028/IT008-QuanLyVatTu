@@ -36,18 +36,17 @@
         </Border>
         <Grid x:Name="MW_LayoutGrid">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="160.828"/>
-                <ColumnDefinition Width="39.172"/>
+                <ColumnDefinition Width="200"/>
                 <ColumnDefinition/>
             </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
                 <RowDefinition Height="55"/>
                 <RowDefinition/>
             </Grid.RowDefinitions>
-            <Image Source="Material/Images/AppLogo/logo.png" Grid.ColumnSpan="2"/>
+            <Image Source="Material/Images/AppLogo/logo.png"/>
             <StackPanel x:Name="Stackpanel_WindowsButton"
-                        Grid.Column="2"
-                        Margin="0,0,20,0"
+                        Grid.Column="1"
+                        Margin="0,10,10,0"
                         HorizontalAlignment="Right"
                         VerticalAlignment="Center"
                         Orientation="Horizontal">
@@ -75,7 +74,7 @@
             </StackPanel>
             <Border x:Name="PageDispayArea"
                     Grid.Row="1"
-                    Grid.Column="2"
+                    Grid.Column="1"
                     BorderBrush="Aqua"
                     BorderThickness="1"
                     CornerRadius="10"
@@ -86,7 +85,7 @@
                 </Border.Background>
             </Border>
             <ContentControl Grid.Row="1"
-                            Grid.Column="2"
+                            Grid.Column="1"
                             Content="{Binding CurrentPage}"/>
             <!--<view:TrangChu Grid.Column="1"
                            Grid.Row="1"/>-->
@@ -104,11 +103,26 @@
                                          VerticalAlignment="Top"
                                          Height="70"
                                          Margin="10,10,0,0"
-                                         ImageLocation="/Material/Images/Avatars/user1.jpg"
-                                         Command="{Binding AccountInfoCommand}" Grid.ColumnSpan="2"/>
+                                         ImageLocation="{Binding Avatar}"
+                                         DisplayName="{Binding HoTen}"
+                                         Command="{Binding AccountInfoCommand}"/>
+            <CustomControl:NavigationButton Grid.Row="1"
+                                            VerticalAlignment="Bottom"
+                                            HorizontalAlignment="Center"
+                                            Margin="0, 0, 0, 10"
+                                            Height="30"
+                                            Width="150"
+                                            BackgroundColor="Transparent"
+                                            BorderColor="Red"
+                                            TextColor="{StaticResource LightRed2}"
+                                            TextSize="14"
+                                            DisplayText="Đăng xuất"
+                                            ImageLocation="/Material/Images/Icons/turn_off.png"
+                                            Command="{Binding LogOutCommand}"
+                                            CommandParameter="{Binding ElementName=MainWin}"/>
             <ScrollViewer Grid.Row="1"
                           VerticalScrollBarVisibility="Hidden"
-                          Margin="0,100,0,50" Grid.ColumnSpan="2">
+                          Margin="0,100,0,50">
                 <StackPanel Grid.Row="1"
                             VerticalAlignment="Top"
                             Orientation="Vertical">
@@ -160,7 +174,8 @@
                                                     BorderColor="Aqua"
                                                     BorderThick="2"
                                                     Margin="10, 5, 0, 0"
-                                                    Command="{Binding KhachHangCommand}"/>
+                                                    Command="{Binding KhachHangCommand}"
+                                                    Visibility="{Binding ChucVu, Converter={StaticResource Allow134}}"/>
                     <CustomControl:NavigationButton x:Name="NhaCungCap" 
                                                     Height="50"
                                                     ImageLocation="/Material/Images/Icons/supplier.png"
@@ -172,7 +187,8 @@
                                                     BorderColor="Aqua"
                                                     BorderThick="2"
                                                     Margin="10, 5, 0, 0"
-                                                    Command="{Binding NhaCungCapCommand}"/>
+                                                    Command="{Binding NhaCungCapCommand}"
+                                                    Visibility="{Binding ChucVu, Converter={StaticResource Allow14}}"/>
                     <CustomControl:NavigationButton x:Name="Kho" 
                                                     Height="50"
                                                     ImageLocation="/Material/Images/Icons/warehouse.png"
@@ -184,19 +200,8 @@
                                                     BorderColor="Aqua"
                                                     BorderThick="2"
                                                     Margin="10, 5, 0, 0"
-                                                    Command="{Binding KhoCommand}"/>
-                    <CustomControl:NavigationButton x:Name="Duyet" 
-                                                    Height="50"
-                                                    ImageLocation="/Material/Images/Icons/approve.png"
-                                                    BackgroundColor="{StaticResource BackGroundColor}"
-                                                    RadiusOfCorner="10"
-                                                    DisplayText="DUYỆT"
-                                                    TextSize="15"
-                                                    TextColor="White"
-                                                    BorderColor="Aqua"
-                                                    BorderThick="2"
-                                                    Margin="10, 5, 0, 0"
-                                                    Command="{Binding DuyetCommand}"/>
+                                                    Command="{Binding KhoCommand}"
+                                                    Visibility="{Binding ChucVu, Converter={StaticResource Allow124}}"/>
                     <CustomControl:NavigationButton x:Name="ThongKe" 
                                                     Height="50"
                                                     ImageLocation="/Material/Images/Icons/report.png"
@@ -208,7 +213,21 @@
                                                     BorderColor="Aqua"
                                                     BorderThick="2"
                                                     Margin="10, 5, 0, 0"
+                                                    Visibility="{Binding ChucVu, Mode=OneWay, Converter={StaticResource Allow12}}"
                                                     Command="{Binding ThongKeCommand}"/>
+                    <CustomControl:NavigationButton x:Name="Duyet" 
+                                                    Height="50"
+                                                    ImageLocation="/Material/Images/Icons/approve.png"
+                                                    BackgroundColor="{StaticResource BackGroundColor}"
+                                                    RadiusOfCorner="10"
+                                                    DisplayText="DUYỆT"
+                                                    TextSize="15"
+                                                    TextColor="White"
+                                                    BorderColor="Aqua"
+                                                    BorderThick="2"
+                                                    Margin="10, 5, 0, 0"
+                                                    Command="{Binding DuyetCommand}"
+                                                    Visibility="{Binding ChucVu, Mode=OneWay, Converter={StaticResource Allow12}}"/>
                     <CustomControl:NavigationButton x:Name="YeuCauNhap" 
                                                     Height="50"
                                                     ImageLocation="/Material/Images/Icons/import_request.png"
@@ -220,7 +239,8 @@
                                                     BorderColor="Aqua"
                                                     BorderThick="2"
                                                     Margin="10, 5, 0, 0"
-                                                    Command="{Binding YeuCauNhapHangCommand}"/>
+                                                    Command="{Binding YeuCauNhapHangCommand}"
+                                                    Visibility="{Binding ChucVu, Mode=OneWay, Converter={StaticResource Allow24}}"/>
                     <CustomControl:NavigationButton x:Name="YeuCauXuat" 
                                                     Height="50"
                                                     ImageLocation="/Material/Images/Icons/export_request.png"
@@ -232,7 +252,8 @@
                                                     BorderColor="Aqua"
                                                     BorderThick="2"
                                                     Margin="10, 5, 0, 0"
-                                                    Command="{Binding YeuCauXuatHangCommand}"/>
+                                                    Command="{Binding YeuCauXuatHangCommand}"
+                                                    Visibility="{Binding ChucVu, Mode=OneWay, Converter={StaticResource Allow34}}"/>
                     <!--<CustomControl:NavigationButton Height="50"
                                                     ImageLocation="/Material/Images/Icons/denied_request.png"
                                                     BackgroundColor="{StaticResource BackGroundColor}"
@@ -254,7 +275,8 @@
                                                     BorderColor="Aqua"
                                                     BorderThick="2"
                                                     Margin="10, 5, 0, 0"
-                                                    Command="{Binding PhieuNhapCommand}"/>
+                                                    Command="{Binding PhieuNhapCommand}"
+                                                    Visibility="{Binding ChucVu, Mode=OneWay, Converter={StaticResource Allow124}}"/>
                     <CustomControl:NavigationButton x:Name="PhieuXuat" 
                                                     Height="50"
                                                     ImageLocation="/Material/Images/Icons/delivery_note.png"
@@ -266,7 +288,8 @@
                                                     BorderColor="Aqua"
                                                     BorderThick="2"
                                                     Margin="10, 5, 0, 0"
-                                                    Command="{Binding PhieuXuatCommand}"/>
+                                                    Command="{Binding PhieuXuatCommand}"
+                                                    Visibility="{Binding ChucVu, Mode=OneWay, Converter={StaticResource Allow124}}"/>
                 </StackPanel>
             </ScrollViewer>
 

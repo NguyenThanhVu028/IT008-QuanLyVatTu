@@ -52,7 +52,7 @@
                        Text="{Binding MainTitle}"
                        FontFamily="/Material/Fonts/Lexend/#Lexend Regular"
                        FontWeight="Medium"
-                       FontSize="19"
+                       FontSize="20"
                        HorizontalAlignment="Left"
                        VerticalAlignment="Top"
                        TextWrapping="Wrap"/>
@@ -66,7 +66,7 @@
                        Text="{Binding MainMessage}"
                        FontFamily="/Material/Fonts/Lexend/#Lexend Regular"
                        FontWeight="Medium"
-                       FontSize="15"
+                       FontSize="17"
                        HorizontalAlignment="Left"
                        VerticalAlignment="Top"
                        TextWrapping="Wrap"/>

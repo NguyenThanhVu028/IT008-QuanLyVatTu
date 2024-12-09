@@ -14,9 +14,9 @@ namespace PMQuanLyVatTu.ViewModel
 {
     public class ThemSuaVatTuWindowViewModel : BaseViewModel
     {
-        public ThemSuaVatTuWindowViewModel(string makho = "")
+        public ThemSuaVatTuWindowViewModel(string makho = "", string mancc = "")
         {
-            if(makho != null) Makho = makho;
+            Makho = makho; MaNCC = mancc;
             
             LoadVatTu();
 
@@ -30,6 +30,12 @@ namespace PMQuanLyVatTu.ViewModel
         {
             get { return _maKho; }
             set { _maKho = value; OnPropertyChanged(); }
+        }
+        private string _maNCC;
+        public string MaNCC
+        {
+            get { return _maNCC; }
+            set { _maNCC = value; OnPropertyChanged(); }
         }
         private string _maVT="";
         public string MaVT
@@ -110,7 +116,7 @@ namespace PMQuanLyVatTu.ViewModel
             var ListFromDB = DataProvider.Instance.DB.Supplies.ToList();
             foreach (var item in ListFromDB)
             {
-                if(item.MaKho.Contains(Makho)) DanhSachVatTu.Add(item.MaVt);
+                if(item.MaKho.Contains(Makho) && item.MaNcc.Contains(MaNCC)) DanhSachVatTu.Add(item.MaVt);
             }
         }
         #endregion  

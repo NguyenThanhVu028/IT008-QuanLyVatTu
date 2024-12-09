@@ -1,5 +1,6 @@
 ﻿using PMQuanLyVatTu.ErrorMessage;
 using PMQuanLyVatTu.Models;
+using PMQuanLyVatTu.User;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -7,6 +8,7 @@ using System.Diagnostics.Eventing.Reader;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Input;
 using static PMQuanLyVatTu.ViewModel.NhanVienViewModel;
 
@@ -18,12 +20,25 @@ namespace PMQuanLyVatTu.ViewModel
         {
             AddCommand = new RelayCommand<object>(Add);
             XoaGanDayCommand = new RelayCommand<object>(XoaGanDay);
+            KiemTraTonKhoCommand = new RelayCommand<object>(KiemTraTonKho);
             RefreshCommand = new RelayCommand<object>(Refresh);
             EditButtonCommand = new RelayCommand<object>(EditButton);
             DeleteButtonCommand = new RelayCommand<object>(DeleteButton);
             //DeleteSelectedCommand = new RelayCommand<object>(DeleteSelected);
+            DaTiepNhanCommand = new RelayCommand<object>(DaTiepNhan);
+            TuChoiCommand = new RelayCommand<object>(TuChoi);
             Refresh();
         }
+        #region Info
+        public string MaNV
+        {
+            get { return CurrentUser.Instance.MaNv; }
+        }
+        public string ChucVu
+        {
+            get { return CurrentUser.Instance.ChucVu; }
+        }
+        #endregion
         #region Data for SelectionList
         private ObservableCollection<string> _searchFilter = new ObservableCollection<string>() { "Mã yêu cầu xuất", "Mã nhân viên", "Mã khách hàng", "Ngày lập yêu cầu", "Trạng thái" };
         public ObservableCollection<string> SearchFilter
@@ -79,6 +94,18 @@ namespace PMQuanLyVatTu.ViewModel
             xoaGanDayWindow.ShowDialog();
             Refresh();
         }
+        public ICommand KiemTraTonKhoCommand { get; set; }
+        void KiemTraTonKho(object t)
+        {
+            DanhSachYeuCauXuat.Clear();
+            var ListFromDB = DataProvider.Instance.DB.ExportRequests.ToList();
+            foreach (var list in ListFromDB)
+            {
+                //Duyệt từng sản phẩm trong ExportRequestInfo của list.MaYcx, nếu có hàng không đủ => Duyệt qua ExportResquests, Cập nhật trạng thái của list, TrangThai = "Thiếu hàng"
+                //Nhớ SaveChanges()
+                DanhSachYeuCauXuat.Add(list);
+            }
+        }
         public ICommand RefreshCommand { get; set; }
         void Refresh(object t = null)
         {
@@ -89,9 +116,6 @@ namespace PMQuanLyVatTu.ViewModel
             {
                 DanhSachYeuCauXuat.Add(list);
             }
-            //DanhSachYeuCauXuat.Add(new ExportRequest() { Checked = false, MaYCX = "YCX0001", MaNV = "NV0003", MaKH = "KH0002", MaKho = "KHO0003", NgayLap = "02/12/2024", GhiChu = "Giao gấp trong tuần tiếp theo kể từ ngày lập yêu cầu.", TrangThai = "Đã tiếp nhận" });
-            //DanhSachYeuCauXuat.Add(new ExportRequest() { Checked = false, MaYCX = "YCX0002", MaNV = "NV0005", MaKH = "KH0001", MaKho = "KHO0001", NgayLap = "02/12/2024", GhiChu = "Giao gấp trong tuần tiếp theo kể từ ngày lập yêu cầu.", TrangThai = "Đã tiếp nhận" });
-            //DanhSachYeuCauXuat.Add(new ExportRequest() { Checked = false, MaYCX = "YCX0003", MaNV = "NV0001", MaKH = "KH0005", MaKho = "KHO0009", NgayLap = "02/12/2024", GhiChu = "Giao gấp trong tuần tiếp theo kể từ ngày lập yêu cầu.", TrangThai = "Đã tiếp nhận" });
         }
         public ICommand EditButtonCommand { get; set; }
         void EditButton(object t)
@@ -136,6 +160,16 @@ namespace PMQuanLyVatTu.ViewModel
         //        Refresh();
         //    }
         //}
+        public ICommand DaTiepNhanCommand { get; set; }
+        void DaTiepNhan(object t)
+        {
+            MessageBox.Show("Đã tiếp nhận");
+        }
+        public ICommand TuChoiCommand { get; set; }
+        void TuChoi(object t)
+        {
+            MessageBox.Show("Từ chối");
+        }
         #endregion
     }
     //public class ExportRequest

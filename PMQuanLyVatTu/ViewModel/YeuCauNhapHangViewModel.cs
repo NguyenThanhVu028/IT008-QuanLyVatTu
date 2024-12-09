@@ -1,5 +1,6 @@
 ﻿using PMQuanLyVatTu.ErrorMessage;
 using PMQuanLyVatTu.Models;
+using PMQuanLyVatTu.User;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -7,6 +8,7 @@ using System.Diagnostics.Contracts;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Input;
 using static PMQuanLyVatTu.ViewModel.YeuCauXuatHangViewModel;
 
@@ -22,8 +24,20 @@ namespace PMQuanLyVatTu.ViewModel
             EditButtonCommand = new RelayCommand<object>(EditButton);
             DeleteButtonCommand = new RelayCommand<object>(DeleteButton);
             //DeleteSelectedCommand = new RelayCommand<object>(DeleteSelected);
+            DaTiepNhanCommand = new RelayCommand<object>(DaTiepNhan);
+            TuChoiCommand = new RelayCommand<object>(TuChoi);
             Refresh();
         }
+        #region Info
+        public string MaNV
+        {
+            get { return CurrentUser.Instance.MaNv; }
+        }
+        public string ChucVu
+        {
+            get { return CurrentUser.Instance.ChucVu; }
+        }
+        #endregion
         #region Data for SelectionList
         private ObservableCollection<string> _searchFilter = new ObservableCollection<string>() { "Mã yêu cầu nhập", "Mã nhân viên", "Mã vật tư", "Ngày lập yêu cầu", "Trạng thái" };
         public ObservableCollection<string> SearchFilter
@@ -135,6 +149,16 @@ namespace PMQuanLyVatTu.ViewModel
         //        Refresh();
         //    }
         //}
+        public ICommand DaTiepNhanCommand { get; set; }
+        void DaTiepNhan(object t)
+        {
+            MessageBox.Show("Đã tiếp nhận");
+        }
+        public ICommand TuChoiCommand { get; set; }
+        void TuChoi(object t)
+        {
+            MessageBox.Show("Từ chối");
+        }
         #endregion
     }
     //public class ImportRequest

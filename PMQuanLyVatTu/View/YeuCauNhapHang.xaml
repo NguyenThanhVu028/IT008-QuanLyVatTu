@@ -59,7 +59,7 @@
                     <DataGridTextColumn Header="Số lượng"
                                         Width="150"
                                         IsReadOnly="True"
-                                        Binding="{Binding SoLuong}"/>
+                                        Binding="{Binding SoLuong, StringFormat={}{0:n0}}"/>
                     <DataGridTextColumn Header="Ngày lập yêu cầu"
                                         Width="200"
                                         IsReadOnly="True"
@@ -75,7 +75,8 @@
                     <DataGridTemplateColumn Header="" IsReadOnly="True">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
-                                <StackPanel Orientation="Horizontal">
+                                <StackPanel Orientation="Horizontal"
+                                            Visibility="{Binding TrangThai, Mode=OneWay, Converter={StaticResource TrangThaiConverter}}">
                                     <CustomControl:CustomButton Width="100"
                                                                 Height="30"
                                                                 RadiusOfCorner="3"
@@ -136,33 +137,11 @@
                        FontSize="30"
                        TextAlignment="Center"
                        TextWrapping="Wrap"/>
-            <CustomControl:CustomButton Width="100"
-                                        Height="40"
-                                        HorizontalAlignment="Right"
-                                        VerticalAlignment="Top"
-                                        BorderBackground="{StaticResource LightAqua3}"
-                                        BorderBackgroundClicked="{StaticResource Aqua}"
-                                        BorderColor="{StaticResource DarkGreen2}"
-                                        BorderColorHighlight="{StaticResource DarkGreen3}"
-                                        DisplayText="Thêm"
-                                        TextSize="15"
-                                        Margin="0, 95, 30, 0"
-                                        RadiusOfCorner="5"
-                                        Command="{Binding AddCommand}"/>
-            <CustomControl:CustomButton Width="120"
-                                        Height="40"
-                                        HorizontalAlignment="Right"
-                                        VerticalAlignment="Top"
-                                        BorderBackground="{StaticResource LightAqua3}"
-                                        BorderBackgroundClicked="{StaticResource Aqua}"
-                                        BorderColor="{StaticResource DarkGreen2}"
-                                        BorderColorHighlight="{StaticResource DarkGreen3}"
-                                        DisplayText="Xóa gần đây"
-                                        TextSize="15"
-                                        Margin="0, 95, 135, 0"
-                                        RadiusOfCorner="5"
-                                        Command="{Binding XoaGanDayCommand}"/>
-            <CustomControl:CustomButton Width="100"
+            <StackPanel HorizontalAlignment="Right"
+                        VerticalAlignment="Top"
+                        Margin="0, 95, 30, 0"
+                        Orientation="Horizontal">
+                <!--<CustomControl:CustomButton Width="100"
                                         Height="40"
                                         HorizontalAlignment="Right"
                                         VerticalAlignment="Top"
@@ -172,9 +151,45 @@
                                         BorderColorHighlight="{StaticResource DarkGreen3}"
                                         DisplayText="Làm mới"
                                         TextSize="15"
-                                        Margin="0, 95, 260, 0"
+                                        Margin="5, 0, 0, 0"
                                         RadiusOfCorner="5"
-                                        Command="{Binding RefreshCommand}"/>
+                                        Command="{Binding RefreshCommand}"/>-->
+                <CustomControl:CustomButton Width="120"
+                                        Height="40"
+                                        HorizontalAlignment="Right"
+                                        VerticalAlignment="Top"
+                                        BorderBackground="{StaticResource LightAqua3}"
+                                        BorderBackgroundClicked="{StaticResource Aqua}"
+                                        BorderColor="{StaticResource DarkGreen2}"
+                                        BorderColorHighlight="{StaticResource DarkGreen3}"
+                                        DisplayText="Xóa gần đây"
+                                        TextSize="15"
+                                        Margin="5, 0, 0, 0"
+                                        RadiusOfCorner="5"
+                                        Command="{Binding XoaGanDayCommand}"/>
+                <CustomControl:CustomButton Width="100"
+                                            Height="40"
+                                            HorizontalAlignment="Right"
+                                            VerticalAlignment="Top"
+                                            BorderBackground="{StaticResource LightAqua3}"
+                                            BorderBackgroundClicked="{StaticResource Aqua}"
+                                            BorderColor="{StaticResource DarkGreen2}"
+                                            BorderColorHighlight="{StaticResource DarkGreen3}"
+                                            DisplayText="Thêm"
+                                            TextSize="15"
+                                            Margin="5, 0, 0, 0"
+                                            RadiusOfCorner="5"
+                                            Command="{Binding AddCommand}"
+                                            Visibility="{Binding ChucVu, Mode=OneWay, Converter={StaticResource Allow2}}"/>
+                <CustomControl:ImageButton ImageLocation="/Material/Images/Icons/refresh.png"
+                                           VerticalAlignment="Top"
+                                           HorizontalAlignment="Right"
+                                           Margin="5, 0, 0, 0"
+                                           Width="35"
+                                           Height="35"
+                                           BorderBackgroundHightlight="Transparent"
+                                           Command="{Binding RefreshCommand}"/>
+            </StackPanel>
             <CustomControl:CustomTextbox Width="335"
                                          Height="40"
                                          HorizontalAlignment="Left"

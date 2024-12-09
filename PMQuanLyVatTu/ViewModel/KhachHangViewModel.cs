@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore.Metadata;
 using PMQuanLyVatTu.ErrorMessage;
 using PMQuanLyVatTu.Models;
+using PMQuanLyVatTu.User;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -27,6 +28,16 @@ namespace PMQuanLyVatTu.ViewModel
             //DeleteSelectedCommand = new RelayCommand<object>(DeleteSelected);
             Refresh();
         }
+        #region Info
+        public string MaNV
+        {
+            get { return CurrentUser.Instance.MaNv; }
+        }
+        public string ChucVu
+        {
+            get { return CurrentUser.Instance.ChucVu; }
+        }
+        #endregion
         #region Data for SelectionList
         private ObservableCollection<string> _searchFilter = new ObservableCollection<string>() { "Mã khách hàng", "Họ và tên", "Số điện thoại", "Giới tính", "Ngày sinh" };
         public ObservableCollection<string> SearchFilter

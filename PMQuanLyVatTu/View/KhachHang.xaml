@@ -80,13 +80,15 @@
                                         Binding="{Binding NgaySinh}"
                                         CanUserResize="False"/>
                     <DataGridTextColumn Header="Địa chỉ"
-                                        Width="250"
+                                        Width="300"
                                         IsReadOnly="True"
                                         Binding="{Binding DiaChi}"/>
                     <DataGridTemplateColumn Header="" IsReadOnly="True">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
-                                <StackPanel Orientation="Horizontal">
+                                <StackPanel Orientation="Horizontal"
+                                            DataContext="{Binding ElementName=ThisWin, Path=DataContext}"
+                                            Visibility="{Binding ChucVu, Mode=OneWay, Converter={StaticResource Allow1}}">
                                     <CustomControl:ImageButton x:Name="EditButton" 
                                                            Width="20"
                                                            Height="20"
@@ -122,7 +124,11 @@
                        FontSize="30"
                        TextAlignment="Center"
                        TextWrapping="Wrap"/>
-            <CustomControl:CustomButton Width="100"
+            <StackPanel HorizontalAlignment="Right"
+                        VerticalAlignment="Top"
+                        Margin="0, 95, 30, 0"
+                        Orientation="Horizontal">
+                <!--<CustomControl:CustomButton Width="100"
                                         Height="40"
                                         HorizontalAlignment="Right"
                                         VerticalAlignment="Top"
@@ -130,11 +136,49 @@
                                         BorderBackgroundClicked="{StaticResource Aqua}"
                                         BorderColor="{StaticResource DarkGreen2}"
                                         BorderColorHighlight="{StaticResource DarkGreen3}"
-                                        DisplayText="Thêm"
+                                        DisplayText="Làm mới"
                                         TextSize="15"
-                                        Margin="0, 95, 30, 0"
+                                        Margin="5, 0, 0, 0"
                                         RadiusOfCorner="5"
-                                        Command="{Binding AddCommand}"/>
+                                        Command="{Binding RefreshCommand}"/>-->
+                <CustomControl:CustomButton Width="120"
+                                            Height="40"
+                                            HorizontalAlignment="Right"
+                                            VerticalAlignment="Top"
+                                            BorderBackground="{StaticResource LightAqua3}"
+                                            BorderBackgroundClicked="{StaticResource Aqua}"
+                                            BorderColor="{StaticResource DarkGreen2}"
+                                            BorderColorHighlight="{StaticResource DarkGreen3}"
+                                            DisplayText="Xóa gần đây"
+                                            TextSize="15"
+                                            Margin="5, 0, 0, 0"
+                                            RadiusOfCorner="5"
+                                            Command="{Binding XoaGanDayCommand}"
+                                            Visibility="{Binding ChucVu, Mode=OneWay, Converter={StaticResource Allow1}}"/>
+                <CustomControl:CustomButton Width="100"
+                                            Height="40"
+                                            HorizontalAlignment="Right"
+                                            VerticalAlignment="Top"
+                                            BorderBackground="{StaticResource LightAqua3}"
+                                            BorderBackgroundClicked="{StaticResource Aqua}"
+                                            BorderColor="{StaticResource DarkGreen2}"
+                                            BorderColorHighlight="{StaticResource DarkGreen3}"
+                                            DisplayText="Thêm"
+                                            TextSize="15"
+                                            Margin="5, 0, 0, 0"
+                                            RadiusOfCorner="5"
+                                            Command="{Binding AddCommand}"
+                                            Visibility="{Binding ChucVu, Mode=OneWay, Converter={StaticResource Allow1}}"/>
+                <CustomControl:ImageButton ImageLocation="/Material/Images/Icons/refresh.png"
+                                           VerticalAlignment="Top"
+                                           HorizontalAlignment="Right"
+                                           Margin="5, 0, 0, 0"
+                                           Width="35"
+                                           Height="35"
+                                           BorderBackgroundHightlight="Transparent"
+                                           Command="{Binding RefreshCommand}"/>
+            </StackPanel>
+                
             <!--<CustomControl:CustomButton Width="110"
                                         Height="30"
                                         HorizontalAlignment="Right"
@@ -148,32 +192,6 @@
                                         Margin="0, 0, 80, 40"
                                         RadiusOfCorner="5"
                                         Command="{Binding DeleteSelectedCommand}"/>-->
-            <CustomControl:CustomButton Width="120"
-                                        Height="40"
-                                        HorizontalAlignment="Right"
-                                        VerticalAlignment="Top"
-                                        BorderBackground="{StaticResource LightAqua3}"
-                                        BorderBackgroundClicked="{StaticResource Aqua}"
-                                        BorderColor="{StaticResource DarkGreen2}"
-                                        BorderColorHighlight="{StaticResource DarkGreen3}"
-                                        DisplayText="Xóa gần đây"
-                                        TextSize="15"
-                                        Margin="0, 95, 135, 0"
-                                        RadiusOfCorner="5"
-                                        Command="{Binding XoaGanDayCommand}"/>
-            <CustomControl:CustomButton Width="100"
-                                        Height="40"
-                                        HorizontalAlignment="Right"
-                                        VerticalAlignment="Top"
-                                        BorderBackground="{StaticResource LightAqua3}"
-                                        BorderBackgroundClicked="{StaticResource Aqua}"
-                                        BorderColor="{StaticResource DarkGreen2}"
-                                        BorderColorHighlight="{StaticResource DarkGreen3}"
-                                        DisplayText="Làm mới"
-                                        TextSize="15"
-                                        Margin="0, 95, 260, 0"
-                                        RadiusOfCorner="5"
-                                        Command="{Binding RefreshCommand}"/>
             <CustomControl:CustomTextbox Width="335"
                                          Height="40"
                                          HorizontalAlignment="Left"

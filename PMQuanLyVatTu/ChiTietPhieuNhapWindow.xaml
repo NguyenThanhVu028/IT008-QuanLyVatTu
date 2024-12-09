@@ -101,6 +101,7 @@
                                     DisplayText="Chọn từ yêu cầu nhập"
                                     Width="200"
                                     Height="30"
+                                    IsEnabled="{Binding ListEmpty}"
                                     Command="{Binding SelectFromRequestCommand}"/>
         <CustomControl:CustomButton Grid.Row="1"
                                     VerticalAlignment="Top"
@@ -189,7 +190,7 @@
                                      IsEnabled="False"
                                      Height="40"
                                      Width="250"
-                                     Text="{Binding TongGia}"
+                                     Text="{Binding TongGia, StringFormat={}{0:n0}}"
                                      TextSize="15"
                                      WaterMark="Tổng giá"
                                      VerticalAlignment="Bottom"
@@ -213,7 +214,7 @@
                                      IsEnabled="False"
                                      Height="40"
                                      Width="250"
-                                     Text="{Binding VAT}"
+                                     Text="{Binding VAT, StringFormat={}{0:n0}}"
                                      TextSize="15"
                                      WaterMark="Thuế VAT"
                                      VerticalAlignment="Bottom"
@@ -225,7 +226,7 @@
                                      RadiusOfCorner="5" 
                                      Margin="0,0,300,90" Grid.Column="1"/>
         <TextBlock Grid.Row="1" 
-                   Text="Chiết suất:"
+                   Text="Chiết khấu:"
                    Foreground="{StaticResource DarkGreen2}"
                    HorizontalAlignment="Right"
                    VerticalAlignment="Bottom" 
@@ -237,7 +238,7 @@
                                      IsEnabled="False"
                                      Height="40"
                                      Width="250"
-                                     Text ="{Binding ChietKhau}"
+                                     Text ="{Binding ChietKhau, StringFormat={}{0:n0}}"
                                      TextSize="15"
                                      WaterMark="Chiết khấu"
                                      VerticalAlignment="Bottom"
@@ -280,7 +281,7 @@
                     <DataGridTextColumn Header="Số lượng"
                                         Width="175"
                                         IsReadOnly="True"
-                                        Binding="{Binding SoLuong}"/>
+                                        Binding="{Binding SoLuong, StringFormat={}{0:n0}}"/>
                     <DataGridTextColumn Header="Chiết khấu"
                                         Width="175"
                                         IsReadOnly="True"
@@ -292,11 +293,11 @@
                     <DataGridTextColumn Header="Giá niêm yết"
                                         Width="175"
                                         IsReadOnly="True"
-                                        Binding="{Binding GiaNiemYet}"/>
+                                        Binding="{Binding GiaNiemYet, StringFormat={}{0:n0}}"/>
                     <DataGridTextColumn Header="Thành tiền"
                                         Width="175"
                                         IsReadOnly="True"
-                                        Binding="{Binding ThanhTien}"/>
+                                        Binding="{Binding ThanhTien, StringFormat={}{0:n0}}"/>
                 </DataGrid.Columns>
             </DataGrid>
         </Border>
@@ -329,6 +330,7 @@
                                      Height="40"
                                      Width="230"
                                      TextSize="15"
+                                     TextWrapping="Wrap"
                                      VerticalAlignment="Top"
                                      HorizontalAlignment="Left"
                                      BorderColor="{StaticResource DarkGreen2}"
@@ -336,7 +338,24 @@
                                      BorderThick="2"
                                      RadiusOfCorner="5" 
                                      Margin="570, 200, 0, 0"
-                                     Text="{Binding LyDoNhap}"/>
+                                     Text="{Binding LyDoNhap}">
+            <CustomControl:CustomTextbox.Triggers>
+                <EventTrigger RoutedEvent="TextBox.GotFocus">
+                    <BeginStoryboard>
+                        <Storyboard>
+                            <DoubleAnimation Duration="0:0:0.25" Storyboard.TargetProperty="Height" From="40" To="90"/>
+                        </Storyboard>
+                    </BeginStoryboard>
+                </EventTrigger>
+                <EventTrigger RoutedEvent="TextBox.LostFocus">
+                    <BeginStoryboard>
+                        <Storyboard>
+                            <DoubleAnimation Duration="0:0:0.25" Storyboard.TargetProperty="Height" From="200" To="90"/>
+                        </Storyboard>
+                    </BeginStoryboard>
+                </EventTrigger>
+            </CustomControl:CustomTextbox.Triggers>
+        </CustomControl:CustomTextbox>
         <TextBlock Grid.Row="1"
                    HorizontalAlignment="Left"
                    VerticalAlignment="Top" 

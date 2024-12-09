@@ -1,5 +1,6 @@
 ﻿using PMQuanLyVatTu.ErrorMessage;
 using PMQuanLyVatTu.Models;
+using PMQuanLyVatTu.User;
 using PMQuanLyVatTu.View;
 using System;
 using System.Collections.Generic;
@@ -26,6 +27,7 @@ namespace PMQuanLyVatTu.ViewModel
             MinimizeWindowCommand = new RelayCommand<Window>(MinimizeWin);
             MoveWindowCommand = new RelayCommand<Window>(MoveWindow);
             AccountInfoCommand = new RelayCommand<object>(AccountInfo);
+            LogOutCommand = new RelayCommand<Window>(LogOut);
             #endregion
             #region PageCommand
             TrangChuCommand = new RelayCommand<object>(TrangChu);
@@ -59,8 +61,11 @@ namespace PMQuanLyVatTu.ViewModel
             //Khởi tạo các trang/window ban đầu
             _currentPage = new TrangChu(); (_currentPage as TrangChu).DataContext = TrangChuVM;
             LoginWindow newLogin = new LoginWindow(); newLogin.DataContext = LoginVM; newLogin.ShowDialog();
-            TrangChuVM.DisplayUsername = "Trịnh Trần Phương Tuấn";
 
+            MaNV = CurrentUser.Instance.MaNv;
+            ChucVu = CurrentUser.Instance.ChucVu;
+            HoTen = CurrentUser.Instance.HoTen;
+            Avatar = CurrentUser.Instance.ImageLocation;
         }
         #region CurrentPage
         private object _currentPage;
@@ -121,6 +126,29 @@ namespace PMQuanLyVatTu.ViewModel
             AccountWin.DataContext = TTCNVM;
             AccountWin.ShowDialog();
         }
+        public ICommand LogOutCommand { get; set; }
+        void LogOut(Window t)
+        {
+            t.Hide();
+            LoginWindow newLogin = new LoginWindow(); newLogin.DataContext = LoginVM; newLogin.ShowDialog();
+            if (LoginVM.ReturnValue == true)
+            {
+                CustomMessage popUpMessage = new CustomMessage("/Material/Images/Icons/success.png", "ĐĂNG NHẬP THÀNH CÔNG", "Đã đăng nhập thành công với tên: " + LoginVM.UserName);
+                popUpMessage.ShowDialog();
+                if (popUpMessage.ReturnValue == false) t.Close();
+                else
+                {
+                    MaNV = CurrentUser.Instance.MaNv;
+                    ChucVu = CurrentUser.Instance.ChucVu;
+                    HoTen = CurrentUser.Instance.HoTen;
+                    Avatar = CurrentUser.Instance.ImageLocation;
+
+                    CurrentPage = null;
+                    t.Show();
+                }
+            }
+            else t.Close();
+        }
 
         public ICommand TrangChuCommand {  get; set; }
         void TrangChu(object t) { if((CurrentPage as TrangChu) == null) {CurrentPage = new TrangChu(); (CurrentPage as TrangChu).DataContext = TrangChuVM; } }
@@ -160,6 +188,32 @@ namespace PMQuanLyVatTu.ViewModel
         YeuCauNhapHangViewModel YeuCauNhapHangVM;
         PhieuNhapViewModel PhieuNhapVM;
         PhieuXuatViewModel PhieuXuatVM;
+        #endregion
+        #region Info
+        private string _maNV;
+        public string MaNV
+        {
+            get { return _maNV; }
+            set { _maNV = value; OnPropertyChanged(); }
+        }
+        private string _hoTen;
+        public string HoTen
+        {
+            get { return _hoTen; }
+            set { _hoTen = value; OnPropertyChanged();}
+        }
+        private string _chucVu;
+        public string ChucVu
+        {
+            get { return _chucVu; }
+            set { _chucVu = value; OnPropertyChanged(); }
+        }
+        private string _avatar;
+        public string Avatar
+        {
+            get { return _avatar; }
+            set { _avatar = value; OnPropertyChanged(); }
+        }
         #endregion
     }
 }

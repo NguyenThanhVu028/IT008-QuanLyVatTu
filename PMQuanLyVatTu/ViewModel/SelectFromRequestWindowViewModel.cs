@@ -13,20 +13,43 @@ namespace PMQuanLyVatTu.ViewModel
 {
     class SelectFromRequestWindowViewModel : BaseViewModel
     {
-        public SelectFromRequestWindowViewModel(bool isYCN = false)
+        public SelectFromRequestWindowViewModel(bool isYCN = false, string ma1 = "", string ma2 = "")
         {
             IsYCN = isYCN;
-            LoadData();
+            LoadData(ma1, ma2);
 
             ConfirmCommand = new RelayCommand<Window>(Confirm);
             CancelCommand = new RelayCommand<Window>(Cancel);
+            MoveWindowCommand = new RelayCommand<Window>(MoveWindow);
         }
+        #region Info
+        private string _ma1;
+        private string _ma2;
+        public string Ma1
+        {
+            get { return _ma1; }
+            set { _ma1 = value; OnPropertyChanged(); }
+        }
+        public string Ma2
+        {
+            get { return _ma2; }
+            set { _ma2 = value; OnPropertyChanged(); }
+        }
+        #endregion
         #region IsYCN
         private bool _isYCN;
         public bool IsYCN
         {
             get { return _isYCN; }
             set { _isYCN = value; OnPropertyChanged(); }
+        }
+        #endregion
+        #region ReturnValue
+        private bool _returnValue;
+        public bool ReturnValue
+        {
+            get { return _returnValue; }
+            set { _returnValue = value; OnPropertyChanged(); }
         }
         #endregion
         #region DanhSachYeuCau
@@ -36,11 +59,17 @@ namespace PMQuanLyVatTu.ViewModel
             get { return _danhSachYeuCau; }
             set { _danhSachYeuCau = value; OnPropertyChanged(); }
         }
-        private ObservableCollection<string> _selectedYeuCau = new ObservableCollection<string>();
-        public ObservableCollection<string> SelectedYeuCau
+        private Request _selectedYeuCau;
+        public Request SelectedYeuCau
         {
             get { return _selectedYeuCau; }
             set { _selectedYeuCau = value; OnPropertyChanged(); }
+        }
+        private string _selectedYeuCauValue;
+        public string SelectedYeuCauValue
+        {
+            get { return _selectedYeuCauValue; }
+            set { _selectedYeuCauValue = value; OnPropertyChanged(); }
         }
         #endregion
         #region Command
@@ -52,35 +81,83 @@ namespace PMQuanLyVatTu.ViewModel
         public ICommand ConfirmCommand { get; set; }
         void Confirm(Window t)
         {
-            CustomMessage msg = new CustomMessage("/Material/Images/Icons/question.png", "THÔNG BÁO", "Bạn có muốn lưu các mục đã chọn?", true);
+            CustomMessage msg = new CustomMessage("/Material/Images/Icons/question.png", "THÔNG BÁO", "Bạn có muốn lưu mục đã chọn?", true);
             msg.ShowDialog();
             if(msg.ReturnValue == true)
             {
-                foreach (Request i in DanhSachYeuCau)
+                if (IsYCN)
                 {
-                    if (i.Checked == true) SelectedYeuCau.Add(i.MaYC);
+                    if(SelectedYeuCau != null)
+                    {
+                        var ListYCFromDB = DataProvider.Instance.DB.ImportRequests.ToList();
+                        var ListFromDB = DataProvider.Instance.DB.Supplies.ToList();
+                        foreach(var request in ListYCFromDB)
+                        {
+                            if(request.MaYcn == SelectedYeuCau.MaYC)
+                            {
+                                foreach(var item in ListFromDB)
+                                {
+                                    if(item.MaVt == request.MaVt)
+                                    {
+                                        Ma1 = item.MaNcc; Ma2 = item.MaKho;
+                                        break;
+                                    }
+                                }
+                                break;
+                            }
+                        }
+                    }
                 }
+                else
+                {
+                    if(SelectedYeuCau != null)
+                    {
+                        var ListYCFromDB = DataProvider.Instance.DB.ExportRequests.ToList();
+                        foreach(var request in ListYCFromDB)
+                        {
+                            if(request.MaYcx == SelectedYeuCau.MaYC)
+                            {
+                                Ma1 = request.MaKh; Ma2 = request.KhoXuat;
+                                break;
+                            }
+                        }
+                    }
+
+                }
+                ReturnValue = true;
+                if (SelectedYeuCau != null) SelectedYeuCauValue = SelectedYeuCau.MaYC;
+                else SelectedYeuCauValue = "";
                 t.Close();
             }
         }
         public ICommand CancelCommand { get; set; }
         void Cancel(Window t)
         {
-            SelectedYeuCau.Clear();
-            SelectedYeuCau.Clear();
+            SelectedYeuCauValue = "";
+            ReturnValue = false;
             t.Close();
         }
         #endregion
         #region Function
-        void LoadData()
+        void LoadData(string ma1, string ma2)
         {
             if (IsYCN)
             {
                 var ListFromDB = DataProvider.Instance.DB.ImportRequests.ToList();
+                var ListSupplyFromDB = DataProvider.Instance.DB.Supplies.ToList();
                 foreach(var request in ListFromDB)
                 {
-                    Request temp = new Request(); temp.MaYC = request.MaYcn; temp.NgayLap = request.NgayLap;
-                    DanhSachYeuCau.Add(temp);
+                    if(request.DaXoa == false)
+                    {
+                        foreach(var item in ListSupplyFromDB)
+                        {
+                            if(item.DaXoa == false && item.MaVt == request.MaVt && item.MaNcc.Contains(ma1) && item.MaKho.Contains(ma2))
+                            {
+                                Request temp = new Request(); temp.MaYC = request.MaYcn; temp.NgayLap = request.NgayLap;
+                                DanhSachYeuCau.Add(temp); break;
+                            }
+                        }
+                    }
                 }
             }
             else
@@ -88,8 +165,24 @@ namespace PMQuanLyVatTu.ViewModel
                 var ListFromDB = DataProvider.Instance.DB.ExportRequests.ToList();
                 foreach (var request in ListFromDB)
                 {
-                    Request temp = new Request(); temp.MaYC = request.MaYcx; temp.NgayLap = request.NgayLap;
-                    DanhSachYeuCau.Add(temp);
+                    if (request.DaXoa == false)
+                    {
+                        Request temp = new Request(); temp.MaYC = request.MaYcx; temp.NgayLap = request.NgayLap;
+                        DanhSachYeuCau.Add(temp);
+                        //if (request.MaKh.Contains(ma1) && request.KhoXuat.Contains(ma2))
+                        //{
+                        //    Request temp = new Request(); temp.MaYC = request.MaYcx; temp.NgayLap = request.NgayLap;
+                        //    DanhSachYeuCau.Add(temp); break;
+                        //}
+                        //foreach (var item in ListSupplyFromDB)
+                        //{
+                        //    if (item.DaXoa == false && item.MaVt == request.MaVt && item.MaNcc.Contains(ma1) && item.MaKho.Contains(ma2))
+                        //    {
+                        //        Request temp = new Request(); temp.MaYC = request.MaYcn; temp.NgayLap = request.NgayLap;
+                        //        DanhSachYeuCau.Add(temp); break;
+                        //    }
+                        //}
+                    }
                 }
             }
 

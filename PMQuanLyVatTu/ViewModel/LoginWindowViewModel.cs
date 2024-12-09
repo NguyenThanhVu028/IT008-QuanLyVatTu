@@ -1,4 +1,6 @@
 ﻿using PMQuanLyVatTu.ErrorMessage;
+using PMQuanLyVatTu.Models;
+using PMQuanLyVatTu.User;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -45,15 +47,41 @@ namespace PMQuanLyVatTu.ViewModel
         public ICommand LoginButtonCommand {  get; set; }
         void LoginButton(Window window)
         {
-            if (true) //Check tài khoản hợp lệ
-            {
-                ReturnValue = true;
-                window.Close();
-            }
-            else if (UserName == "") //Nếu chưa nhập tên đăng nhập, k check password vì có thể cho tk k có mật khẩu
+            bool Check = false;
+            
+            if (UserName == "") //Nếu chưa nhập tên đăng nhập, k check password vì có thể cho tk k có mật khẩu
             {
                 CustomMessage msg = new CustomMessage("/Material/Images/Icons/wrong.png", "LỖI", "Vui lòng nhập tên đăng nhập.");
                 msg.ShowDialog();
+                return;
+            }
+            var ListFromDB = DataProvider.Instance.DB.Accounts.ToList();
+            foreach (var account in ListFromDB)
+            {
+                if(account.TenDn == UserName)
+                {
+                    if(account.MatKhau == Password)
+                    {
+                        Check = true;
+                        var ListEmployee = DataProvider.Instance.DB.Employees.ToList();
+                        foreach (var emp in ListEmployee)
+                        {
+                            if(emp.MaNv == account.MaNv)
+                            {
+                                CurrentUser.Instance.MaNv = emp.MaNv;
+                                CurrentUser.Instance.HoTen = emp.HoTen;
+                                CurrentUser.Instance.ChucVu = emp.ChucVu;
+                                CurrentUser.Instance.ImageLocation = emp.ImageLocation;
+                            }
+                        }
+                        break;
+                    }
+                }
+            }
+            if (Check) //Check tài khoản hợp lệ
+            {
+                ReturnValue = true;
+                window.Close();
             }
             else
             {

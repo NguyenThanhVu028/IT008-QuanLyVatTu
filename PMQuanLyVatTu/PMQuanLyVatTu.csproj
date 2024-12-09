@@ -57,6 +57,7 @@
     <None Remove="Material\Images\Icons\question.png" />
     <None Remove="Material\Images\Icons\receipt.png" />
     <None Remove="Material\Images\Icons\received_note.png" />
+    <None Remove="Material\Images\Icons\refresh.png" />
     <None Remove="Material\Images\Icons\report.png" />
     <None Remove="Material\Images\Icons\request.png" />
     <None Remove="Material\Images\Icons\show.png" />
@@ -65,6 +66,7 @@
     <None Remove="Material\Images\Icons\sun_set.png" />
     <None Remove="Material\Images\Icons\supplier.png" />
     <None Remove="Material\Images\Icons\supply.png" />
+    <None Remove="Material\Images\Icons\turn_off.png" />
     <None Remove="Material\Images\Icons\user_login.png" />
     <None Remove="Material\Images\Icons\warehouse.png" />
     <None Remove="Material\Images\Icons\wrong.png" />
@@ -126,6 +128,7 @@
     <Resource Include="Material\Images\Icons\printer2.png" />
     <Resource Include="Material\Images\Icons\question.png" />
     <Resource Include="Material\Images\Icons\received_note.png" />
+    <Resource Include="Material\Images\Icons\refresh.png" />
     <Resource Include="Material\Images\Icons\report.png" />
     <Resource Include="Material\Images\Icons\request.png" />
     <Resource Include="Material\Images\Icons\show.png" />
@@ -134,6 +137,7 @@
     <Resource Include="Material\Images\Icons\sun_set.png" />
     <Resource Include="Material\Images\Icons\supplier.png" />
     <Resource Include="Material\Images\Icons\supply.png" />
+    <Resource Include="Material\Images\Icons\turn_off.png" />
     <Resource Include="Material\Images\Icons\user_login.png" />
     <Resource Include="Material\Images\Icons\warehouse.png" />
     <Resource Include="Material\Images\Icons\wrong.png" />

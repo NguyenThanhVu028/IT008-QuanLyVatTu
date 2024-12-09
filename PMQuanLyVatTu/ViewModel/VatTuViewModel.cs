@@ -1,6 +1,7 @@
 ﻿using PMQuanLyVatTu.CustomControls;
 using PMQuanLyVatTu.ErrorMessage;
 using PMQuanLyVatTu.Models;
+using PMQuanLyVatTu.User;
 using PMQuanLyVatTu.View;
 using System;
 using System.Collections.Generic;
@@ -25,6 +26,16 @@ namespace PMQuanLyVatTu.ViewModel
             //DeleteSelectedCommand = new RelayCommand<object>(DeleteSelected);
             Refresh();
         }
+        #region Info
+        public string MaNV
+        {
+            get { return CurrentUser.Instance.MaNv; }
+        }
+        public string ChucVu
+        {
+            get { return CurrentUser.Instance.ChucVu; }
+        }
+        #endregion
         #region Data for SelectionList
         private ObservableCollection<string> _searchFilter = new ObservableCollection<string>() {"Không", "Mã vật tư", "Tên vật tư", "Loại vật tư", "Đơn vị tính", "Mã nhà cung cấp", "Mã kho chứa"};
         public ObservableCollection<string> SearchFilter

@@ -122,6 +122,9 @@
                         <Trigger Property="IsMouseOver" Value="True">
                             <Setter Property="Background" Value="{Binding BorderBackgroundHightlight, RelativeSource={RelativeSource TemplatedParent}}" TargetName="ImageBtnGrid"/>
                         </Trigger>
+                        <Trigger Property="IsPressed" Value="True">
+                            <Setter Property="Background" Value="{Binding BorderBackgroundClicked, RelativeSource={RelativeSource TemplatedParent}}" TargetName="ImageBtnGrid"/>
+                        </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
             </Setter.Value>
@@ -352,15 +355,15 @@
                 <ControlTemplate TargetType="CustomControl:AccountButton">
                     <Grid>
                         <Border x:Name="AccountBorder" 
-                                Background="{StaticResource DarkGreen1}"
+                                Background="{StaticResource DarkGreenTransparent3}"
                                 BorderBrush="Aqua"
-                                BorderThickness="2"
+                                BorderThickness="0"
                                 HorizontalAlignment="Stretch"
                                 VerticalAlignment="Stretch"
                                 CornerRadius="10"/>
                         <Border Background="Transparent"
                                 BorderBrush="Aqua"
-                                BorderThickness="2"
+                                BorderThickness="0"
                                 HorizontalAlignment="Stretch"
                                 VerticalAlignment="Stretch"
                                 CornerRadius="10">
@@ -382,30 +385,30 @@
                                        HorizontalAlignment="Stretch"
                                        Width="100"
                                        TextWrapping="Wrap"
-                                       Margin="5, 0, 5, 0"
-                                       Text="Trịnh Trần Phương Tuấn"
-                                       FontFamily="/Material/Fonts/Lexend/#Lexend Black"
-                                       FontWeight="Black"
-                                       FontSize="14"
-                                       TextAlignment="Center"
-                                       Foreground="White"/>
+                                       Margin="10, 0, 5, 0"
+                                       Text="{TemplateBinding DisplayName}"
+                                       FontFamily="/Material/Fonts/Lexend/#Lexend Bold"
+                                       FontWeight="Bold"
+                                       FontSize="15"
+                                       TextAlignment="Left"
+                                       Foreground="{StaticResource LightAqua1}"/>
                         </StackPanel>
                     </Grid>
                     <ControlTemplate.Triggers>
-                        <!--<EventTrigger RoutedEvent="Mouse.MouseEnter">
+                        <EventTrigger RoutedEvent="Mouse.MouseEnter">
                             <BeginStoryboard>
                                 <Storyboard>
-                                    <ColorAnimation Duration="0:0:0.25" Storyboard.TargetName="AccountBorder" Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)" To="#FF64FFFF"/>
+                                    <ColorAnimation Duration="0:0:0.25" Storyboard.TargetName="AccountBorder" Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)" From="#CC003547"  To="#E500506C"/>
                                 </Storyboard>
                             </BeginStoryboard>
                         </EventTrigger>
                         <EventTrigger RoutedEvent="Mouse.MouseLeave">
                             <BeginStoryboard>
                                 <Storyboard>
-                                    <ColorAnimation Duration="0:0:0.25" Storyboard.TargetName="AccountBorder" Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)" To="#FF56CDCD"/>
+                                    <ColorAnimation Duration="0:0:0.25" Storyboard.TargetName="AccountBorder" Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)" From="#E500506C" To="#CC003547"/>
                                 </Storyboard>
                             </BeginStoryboard>
-                        </EventTrigger>-->
+                        </EventTrigger>
                         <Trigger Property="IsPressed" Value="True">
                             <Setter Property="Background" Value="#FF42A3A3" TargetName="AccountBorder"/>
                         </Trigger>
@@ -522,7 +525,7 @@
                             <TextBlock Grid.Row="1"
                                        HorizontalAlignment="Center"
                                        VerticalAlignment="Top"
-                                       Margin="0, 5, 0, 0"
+                                       Margin="5, 5, 5, 0"
                                        Text="{Binding TenVatTu}"
                                        Foreground="White"
                                        FontSize="17"
@@ -545,7 +548,7 @@
                                 <TextBlock Grid.Row="1"
                                            HorizontalAlignment="Center"
                                            VerticalAlignment="Top"
-                                           Text="{Binding GiaXuat}"
+                                           Text="{Binding GiaXuat, StringFormat={}{0:n0}}"
                                            Foreground="White"
                                            FontSize="15"
                                            FontFamily="/Material/Fonts/Lexend/#Lexend Medium"
@@ -619,7 +622,7 @@
                             <TextBlock Grid.Row="1"
                                        HorizontalAlignment="Center"
                                        VerticalAlignment="Top"
-                                       Margin="0, 5, 0, 0"
+                                       Margin="5, 5, 5, 0"
                                        Text="{Binding HoTen}"
                                        Foreground="White"
                                        FontSize="17"

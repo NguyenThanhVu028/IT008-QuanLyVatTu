@@ -1,6 +1,7 @@
 ﻿using PMQuanLyVatTu.CustomControls;
 using PMQuanLyVatTu.ErrorMessage;
 using PMQuanLyVatTu.Models;
+using PMQuanLyVatTu.User;
 using PMQuanLyVatTu.View;
 using System;
 using System.Collections.Generic;
@@ -26,6 +27,16 @@ namespace PMQuanLyVatTu.ViewModel
             //DeleteSelectedCommand = new RelayCommand<object>(DeleteSelected);
             Refresh();
         }
+        #region Info
+        public string MaNV
+        {
+            get { return CurrentUser.Instance.MaNv; }
+        }
+        public string ChucVu
+        {
+            get { return CurrentUser.Instance.ChucVu; }
+        }
+        #endregion
         #region Data for SelectionList
         private ObservableCollection<string> _searchFilter = new ObservableCollection<string>() {"Mã nhân viên", "Họ và tên", "Chức vụ", "Giới tính", "Chức vụ", "Ngày sinh", "Số điện thoại", "Email", "Địa chỉ", "Lương" };
         public ObservableCollection<string> SearchFilter
@@ -120,13 +131,6 @@ namespace PMQuanLyVatTu.ViewModel
             {
                 DanhSachNhanVien.Add(item);
             }
-
-            //DanhSachNhanVien.Add(new Employee() { Checked = true, MaNV = "NV0001", HoTen = "Nguyễn Văn An", ChucVu = "QL", NgaySinh = "19/5/1998", GioiTinh = "Nam", SDT = "0912345678", Email = "de@gmqaial.com", DiaChi = "Số 354 Phường Linh Xuân, Quận Tân Hiệp Thành", Luong = 35000000, ImageLocation = "/Material/Images/Avatars/user1.jpg" });
-            //DanhSachNhanVien.Add(new Employee() { Checked = true, MaNV = "NV0002", HoTen = "Nguyễn Thị Bình", ChucVu = "KT", NgaySinh = "19/5/1998", GioiTinh = "Nữ", SDT = "0912345678", Email = "de@gmqaial.com", DiaChi = "Số 354 Phường Linh Xuân, Quận Tân Hiệp Thành", Luong = 35000000, ImageLocation = "/Material/Images/Avatars/user2.jpg" });
-            //DanhSachNhanVien.Add(new Employee() { Checked = true, MaNV = "NV0003", HoTen = "Nguyễn Trọng Phước Thành Danh", ChucVu = "NX", NgaySinh = "19/5/1998", GioiTinh = "Nam", SDT = "0912345678", Email = "de@gmqaial.com", DiaChi = "Số 354 Phường Linh Xuân, Quận Tân Hiệp Thành", Luong = 35000000, ImageLocation = "/Material/Images/Avatars/user3.jpg" });
-            //DanhSachNhanVien.Add(new Employee() { Checked = true, MaNV = "NV0003", HoTen = "Nguyễn Hữu Tính", ChucVu = "TN", NgaySinh = "19/5/1998", GioiTinh = "Nam", SDT = "0912345678", Email = "de@gmqaial.com", DiaChi = "Số 354 Phường Linh Xuân, Quận Tân Hiệp Thành", Luong = 35000000, ImageLocation = "/Material/Images/Avatars/user4.jpg" });
-            //DanhSachNhanVien.Add(new Employee() { Checked = true, MaNV = "NV0003", HoTen = "Nguyễn Trọng Phước Thành Danh", ChucVu = "KT", NgaySinh = "19/5/1998", GioiTinh = "Nam", SDT = "0912345678", Email = "de@gmqaial.com", DiaChi = "Số 354 Phường Linh Xuân, Quận Tân Hiệp Thành", Luong = 35000000, ImageLocation = "/Material/Images/Avatars/user5.jpg" });
-
             if(DanhSachNhanVien.Count() > DanhSachNhanVienLargeIcon.Count())
             {
                 int temp1 = DanhSachNhanVien.Count(), temp2 = DanhSachNhanVienLargeIcon.Count();
@@ -143,8 +147,11 @@ namespace PMQuanLyVatTu.ViewModel
             {
                 DanhSachNhanVienLargeIcon[i].DataContext = DanhSachNhanVien[i];
                 if (DanhSachNhanVien[i].ChucVu == "Quản Lý") DanhSachNhanVienLargeIcon[i].BorderBrush = Brushes.Yellow;
-                else if (false) DanhSachNhanVienLargeIcon[i].BorderBrush = Brushes.Green;               //Nếu là ng đang dùng
-                else DanhSachNhanVienLargeIcon[i].BorderBrush = Brushes.Aqua;
+                else
+                {
+                    DanhSachNhanVienLargeIcon[i].BorderBrush = Brushes.Aqua;
+                }
+
                 temp.Add(DanhSachNhanVienLargeIcon[i]);
             }
             DisplayDanhSachNhanVienLargeIcon = temp;

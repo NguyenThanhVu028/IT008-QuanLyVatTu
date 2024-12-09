@@ -31,5 +31,16 @@ namespace PMQuanLyVatTu.CustomControls
         public static readonly DependencyProperty ImageLocationProperty =
             DependencyProperty.Register("ImageLocation", typeof(string), typeof(AccountButton), new PropertyMetadata("/Material/Images/null_image.jpg"));
         #endregion
+        public string DisplayName
+        {
+            get { return (string)GetValue(DisplayNameProperty); }
+            set { SetValue(DisplayNameProperty, value); }
+        }
+
+        // Using a DependencyProperty as the backing store for DisplayName.  This enables animation, styling, binding, etc...
+        public static readonly DependencyProperty DisplayNameProperty =
+            DependencyProperty.Register("DisplayName", typeof(string), typeof(AccountButton), new PropertyMetadata("Empty Username"));
+
+
     }
 }
