@@ -197,12 +197,16 @@ namespace PMQuanLyVatTu.ViewModel
         #region Function
         void VatTuDisplayerButtonClick(object sender, RoutedEventArgs e)
         {
-            string mavt = ((sender as VatTuDisplayer).DataContext as Supply).MaVt;
-            ThongTinVatTuWindowViewModel TTVTVM = new ThongTinVatTuWindowViewModel(mavt);
-            ThongTinVatTuWindow AddWindow = new ThongTinVatTuWindow();
-            AddWindow.DataContext = TTVTVM;
-            AddWindow.ShowDialog();
-            Refresh();
+            if(CurrentUser.Instance.ChucVu == "Quản Lý")
+            {
+                string mavt = ((sender as VatTuDisplayer).DataContext as Supply).MaVt;
+                ThongTinVatTuWindowViewModel TTVTVM = new ThongTinVatTuWindowViewModel(mavt);
+                ThongTinVatTuWindow AddWindow = new ThongTinVatTuWindow();
+                AddWindow.DataContext = TTVTVM;
+                AddWindow.ShowDialog();
+                Refresh();
+            }
+
 
             DataProvider.Instance.DB.SaveChanges();
         }

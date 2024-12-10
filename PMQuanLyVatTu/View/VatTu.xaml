@@ -103,7 +103,9 @@
                     <DataGridTemplateColumn Header="" IsReadOnly="True">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
-                                <StackPanel Orientation="Horizontal">
+                                <StackPanel Orientation="Horizontal"
+                                            DataContext="{Binding ElementName=ThisUC, Path=DataContext}"
+                                            Visibility="{Binding ChucVu, Converter={StaticResource Allow1}}">
                                     <CustomControl:ImageButton x:Name="EditButton" 
                                                            Width="20"
                                                            Height="20"
@@ -247,7 +249,7 @@
                        Foreground="{StaticResource LightAqua1}"
                        FontFamily="/Material/Fonts/Lexend/#Lexend Medium"
                        FontWeight="Medium"
-                       Visibility="{Binding ChucVu, Mode=OneWay, Converter={StaticResource Allow1}}"/>
+                       Visibility="{Binding ChucVu, Mode=OneWay, Converter={StaticResource Allow14}}"/>
             <CustomControl:CustomTogglebutton x:Name="ModeSwitch" 
                                               Width="50"
                                               Height="30"
@@ -259,7 +261,7 @@
                                               RadiusOfCorner="10"
                                               SliderHeight="25"
                                               SliderWidth="25"
-                                              Visibility="{Binding ChucVu, Mode=OneWay, Converter={StaticResource Allow1}}"/>
+                                              Visibility="{Binding ChucVu, Mode=OneWay, Converter={StaticResource Allow14}}"/>
         </Grid>
     </Grid>
 </UserControl>

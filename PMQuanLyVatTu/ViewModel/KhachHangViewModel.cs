@@ -148,6 +148,11 @@ namespace PMQuanLyVatTu.ViewModel
             AddWindow.ShowDialog();
             Refresh();
         }
+        bool EditButtonCondition(object t)
+        {
+            if (CurrentUser.Instance.ChucVu == "Quản Lý") return true;
+            else return false;
+        }
         //public ICommand DeleteSelectedCommand { get; set; }
         //void DeleteSelected(object t)
         //{

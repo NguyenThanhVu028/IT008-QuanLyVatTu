@@ -202,12 +202,16 @@ namespace PMQuanLyVatTu.ViewModel
         #region Function
         void NhanVienDisplayerClicked(object sender, EventArgs e)
         {
-            string manv = ((sender as NhanVienDisplayer).DataContext as Employee).MaNv;
-            ThongTinNhanVienWindowViewModel TTVTVM = new ThongTinNhanVienWindowViewModel(manv);
-            ThongTinNhanVienWindow AddWindow = new ThongTinNhanVienWindow();
-            AddWindow.DataContext = TTVTVM;
-            AddWindow.ShowDialog();
-            Refresh();
+            if(CurrentUser.Instance.ChucVu == "Quản Lý")
+            {
+                string manv = ((sender as NhanVienDisplayer).DataContext as Employee).MaNv;
+                ThongTinNhanVienWindowViewModel TTVTVM = new ThongTinNhanVienWindowViewModel(manv);
+                ThongTinNhanVienWindow AddWindow = new ThongTinNhanVienWindow();
+                AddWindow.DataContext = TTVTVM;
+                AddWindow.ShowDialog();
+                Refresh();
+            }
+            
         }
         #endregion
         //public class Employee
