@@ -31,7 +31,10 @@
     <None Remove="Material\Images\BackGround\BackGround.png" />
     <None Remove="Material\Images\BackGround\BackGround2.jpg" />
     <None Remove="Material\Images\BackGround\BackGround3.jpg" />
+    <None Remove="Material\Images\BackGround\BackGround4.jpg" />
+    <None Remove="Material\Images\BackGround\BackGround5.jpg" />
     <None Remove="Material\Images\BackGround\DefaultBackGround.jpg" />
+    <None Remove="Material\Images\BackGround\DefaultBackGround.png" />
     <None Remove="Material\Images\Icons\approve.png" />
     <None Remove="Material\Images\Icons\close.png" />
     <None Remove="Material\Images\Icons\close2.png" />
@@ -48,7 +51,9 @@
     <None Remove="Material\Images\Icons\home.png" />
     <None Remove="Material\Images\Icons\import_request.png" />
     <None Remove="Material\Images\Icons\maximize.png" />
+    <None Remove="Material\Images\Icons\maximize2.png" />
     <None Remove="Material\Images\Icons\minimize.png" />
+    <None Remove="Material\Images\Icons\minimize2.png" />
     <None Remove="Material\Images\Icons\moon.png" />
     <None Remove="Material\Images\Icons\noon.png" />
     <None Remove="Material\Images\Icons\password_login.png" />
@@ -103,7 +108,10 @@
     <Resource Include="Material\Images\BackGround\BackGround.jpg" />
     <Resource Include="Material\Images\BackGround\BackGround2.jpg" />
     <Resource Include="Material\Images\BackGround\BackGround3.jpg" />
+    <Resource Include="Material\Images\BackGround\BackGround4.jpg" />
+    <Resource Include="Material\Images\BackGround\BackGround5.jpg" />
     <Resource Include="Material\Images\BackGround\DefaultBackGround.jpg" />
+    <Resource Include="Material\Images\BackGround\DefaultBackGround.png" />
     <Resource Include="Material\Images\Icons\approve.png" />
     <Resource Include="Material\Images\Icons\close.png" />
     <Resource Include="Material\Images\Icons\close2.png" />
@@ -120,7 +128,9 @@
     <Resource Include="Material\Images\Icons\home.png" />
     <Resource Include="Material\Images\Icons\import_request.png" />
     <Resource Include="Material\Images\Icons\maximize.png" />
+    <Resource Include="Material\Images\Icons\maximize2.png" />
     <Resource Include="Material\Images\Icons\minimize.png" />
+    <Resource Include="Material\Images\Icons\minimize2.png" />
     <Resource Include="Material\Images\Icons\moon.png" />
     <Resource Include="Material\Images\Icons\noon.png" />
     <Resource Include="Material\Images\Icons\password_login.png" />

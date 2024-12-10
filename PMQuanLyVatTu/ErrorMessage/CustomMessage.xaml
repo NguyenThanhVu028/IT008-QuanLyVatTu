@@ -31,7 +31,7 @@
             <ColumnDefinition Width="35*"/>
             <ColumnDefinition Width="160*"/>
         </Grid.ColumnDefinitions>
-        <Border Background="{StaticResource LightAqua1}"
+        <Border Background="#FFBDFFFF"
                 CornerRadius="20"
                 Grid.ColumnSpan="2">
             <Border.BitmapEffect>
@@ -102,7 +102,7 @@
                                     DisplayText="OK"
                                     BorderBackground="{StaticResource DarkGreen2}"
                                     BorderBackgroundClicked="{StaticResource DarkGreen3}"
-                                    BorderColor="{StaticResource LightAqua1}"
+                                    BorderColor="#FFBDFFFF"
                                     BorderColorHighlight="{StaticResource White}"
                                     Click="OKClick"/>
         </StackPanel>

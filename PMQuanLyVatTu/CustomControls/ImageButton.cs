@@ -51,7 +51,7 @@ namespace PMQuanLyVatTu.CustomControls
 
         // Using a DependencyProperty as the backing store for BorderBackgroundClicked.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty BorderBackgroundClickedProperty =
-            DependencyProperty.Register("BorderBackgroundClicked", typeof(SolidColorBrush), typeof(ImageButton), new PropertyMetadata(Brushes.DarkGreen));
+            DependencyProperty.Register("BorderBackgroundClicked", typeof(SolidColorBrush), typeof(ImageButton), new PropertyMetadata(Brushes.LightBlue));
 
 
         #endregion

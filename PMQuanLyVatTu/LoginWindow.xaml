@@ -17,9 +17,9 @@
     <Grid x:Name="LoginWindowGrid">
         <Border CornerRadius="10"
                 BorderThickness="1"
-                BorderBrush="Aqua">
+                BorderBrush="{StaticResource DarkGreen2}">
             <Border.Background>
-                <ImageBrush ImageSource="/Material/Images/BackGround/BackGround.jpg"/>
+                <ImageBrush ImageSource="/Material/Images/BackGround/BackGround5.jpg"/>
             </Border.Background>
             <i:Interaction.Triggers>
                 <i:EventTrigger EventName="MouseLeftButtonDown">
@@ -55,7 +55,7 @@
                                            BorderBackgroundHightlight="#FF063747"
                                            HorizontalAlignment="Right"
                                            Margin="0,0,10,0"
-                                           ImageLocation="/Material/Images/Icons/minimize.png"
+                                           ImageLocation="/Material/Images/Icons/minimize2.png"
                                            Command="{Binding MinimizeWindowCommand}"
                                            CommandParameter="{Binding ElementName=LoginWin}"/>
                 <CustomControl:ImageButton Width="25"
@@ -63,7 +63,7 @@
                                            BorderBackgroundHightlight="{StaticResource RedTransparent1}"
                                            HorizontalAlignment="Right"
                                            Margin="0,0,10,0"
-                                           ImageLocation="/Material/Images/Icons/close.png"
+                                           ImageLocation="/Material/Images/Icons/close2.png"
                                            Command="{Binding CloseWindowCommand}"
                                            CommandParameter="{Binding ElementName=LoginWin}"/>
             </StackPanel>
@@ -76,29 +76,29 @@
                     <RowDefinition Height="100"/>
                     <RowDefinition/>
                 </Grid.RowDefinitions>
-                <Border Background="{StaticResource DarkGreenTransparent4}"
-                        CornerRadius="20, 20, 0, 0"
+                <Border Background="Transparent"
+                        CornerRadius="10"
                         Margin="0, 0, 0, 10"/>
                 <Border Grid.RowSpan="2"
-                        Background="{StaticResource DarkGreenTransparent1}"
-                        BorderBrush="Aqua"
-                        BorderThickness="2"
+                        Background="Transparent"
+                        BorderBrush="Transparent"
+                        BorderThickness="0"
                         CornerRadius="20"/>
                 <TextBlock Text="ĐĂNG NHẬP"
-                           Foreground="{StaticResource LightAqua3}"
+                           Foreground="{StaticResource DarkGreen2}"
                            FontWeight="Black"
-                           FontSize="40"
+                           FontSize="50"
                            FontFamily="Material/Fonts/Lexend/#Lexend Black"
                            HorizontalAlignment="Center"
                            VerticalAlignment="Center">
-                    <TextBlock.BitmapEffect>
+                    <!--<TextBlock.BitmapEffect>
                         <DropShadowBitmapEffect Opacity="0.3"
                                                 Softness="0.2"/>
-                    </TextBlock.BitmapEffect>
+                    </TextBlock.BitmapEffect>-->
                 </TextBlock>
                 <TextBlock Text="Vui lòng đăng nhập để tiếp tục" 
                            Grid.Row="1"
-                           Foreground="{StaticResource LightAqua2}"
+                           Foreground="{StaticResource DarkGreen2}"
                            FontSize="18"
                            FontWeight="Regular"
                            FontFamily="/Material/Fonts/Lexend/#Lexend Regular"
@@ -156,7 +156,7 @@
                                             DisplayText="Hủy"
                                             BorderColor="{StaticResource DarkRed}"
                                             BorderColorHighlight="Red"
-                                            BorderBackground="#4C470000"
+                                            BorderBackground="Transparent"
                                             BorderBackgroundClicked="#B2470000"
                                             BorderThick="2"
                                             RadiusOfCorner="10"

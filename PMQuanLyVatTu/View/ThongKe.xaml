@@ -41,10 +41,10 @@
                                                 IsChecked="False"
                                                 BorderThick="0"
                                                 RadiusOfCorner="10"
-                                                BackgroundColor="{StaticResource LightAqua2}"
+                                                BackgroundColor="{StaticResource DarkGreen2}"
                                                 ImageLocation=""
                                                 DisplayText="TỔNG QUAN"
-                                                TextColor="{StaticResource DarkGreen2}"/>
+                                                TextColor="{StaticResource White}"/>
                 <CustomControl:NavigationButton x:Name="LichSuNhapButton"  
                                                 Style="{StaticResource CustomNavigationButtonExpandable}"
                                                 VerticalAlignment="Bottom"
@@ -54,10 +54,10 @@
                                                 IsChecked="False"
                                                 BorderThick="0"
                                                 RadiusOfCorner="10"
-                                                BackgroundColor="{StaticResource LightAqua2}"
+                                                BackgroundColor="{StaticResource DarkGreen2}"
                                                 ImageLocation=""
                                                 DisplayText="LỊCH SỬ NHẬP"
-                                                TextColor="{StaticResource DarkGreen2}"/>
+                                                TextColor="{StaticResource White}"/>
                 <CustomControl:NavigationButton x:Name="LichSuXuatButton" 
                                                 Style="{StaticResource CustomNavigationButtonExpandable}"
                                                 VerticalAlignment="Bottom"
@@ -67,10 +67,10 @@
                                                 IsChecked="False"
                                                 BorderThick="0"
                                                 RadiusOfCorner="10"
-                                                BackgroundColor="{StaticResource LightAqua2}"
+                                                BackgroundColor="{StaticResource DarkGreen2}"
                                                 ImageLocation=""
                                                 DisplayText="LỊCH SỬ XUẤT"
-                                                TextColor="{StaticResource DarkGreen2}"/>
+                                                TextColor="{StaticResource White}"/>
                 <CustomControl:NavigationButton x:Name="DoanhThuButton"  
                                                 Style="{StaticResource CustomNavigationButtonExpandable}"
                                                 VerticalAlignment="Bottom"
@@ -80,10 +80,10 @@
                                                 IsChecked="False"
                                                 BorderThick="0"
                                                 RadiusOfCorner="10"
-                                                BackgroundColor="{StaticResource LightAqua2}"
+                                                BackgroundColor="{StaticResource DarkGreen2}"
                                                 ImageLocation=""
                                                 DisplayText="DOANH THU"
-                                                TextColor="{StaticResource DarkGreen2}"/>
+                                                TextColor="{StaticResource White}"/>
             </StackPanel>
             <Border Grid.Row="1"
                     Grid.RowSpan="1"
@@ -113,7 +113,7 @@
                        HorizontalAlignment="Center"
                        VerticalAlignment="Center"
                        Text="THỐNG KÊ"
-                       Foreground="{StaticResource LightAqua1}"
+                       Foreground="{StaticResource LightAqua1a}"
                        FontFamily="/Material/Fonts/Lexend/#Lexend Black"
                        FontWeight="Black"
                        FontSize="30"

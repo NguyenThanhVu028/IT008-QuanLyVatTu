@@ -182,7 +182,7 @@
         </Setter>
     </Style>
     <Style x:Key="DataGridRowStyle1" TargetType="{x:Type DataGridRow}">
-        <Setter Property="Background" Value="{StaticResource LightAqua1}"/>
+        <Setter Property="Background" Value="{StaticResource White}"/>
         <Setter Property="Height" Value="40"/>
         <Setter Property="SnapsToDevicePixels" Value="true"/>
         <Setter Property="Validation.ErrorTemplate" Value="{x:Null}"/>
@@ -228,7 +228,7 @@
                 <Setter Property="Background" Value="{StaticResource LightAqua3}"/>
             </Trigger>
             <Trigger Property="IsMouseOver" Value="false">
-                <Setter Property="Background" Value="{StaticResource LightAqua1}"/>
+                <Setter Property="Background" Value="#FFE3FDFF"/>
             </Trigger>
             <Trigger Property="IsSelected" Value="True">
                 <Setter Property="Background" Value="{StaticResource DarkGreen1}"/>

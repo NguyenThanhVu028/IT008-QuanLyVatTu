@@ -30,12 +30,12 @@
             <Border HorizontalAlignment="Stretch"
                     VerticalAlignment="Stretch"
                     Margin="30, 140, 30, 30"
-                    Background="#4C000000"
+                    Background="{StaticResource DarkGreenTransparent2}"
                     BorderBrush="Aqua"
                     BorderThickness="2"
                     CornerRadius="25"/>
             <ScrollViewer VerticalScrollBarVisibility="Auto"
-                          Margin="50, 160, 50, 80"
+                          Margin="50, 160, 50, 50"
                           Visibility="{Binding ElementName=ModeSwitch, Path=IsChecked, Converter={StaticResource ReverseBoolToVisibilityConverter}}">
                 <ItemsControl ItemsSource="{Binding DisplayDanhSachNhanVienLargeIcon}">
                     <ItemsControl.ItemsPanel>
@@ -128,7 +128,7 @@
                        VerticalAlignment="Top"
                        Margin="30"
                        Text="QUẢN LÝ NHÂN VIÊN"
-                       Foreground="{StaticResource LightAqua1}"
+                       Foreground="{StaticResource LightAqua1a}"
                        FontFamily="/Material/Fonts/Lexend/#Lexend Black"
                        FontWeight="Black"
                        FontSize="30"
@@ -197,14 +197,14 @@
                                          BorderColor="Aqua"
                                          BorderColorClicked="Aqua"
                                          BorderThick="2"
-                                         BackgroundColor="Transparent"
-                                         BackgroundColorHighlight="{StaticResource DarkGreenTransparent2}"
-                                         BackgroundColorClicked="{StaticResource DarkGreenTransparent1}"
+                                         BackgroundColor="White"
+                                         BackgroundColorHighlight="{StaticResource White}"
+                                         BackgroundColorClicked="{StaticResource White}"
                                          WaterMark="Tìm kiếm"
                                          Text="{Binding SearchString, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                                         TextColor="White"
+                                         TextColor="Black"
                                          TextSize="15"
-                                         Foreground="White">
+                                         Foreground="Black">
                 <i:Interaction.Triggers>
                     <i:EventTrigger EventName="TextChanged">
                         <i:InvokeCommandAction Command="{Binding RefreshCommand}"/>
@@ -223,7 +223,7 @@
                        Margin="0, 55, 90, 0"
                        Text="Hiển thị chi tiết:"
                        FontSize="14"
-                       Foreground="{StaticResource LightAqua1}"
+                       Foreground="{StaticResource LightAqua1a}"
                        FontFamily="/Material/Fonts/Lexend/#Lexend Medium"
                        FontWeight="Medium"
                        Visibility="{Binding ChucVu, Mode=OneWay, Converter={StaticResource Allow1}}"/>

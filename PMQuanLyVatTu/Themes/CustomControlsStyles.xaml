@@ -50,7 +50,7 @@
                 <ControlTemplate TargetType="CustomControl:NavigationButton">
                     <Grid>
                         <Border x:Name="ButtonBorder" 
-                                Background="{TemplateBinding BackgroundColor}"
+                                Background="#FF56CDCD"
                                 CornerRadius="{TemplateBinding RadiusOfCorner}"
                                 BorderThickness="{TemplateBinding BorderThick}"/>
                         <StackPanel Orientation="Horizontal">
@@ -264,7 +264,7 @@
                 <ControlTemplate TargetType="CustomControl:NavigationButton">
                     <Grid>
                         <Border x:Name="ButtonBorder" 
-                                Background="{TemplateBinding BackgroundColor}"
+                                Background="Transparent"
                                 CornerRadius="{TemplateBinding RadiusOfCorner}"
                                 BorderThickness="{TemplateBinding BorderThick}"/>
                         <StackPanel Orientation="Horizontal">
@@ -289,14 +289,14 @@
                         <EventTrigger RoutedEvent="Mouse.MouseEnter">
                             <BeginStoryboard>
                                 <Storyboard>
-                                    <ColorAnimation Duration="0:0:0.25" Storyboard.TargetName="ButtonBorder" Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)" To="#FF009191"/>
+                                    <ColorAnimation Duration="0:0:0.25" Storyboard.TargetName="ButtonBorder" Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)" To="#FF35E3E3"/>
                                 </Storyboard>
                             </BeginStoryboard>
                         </EventTrigger>
                         <EventTrigger RoutedEvent="Mouse.MouseLeave">
                             <BeginStoryboard>
                                 <Storyboard>
-                                    <ColorAnimation Duration="0:0:0.25" Storyboard.TargetName="ButtonBorder" Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)" To="#FF001E28"/>
+                                    <ColorAnimation Duration="0:0:0.25" Storyboard.TargetName="ButtonBorder" Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)" To="#FF00B1B1"/>
                                 </Storyboard>
                             </BeginStoryboard>
                         </EventTrigger>
@@ -313,7 +313,7 @@
                 <ControlTemplate TargetType="CustomControl:NavigationButton">
                     <Grid>
                         <Border x:Name="ButtonBorder" 
-                                Background="{TemplateBinding BackgroundColor}"
+                                Background="Transparent"
                                 CornerRadius="{TemplateBinding RadiusOfCorner}"
                                 BorderThickness="{TemplateBinding BorderThick}"/>
                         <TextBlock HorizontalAlignment="Center" 
@@ -327,8 +327,9 @@
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsChecked" Value="True">
                             <Setter Property="BorderBrush" Value="{Binding BorderColor, RelativeSource={RelativeSource TemplatedParent}}" TargetName="ButtonBorder"/>
+                            <Setter Property="Background" Value="#FF009191" TargetName="ButtonBorder"/>
                         </Trigger>
-                        <EventTrigger RoutedEvent="Mouse.MouseEnter">
+                        <!--<EventTrigger RoutedEvent="Mouse.MouseEnter">
                             <BeginStoryboard>
                                 <Storyboard>
                                     <ColorAnimation Duration="0:0:0.25" Storyboard.TargetName="ButtonBorder" Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)" To="#FF009191"/>
@@ -338,10 +339,10 @@
                         <EventTrigger RoutedEvent="Mouse.MouseLeave">
                             <BeginStoryboard>
                                 <Storyboard>
-                                    <ColorAnimation Duration="0:0:0.25" Storyboard.TargetName="ButtonBorder" Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)" To="#FF001E28"/>
+                                    <ColorAnimation Duration="0:0:0.25" Storyboard.TargetName="ButtonBorder" Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)" To="Transparent"/>
                                 </Storyboard>
                             </BeginStoryboard>
-                        </EventTrigger>
+                        </EventTrigger>-->
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
             </Setter.Value>
@@ -360,7 +361,7 @@
                                 BorderThickness="0"
                                 HorizontalAlignment="Stretch"
                                 VerticalAlignment="Stretch"
-                                CornerRadius="10"/>
+                                CornerRadius="10, 0, 0, 10"/>
                         <Border Background="Transparent"
                                 BorderBrush="Aqua"
                                 BorderThickness="0"
@@ -391,7 +392,7 @@
                                        FontWeight="Bold"
                                        FontSize="15"
                                        TextAlignment="Left"
-                                       Foreground="{StaticResource LightAqua1}"/>
+                                       Foreground="White"/>
                         </StackPanel>
                     </Grid>
                     <ControlTemplate.Triggers>
@@ -427,10 +428,10 @@
                         <Border x:Name="ToggleBorder" 
                                 Background="{TemplateBinding BorderBackground}"
                                 BorderThickness="{TemplateBinding BorderThick}"
-                                BorderBrush="{TemplateBinding BorderColor}"
+                                BorderBrush="{StaticResource LightAqua1a}"
                                 CornerRadius="{TemplateBinding RadiusOfCorner}"/>
                         <Border x:Name="Slider" 
-                                Background="{TemplateBinding SliderColor}"
+                                Background="{StaticResource LightAqua1a}"
                                 Width="{TemplateBinding SliderWidth}"
                                 Height="{TemplateBinding SliderHeight}"
                                 CornerRadius="{TemplateBinding RadiusOfCorner}"
@@ -500,9 +501,9 @@
                         </Grid.RowDefinitions>
                         <Border x:Name="DisplayBorder" 
                                 Grid.RowSpan="2" 
-                                Background="#B2001E28"
+                                Background="White"
                                 BorderBrush="Aqua"
-                                BorderThickness="2"
+                                BorderThickness="0"
                                 CornerRadius="20"/>
                         <CustomControl:CircleImage Height="150"
                                                    Width="150"
@@ -518,7 +519,7 @@
                                        VerticalAlignment="Top"
                                        Margin="0, 10, 0, 0"
                                        Text="{Binding MaVt}"
-                                       Foreground="White"
+                                       Foreground="{StaticResource LightAqua1a}"
                                        FontSize="15"
                                        FontFamily="/Material/Fonts/Lexend/#Lexend Medium"
                                        FontWeight="Medium"/>
@@ -527,7 +528,7 @@
                                        VerticalAlignment="Top"
                                        Margin="5, 5, 5, 0"
                                        Text="{Binding TenVatTu}"
-                                       Foreground="White"
+                                       Foreground="{StaticResource LightAqua1a}"
                                        FontSize="17"
                                        FontFamily="/Material/Fonts/Lexend/#Lexend Bold"
                                        FontWeight="Bold"
@@ -538,7 +539,7 @@
                                        VerticalAlignment="Top"
                                        Margin="0, 5, 0, 0"
                                        Text="{Binding LoaiVatTu}"
-                                       Foreground="White"
+                                       Foreground="{StaticResource LightAqua1a}"
                                        FontSize="15"
                                        FontFamily="/Material/Fonts/Lexend/#Lexend Medium"
                                        FontWeight="Medium"/>
@@ -549,7 +550,7 @@
                                            HorizontalAlignment="Center"
                                            VerticalAlignment="Top"
                                            Text="{Binding GiaXuat, StringFormat={}{0:n0}}"
-                                           Foreground="White"
+                                           Foreground="{StaticResource LightAqua1a}"
                                            FontSize="15"
                                            FontFamily="/Material/Fonts/Lexend/#Lexend Medium"
                                            FontWeight="Medium"/>
@@ -557,7 +558,7 @@
                                            HorizontalAlignment="Center"
                                            VerticalAlignment="Top"
                                            Text=" VNĐ"
-                                           Foreground="White"
+                                           Foreground="{StaticResource LightAqua1a}"
                                            FontSize="15"
                                            FontFamily="/Material/Fonts/Lexend/#Lexend Medium"
                                            FontWeight="Medium"/>
@@ -568,14 +569,14 @@
                         <EventTrigger RoutedEvent="Mouse.MouseEnter">
                             <BeginStoryboard>
                                 <Storyboard>
-                                    <ColorAnimation Duration="0:0:0.25" Storyboard.TargetName="DisplayBorder" Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)" From="#B2001E28" To="#B200455C"/>
+                                    <ColorAnimation Duration="0:0:0.25" Storyboard.TargetName="DisplayBorder" Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)" From="White" To="#CCE4FEFF"/>
                                 </Storyboard>
                             </BeginStoryboard>
                         </EventTrigger>
                         <EventTrigger RoutedEvent="Mouse.MouseLeave">
                             <BeginStoryboard>
                                 <Storyboard>
-                                    <ColorAnimation Duration="0:0:0.25" Storyboard.TargetName="DisplayBorder" Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)" From="#B200455C" To="#B2001E28"/>
+                                    <ColorAnimation Duration="0:0:0.25" Storyboard.TargetName="DisplayBorder" Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)" From="#CCE4FEFF" To="White"/>
                                 </Storyboard>
                             </BeginStoryboard>
                         </EventTrigger>
@@ -591,31 +592,38 @@
             <Setter.Value>
                 <ControlTemplate TargetType="CustomControl:NhanVienDisplayer">
                     <Grid>
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="35*"/>
-                            <RowDefinition Height="29*"/>
-                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="45*"/>
+                            <ColumnDefinition Width="35*"/>
+                        </Grid.ColumnDefinitions>
                         <Border x:Name="DisplayBorder" 
-                                Grid.RowSpan="2"
-                                Background="#B2001E28"
+                                Grid.ColumnSpan="2"
+                                Background="#CCE4FEFF"
                                 BorderBrush="{Binding BorderBrush, RelativeSource={RelativeSource TemplatedParent}}"
                                 BorderThickness="2"
                                 CornerRadius="20"/>
-                        <CustomControl:CircleImage Height="150"
-                                                   Width="150"
-                                                   VerticalAlignment="Bottom"
-                                                   HorizontalAlignment="Center"
-                                                   Margin="0, 0, 0, 0"
+                        <Border x:Name="TempBG" 
+                                Grid.Column="0"
+                                Background="White"
+                                CornerRadius="20"
+                                BorderThickness="2"/>
+                        <CustomControl:CircleImage Height="140"
+                                                   Width="140"
+                                                   VerticalAlignment="Center"
+                                                   HorizontalAlignment="Left"
+                                                   Margin="10, 0, 0, 10"
                                                    BorderThick="3"
                                                    ImageLocation="{Binding ImageLocation}"/>
-                        <StackPanel Grid.Row="1"
-                                    Orientation="Vertical">
+                        
+                        <StackPanel Grid.Column="1"
+                                    Orientation="Vertical"
+                                    VerticalAlignment="Center">
                             <TextBlock Grid.Row="1"
                                        HorizontalAlignment="Center"
                                        VerticalAlignment="Top"
                                        Margin="0, 10, 0, 0"
                                        Text="{Binding MaNv}"
-                                       Foreground="White"
+                                       Foreground="{StaticResource LightAqua1a}"
                                        FontSize="15"
                                        FontFamily="/Material/Fonts/Lexend/#Lexend Medium"
                                        FontWeight="Medium"/>
@@ -624,7 +632,7 @@
                                        VerticalAlignment="Top"
                                        Margin="5, 5, 5, 0"
                                        Text="{Binding HoTen}"
-                                       Foreground="White"
+                                       Foreground="{StaticResource LightAqua1a}"
                                        FontSize="17"
                                        FontFamily="/Material/Fonts/Lexend/#Lexend Bold"
                                        FontWeight="Bold"
@@ -637,7 +645,7 @@
                                        Text="{Binding ChucVu}"
                                        TextWrapping="Wrap"
                                        TextAlignment="Center"
-                                       Foreground="White"
+                                       Foreground="{StaticResource LightAqua1a}"
                                        FontSize="15"
                                        FontFamily="/Material/Fonts/Lexend/#Lexend Medium"
                                        FontWeight="Medium"/>
@@ -667,14 +675,14 @@
                         <EventTrigger RoutedEvent="Mouse.MouseEnter">
                             <BeginStoryboard>
                                 <Storyboard>
-                                    <ColorAnimation Duration="0:0:0.25" Storyboard.TargetName="DisplayBorder" Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)" From="#B2001E28" To="#B200455C"/>
+                                    <ColorAnimation Duration="0:0:0.25" Storyboard.TargetName="TempBG" Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)" From="White" To="#CCE4FEFF"/>
                                 </Storyboard>
                             </BeginStoryboard>
                         </EventTrigger>
                         <EventTrigger RoutedEvent="Mouse.MouseLeave">
                             <BeginStoryboard>
                                 <Storyboard>
-                                    <ColorAnimation Duration="0:0:0.25" Storyboard.TargetName="DisplayBorder" Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)" From="#B200455C" To="#B2001E28"/>
+                                    <ColorAnimation Duration="0:0:0.25" Storyboard.TargetName="TempBG" Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)" From="#CCE4FEFF" To="White"/>
                                 </Storyboard>
                             </BeginStoryboard>
                         </EventTrigger>

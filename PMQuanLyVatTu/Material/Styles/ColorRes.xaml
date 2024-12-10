@@ -3,7 +3,8 @@
     <SolidColorBrush x:Key="White"                              Color="White"/>
     <SolidColorBrush x:Key="WhiteTransparent"                   Color="#B2FFFFFF"/>
     <SolidColorBrush x:Key="WhiteTransparent1"                   Color="#CCFFFFFF"/>
-    <SolidColorBrush x:Key="LightAqua1"                         Color="#FFC8FFFF"/>
+    <SolidColorBrush x:Key="LightAqua1"                         Color="#FFBDFFFF"/>
+    <SolidColorBrush x:Key="LightAqua1a"                         Color="#FF00A7A7"/>
     <SolidColorBrush x:Key="LightAqua2"                         Color="#FF56CDCD"/>
     <SolidColorBrush x:Key="LightAqua3"                         Color="#FF64FFFF"/>
     <SolidColorBrush x:Key="Aqua"                               Color="Aqua"/>
@@ -11,8 +12,8 @@
     <SolidColorBrush x:Key="DarkGreen2"                         Color="#FF009191"/>
     <SolidColorBrush x:Key="DarkGreen3"                         Color="#FF005B5B"/>
     <SolidColorBrush x:Key="DarkGreen4"                         Color="Red"/>
-    <SolidColorBrush x:Key="DarkGreenTransparent1"              Color="#4C005B5B"/>
-    <SolidColorBrush x:Key="DarkGreenTransparent2"              Color="#7F003547"/>
+    <SolidColorBrush x:Key="DarkGreenTransparent1"              Color="#CCCEFFFF"/>
+    <SolidColorBrush x:Key="DarkGreenTransparent2"              Color="#7F29A0A9"/>
     <SolidColorBrush x:Key="DarkGreenTransparent3"              Color="#CC003547"/>
     <SolidColorBrush x:Key="DarkGreenTransparent4"              Color="#E500506C"/>
     <SolidColorBrush x:Key="LightRed"                           Color="#FFF4CCCC"/>
@@ -23,6 +24,6 @@
     <SolidColorBrush x:Key="RedTransparent2"                    Color="#4C470000"/>
     <SolidColorBrush x:Key="RedTransparent3"                    Color="#B2470000"/>
     <SolidColorBrush x:Key="DarkBlueTransparent1"               Color="#FF063747"/>
-    <SolidColorBrush x:Key="BackGroundColor"                    Color="#FF001E28"/>
-    <SolidColorBrush x:Key="BackGroundColorTransparent"         Color="#B2001E28"/>
+    <SolidColorBrush x:Key="BackGroundColor"                    Color="White"/>
+    <SolidColorBrush x:Key="BackGroundColorTransparent"         Color="#B27EF1FF"/>
 </ResourceDictionary>

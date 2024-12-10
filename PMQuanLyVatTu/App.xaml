@@ -7,8 +7,8 @@
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="Resource/ConverterRes.xaml"/>
-                <ResourceDictionary Source="Material/Styles/ButtonRes.xaml"/>
                 <ResourceDictionary Source="Material/Styles/ColorRes.xaml"/>
+                <ResourceDictionary Source="Material/Styles/ButtonRes.xaml"/>
                 <ResourceDictionary Source="Resource/MainRes.xaml"/>
                 <ResourceDictionary Source="Material/Styles/DataGridRes.xaml"/>
                 <ResourceDictionary Source="Resource/VMDataTemplate.xaml"/>

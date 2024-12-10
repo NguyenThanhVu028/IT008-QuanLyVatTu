@@ -43,10 +43,11 @@
         </Grid.Resources>
         <Border CornerRadius="10"
                 Margin="10"
-                BorderThickness="2">
-            <Border.Background>
-                <ImageBrush ImageSource="/Material/Images/BackGround/BAckGround3.jpg"/>
-            </Border.Background>
+                BorderThickness="0"
+                Background="White">
+            <Image Source="/Material/Images/BackGround/BackGround4.jpg"
+                   Stretch="UniformToFill"
+                   Opacity="0.7"/>
         </Border>
         <Grid x:Name="LayoutGrid">
             <!--<Grid.RowDefinitions>
@@ -89,11 +90,11 @@
                            TextAlignment="Center"
                            Grid.RowSpan="3"
                            TextWrapping="Wrap"
-                           Foreground="White"
-                           FontFamily="/Material/Fonts/Lexend/#Lexend Me    "
-                           FontWeight="Medium"
+                           Foreground="Black"
+                           FontFamily="/Material/Fonts/Lexend/#Lexend Bold"
+                           FontWeight="Bold"
                            FontSize="40"/>
-                <Image Source="/Material/Images/AppLogo/logo.png" 
+                <Image Source="/Material/Images/AppLogo/logo_black.png" 
                        VerticalAlignment="Center"
                        HorizontalAlignment="Stretch"
                        Margin="0, 0, 0, 0"/>

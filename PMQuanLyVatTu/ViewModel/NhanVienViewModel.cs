@@ -137,7 +137,7 @@ namespace PMQuanLyVatTu.ViewModel
                 for(int i=0; i< temp1 - temp2; i++)
                 {
                     NhanVienDisplayer newButton = new NhanVienDisplayer();
-                    newButton.Margin = new Thickness(10, 10, 10, 10); newButton.Height = 300; newButton.Width = 220; newButton.Click += NhanVienDisplayerClicked;
+                    newButton.Margin = new Thickness(10, 10, 10, 10); newButton.Height = 190; newButton.Width = 290; newButton.Click += NhanVienDisplayerClicked;
                     DanhSachNhanVienLargeIcon.Add(newButton);
                 }
             }

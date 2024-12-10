@@ -28,7 +28,7 @@
                 </BeginStoryboard>
             </EventTrigger>
         </Grid.Triggers>
-        <Border Background="{StaticResource LightAqua1}"
+        <Border Background="#FFBDFFFF"
                 CornerRadius="20">
             <Border.BitmapEffect>
                 <DropShadowBitmapEffect Opacity="0.5" ShadowDepth="0"/>
@@ -58,7 +58,7 @@
                                     DisplayText="Nhập lại"
                                     BorderBackground="{StaticResource DarkGreen2}"
                                     BorderBackgroundClicked="{StaticResource DarkGreen3}"
-                                    BorderColor="{StaticResource LightAqua1}"
+                                    BorderColor="#FFBDFFFF"
                                     BorderColorHighlight="{StaticResource White}"
                                     Click="TryAgainClick"/>
     </Grid>
