@@ -1,4 +1,5 @@
 ﻿using PMQuanLyVatTu.ErrorMessage;
+using PMQuanLyVatTu.Models;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -65,7 +66,7 @@ namespace PMQuanLyVatTu.ViewModel
             get { return _selectedSearchFilter; }
             set { _selectedSearchFilter = value; OnPropertyChanged(); Refresh(); MessageBox.Show("Changed"); }
         }
-        private string _searchString;
+        private string _searchString = "";
         public string SearchString
         {
             get { return _searchString; }
@@ -175,7 +176,7 @@ namespace PMQuanLyVatTu.ViewModel
         void DeleteSelected(object t)
         {
             int Count = 0;
-            CustomMessage msg = new CustomMessage("/Material/Images/Icons/question.png", "THÔNG BÁO", "Bạn có muốn xóa mục đã chọn?");
+            CustomMessage msg = new CustomMessage("/Material/Images/Icons/question.png", "THÔNG BÁO", "Bạn có muốn xóa mục đã chọn?", true);
             msg.ShowDialog();
             if (msg.ReturnValue == true)
             {
@@ -315,8 +316,13 @@ namespace PMQuanLyVatTu.ViewModel
     }
     public class DeletedItem
     {
+        public DeletedItem(bool ck = false, string madx = "", DateTime? tg = null)
+        {
+            Checked = ck; MaDaXoa = madx; ThoiGianXoa = tg;
+            string s = "";
+        }
         public bool Checked { get; set; }
         public string MaDaXoa { get; set; }
-        public string ThoiGianXoa { get; set; }
+        public DateTime? ThoiGianXoa { get; set; }
     }
 }

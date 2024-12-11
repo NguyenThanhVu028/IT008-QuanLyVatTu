@@ -217,7 +217,7 @@
                                          VerticalAlignment="Top"
                                          Margin="30, 95, 0, 0"
                                          RadiusOfCorner="5"
-                                         BorderColor="{StaticResource LightAqua1}"
+                                         BorderColor="Aqua"
                                          BorderColorClicked="Aqua"
                                          BorderThick="2"
                                          BackgroundColor="White"

@@ -45,9 +45,14 @@
                 Margin="10"
                 BorderThickness="0"
                 Background="White">
-            <Image Source="/Material/Images/BackGround/BackGround4.jpg"
-                   Stretch="UniformToFill"
-                   Opacity="0.7"/>
+            <Rectangle RadiusX="10"
+                       RadiusY="10">
+                <Rectangle.Fill>
+                    <ImageBrush ImageSource="/Material/Images/BackGround/BackGround4.jpg"
+                                Stretch="UniformToFill"
+                                Opacity="0.7"/>
+                </Rectangle.Fill>
+            </Rectangle>
         </Border>
         <Grid x:Name="LayoutGrid">
             <!--<Grid.RowDefinitions>
