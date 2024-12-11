@@ -12,43 +12,58 @@ namespace PMQuanLyVatTu.ViewModel
 {
     public class ChangePasswordViewModel : BaseViewModel
     {
-        public ChangePasswordViewModel(string manv)
+        public ChangePasswordViewModel()
         {
-            MaNV = manv;
-
             ConfirmCommand = new RelayCommand<object>(Confirm);
             CancelCommand = new RelayCommand<Window>(CloseWindow);
             MoveWindowCommand = new RelayCommand<Window>(MoveWindow);
         }
-        #region CurrentUser
-        private string _maNV;
-        public string MaNV
+        #region Info
+        private string _mkCu = "";
+        private string _mkMoi = "";
+        private string _mkMoiAgain = "";
+        public string MkCu
         {
-            get { return _maNV; }
-            set { _maNV = value; OnPropertyChanged(); }
+            get { return _mkCu; }
+            set { _mkCu = value; OnPropertyChanged(); }
+        }
+        public string MkMoi
+        {
+            get { return _mkMoi; }
+            set { _mkMoi = value; OnPropertyChanged(); }
+        }
+        public string MkMoiAgain
+        {
+            get { return _mkMoiAgain; }
+            set { _mkMoiAgain = value; OnPropertyChanged(); }
         }
         #endregion
         #region Command
         public ICommand ConfirmCommand { get; set; }
         void Confirm(object t)
         {
-            if (false) //Chưa nhập dữ liệu
+            //Chưa nhập dữ liệu
+            if (false) 
             {
                 InputError msg = new InputError();
                 msg.ShowDialog();
             }
-            else if(false) //Sai mật khẩu cũ
+            //Sai mật khẩu cũ
+            else if (false)
             {
                 CustomMessage msg = new CustomMessage("/Material/Images/Icons/wrong.png", "LỖI", "Mật khẩu cũ nhập vào không chính xác. Vui lòng nhập lại.");
                 msg.ShowDialog();
             }
-            else if(false) //Mật khẩu mới trùng với mật khẩu cũ
+            //Mật khẩu mới trùng với mật khẩu cũ
+            else if (false) 
             {
                 CustomMessage msg = new CustomMessage("/Material/Images/Icons/wrong.png", "LỖI", "Mật khẩu mới phải khác với mật khẩu cũ. Vui lòng nhập lại.");
                 msg.ShowDialog();
             }
+            //Hợp lệ
             else
             {
+                //Lưu xuống database
                 CustomMessage msg = new CustomMessage("/Material/Images/Icons/success.png", "THÀNH CÔNG", "Đổi mật khẩu thành công.");
                 msg.ShowDialog();
             }

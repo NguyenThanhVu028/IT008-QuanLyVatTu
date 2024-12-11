@@ -18,25 +18,25 @@ namespace PMQuanLyVatTu.User
             }
             set { _instance = value; }
         }
-        private string _maNv;
+        private string _maNv = "";
         public string MaNv
         {
             get { return _maNv; }
             set { _maNv = value; }
         }
-        private string _chucVu;
+        private string _chucVu = "";
         public string ChucVu
         {
             get { return _chucVu; }
             set { _chucVu = value; }
         }
-        private string _hoTen;
+        private string _hoTen = "";
         public string HoTen
         {
             get { return _hoTen; }
             set { _hoTen = value; }
         }
-        private string _imageLocation;
+        private string _imageLocation = "";
         public string ImageLocation
         {
             get { return _imageLocation; }

@@ -356,12 +356,12 @@
                 <ControlTemplate TargetType="CustomControl:AccountButton">
                     <Grid>
                         <Border x:Name="AccountBorder" 
-                                Background="{StaticResource DarkGreenTransparent3}"
+                                Background="{StaticResource LightAqua2}"
                                 BorderBrush="Aqua"
                                 BorderThickness="0"
                                 HorizontalAlignment="Stretch"
                                 VerticalAlignment="Stretch"
-                                CornerRadius="10, 0, 0, 10"/>
+                                CornerRadius="35, 0, 0, 35"/>
                         <Border Background="Transparent"
                                 BorderBrush="Aqua"
                                 BorderThickness="0"
@@ -399,14 +399,14 @@
                         <EventTrigger RoutedEvent="Mouse.MouseEnter">
                             <BeginStoryboard>
                                 <Storyboard>
-                                    <ColorAnimation Duration="0:0:0.25" Storyboard.TargetName="AccountBorder" Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)" From="#CC003547"  To="#E500506C"/>
+                                    <ColorAnimation Duration="0:0:0.25" Storyboard.TargetName="AccountBorder" Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)" From="#FF56CDCD"  To="#FF5EB1B1"/>
                                 </Storyboard>
                             </BeginStoryboard>
                         </EventTrigger>
                         <EventTrigger RoutedEvent="Mouse.MouseLeave">
                             <BeginStoryboard>
                                 <Storyboard>
-                                    <ColorAnimation Duration="0:0:0.25" Storyboard.TargetName="AccountBorder" Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)" From="#E500506C" To="#CC003547"/>
+                                    <ColorAnimation Duration="0:0:0.25" Storyboard.TargetName="AccountBorder" Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)" From="#FF5EB1B1" To="#FF56CDCD"/>
                                 </Storyboard>
                             </BeginStoryboard>
                         </EventTrigger>

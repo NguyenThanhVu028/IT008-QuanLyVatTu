@@ -104,6 +104,7 @@ namespace PMQuanLyVatTu.ViewModel
         void SaveInfo(object t)
         {
             EnableEditing = false;
+            //Lưu xuống database
             CustomMessage msg = new CustomMessage("/Material/Images/Icons/success.png", "THÀNH CÔNG", "Đã lưu thông tin chỉnh sửa.");
             msg.ShowDialog();
         }
@@ -111,7 +112,7 @@ namespace PMQuanLyVatTu.ViewModel
         void ChangePassword(object t)
         {
             ChangePasswordWindows changePasswordWindows = new ChangePasswordWindows();
-            ChangePasswordViewModel VM = new ChangePasswordViewModel(MaNV);
+            ChangePasswordViewModel VM = new ChangePasswordViewModel();
             changePasswordWindows.DataContext = VM;
             changePasswordWindows.ShowDialog();
         }

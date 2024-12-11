@@ -63,13 +63,13 @@ namespace PMQuanLyVatTu.ViewModel
         public string SelectedSearchFilter
         {
             get { return _selectedSearchFilter; }
-            set { _selectedSearchFilter = value; OnPropertyChanged(); }
+            set { _selectedSearchFilter = value; OnPropertyChanged(); Refresh(); MessageBox.Show("Changed"); }
         }
         private string _searchString;
         public string SearchString
         {
             get { return _searchString; }
-            set { _searchString = value; OnPropertyChanged(); Refresh(); }
+            set { _searchString = value; OnPropertyChanged(); Refresh(); MessageBox.Show("Changed"); }
         }
         #endregion
         #region Command
