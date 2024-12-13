@@ -24,7 +24,7 @@ namespace PMQuanLyVatTu.ViewModel
             SaveInfoCommand = new RelayCommand<object>(SaveInfo);
         }
         #region Title
-        private string _title;
+        private string _title = "";
         public string Title
         {
             get { return _title; }
@@ -33,12 +33,12 @@ namespace PMQuanLyVatTu.ViewModel
         #endregion
         #region Info
         private string _maKH = "";
-        private string _hoTen;
-        private string _gTinh;
-        private string _ngaySinh;
-        private string _email;
-        private string _sdt;
-        private string _diaChi;
+        private string _hoTen = "";
+        private string _gTinh = "";
+        private string _ngaySinh = "";
+        private string _email = "";
+        private string _sdt = "";
+        private string _diaChi = "";
         public string MaKH
         {
             get { return _maKH; }
@@ -76,7 +76,7 @@ namespace PMQuanLyVatTu.ViewModel
         }
         #endregion
         #region EditMode
-        private bool _editMode;
+        private bool _editMode = false;
         public bool EditMode
         {
             get { return _editMode; }
@@ -114,7 +114,7 @@ namespace PMQuanLyVatTu.ViewModel
         public ICommand DeleteButtonCommand { get; set; }
         void DeleteButton(Window t)
         {
-            CustomMessage msg = new CustomMessage("/Material/Images/Icons/question.png", "THÔNG BÁO", "Bạn có muốn xóa khách hàng đã chọn?");
+            CustomMessage msg = new CustomMessage("/Material/Images/Icons/question.png", "THÔNG BÁO", "Bạn có muốn xóa khách hàng đã chọn?", true);
             msg.ShowDialog();
             if (msg.ReturnValue == true)
             { //Chấp nhận xóa
@@ -142,21 +142,21 @@ namespace PMQuanLyVatTu.ViewModel
             {
                 if (false) //Chưa nhập mã nhân viên
                 {
-                    CustomMessage msg = new CustomMessage("/Material/Images/Icons/wrong.png", "LỖI", "Vui lòng nhập mã khách hàng.");
-                    msg.ShowDialog();
+                    CustomMessage msg1 = new CustomMessage("/Material/Images/Icons/wrong.png", "LỖI", "Vui lòng nhập mã khách hàng.");
+                    msg1.ShowDialog();
+                    return;
                 }
-                else if (false) //Trùng mã nhân viên
+                if (false) //Trùng mã nhân viên
                 {
-                    AlreadyExistsError msg = new AlreadyExistsError();
-                    msg.ShowDialog();
+                    AlreadyExistsError msg2 = new AlreadyExistsError();
+                    msg2.ShowDialog();
+                    return;
                 }
-                else // Hợp lệ
-                {
-                    EnableEditing = false;
-                    CustomMessage msg = new CustomMessage("/Material/Images/Icons/success.png", "THÀNH CÔNG", "Thêm khách hàng thành công.");
-                    msg.ShowDialog();
-                    (t as Window).Close();
-                }
+                 // Hợp lệ
+                EnableEditing = false;
+                CustomMessage msg = new CustomMessage("/Material/Images/Icons/success.png", "THÀNH CÔNG", "Thêm khách hàng thành công.");
+                msg.ShowDialog();
+                (t as Window).Close();
             }
         }
         #endregion

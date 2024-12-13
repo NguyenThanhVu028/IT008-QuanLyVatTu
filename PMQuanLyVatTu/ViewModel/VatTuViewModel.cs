@@ -37,7 +37,7 @@ namespace PMQuanLyVatTu.ViewModel
         }
         #endregion
         #region Data for SelectionList
-        private ObservableCollection<string> _searchFilter = new ObservableCollection<string>() {"Không", "Mã vật tư", "Tên vật tư", "Loại vật tư", "Đơn vị tính", "Mã nhà cung cấp", "Mã kho chứa"};
+        private ObservableCollection<string> _searchFilter = new ObservableCollection<string>() {"Mã vật tư", "Tên vật tư", "Loại vật tư", "Đơn vị tính", "Mã nhà cung cấp", "Mã kho chứa"};
         public ObservableCollection<string> SearchFilter
         {
             get { return _searchFilter; }
@@ -49,9 +49,9 @@ namespace PMQuanLyVatTu.ViewModel
         public string SelectedSearchFilter
         {
             get { return _selectedSearchFilter; }
-            set { _selectedSearchFilter = value; OnPropertyChanged(); }
+            set { _selectedSearchFilter = value; OnPropertyChanged(); Refresh(); }
         }
-        private string _searchString;
+        private string _searchString = "";
         public string SearchString
         {
             get { return _searchString; }
@@ -65,13 +65,13 @@ namespace PMQuanLyVatTu.ViewModel
             get { return _danhSachVatTu; }
             set { _danhSachVatTu = value;}
         }
-        private ObservableCollection<VatTuDisplayer> _danhSachVatTuLargeIcon = new ObservableCollection<VatTuDisplayer>();
+        public ObservableCollection<VatTuDisplayer> _tempDS = new ObservableCollection<VatTuDisplayer>();
+        private ObservableCollection<VatTuDisplayer> _danhSachVatTuLargeIcon;
         public ObservableCollection<VatTuDisplayer> DanhSachVatTuLargeIcon
         {
             get{ return _danhSachVatTuLargeIcon; }
             set{ _danhSachVatTuLargeIcon = value; }
         }
-        public ObservableCollection<VatTuDisplayer> DisplayDanhSachVatTuLargeIcon { get; set; }
         private Supply _selectedVatTu;
         public Supply SelectedVatTu
         {
@@ -120,36 +120,61 @@ namespace PMQuanLyVatTu.ViewModel
         //}
         void Refresh(object t = null)
         {
-            //Đổ dữ liệu, bao gồm DanhSachVatTu (danh sách chi tiết) và DanhSachVatTuLargeIcon (danh sách thu gọn, dùng ds tạm temp)
-            DanhSachVatTu.Clear();
-
-            var ListFromDB = DataProvider.Instance.DB.Supplies.ToList();
-            foreach ( var item in ListFromDB)
-            {
-                DanhSachVatTu.Add(item);
+            DanhSachVatTu.Clear(); DanhSachVatTuLargeIcon = null;
+            var ListFromDB = DataProvider.Instance.DB.Supplies.Where(c=>c.DaXoa == false).ToList();
+            if(ListFromDB != null) {
+                foreach ( var item in ListFromDB)
+                {
+                    switch (SelectedSearchFilter)
+                    {
+                        case "Mã vật tư":
+                            if(item.MaVt != null)
+                                if(item.MaVt.Contains(SearchString)) DanhSachVatTu.Add(item);
+                            break;
+                        case "Tên vật tư":
+                            if (item.TenVatTu != null)
+                                if (item.TenVatTu.Contains(SearchString)) DanhSachVatTu.Add(item);
+                            break;
+                        case "Loại vật tư":
+                            if (item.LoaiVatTu != null)
+                                if (item.LoaiVatTu.Contains(SearchString)) DanhSachVatTu.Add(item);
+                            break;
+                        case "Đơn vị tính":
+                            if (item.DonViTinh != null)
+                                if (item.DonViTinh.Contains(SearchString)) DanhSachVatTu.Add(item);
+                            break;
+                        case "Mã nhà cung cấp":
+                            if (item.MaNcc != null)
+                                if (item.MaNcc.Contains(SearchString)) DanhSachVatTu.Add(item);
+                            break;
+                        case "Mã kho chứa":
+                            if (item.MaKho != null)
+                                if (item.MaNcc.Contains(SearchString)) DanhSachVatTu.Add(item);
+                            break;
+                        default:
+                            DanhSachVatTu.Add(item);
+                            break;
+                    }
+                }
             }
-
-            //DanhSachVatTu.Add(new Supply() { MaVt = "VT0001", TenVatTu = "Gạch 529", LoaiVatTu = "NVL", DonViTinh = "Viên", MaNcc = "NCC0002", MaKho = "KHO0001", GiaNhap = 9500, GiaXuat = 11000, SoLuongTonKho = 123, ImageLocation = "/Material/Images/Supplies/brick.jpg" });
-            //DanhSachVatTu.Add(new Supply() { MaVt = "VT0002", TenVatTu = "Búa", LoaiVatTu = "CC", DonViTinh = "Chiếc", MaNcc = "NCC0002", MaKho = "KHO0001", GiaNhap = 9500, GiaXuat = 11000, SoLuongTonKho = 123, ImageLocation = "/Material/Images/Supplies/hammer.jpg" });
-            //DanhSachVatTu.Add(new Supply() { MaVt = "VT0003", TenVatTu = "Máy khoan Mĩ Kim", LoaiVatTu = "TB", DonViTinh = "Máy", MaNcc = "NCC0002", MaKho = "KHO0001", GiaNhap = 9500, GiaXuat = 11000, SoLuongTonKho = 123, ImageLocation = "/Material/Images/Supplies/drill.jpg" });
-
-            if(DanhSachVatTuLargeIcon.Count() < DanhSachVatTu.Count())
+            //Phần dành cho LargeIcon
+            if(_tempDS.Count() < DanhSachVatTu.Count())
             {
-                int temp1 = DanhSachVatTu.Count(), temp2 = DanhSachVatTuLargeIcon.Count();
+                int temp1 = DanhSachVatTu.Count(), temp2 = _tempDS.Count();
                 for (int i=0; i< temp1 - temp2; i++)
                 {
                     VatTuDisplayer newButton = new VatTuDisplayer();
                     newButton.Margin = new Thickness(10, 10, 10, 10); newButton.Height = 290; newButton.Width = 210; newButton.Click += VatTuDisplayerButtonClick;
-                    DanhSachVatTuLargeIcon.Add(newButton);
+                    _tempDS.Add(newButton);
                 }
             }
-            ObservableCollection<VatTuDisplayer> temp = new ObservableCollection<VatTuDisplayer>();
-            for(int i=0; i<DanhSachVatTu.Count(); i++)
+            for (int i=0; i<DanhSachVatTu.Count(); i++)
             {
-                DanhSachVatTuLargeIcon[i].DataContext = DanhSachVatTu[i];
-                temp.Add(DanhSachVatTuLargeIcon[i]);
+                _tempDS[i].Visibility = Visibility.Visible;
+                _tempDS[i].DataContext = DanhSachVatTu[i];
             }
-            DisplayDanhSachVatTuLargeIcon = temp;
+            for(int i=DanhSachVatTu.Count(); i<_tempDS.Count(); i++) _tempDS[i].Visibility = Visibility.Collapsed;
+            DanhSachVatTuLargeIcon = _tempDS;
         }
         public ICommand EditButtonCommand {  get; set; }
         void EditButton(object t=null)
@@ -164,7 +189,7 @@ namespace PMQuanLyVatTu.ViewModel
         public ICommand DeleteButtonCommand {  get; set; }
         void DeleteButton(object t)
         {
-            CustomMessage msg = new CustomMessage("/Material/Images/Icons/question.png", "THÔNG BÁO", "Bạn có muốn xóa vật tư đã chọn?");
+            CustomMessage msg = new CustomMessage("/Material/Images/Icons/question.png", "THÔNG BÁO", "Bạn có muốn xóa vật tư đã chọn?", true);
             msg.ShowDialog();
             if (msg.ReturnValue == true)
             {

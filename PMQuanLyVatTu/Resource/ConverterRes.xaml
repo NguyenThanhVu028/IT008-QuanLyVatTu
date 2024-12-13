@@ -18,4 +18,5 @@
     <convert:Position124 x:Key="Allow124"/>
     <convert:Position134 x:Key="Allow134"/>
     <convert:TrangThaiConverter x:Key="TrangThaiConverter"/>
+    <convert:TrangthaiToColorConverter x:Key="TrangThaiToColorConverter"/>
 </ResourceDictionary>

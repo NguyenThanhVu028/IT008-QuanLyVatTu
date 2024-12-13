@@ -378,7 +378,7 @@
                             <CustomControl:CircleImage ImageLocation="{TemplateBinding ImageLocation}"
                                                        HorizontalAlignment="Left"
                                                        VerticalAlignment="Center"
-                                                       Margin="5"
+                                                       Margin="10, 5, 5, 5"
                                                        BorderThick="2"
                                                        Width="50"
                                                        Height="50"/>

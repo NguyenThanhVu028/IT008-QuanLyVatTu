@@ -1,5 +1,6 @@
 ﻿using Microsoft.Win32;
 using PMQuanLyVatTu.ErrorMessage;
+using PMQuanLyVatTu.Models;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -17,8 +18,19 @@ namespace PMQuanLyVatTu.ViewModel
     {
         public ThongTinVatTuWindowViewModel(string mavt = null)
         {
-            if(mavt != null) { EditMode = true; Title = "CHỈNH SỬA VẬT TƯ"; LoadData(mavt); }
-            else { EditMode = false; EnableEditing = true; Title = "THÊM VẬT TƯ"; }
+            if(mavt != null) 
+            { 
+                EditMode = true; 
+                Title = "CHỈNH SỬA VẬT TƯ"; 
+                LoadData(mavt); 
+            }
+            else 
+            { 
+                EditMode = false; 
+                EnableEditing = true; 
+                Title = "THÊM VẬT TƯ"; 
+            }
+            LoadNhaCungCap(); LoadKho();
 
             CloseCommand = new RelayCommand<Window>(CloseWin);
             MoveWindowCommand = new RelayCommand<Window>(MoveWindow);
@@ -26,9 +38,10 @@ namespace PMQuanLyVatTu.ViewModel
             DeleteButtonCommand = new RelayCommand<Window>(DeleteButton);
             SaveInfoCommand = new RelayCommand<object>(SaveInfo);
             ChangeAvatarCommand = new RelayCommand<object>(ChangeAvatar);
+
         }
         #region Title
-        private string _title;
+        private string _title = "";
         public string Title
         {
             get { return _title; }
@@ -37,15 +50,15 @@ namespace PMQuanLyVatTu.ViewModel
         #endregion
         #region Info
         private string _maVT = "";
-        private string _tenVatTu;
-        private string _loaiVT;
-        private string _donViTinh;
-        private string _maNCC;
-        private string _maKho;
-        private int _giaNhap;
-        private int _giaXuat;
-        private int _soLuongTonKho;
-        private string _imageLocation;
+        private string _tenVatTu = "";
+        private string _loaiVT = "";
+        private string _donViTinh = "";
+        private string _maNCC = "";
+        private string _maKho = "";
+        private int _giaNhap = 0;
+        private int _giaXuat = 0;
+        private int _soLuongTonKho = 0;
+        private string _imageLocation = "";
         public string MaVT
         {
             get { return _maVT; }
@@ -98,7 +111,7 @@ namespace PMQuanLyVatTu.ViewModel
         }
         #endregion
         #region EditMode
-        private bool _editMode;
+        private bool _editMode = false;
         public bool EditMode
         {
             get { return _editMode; }
@@ -114,7 +127,7 @@ namespace PMQuanLyVatTu.ViewModel
         }
         #endregion
         #region Data for SelectionList
-        ObservableCollection<string> _nhaCungCap = new ObservableCollection<string>() {"NCC1", "NCC2", "NCC3", "NCC4" };
+        ObservableCollection<string> _nhaCungCap = new ObservableCollection<string>();
         public ObservableCollection<string> NhaCungCap
         {
             get { return _nhaCungCap; }
@@ -126,7 +139,7 @@ namespace PMQuanLyVatTu.ViewModel
             get { return _loaiVatTu; }
             set { _loaiVatTu = value; OnPropertyChanged(); }
         }
-        ObservableCollection<string> _khoChua = new ObservableCollection<string>() { "KHO1", "KHO2", "KHO3" };
+        ObservableCollection<string> _khoChua = new ObservableCollection<string>();
         public ObservableCollection<string> KhoChua
         {
             get { return _khoChua; }
@@ -167,7 +180,11 @@ namespace PMQuanLyVatTu.ViewModel
         public ICommand SaveInfoCommand { get; set; }
         void SaveInfo(object t)
         {
-            if(EditMode == true) //Nếu đang chế độ chỉnh sửa
+            CustomMessage msg3 = new CustomMessage("/Material/Images/Icons/question.png", "THÔNG BÁO", "Bạn có muốn lưu vật tư?", true);
+            msg3.ShowDialog();
+            if (msg3.ReturnValue == false) return;
+
+            if (EditMode == true) //Nếu đang chế độ chỉnh sửa
             {
                 EnableEditing = false;
                 //Lưu thông tin trên database theo MaVT
@@ -220,6 +237,24 @@ namespace PMQuanLyVatTu.ViewModel
             GiaXuat = 12000000;
             SoLuongTonKho = 30;
             ImageLocation = "/Material/Images/Supplies/welding_machine.jpg";
+        }
+        void LoadNhaCungCap()
+        {
+            NhaCungCap.Clear();
+            var ListFromDB = DataProvider.Instance.DB.Suppliers.Where(p => p.DaXoa == false).ToList();
+            foreach (var list in ListFromDB)
+            {
+                NhaCungCap.Add(list.MaNcc);
+            }
+        }
+        void LoadKho()
+        {
+            KhoChua.Clear();
+            var ListFromDB = DataProvider.Instance.DB.Warehouses.Where(p => p.DaXoa == false).ToList();
+            foreach (var list in ListFromDB)
+            {
+                KhoChua.Add(list.MaKho);
+            }
         }
         #endregion
     }

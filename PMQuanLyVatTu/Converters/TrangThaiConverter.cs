@@ -13,7 +13,7 @@ namespace PMQuanLyVatTu.Converters
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            if(value.ToString() != "Thiếu hàng" && value.ToString() != "Đã duyệt" && value.ToString() != "Đã tiếp nhận" && value.ToString() != "Bị từ chối") return Visibility.Visible;
+            if(value.ToString() != "Thiếu hàng" && value.ToString() != "Lỗi không tồn tại" && value.ToString() != "Đã duyệt" && value.ToString() != "Đã tiếp nhận" && value.ToString() != "Bị từ chối") return Visibility.Visible;
             else return Visibility.Collapsed;
         }
 

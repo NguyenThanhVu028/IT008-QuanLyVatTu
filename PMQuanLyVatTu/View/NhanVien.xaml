@@ -37,7 +37,7 @@
             <ScrollViewer VerticalScrollBarVisibility="Auto"
                           Margin="50, 160, 50, 50"
                           Visibility="{Binding ElementName=ModeSwitch, Path=IsChecked, Converter={StaticResource ReverseBoolToVisibilityConverter}}">
-                <ItemsControl ItemsSource="{Binding DisplayDanhSachNhanVienLargeIcon}">
+                <ItemsControl ItemsSource="{Binding DanhSachNhanVienLargeIcon}">
                     <ItemsControl.ItemsPanel>
                         <ItemsPanelTemplate>
                             <WrapPanel IsItemsHost="True"/>
@@ -92,7 +92,7 @@
                     <DataGridTextColumn Header="Luong"
                                         Width="150"
                                         IsReadOnly="True"
-                                        Binding="{Binding Luong}"/>
+                                        Binding="{Binding Luong, StringFormat={}{0:n0}}"/>
                     <DataGridTemplateColumn Header="" IsReadOnly="True">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>

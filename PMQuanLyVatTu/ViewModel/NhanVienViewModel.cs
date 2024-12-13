@@ -52,7 +52,7 @@ namespace PMQuanLyVatTu.ViewModel
             get { return _selectedSearchFilter; }
             set { _selectedSearchFilter = value; OnPropertyChanged(); Refresh(); }
         }
-        private string _searchString;
+        private string _searchString = "";
         public string SearchString
         {
             get { return _searchString; }
@@ -66,13 +66,13 @@ namespace PMQuanLyVatTu.ViewModel
             get { return _danhSachNhanVien; }
             set { _danhSachNhanVien = value; OnPropertyChanged(); }
         }
-        private ObservableCollection<NhanVienDisplayer> _danhSachNhanVienLargeIcon = new ObservableCollection<NhanVienDisplayer>();
+        public ObservableCollection<NhanVienDisplayer> _tempDS = new ObservableCollection<NhanVienDisplayer>();
+        private ObservableCollection<NhanVienDisplayer> _danhSachNhanVienLargeIcon;
         public ObservableCollection<NhanVienDisplayer> DanhSachNhanVienLargeIcon
         {
             get { return _danhSachNhanVienLargeIcon; }
             set { _danhSachNhanVienLargeIcon = value; OnPropertyChanged(); }
         }
-        public ObservableCollection<NhanVienDisplayer> DisplayDanhSachNhanVienLargeIcon { get; set; }
         private Employee _selectedNhanVien;
         public Employee SelectedNhanVien
         {
@@ -124,37 +124,73 @@ namespace PMQuanLyVatTu.ViewModel
         //}
         void Refresh(object t = null)
         {
-            DanhSachNhanVien.Clear();
-
-            var ListFromDB = DataProvider.Instance.DB.Employees.ToList();
-            foreach(var item in  ListFromDB)
-            {
-                DanhSachNhanVien.Add(item);
+            DanhSachNhanVien.Clear(); DanhSachNhanVienLargeIcon = null;
+            var ListFromDB = DataProvider.Instance.DB.Employees.Where(c => c.DaXoa == false).ToList();
+            if(ListFromDB != null) {
+                foreach (var item in ListFromDB)
+                {
+                    switch (SelectedSearchFilter)
+                    {
+                        case "Mã nhân viên":
+                            if (item.MaNv != null)
+                                if (item.MaNv.Contains(SearchString)) DanhSachNhanVien.Add(item);
+                            break;
+                        case "Họ và tên":
+                            if (item.HoTen != null)
+                                if (item.HoTen.Contains(SearchString)) DanhSachNhanVien.Add(item);
+                            break;
+                        case "Chức vụ":
+                            if (item.ChucVu != null)
+                                if (item.ChucVu.Contains(SearchString)) DanhSachNhanVien.Add(item);
+                            break;
+                        case "Giới tính":
+                            if (item.GioiTinh != null)
+                                if (item.GioiTinh.Contains(SearchString)) DanhSachNhanVien.Add(item);
+                            break;
+                        case "Ngày sinh":
+                            if (item.NgaySinh != null)
+                                if (item.NgaySinh.ToString().Contains(SearchString)) DanhSachNhanVien.Add(item);
+                            break;
+                        case "Số điện thoại":
+                            if (item.Sdt != null)
+                                if (item.Sdt.Contains(SearchString)) DanhSachNhanVien.Add(item);
+                            break;
+                        case "Email":
+                            if (item.Email != null)
+                                if (item.Email.Contains(SearchString)) DanhSachNhanVien.Add(item);
+                            break;
+                        case "Địa chỉ":
+                            if (item.DiaChi != null)
+                                if (item.DiaChi.Contains(SearchString)) DanhSachNhanVien.Add(item);
+                            break;
+                        case "Lương":
+                            if (item.Luong != null)
+                                if (item.Luong.ToString().Contains(SearchString)) DanhSachNhanVien.Add(item);
+                            break;
+                        default:
+                            DanhSachNhanVien.Add(item);
+                            break;
+                    }
+                }
             }
-            if(DanhSachNhanVien.Count() > DanhSachNhanVienLargeIcon.Count())
+            //Phần dành cho LargeIcon
+            if (_tempDS.Count() < DanhSachNhanVien.Count())
             {
-                int temp1 = DanhSachNhanVien.Count(), temp2 = DanhSachNhanVienLargeIcon.Count();
-                for(int i=0; i< temp1 - temp2; i++)
+                int temp1 = DanhSachNhanVien.Count(), temp2 = _tempDS.Count();
+                for (int i = 0; i < temp1 - temp2; i++)
                 {
                     NhanVienDisplayer newButton = new NhanVienDisplayer();
                     newButton.Margin = new Thickness(10, 10, 10, 10); newButton.Height = 190; newButton.Width = 290; newButton.Click += NhanVienDisplayerClicked;
-                    DanhSachNhanVienLargeIcon.Add(newButton);
+                    _tempDS.Add(newButton);
                 }
             }
-
-            ObservableCollection<NhanVienDisplayer> temp = new ObservableCollection<NhanVienDisplayer>();
-            for(int i=0; i<DanhSachNhanVien.Count(); i++)
+            for (int i = 0; i < DanhSachNhanVien.Count(); i++)
             {
-                DanhSachNhanVienLargeIcon[i].DataContext = DanhSachNhanVien[i];
-                if (DanhSachNhanVien[i].ChucVu == "Quản Lý") DanhSachNhanVienLargeIcon[i].BorderBrush = Brushes.Yellow;
-                else
-                {
-                    DanhSachNhanVienLargeIcon[i].BorderBrush = Brushes.Aqua;
-                }
-
-                temp.Add(DanhSachNhanVienLargeIcon[i]);
+                _tempDS[i].Visibility = Visibility.Visible;
+                _tempDS[i].DataContext = DanhSachNhanVien[i];
             }
-            DisplayDanhSachNhanVienLargeIcon = temp;
+            for (int i = DanhSachNhanVien.Count(); i < _tempDS.Count(); i++) _tempDS[i].Visibility = Visibility.Collapsed;
+            DanhSachNhanVienLargeIcon = _tempDS;
         }
         public ICommand EditButtonCommand { get; set; }
         void EditButton(object t = null)
@@ -169,7 +205,7 @@ namespace PMQuanLyVatTu.ViewModel
         public ICommand DeleteButtonCommand { get; set; }
         void DeleteButton(object t)
         {
-            CustomMessage msg = new CustomMessage("/Material/Images/Icons/question.png", "THÔNG BÁO", "Bạn có muốn xóa nhân viên đã chọn?");
+            CustomMessage msg = new CustomMessage("/Material/Images/Icons/question.png", "THÔNG BÁO", "Bạn có muốn xóa nhân viên đã chọn?", true);
             msg.ShowDialog();
             if (msg.ReturnValue == true)
             {

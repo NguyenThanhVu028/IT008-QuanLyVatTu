@@ -26,7 +26,7 @@ namespace PMQuanLyVatTu.ViewModel
             ChangeAvatarCommand = new RelayCommand<object>(ChangeAvatar);
         }
         #region Title
-        private string _title;
+        private string _title = "";
         public string Title
         {
             get { return _title; }
@@ -35,14 +35,14 @@ namespace PMQuanLyVatTu.ViewModel
         #endregion
         #region Info
         private string _maNV = "";
-        private string _hoVaTen;
-        private string _cVu;
-        private string _gTinh;
-        private string _ngaySinh;
-        private string _diaChi;
-        private string _sDT;
-        private string _email;
-        private string _luong;
+        private string _hoVaTen = "";
+        private string _cVu = "";
+        private string _gTinh = "";
+        private string _ngaySinh = "";
+        private string _diaChi = "";
+        private string _sDT = "";
+        private string _email = "";
+        private int _luong = 0;
         private string _tenDangNhap;
         private string _matKhau;
         private string _imageLocation;
@@ -86,7 +86,7 @@ namespace PMQuanLyVatTu.ViewModel
             get { return _email; }
             set { _email = value; OnPropertyChanged();}
         }
-        public string Luong
+        public int Luong
         {
             get { return _luong; }
             set { _luong = value; OnPropertyChanged(); }
@@ -221,7 +221,7 @@ namespace PMQuanLyVatTu.ViewModel
             DiaChi = "123, Tô Vĩnh Diện, Thành phố Thủ Đức";
             SDT = "0123456789";
             Email = "defaultEmail@gmail.com";
-            Luong = "12000000";
+            Luong = 12000000;
             TenDangNhap = "admin1";
             MatKhau = "admin1";
             ImageLocation = "/Material/Images/Avatars/user6.jpg";

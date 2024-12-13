@@ -36,9 +36,9 @@ namespace PMQuanLyVatTu.ViewModel
         public string SelectedSearchFilter
         {
             get { return _selectedSearchFilter; }
-            set { _selectedSearchFilter = value; OnPropertyChanged(); }
+            set { _selectedSearchFilter = value; OnPropertyChanged(); Refresh(); }
         }
-        private string _searchString;
+        private string _searchString = "";
         public string SearchString
         {
             get { return _searchString; }
@@ -90,29 +90,19 @@ namespace PMQuanLyVatTu.ViewModel
         public ICommand KiemTraTonKhoCommand { get; set; }
         void KiemTraTonKho(object t = null)
         {
-            DanhSachPhieuNhap.Clear(); DanhSachPhieuXuat.Clear();
-            var ListPNFromDB = DataProvider.Instance.DB.GoodsReceivedNotes.ToList();
-            foreach(var item in ListPNFromDB)
+            var ListFromDB = DataProvider.Instance.DB.GoodsDeliveryNotes.ToList();
+            foreach (var item in ListFromDB)
             {
-                if(item.DaXoa == false)
-                {
-                    //Duyệt qua Infos, từng mặt hàng, nếu số lượng > Tồn kho => Cập nhật item.TrangThai = "Thiếu hàng". Nhớ SaveChanges()
-                    DanhSachPhieuNhap.Add(item);
-                }
+                //Thực hiện
+                
             }
-            var ListPXFromDB = DataProvider.Instance.DB.GoodsDeliveryNotes.ToList();
-            foreach(var item in ListPXFromDB)
-            {
-                if(item.DaXoa == false)
-                {
-                    //Duyệt qua Infos, từng mặt hàng, nếu số lượng > Tồn kho => Cập nhật item.TrangThai = "Thiếu hàng". Nhớ SaveChanges()
-                    DanhSachPhieuXuat.Add(item);
-                }
-            }
+
+            Refresh();
         }
         public ICommand DuyetPNCommand { get; set; }
         void DuyetPN(object t)
         {
+            MessageBox.Show(SelectedPhieuNhap.MaPn);
             //Nếu User đang là "Quản Lý", Nếu SelectedPhieuNhap.TrangThai == "Kế toán đã duyệt" thì mới được duyệt, không thì showdialog "Chờ kế toán xác nhận"
             //Nếu User đang là "Kế Toán" => Duyệt qua danh sách phiếu nhập, nếu MaPn == MaPn => Cập nhật trạng thái = "Kế toán đã duyệt", cập nhật tồn kho theo Infos của phiếu nhập
             MessageBox.Show("DuyetPNCommand");
@@ -121,6 +111,7 @@ namespace PMQuanLyVatTu.ViewModel
         public ICommand DuyetPXCommand {  get; set; }
         void DuyetPX(object t)
         {
+            MessageBox.Show(SelectedPhieuXuat.MaPx);
             //Nếu User đang là "Quản Lý", Nếu SelectedPhieuNhap.TrangThai == "Kế toán đã duyệt" thì mới được duyệt, cập nhật trạng thái, không thì showdialog "Chờ kế toán xác nhận"
             //Nếu User đang là "Kế Toán" => Duyệt qua danh sách phiếu xuất, nếu MaPx == MaPx => Cập nhật trạng thái = "Kế toán đã duyệt", cập nhật tồn kho theo Infos của phiếu xuất
             MessageBox.Show("DuyetPXCommand");

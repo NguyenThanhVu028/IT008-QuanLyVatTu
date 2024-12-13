@@ -51,9 +51,9 @@ namespace PMQuanLyVatTu.ViewModel
         public string SelectedSearchFilter
         {
             get { return _selectedSearchFilter; }
-            set { _selectedSearchFilter = value; OnPropertyChanged(); }
+            set { _selectedSearchFilter = value; OnPropertyChanged(); Refresh(); }
         }
-        private string _searchString;
+        private string _searchString = "";
         public string SearchString
         {
             get { return _searchString; }

@@ -24,15 +24,15 @@
         </i:EventTrigger>
     </i:Interaction.Triggers>
     <Grid x:Name="MainWindowsGrid">
+        <i:Interaction.Triggers>
+            <i:EventTrigger EventName="MouseLeftButtonDown">
+                <i:InvokeCommandAction Command="{Binding MoveWindowCommand}" CommandParameter="{Binding ElementName=MainWin}"/>
+            </i:EventTrigger>
+        </i:Interaction.Triggers>
         <Border
                 CornerRadius="10"
                 BorderBrush="Aqua"
                 BorderThickness="1" Background="#FF009191">
-            <i:Interaction.Triggers>
-                <i:EventTrigger EventName="MouseLeftButtonDown">
-                    <i:InvokeCommandAction Command="{Binding MoveWindowCommand}" CommandParameter="{Binding ElementName=MainWin}"/>
-                </i:EventTrigger>
-            </i:Interaction.Triggers>
         </Border>
         <Grid x:Name="MW_LayoutGrid">
             <Grid.ColumnDefinitions>

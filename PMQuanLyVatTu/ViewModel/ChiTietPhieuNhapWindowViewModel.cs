@@ -1,5 +1,6 @@
 ﻿using PMQuanLyVatTu.ErrorMessage;
 using PMQuanLyVatTu.Models;
+using PMQuanLyVatTu.User;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -35,7 +36,7 @@ namespace PMQuanLyVatTu.ViewModel
             SelectFromRequestCommand = new RelayCommand<object>(SelectFromRequest);
         }
         #region Title
-        private string _title;
+        private string _title = "";
         public string Title
         {
             get { return _title; }
@@ -44,14 +45,14 @@ namespace PMQuanLyVatTu.ViewModel
         #endregion
         #region Info
         private string _maPN = "";
-        private string _maNV;
+        private string _maNV = CurrentUser.Instance.MaNv;
         private string _maNCC = "";
-        private string _ngayLap;
+        private string _ngayLap = "";
         private string _khoNhap = "";
-        private string _lyDoNhap;
-        private int _chietSuat;
-        private int _vAT;
-        private int _tongGia;
+        private string _lyDoNhap = "";
+        private int _chietSuat = 0;
+        private int _vAT = 0;
+        private int _tongGia = 0;
         public string MaPN
         {
             get { return _maPN; }
@@ -107,7 +108,7 @@ namespace PMQuanLyVatTu.ViewModel
         }
         #endregion
         #region EditMode
-        private bool _editMode;
+        private bool _editMode = false;
         public bool EditMode
         {
             get { return _editMode; }
@@ -249,7 +250,19 @@ namespace PMQuanLyVatTu.ViewModel
 
             if(VM.ReturnValue == true)
             {
-                DanhSachVatTu.Add(new VatTu() { Checked = false, MaVT = VM.MaVT, SoLuong = VM.SoLuong, ChietKhau = VM.ChietKhau, VAT = VM.VAT }) ; Calculate();
+                foreach(var item in DanhSachVatTu)
+                {
+                    if(item.MaVT == VM.MaVT)
+                    {
+                        CustomMessage msg2 = new CustomMessage("/Material/Images/Icons/wrong.png", "LỖI", "Mặt hàng đã được yêu cầu, vui lòng chọn mặt hàng khác.");
+                        msg2.ShowDialog();
+                        return;
+                    }
+                }
+                var item2 = DataProvider.Instance.DB.Supplies.Find(VM.MaVT);
+                int GNY = 0;
+                if (item2 != null) GNY = (int)item2.GiaNhap;
+                DanhSachVatTu.Add(new VatTu() { Checked = false, MaVT = VM.MaVT, SoLuong = VM.SoLuong, ChietKhau = VM.ChietKhau, VAT = VM.VAT, GiaNiemYet = GNY, ThanhTien = (int?)(GNY *VM.SoLuong*(1-VM.ChietKhau+VM.VAT)) }) ; Calculate();
                 if (DanhSachVatTu.Count() > 0) { ListEmpty = false; }
                 else ListEmpty = true;
             }  
@@ -273,33 +286,8 @@ namespace PMQuanLyVatTu.ViewModel
                 }
                 CustomMessage msg2 = new CustomMessage("/Material/Images/Icons/success.png", "THÀNH CÔNG", "Đã xóa thành công " + Count.ToString() + " mục.");
                 msg2.ShowDialog();
-                foreach(VatTu i in NeedDeleting)
-                {
-                    DanhSachVatTu.Remove(i);
-                }
-                //List<VatTu> NeedDeleting = new List<VatTu>();
-                //foreach (VatTu i in DanhSachVatTu)
-                //{
-                //    if (i.Checked == true)
-                //    {
-                //        if (EditMode == true) //Nếu đang chỉnh sửa
-                //        {
-                //            //Xóa trong database database
-                //        }
-                //        else //Đang thêm mới
-                //        {
-                //            NeedDeleting.Add(i);
-                //        }
-                //        Count++;
-                //    }
-                //}
-                //CustomMessage msg2 = new CustomMessage("/Material/Images/Icons/success.png", "THÀNH CÔNG", "Đã xóa thành công " + Count.ToString() + " mục.");
-                //msg2.ShowDialog();
-                //if (EditMode == true) { LoadDanhSach(); } //Cập nhật danh sách từ database
-                //else
-                //{
-                //    foreach (VatTu v in NeedDeleting) DanhSachVatTu.Remove(v);
-                //}
+                foreach(VatTu i in NeedDeleting) DanhSachVatTu.Remove(i);
+
                 if (DanhSachVatTu.Count() > 0) { ListEmpty = false; }
                 else ListEmpty = true;
             }
@@ -307,23 +295,13 @@ namespace PMQuanLyVatTu.ViewModel
         public ICommand SelectFromRequestCommand { get; set; }
         void SelectFromRequest(object t)
         {
-            //if (MaNCC == "" || KhoNhap == "")
-            //{
-            //    CustomMessage msg = new CustomMessage("/Material/Images/Icons/wrong.png", "LỖI", "Vui lòng nhập đầy đủ nhà cung cấp và kho nhập hàng.");
-            //    msg.ShowDialog();
-            //    return;
-            //}
             SelectFromRequestWindow SelectWin = new SelectFromRequestWindow();
             SelectFromRequestWindowViewModel VM = new SelectFromRequestWindowViewModel(true, MaNCC, KhoNhap);
             SelectWin.DataContext = VM;
             SelectWin.ShowDialog();
 
-            if (VM.ReturnValue == true)
-            {
-                MaNCC = VM.Ma1; KhoNhap = VM.Ma2;
-            }
-
-            //Dùng VM.SelectedYeuCauValue, duyệt qua danh sách yêu cầu, add vào vật tư (dùng chuyển kiếu từ request thành vật tư)
+            //Thực hiện
+            MaNCC = (VM.Ma1 == null) ? "" : VM.Ma1; KhoNhap = (VM.Ma2 == null) ? "" : VM.Ma2;
         }
         #endregion
         #region Function
@@ -368,23 +346,15 @@ namespace PMQuanLyVatTu.ViewModel
                 }
             }
         }
-        void LoadData(string maycx)
+        void LoadData(string mapn)
         {
             //Load
+            
         }
         void LoadDanhSach()
         {
             DanhSachVatTu.Clear();
 
-            var ListFromDB = DataProvider.Instance.DB.GoodsReceivedNoteInfos.ToList();
-            foreach(var item in ListFromDB)
-            {
-                if(item.MaPn == MaPN)
-                {
-                    VatTu temp = new VatTu(item);
-                    DanhSachVatTu.Add(temp);
-                }
-            }
 
             if (DanhSachVatTu.Count() > 0) { ListEmpty = false; }
             else ListEmpty = true;
@@ -412,13 +382,17 @@ namespace PMQuanLyVatTu.ViewModel
             public VatTu(GoodsReceivedNoteInfo t) 
             {
                 Checked = false;
-                MaVT = t.MaVt; SoLuong = t.SoLuong; ChietKhau = t.ChietKhau; VAT = t.Vat;
-                var ListFromDB = DataProvider.Instance.DB.Supplies.ToList();
-                foreach(var item in ListFromDB)
+                MaVT = (t.MaVt == null)? "" : t.MaVt; 
+                SoLuong = (t.SoLuong == null)? 0:t.SoLuong; 
+                ChietKhau = (t.ChietKhau == null)? 0:t.ChietKhau; 
+                VAT = (t.Vat == null) ? 0 : t.Vat;
+                var item = DataProvider.Instance.DB.Supplies.Find(t.MaVt);
+                if (item == null) ThanhTien = 0;
+                else
                 {
-                    if(item.MaVt == t.MaVt) { GiaNiemYet = item.GiaNhap; break; }
+                    GiaNiemYet = item.GiaNhap;
+                    ThanhTien = (int?)(GiaNiemYet * SoLuong - (GiaNiemYet * SoLuong * ChietKhau) + GiaNiemYet * SoLuong + VAT);
                 }
-                ThanhTien = (int?)(GiaNiemYet * SoLuong - (GiaNiemYet * SoLuong * ChietKhau) + GiaNiemYet * SoLuong + VAT);
             }
             public bool Checked { get; set; }
             public string MaVT { get; set; }

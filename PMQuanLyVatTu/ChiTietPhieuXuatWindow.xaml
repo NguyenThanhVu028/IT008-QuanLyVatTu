@@ -366,7 +366,7 @@
                 <EventTrigger RoutedEvent="TextBox.LostFocus">
                     <BeginStoryboard>
                         <Storyboard>
-                            <DoubleAnimation Duration="0:0:0.25" Storyboard.TargetProperty="Height" From="110" To="90"/>
+                            <DoubleAnimation Duration="0:0:0.25" Storyboard.TargetProperty="Height" From="90" To="40"/>
                         </Storyboard>
                     </BeginStoryboard>
                 </EventTrigger>

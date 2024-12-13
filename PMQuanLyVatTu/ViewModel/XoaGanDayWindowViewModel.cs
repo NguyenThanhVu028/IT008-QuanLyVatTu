@@ -27,7 +27,7 @@ namespace PMQuanLyVatTu.ViewModel
             Refresh();
         }
         #region LoaiDaXoa
-        private string _loaiDaXoa;
+        private string _loaiDaXoa = "";
         public string LoaiDaXoa
         {
             get { return _loaiDaXoa; }
@@ -64,13 +64,13 @@ namespace PMQuanLyVatTu.ViewModel
         public string SelectedSearchFilter
         {
             get { return _selectedSearchFilter; }
-            set { _selectedSearchFilter = value; OnPropertyChanged(); Refresh(); MessageBox.Show("Changed"); }
+            set { _selectedSearchFilter = value; OnPropertyChanged(); Refresh();}
         }
         private string _searchString = "";
         public string SearchString
         {
             get { return _searchString; }
-            set { _searchString = value; OnPropertyChanged(); Refresh(); MessageBox.Show("Changed"); }
+            set { _searchString = value; OnPropertyChanged(); Refresh();}
         }
         #endregion
         #region Command

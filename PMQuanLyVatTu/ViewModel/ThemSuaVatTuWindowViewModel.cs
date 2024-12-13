@@ -25,37 +25,37 @@ namespace PMQuanLyVatTu.ViewModel
             ConfirmCommand = new RelayCommand<Window>(Confirm);
         }
         #region Info
-        private string _maKho;
+        private string _maKho = "";
         public string Makho
         {
             get { return _maKho; }
             set { _maKho = value; OnPropertyChanged(); }
         }
-        private string _maNCC;
+        private string _maNCC = "";
         public string MaNCC
         {
             get { return _maNCC; }
             set { _maNCC = value; OnPropertyChanged(); }
         }
-        private string _maVT="";
+        private string _maVT = "";
         public string MaVT
         {
             get { return _maVT; }
             set { _maVT = value; OnPropertyChanged(); }
         }
-        private int _soLuong;
+        private int _soLuong = 0;
         public int SoLuong
         {
             get { return _soLuong; }
             set { _soLuong = value; OnPropertyChanged(); }
         }
-        private double _chietKhau;
+        private double _chietKhau = 0;
         public double ChietKhau
         {
             get { return _chietKhau; }
             set { _chietKhau = value; OnPropertyChanged(); }
         }
-        private double _vAT;
+        private double _vAT = 0;
         public double VAT
         {
             get { return _vAT; }
@@ -95,16 +95,16 @@ namespace PMQuanLyVatTu.ViewModel
             {
                 CustomMessage msg1 = new CustomMessage("/Material/Images/Icons/wrong.png", "LỖI", "Vui lòng chọn mã vật tư.", false);
                 msg1.ShowDialog();
+                return;
             }
-            //Kiểm tra số lượng có <= Tồn kho của VT hay không
-            if (false)
+            if(SoLuong < 0 || ChietKhau < 0 || VAT < 0)
             {
-                CustomMessage msg1 = new CustomMessage("/Material/Images/Icons/wrong.png", "LỖI", "Số lượng tồn kho không đủ.", false);
+                CustomMessage msg1 = new CustomMessage("/Material/Images/Icons/wrong.png", "LỖI", "Không được nhập số âm.", false);
                 msg1.ShowDialog();
+                return;
             }
-            //Nhớ kiểm tra kiểu dữ liệu nhập vào, không được nhập số âm
-            CustomMessage msg = new CustomMessage("/Material/Images/Icons/success.png", "THÀNH CÔNG", "Đã lưu thông tin.", false);
-            msg.ShowDialog();
+            //CustomMessage msg = new CustomMessage("/Material/Images/Icons/success.png", "THÀNH CÔNG", "Đã lưu thông tin.", false);
+            //msg.ShowDialog();
             ReturnValue = true;
             t.Close();
 
@@ -113,7 +113,7 @@ namespace PMQuanLyVatTu.ViewModel
         #region Function
         void LoadVatTu()
         {
-            var ListFromDB = DataProvider.Instance.DB.Supplies.ToList();
+            var ListFromDB = DataProvider.Instance.DB.Supplies.Where(p=>p.DaXoa == false).ToList();
             foreach (var item in ListFromDB)
             {
                 if(item.MaKho.Contains(Makho) && item.MaNcc.Contains(MaNCC)) DanhSachVatTu.Add(item.MaVt);

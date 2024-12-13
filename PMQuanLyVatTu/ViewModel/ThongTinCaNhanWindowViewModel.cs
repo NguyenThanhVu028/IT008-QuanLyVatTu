@@ -1,4 +1,5 @@
 ﻿using PMQuanLyVatTu.ErrorMessage;
+using PMQuanLyVatTu.Models;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -23,13 +24,13 @@ namespace PMQuanLyVatTu.ViewModel
             ChangePasswordCommand = new RelayCommand<object>(ChangePassword);
         }
         #region Info
-        private string _maNV;
-        private string _hoTen;
-        private string _gTinh;
-        private string _ngaySinh;
-        private string _sDT;
-        private string _email;
-        private string _diaChi;
+        private string _maNV = "";
+        private string _hoTen = "";
+        private string _gTinh = "";
+        private string _ngaySinh = "";
+        private string _sDT = "";
+        private string _email = "";
+        private string _diaChi = "";
         public string MaNV
         {
             get { return _maNV; }
@@ -120,6 +121,7 @@ namespace PMQuanLyVatTu.ViewModel
         #region Function
         void LoadData(string manv)
         {
+           
             //Đổ thông tin NV vào info
             MaNV = manv;
             HoTen = "Nguyễn Văn A";

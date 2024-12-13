@@ -25,7 +25,7 @@ namespace PMQuanLyVatTu.ViewModel
             SaveInfoCommand = new RelayCommand<object>(SaveInfo);
         }
         #region Title
-        private string _title;
+        private string _title = "";
         public string Title
         {
             get { return _title; }
@@ -34,8 +34,8 @@ namespace PMQuanLyVatTu.ViewModel
         #endregion
         #region Info
         private string _maKho = "";
-        private string _loaiVT;
-        private string _diaChi;
+        private string _loaiVT = "";
+        private string _diaChi = "";
         public string MaKho
         {
             get { return _maKho; }
@@ -53,7 +53,7 @@ namespace PMQuanLyVatTu.ViewModel
         }
         #endregion
         #region EditMode
-        private bool _editMode;
+        private bool _editMode = false;
         public bool EditMode
         {
             get { return _editMode; }

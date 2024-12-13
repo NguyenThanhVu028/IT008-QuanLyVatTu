@@ -1,5 +1,6 @@
 ﻿using PMQuanLyVatTu.ErrorMessage;
 using PMQuanLyVatTu.Models;
+using PMQuanLyVatTu.User;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -39,7 +40,7 @@ namespace PMQuanLyVatTu.ViewModel
             CreateReceiptCommand = new RelayCommand<object>(CreateRecepit);
         }
         #region Title
-        private string _title;
+        private string _title = "";
         public string Title
         {
             get { return _title; }
@@ -48,11 +49,11 @@ namespace PMQuanLyVatTu.ViewModel
         #endregion
         #region Info
         private string _maYCX = "";
-        private string _maNV;
-        private string _maKH;
-        public string _maKho;
-        private string _ngayLap;
-        private string _ghiChu;
+        private string _maNV = CurrentUser.Instance.MaNv;
+        private string _maKH = "";
+        public string _maKho = "";
+        private string _ngayLap = "";
+        private string _ghiChu = "";
         public string MaYCX
         {
             get { return _maYCX; }
@@ -93,7 +94,7 @@ namespace PMQuanLyVatTu.ViewModel
         }
         #endregion
         #region EditMode
-        private bool _editMode;
+        private bool _editMode = false;
         public bool EditMode
         {
             get { return _editMode; }
@@ -180,21 +181,19 @@ namespace PMQuanLyVatTu.ViewModel
             {
                 if (MaYCX == "") //Chưa nhập mã 
                 {
-                    CustomMessage msg = new CustomMessage("/Material/Images/Icons/wrong.png", "LỖI", "Vui lòng nhập mã yêu cầu xuất hàng.", false);
-                    msg.ShowDialog();
+                    CustomMessage msg1 = new CustomMessage("/Material/Images/Icons/wrong.png", "LỖI", "Vui lòng nhập mã yêu cầu xuất hàng.", false);
+                    msg1.ShowDialog();
+                    return;
                 }
-                else if (true) //Trùng mã 
+                if (true) //Trùng mã 
                 {
-                    AlreadyExistsError msg = new AlreadyExistsError();
-                    msg.ShowDialog();
+                    AlreadyExistsError msg2 = new AlreadyExistsError();
+                    msg2.ShowDialog();
                 }
-                else // Hợp lệ
-                {
-                    EnableEditing = false;
-                    CustomMessage msg = new CustomMessage("/Material/Images/Icons/success.png", "THÀNH CÔNG", "Thêm nhân viên thành công.", false);
-                    msg.ShowDialog();
-                    (t as Window).Close();
-                }
+                EnableEditing = false;
+                CustomMessage msg = new CustomMessage("/Material/Images/Icons/success.png", "THÀNH CÔNG", "Thêm nhân viên thành công.", false);
+                msg.ShowDialog();
+
             }
         }
         public ICommand AddCommand { get; set; }
@@ -212,7 +211,21 @@ namespace PMQuanLyVatTu.ViewModel
                 themSuaVatTuWindow.DataContext = VM;
                 themSuaVatTuWindow.ShowDialog();
 
-                if (VM.ReturnValue == true) DanhSachVatTuYeuCau.Add(new VatTu() { MaVT = VM.MaVT, SoLuong = VM.SoLuong, ChietKhau = VM.ChietKhau, VAT = VM.VAT });
+                if (VM.ReturnValue == true)
+                {
+                    foreach (var item in DanhSachVatTuYeuCau)
+                    {
+                        if(item.MaVT == VM.MaVT)
+                        {
+                            CustomMessage msg2 = new CustomMessage("/Material/Images/Icons/wrong.png", "LỖI", "Mặt hàng đã được yêu cầu, vui lòng chọn mặt hàng khác.");
+                            msg2.ShowDialog();
+                            return;
+                        }
+                    }
+                    DanhSachVatTuYeuCau.Add(new VatTu() { MaVT = VM.MaVT, SoLuong = VM.SoLuong, ChietKhau = VM.ChietKhau, VAT = VM.VAT });
+                    CustomMessage msg = new CustomMessage("/Material/Images/Icons/success.png", "THÀNH CÔNG", "Đã lưu thông tin.", false);
+                    msg.ShowDialog();
+                }
                 if (DanhSachVatTuYeuCau.Count() > 0) { ListEmpty = false; }
                 else ListEmpty = true;
             }
@@ -230,24 +243,14 @@ namespace PMQuanLyVatTu.ViewModel
                 {
                     if (i.Checked == true)
                     {
-                        if (EditMode == true) //Nếu đang chỉnh sửa
-                        {
-                            //Xóa trong database database
-                        }
-                        else //Đang thêm mới
-                        {
-                            NeedDeleting.Add(i);
-                        }
+                        NeedDeleting.Add(i);
                         Count++;
                     }
                 }
                 CustomMessage msg2 = new CustomMessage("/Material/Images/Icons/success.png", "THÀNH CÔNG", "Đã xóa thành công " + Count.ToString() + " mục.");
                 msg2.ShowDialog();
-                if(EditMode == true) { LoadDanhSach(); }
-                else
-                {
-                    foreach(VatTu v in NeedDeleting) DanhSachVatTuYeuCau.Remove(v);
-                }
+                foreach(VatTu v in NeedDeleting) DanhSachVatTuYeuCau.Remove(v);
+
                 if (DanhSachVatTuYeuCau.Count() > 0) { ListEmpty = false; }
                 else ListEmpty = true;
             }
@@ -261,7 +264,8 @@ namespace PMQuanLyVatTu.ViewModel
         #region Function
         void LoadNhanVien()
         {
-            var ListFromDB = DataProvider.Instance.DB.Employees.ToList();
+            NhanVien.Clear();
+            var ListFromDB = DataProvider.Instance.DB.Employees.Where(p=>p.DaXoa ==false).ToList();
             foreach (var item in ListFromDB)
             {
                 if(item.ChucVu == "Tiếp Nhận") NhanVien.Add(item.MaNv);
@@ -269,7 +273,8 @@ namespace PMQuanLyVatTu.ViewModel
         }
         void LoadKhachHang()
         {
-            var ListFromDB = DataProvider.Instance.DB.Customers.ToList();
+            KhachHang.Clear();
+            var ListFromDB = DataProvider.Instance.DB.Customers.Where(p => p.DaXoa == false).ToList();
             foreach(var item in ListFromDB)
             {
                 KhachHang.Add(item.MaKh);
@@ -277,7 +282,8 @@ namespace PMQuanLyVatTu.ViewModel
         }
         void LoadKho()
         {
-            var ListFromDB = DataProvider.Instance.DB.Warehouses.ToList();
+            Kho.Clear();
+            var ListFromDB = DataProvider.Instance.DB.Warehouses.Where(p => p.DaXoa == false).ToList();
             foreach(var item in ListFromDB)
             {
                 Kho.Add(item.MaKho);
@@ -293,12 +299,8 @@ namespace PMQuanLyVatTu.ViewModel
         }
         void LoadDanhSach()
         {
-            DanhSachVatTuYeuCau.Clear();
-
-            DanhSachVatTuYeuCau.Add(new VatTu() { Checked = false, MaVT = "VT00001", SoLuong = 50, ChietKhau = 0.6, VAT = 0.7 });
-            DanhSachVatTuYeuCau.Add(new VatTu() { Checked = true, MaVT = "VT00002", SoLuong = 10, ChietKhau = 0.2, VAT = 0.3 });
-            DanhSachVatTuYeuCau.Add(new VatTu() { Checked = false, MaVT = "VT00005", SoLuong = 5, ChietKhau = 0.9, VAT = 0.1 });
-
+            DanhSachVatTuYeuCau.Clear(); ListEmpty = true;
+            
             if(DanhSachVatTuYeuCau.Count() > 0) { ListEmpty = false; }
         }
         #endregion
@@ -312,6 +314,15 @@ namespace PMQuanLyVatTu.ViewModel
         //}
         public class VatTu
         {
+            public VatTu() { }
+            public VatTu(ExportRequestInfo t)
+            {
+                Checked = false;
+                MaVT = (t.MaVt == null)? "" : t.MaVt;
+                SoLuong = (int)((t.SoLuong == null) ? 0 : t.SoLuong);
+                ChietKhau = (double)((t.ChietKhau == null) ? 0: t.ChietKhau);
+                VAT = (double)((t.Vat == null) ? 0 : t.Vat);
+            }
             public bool Checked { get; set; }
             public string MaVT { get; set; }
             public int SoLuong { get; set; }

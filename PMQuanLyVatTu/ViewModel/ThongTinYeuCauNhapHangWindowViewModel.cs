@@ -1,5 +1,6 @@
 ﻿using PMQuanLyVatTu.ErrorMessage;
 using PMQuanLyVatTu.Models;
+using PMQuanLyVatTu.User;
 using PMQuanLyVatTu.View;
 using System;
 using System.Collections.Generic;
@@ -32,7 +33,7 @@ namespace PMQuanLyVatTu.ViewModel
             SaveInfoCommand = new RelayCommand<object>(SaveInfo);
         }
         #region Title
-        private string _title;
+        private string _title = "";
         public string Title
         {
             get { return _title; }
@@ -41,11 +42,11 @@ namespace PMQuanLyVatTu.ViewModel
         #endregion
         #region Info
         private string _maYCN = "";
-        private string _maNV;
-        private string _maVT;
-        private string _ngayLap;
-        private int _soLuong;
-        private string _ghiChu;
+        private string _maNV = CurrentUser.Instance.MaNv;
+        private string _maVT = "";
+        private string _ngayLap = "";
+        private int _soLuong = 0;
+        private string _ghiChu = "";
         public string MaYCN
         {
             get { return _maYCN; }
@@ -78,7 +79,7 @@ namespace PMQuanLyVatTu.ViewModel
         }
         #endregion
         #region EditMode
-        private bool _editMode;
+        private bool _editMode = false;
         public bool EditMode
         {
             get { return _editMode; }
@@ -150,28 +151,27 @@ namespace PMQuanLyVatTu.ViewModel
             {
                 if (MaYCN == "") //Chưa nhập mã 
                 {
-                    CustomMessage msg = new CustomMessage("/Material/Images/Icons/wrong.png", "LỖI", "Vui lòng nhập mã yêu cầu nhập hàng.");
-                    msg.ShowDialog();
+                    CustomMessage msg1 = new CustomMessage("/Material/Images/Icons/wrong.png", "LỖI", "Vui lòng nhập mã yêu cầu nhập hàng.");
+                    msg1.ShowDialog();
+                    return;
                 }
-                else if (true) //Trùng mã 
+                if (true) //Trùng mã 
                 {
-                    AlreadyExistsError msg = new AlreadyExistsError();
-                    msg.ShowDialog();
+                    AlreadyExistsError msg2 = new AlreadyExistsError();
+                    msg2.ShowDialog();
                 }
-                else // Hợp lệ
-                {
-                    EnableEditing = false;
-                    CustomMessage msg = new CustomMessage("/Material/Images/Icons/success.png", "THÀNH CÔNG", "Thêm yêu cầu thành công.", false);
-                    msg.ShowDialog();
-                    (t as Window).Close();
-                }
+                EnableEditing = false;
+                CustomMessage msg = new CustomMessage("/Material/Images/Icons/success.png", "THÀNH CÔNG", "Thêm yêu cầu thành công.", false);
+                msg.ShowDialog();
+                (t as Window).Close();
             }
         }
         #endregion
         #region Function
         void LoadNhanVien()
         {
-            var ListFromDB = DataProvider.Instance.DB.Employees.ToList();
+            NhanVien.Clear();
+            var ListFromDB = DataProvider.Instance.DB.Employees.Where(p => p.DaXoa == false).ToList();
             foreach(var item in ListFromDB)
             {
                 if(item.ChucVu == "Kế Toán" && item.DaXoa == false) NhanVien.Add(item.MaNv);
@@ -179,7 +179,8 @@ namespace PMQuanLyVatTu.ViewModel
         }
         void LoadVatTu()
         {
-            var ListFromDB = DataProvider.Instance.DB.Supplies.ToList();
+            VatTu.Clear();
+            var ListFromDB = DataProvider.Instance.DB.Supplies.Where(p => p.DaXoa == false).ToList();
             foreach(var item in ListFromDB)
             {
                 if(item.DaXoa == false) VatTu.Add(item.MaVt);

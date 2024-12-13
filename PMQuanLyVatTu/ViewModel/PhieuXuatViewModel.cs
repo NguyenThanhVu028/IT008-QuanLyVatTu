@@ -1,4 +1,5 @@
-﻿using PMQuanLyVatTu.Models;
+﻿using PMQuanLyVatTu.ErrorMessage;
+using PMQuanLyVatTu.Models;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -34,9 +35,9 @@ namespace PMQuanLyVatTu.ViewModel
         public string SelectedSearchFilter
         {
             get { return _selectedSearchFilter; }
-            set { _selectedSearchFilter = value; OnPropertyChanged(); }
+            set { _selectedSearchFilter = value; OnPropertyChanged(); Refresh(); }
         }
-        private string _searchString;
+        private string _searchString = "";
         public string SearchString
         {
             get { return _searchString; }
@@ -90,12 +91,22 @@ namespace PMQuanLyVatTu.ViewModel
         public ICommand EditButtonCommand {  get; set; }
         void EditButton(object t)
         {
-
+            ChiTietPhieuXuatWindow AddWin = new ChiTietPhieuXuatWindow();
+            ChiTietPhieuXuatWindowViewModel VM = new ChiTietPhieuXuatWindowViewModel(SelectedPhieuXuat.MaPx);
+            AddWin.DataContext = VM;
+            AddWin.ShowDialog();
+            Refresh();
         }
         public ICommand DeleteButtonCommand { get; set; }
         void DeleteButton(object t)
         {
+            CustomMessage msg = new CustomMessage("/Material/Images/Icons/question.png", "THÔNG BÁO", "Bạn có muốn xóa phiếu nhập đã chọn?", true);
+            msg.ShowDialog();
+            if (msg.ReturnValue == true)
+            {
 
+            }
+            Refresh();
         }
         #endregion
     }

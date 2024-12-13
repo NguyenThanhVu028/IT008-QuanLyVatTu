@@ -138,7 +138,7 @@
                                             Height="60"
                                             Width="190"
                                             DisplayText="Đăng Nhập"
-                                            BorderColor="{StaticResource LightAqua2}"
+                                            BorderColor="{StaticResource LightAqua1a}"
                                             BorderColorHighlight="{StaticResource Aqua}"
                                             BorderBackground="Transparent"
                                             BorderBackgroundClicked="#7F003547"

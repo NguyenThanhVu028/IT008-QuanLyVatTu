@@ -22,7 +22,7 @@ namespace PMQuanLyVatTu.ViewModel
             MoveWindowCommand = new RelayCommand<Window>(MoveWindow);
         }
         #region ReturnValue
-        private bool _returnValue;
+        private bool _returnValue = false;
         public bool ReturnValue
         {
             get { return _returnValue; }
