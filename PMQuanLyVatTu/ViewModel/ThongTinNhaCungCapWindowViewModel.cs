@@ -1,4 +1,5 @@
 ﻿using PMQuanLyVatTu.ErrorMessage;
+using PMQuanLyVatTu.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -103,11 +104,21 @@ namespace PMQuanLyVatTu.ViewModel
             CustomMessage msg = new CustomMessage("/Material/Images/Icons/question.png", "THÔNG BÁO", "Bạn có muốn xóa nhà cung cấp đã chọn?", true);
             msg.ShowDialog();
             if (msg.ReturnValue == true)
-            { //Chấp nhận xóa
-                EnableEditing = false;
-                //Xóa
-                t.Close();
+            {
+                var NCC = DataProvider.Instance.DB.Suppliers
+                            .Find(MaNCC);
+
+                if (NCC != null)
+                {
+                    NCC.DaXoa = true;
+                    DataProvider.Instance.DB.SaveChanges();
+                }
+                else
+                {
+                    msg = new CustomMessage("/Material/Images/Icons/wrong.png", "LỖI", "Không tìm thấy nhà cung cấp để xóa!", false);
+                }
             }
+            t.Close();
         }
         public ICommand SaveInfoCommand { get; set; }
         void SaveInfo(object t)
@@ -116,26 +127,62 @@ namespace PMQuanLyVatTu.ViewModel
             {
                 EnableEditing = false;
                 //Lưu thông tin vào database
-                CustomMessage msg = new CustomMessage("/Material/Images/Icons/success.png", "THÀNH CÔNG", "Đã lưu thông tin chỉnh sửa.");
-                msg.ShowDialog();
+                var existingSupplier = DataProvider.Instance.DB.Suppliers.Find(MaNCC);
+
+                if (existingSupplier != null)
+                {
+                    existingSupplier.TenNcc = TenNCC;
+                    existingSupplier.DiaChi = DiaChi;
+                    existingSupplier.Email = Email;
+                    existingSupplier.Sdt = SDT;
+                    DataProvider.Instance.DB.SaveChanges();
+
+                    CustomMessage msg = new CustomMessage("/Material/Images/Icons/success.png", "THÀNH CÔNG", "Đã lưu thông tin chỉnh sửa.");
+                    msg.ShowDialog();
+                }
             }
             else //Nếu trong chế độ thêm nhà cung cấp
             {
-                if (MaNCC == "") //Chưa nhập mã nhà cung cấp
+                if (string.IsNullOrWhiteSpace(MaNCC)) //Chưa nhập mã nhà cung cấp
                 {
                     CustomMessage msg = new CustomMessage("/Material/Images/Icons/wrong.png", "LỖI", "Vui lòng nhập mã nhà cung cấp.");
                     msg.ShowDialog();
                 }
-                else if (true) //Trùng mã nhà cung cấp
+                else 
                 {
-                    AlreadyExistsError msg = new AlreadyExistsError();
-                    msg.ShowDialog();
-                }
-                else // Hợp lệ
-                {
+                    var existingSuppliers = DataProvider.Instance.DB.Suppliers.Find(MaNCC);
+
+                    if (existingSuppliers != null) 
+                    {
+                        if (existingSuppliers.DaXoa == true) // Hợp lệ
+                        {
+                            // Xóa nhà cung cấp cũ khỏi database
+                            DataProvider.Instance.DB.Suppliers.Remove(existingSuppliers);
+                            DataProvider.Instance.DB.SaveChanges();
+                        }
+                        else //Trùng mã nhà cung cấp
+                        {
+                            AlreadyExistsError msg1 = new AlreadyExistsError();
+                            msg1.ShowDialog();
+                            return; 
+                        }
+                    }
                     EnableEditing = false;
-                    CustomMessage msg = new CustomMessage("/Material/Images/Icons/success.png", "THÀNH CÔNG", "Thêm nhà cung cấp thành công.");
-                    msg.ShowDialog();
+                    // Tạo nhà cung cấp mới và thêm vào database
+                    var newSuppliers = new Supplier
+                    {
+                        MaNcc = MaNCC,
+                        TenNcc = TenNCC,
+                        DiaChi = DiaChi,
+                        Email = Email,
+                        Sdt = SDT,
+                        DaXoa = false
+                    };
+                    DataProvider.Instance.DB.Suppliers.Add(newSuppliers);
+                    DataProvider.Instance.DB.SaveChanges();
+
+                    CustomMessage msgSuccess = new CustomMessage("/Material/Images/Icons/success.png", "THÀNH CÔNG", "Thêm nhà cung cấp thành công.");
+                    msgSuccess.ShowDialog();
                     (t as Window).Close();
                 }
             }
@@ -144,11 +191,15 @@ namespace PMQuanLyVatTu.ViewModel
         #region Function
         void LoadData(string mancc)
         {
-            MaNCC = mancc;
-            TenNCC = "Đại lý xi măng Vĩnh Phát";
-            SDT = "09777284738";
-            Email = "default@gmail.com";
-            DiaChi = "235 Mạc Đĩnh Chi, Huyện Đinh Bộ Lĩnh";
+            var NCC = DataProvider.Instance.DB.Suppliers.Find(mancc);
+            if (NCC != null)
+            {
+                MaNCC = NCC.MaNcc;
+                TenNCC = (NCC.TenNcc != null)?NCC.TenNcc : "";
+                SDT = (NCC.Sdt != null) ? NCC.Sdt : "";
+                Email = (NCC.Email != null) ? NCC.Email : "";
+                DiaChi = (NCC.DiaChi != null) ? NCC.DiaChi : "";
+            }
         }
         #endregion
     }

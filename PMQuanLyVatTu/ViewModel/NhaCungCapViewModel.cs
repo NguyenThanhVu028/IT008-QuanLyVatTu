@@ -7,6 +7,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Input;
 using static PMQuanLyVatTu.ViewModel.NhanVienViewModel;
 
@@ -94,10 +95,38 @@ namespace PMQuanLyVatTu.ViewModel
         {
             DanhSachNhaCungCap.Clear();
 
-            var ListFromDB = DataProvider.Instance.DB.Suppliers.ToList();
-            foreach(var item in ListFromDB) 
-            { 
-                DanhSachNhaCungCap.Add(item);
+            var ListFromDB = DataProvider.Instance.DB.Suppliers.Where(c => c.DaXoa == false).ToList();
+            if (ListFromDB != null)
+            {
+                foreach (var item in ListFromDB)
+                {
+                    switch (SelectedSearchFilter)
+                    {
+                        case "Mã nhà cung cấp":
+                            if (item.MaNcc != null)
+                                if (item.MaNcc.Contains(SearchString)) DanhSachNhaCungCap.Add(item);
+                            break;
+                        case "Tên nhà cung cấp":
+                            if (item.TenNcc != null)
+                                if (item.TenNcc.Contains(SearchString)) DanhSachNhaCungCap.Add(item);
+                            break;
+                        case "Địa chỉ":
+                            if (item.DiaChi != null)
+                                if (item.DiaChi.Contains(SearchString)) DanhSachNhaCungCap.Add(item);
+                            break;
+                        case "Số điện thoại":
+                            if (item.Sdt != null)
+                                if (item.Sdt.Contains(SearchString)) DanhSachNhaCungCap.Add(item);
+                            break;
+                        case "Email":
+                            if (item.Email != null)
+                                if (item.Email.Contains(SearchString)) DanhSachNhaCungCap.Add(item);
+                            break;
+                        default:
+                            DanhSachNhaCungCap.Add(item);
+                            break;
+                    }
+                }
             }
             //DanhSachNhaCungCap.Add(new Supplier() { Checked = true, MaNCC = "NCC0001", TenNCC = "Đại lý bán hàng A", SDT = "0123456789", Email = "DLA@gmail.com", DiaChi = "123 Phường Đồng Xuân An" });
             //DanhSachNhaCungCap.Add(new Supplier() { Checked = true, MaNCC = "NCC0002", TenNCC = "Đại lý bán hàng B", SDT = "0123456789", Email = "DLB@gmail.com", DiaChi = "123 Phường Đồng Xuân An" });
@@ -121,7 +150,18 @@ namespace PMQuanLyVatTu.ViewModel
             msg.ShowDialog();
             if (msg.ReturnValue == true)
             {
-                //Xóa trong database
+                var NCC = DataProvider.Instance.DB.Suppliers
+                            .Find(SelectedNhaCungCap.MaNcc);
+
+                if (NCC != null)
+                {
+                    NCC.DaXoa = true;
+                    DataProvider.Instance.DB.SaveChanges();
+                }
+                else
+                {
+                    msg = new CustomMessage("/Material/Images/Icons/wrong.png", "LỖI", "Không tìm thấy nhà cung cấp để xóa!", false);
+                }
             }
             Refresh();
         }

@@ -1,4 +1,5 @@
 ﻿using PMQuanLyVatTu.ErrorMessage;
+using PMQuanLyVatTu.Models;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -99,11 +100,21 @@ namespace PMQuanLyVatTu.ViewModel
             CustomMessage msg = new CustomMessage("/Material/Images/Icons/question.png", "THÔNG BÁO", "Bạn có muốn xóa kho đã chọn?", true);
             msg.ShowDialog();
             if (msg.ReturnValue == true)
-            { //Chấp nhận xóa
-                EnableEditing = false;
-                //Xóa
-                t.Close();
+            {
+                var Kho = DataProvider.Instance.DB.Warehouses
+                            .Find(MaKho);
+
+                if (Kho != null)
+                {
+                    Kho.DaXoa = true;
+                    DataProvider.Instance.DB.SaveChanges();
+                }
+                else
+                {
+                    msg = new CustomMessage("/Material/Images/Icons/wrong.png", "LỖI", "Không tìm thấy kho để xóa!", false);
+                }
             }
+            t.Close();
         }
         public ICommand SaveInfoCommand { get; set; }
         void SaveInfo(object t)
@@ -111,26 +122,59 @@ namespace PMQuanLyVatTu.ViewModel
             if (EditMode == true) //Nếu đang chế độ chỉnh sửa
             {
                 EnableEditing = false;
-                CustomMessage msg = new CustomMessage("/Material/Images/Icons/success.png", "THÀNH CÔNG", "Đã lưu thông tin chỉnh sửa.");
-                msg.ShowDialog();
+                //Lưu thông tin vào database
+                var existingWarehouses = DataProvider.Instance.DB.Warehouses.Find(MaKho);
+
+                if (existingWarehouses != null)
+                {
+                    existingWarehouses.LoaiVatTu = LoaiVT;
+                    existingWarehouses.DiaChi = DiaChi;
+                    DataProvider.Instance.DB.SaveChanges();
+
+                    CustomMessage msg = new CustomMessage("/Material/Images/Icons/success.png", "THÀNH CÔNG", "Đã lưu thông tin chỉnh sửa.");
+                    msg.ShowDialog();
+                }
             }
-            else //Nếu trong chế độ thêm nhân viên
+            else //Nếu trong chế độ thêm kho
             {
-                if (false) //Chưa nhập mã nhân viên
+                if (string.IsNullOrWhiteSpace(MaKho)) //Chưa nhập mã nhà kho
                 {
                     CustomMessage msg = new CustomMessage("/Material/Images/Icons/wrong.png", "LỖI", "Vui lòng nhập mã kho.");
                     msg.ShowDialog();
                 }
-                else if (false) //Trùng mã nhân viên
+                else
                 {
-                    AlreadyExistsError msg = new AlreadyExistsError();
-                    msg.ShowDialog();
-                }
-                else // Hợp lệ
-                {
+                    var existingWarehouses = DataProvider.Instance.DB.Warehouses.Find(MaKho);
+
+                    if (existingWarehouses != null)
+                    {
+                        if (existingWarehouses.DaXoa == true) // Hợp lệ
+                        {
+                            // Xóa kho cũ khỏi database
+                            DataProvider.Instance.DB.Warehouses.Remove(existingWarehouses);
+                            DataProvider.Instance.DB.SaveChanges();
+                        }
+                        else //Trùng mã kho
+                        {
+                            AlreadyExistsError msg1 = new AlreadyExistsError();
+                            msg1.ShowDialog();
+                            return;
+                        }
+                    }
                     EnableEditing = false;
-                    CustomMessage msg = new CustomMessage("/Material/Images/Icons/success.png", "THÀNH CÔNG", "Thêm kho thành công.");
-                    msg.ShowDialog();
+                    // Tạo kho mới và thêm vào database
+                    var newWarehouses = new Warehouse
+                    {
+                        MaKho = MaKho,
+                        LoaiVatTu = LoaiVT,
+                        DiaChi = DiaChi,
+                        DaXoa = false
+                    };
+                    DataProvider.Instance.DB.Warehouses.Add(newWarehouses);
+                    DataProvider.Instance.DB.SaveChanges();
+
+                    CustomMessage msgSuccess = new CustomMessage("/Material/Images/Icons/success.png", "THÀNH CÔNG", "Thêm nhà kho thành công.");
+                    msgSuccess.ShowDialog();
                     (t as Window).Close();
                 }
             }
@@ -139,9 +183,13 @@ namespace PMQuanLyVatTu.ViewModel
         #region Function
         void LoadData(string s)
         {
-            MaKho = s;
-            LoaiVT = "TB";
-            DiaChi = "123 Phố Tân Hiệp Mỹ";
+            var Kho = DataProvider.Instance.DB.Warehouses.Find(s);
+            if (Kho != null)
+            {
+                MaKho = s;
+                LoaiVT = (Kho.LoaiVatTu != null) ? Kho.LoaiVatTu : "";
+                DiaChi = (Kho.DiaChi != null) ? Kho.DiaChi : "";
+            }
         }
         #endregion
     }
