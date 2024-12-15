@@ -194,6 +194,13 @@ namespace PMQuanLyVatTu.ViewModel
             if (msg.ReturnValue == true)
             {
                 //Xóa trong database
+                var vt = DataProvider.Instance.DB.Supplies.Find(SelectedVatTu.MaVt);
+                if (vt != null)
+                {
+                    vt.DaXoa = true;
+                    vt.ThoiGianXoa = DateTime.Now;
+                    DataProvider.Instance.DB.SaveChanges();
+                }
             }
             Refresh();
         }

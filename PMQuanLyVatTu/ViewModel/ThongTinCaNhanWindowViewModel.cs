@@ -1,5 +1,6 @@
 ﻿using PMQuanLyVatTu.ErrorMessage;
 using PMQuanLyVatTu.Models;
+using PMQuanLyVatTu.User;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -15,8 +16,8 @@ namespace PMQuanLyVatTu.ViewModel
     {
         public ThongTinCaNhanWindowViewModel(string MaNV)
         {
-            LoadData(MaNV);
-
+            //LoadData(MaNV);
+            LoadEmployeeInfo();
             CloseWindowCommand = new RelayCommand<Window>(CloseWindow);
             MoveWindowCommand = new RelayCommand<Window>(MoveWindow);
             EditInfoCommand = new RelayCommand<object>(EditInfo);
@@ -106,6 +107,28 @@ namespace PMQuanLyVatTu.ViewModel
         {
             EnableEditing = false;
             //Lưu xuống database
+            string manv = CurrentUser.Instance.MaNv;
+            var employee = DataProvider.Instance.DB.Employees.Find(manv) as Employee;
+            if(employee != null)
+            {
+                employee.MaNv = MaNV;
+                employee.HoTen = HoTen;
+                employee.GioiTinh = GioiTinh.ToString();
+                if (DateOnly.TryParse(NgaySinh, out DateOnly parsedNgaySinh))
+                {
+                    employee.NgaySinh = parsedNgaySinh;
+                }
+                else
+                {
+                    // Xử lý khi giá trị NgaySinh không hợp lệ, ví dụ: gán giá trị mặc định hoặc báo lỗi
+                    employee.NgaySinh = default; // Hoặc một giá trị mặc định
+                }
+                employee.Sdt = SDT;
+                employee.Email = Email;
+                employee.DiaChi = DiaChi;
+                DataProvider.Instance.DB.SaveChanges();
+
+            }
             CustomMessage msg = new CustomMessage("/Material/Images/Icons/success.png", "THÀNH CÔNG", "Đã lưu thông tin chỉnh sửa.");
             msg.ShowDialog();
         }
@@ -121,15 +144,61 @@ namespace PMQuanLyVatTu.ViewModel
         #region Function
         void LoadData(string manv)
         {
-           
+
             //Đổ thông tin NV vào info
-            MaNV = manv;
-            HoTen = "Nguyễn Văn A";
-            GTinh = "Nam";
-            NgaySinh = "23/12/2970";
-            SDT = "0123456789";
-            Email = "Default@gmail.com";
-            DiaChi = "123 Phố Mỹ Hạnh";
+            var result = DataProvider.Instance.DB.Employees.Find(manv);
+            if (result != null)
+            {
+                MaNV = manv;
+                HoTen = result.HoTen;
+                GTinh = result.GioiTinh;
+                NgaySinh = result.NgaySinh.ToString();
+                SDT = result.Sdt;
+                Email = result.Email;
+                DiaChi = result.DiaChi;
+            }
+            else
+            {
+                MessageBox.Show("Null");
+                MaNV = manv;
+                HoTen = "";
+                GTinh = "";
+                NgaySinh = "";
+                SDT = "";
+                Email = "";
+                DiaChi = "";
+            }
+        }
+        public void LoadEmployeeInfo()
+        {
+            // Tìm Employee có MaNV trùng với CurrentUser.Instance.MaNV
+            //var employee = DataProvider.Instance.DB.Employees
+            //                 .FirstOrDefault(e => e.MaNv == CurrentUser.Instance.MaNv);
+            string manv = CurrentUser.Instance.MaNv;
+            var employee = DataProvider.Instance.DB.Employees.Find(manv) as Employee;
+
+            if (employee != null)
+            {
+                // Gán giá trị từ Employee vào các thuộc tính, kiểm tra null để gán giá trị rỗng nếu cần
+                MaNV = employee.MaNv ?? "";
+                HoTen = employee.HoTen ?? "";
+                GTinh = employee.GioiTinh ?? "";
+                NgaySinh = employee.NgaySinh?.ToString() ?? ""; // Dùng ToString() với xử lý null
+                SDT = employee.Sdt ?? "";
+                Email = employee.Email ?? "";
+                DiaChi = employee.DiaChi ?? "";
+            }
+            else
+            {
+                // Nếu không tìm thấy Employee, gán giá trị mặc định
+                MaNV = CurrentUser.Instance.MaNv;
+                HoTen = "";
+                GTinh = "";
+                NgaySinh = "";
+                SDT = "";
+                Email = "";
+                DiaChi = "";
+            }
         }
         #endregion
     }

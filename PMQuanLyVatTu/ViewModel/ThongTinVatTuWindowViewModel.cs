@@ -1,4 +1,5 @@
-﻿using Microsoft.Win32;
+﻿using Microsoft.EntityFrameworkCore.Scaffolding.Metadata;
+using Microsoft.Win32;
 using PMQuanLyVatTu.ErrorMessage;
 using PMQuanLyVatTu.Models;
 using System;
@@ -18,17 +19,17 @@ namespace PMQuanLyVatTu.ViewModel
     {
         public ThongTinVatTuWindowViewModel(string mavt = null)
         {
-            if(mavt != null) 
-            { 
-                EditMode = true; 
-                Title = "CHỈNH SỬA VẬT TƯ"; 
-                LoadData(mavt); 
+            if (mavt != null)
+            {
+                EditMode = true;
+                Title = "CHỈNH SỬA VẬT TƯ";
+                LoadData(mavt);
             }
-            else 
-            { 
-                EditMode = false; 
-                EnableEditing = true; 
-                Title = "THÊM VẬT TƯ"; 
+            else
+            {
+                EditMode = false;
+                EnableEditing = true;
+                Title = "THÊM VẬT TƯ";
             }
             LoadNhaCungCap(); LoadKho();
 
@@ -133,7 +134,7 @@ namespace PMQuanLyVatTu.ViewModel
             get { return _nhaCungCap; }
             set { _nhaCungCap = value; OnPropertyChanged(); }
         }
-        ObservableCollection<string> _loaiVatTu = new ObservableCollection<string>() {"NVL", "CC", "TB" };
+        ObservableCollection<string> _loaiVatTu = new ObservableCollection<string>() { "NVL", "CC", "TB" };
         public ObservableCollection<string> LoaiVatTu
         {
             get { return _loaiVatTu; }
@@ -165,7 +166,7 @@ namespace PMQuanLyVatTu.ViewModel
             msg.ShowDialog();
             if (msg.ReturnValue == true) EnableEditing = true;
         }
-        public ICommand DeleteButtonCommand { get; set; } 
+        public ICommand DeleteButtonCommand { get; set; }
         void DeleteButton(Window t)
         {
             CustomMessage msg = new CustomMessage("/Material/Images/Icons/question.png", "THÔNG BÁO", "Bạn có muốn xóa vật tư đã chọn?", true);
@@ -174,6 +175,13 @@ namespace PMQuanLyVatTu.ViewModel
             {
                 EnableEditing = false;
                 //Dùng MaVT để xóa trong database
+                var VT = DataProvider.Instance.DB.Supplies.Find(MaVT);
+                if (VT != null)
+                {
+                    VT.DaXoa = true;
+                    VT.ThoiGianXoa = DateTime.Now;
+                    DataProvider.Instance.DB.SaveChanges();
+                }
                 t.Close();
             }
         }
@@ -188,31 +196,90 @@ namespace PMQuanLyVatTu.ViewModel
             {
                 EnableEditing = false;
                 //Lưu thông tin trên database theo MaVT
+                var VT = DataProvider.Instance.DB.Supplies.Find(MaVT);
+                if (VT != null)
+                {
+                    VT.LoaiVatTu = LoaiVT;
+                    VT.MaNcc= MaNCC;
+                    VT.MaKho= MaKho;
+                    VT.TenVatTu = TenVatTu;
+                    VT.DonViTinh = DonViTinh;
+                    VT.GiaNhap = GiaNhap;
+                    VT.GiaXuat = GiaXuat;
+                    VT.SoLuongTonKho = SoLuongTonKho;
+                    DataProvider.Instance.DB.SaveChanges();
+                }
                 CustomMessage msg = new CustomMessage("/Material/Images/Icons/success.png", "THÀNH CÔNG", "Đã lưu thông tin chỉnh sửa.");
                 msg.ShowDialog();
             }
             else //Nếu trong chế độ thêm vật tư
             {
-                if(MaVT == "") //Chưa nhập mã vật tư
+                if (MaVT == "") //Chưa nhập mã vật tư
                 {
                     CustomMessage msg1 = new CustomMessage("/Material/Images/Icons/wrong.png", "LỖI", "Vui lòng nhập mã vật tư.");
                     msg1.ShowDialog();
                     return;
                 }
-                if (false) //Trùng mã vật tư
+                if (CompareAndExecute()) //Trùng mã vật tư
                 {
                     AlreadyExistsError msg2 = new AlreadyExistsError();
                     msg2.ShowDialog();
                     return;
                 }
                 // Hợp lệ
+
+                Execute();
                 EnableEditing = false;
                 CustomMessage msg = new CustomMessage("/Material/Images/Icons/success.png", "THÀNH CÔNG", "Thêm vật tư thành công.");
                 msg.ShowDialog();
                 (t as Window).Close();
             }
         }
-        public ICommand ChangeAvatarCommand {  get; set; }
+        private bool CompareAndExecute()
+        {
+            var VT = DataProvider.Instance.DB.Supplies.Find(MaVT);
+            if (VT == null)
+            {
+
+               return false;
+            }
+            else
+            {
+                if(VT.DaXoa == true)
+                {
+                    DataProvider.Instance.DB.Supplies.Remove(VT);
+                    var newVT = new Supply();
+                    newVT.LoaiVatTu = LoaiVT;
+                    newVT.MaNcc = MaNCC;
+                    newVT.MaKho = MaKho;
+                    newVT.TenVatTu = TenVatTu;
+                    newVT.DonViTinh = DonViTinh;
+                    newVT.GiaNhap = GiaNhap;
+                    newVT.GiaXuat = GiaXuat;
+                    newVT.SoLuongTonKho = SoLuongTonKho;
+                    DataProvider.Instance.DB.Supplies.Add(newVT);
+                    DataProvider.Instance.DB.SaveChanges();
+                    return false;
+                }
+              
+            }
+            return true;
+        }
+        private void Execute()
+        {
+            var newVT = new Supply();
+            newVT.LoaiVatTu = LoaiVT;
+            newVT.MaNcc = MaNCC;
+            newVT.MaKho = MaKho;
+            newVT.TenVatTu = TenVatTu;
+            newVT.DonViTinh = DonViTinh;
+            newVT.GiaNhap = GiaNhap;
+            newVT.GiaXuat = GiaXuat;
+            newVT.SoLuongTonKho = SoLuongTonKho;
+            DataProvider.Instance.DB.Supplies.Add(newVT);
+            DataProvider.Instance.DB.SaveChanges();
+        }
+        public ICommand ChangeAvatarCommand { get; set; }
         void ChangeAvatar(object t)
         {
             OpenFileDialog openFileDialog = new OpenFileDialog();
@@ -228,15 +295,32 @@ namespace PMQuanLyVatTu.ViewModel
         {
             //Dùng mavt để load dữ liệu từ database, dùng các property trong "Info" để hiện thông tin
             MaVT = mavt;
-            TenVatTu = "Máy hàn chịu nhiệt";
-            LoaiVT = "TB";
-            DonViTinh = "Chiếc";
-            MaNCC = "NCC0001";
-            MaKho = "KHO0002";
-            GiaNhap = 10000000;
-            GiaXuat = 12000000;
-            SoLuongTonKho = 30;
-            ImageLocation = "/Material/Images/Supplies/welding_machine.jpg";
+            var VT = DataProvider.Instance.DB.Supplies.Find(mavt);
+            if (VT != null)
+            {
+                TenVatTu = VT.TenVatTu;
+                LoaiVT =VT.LoaiVatTu;
+                DonViTinh = VT.DonViTinh;
+                MaNCC = VT.MaNcc;
+                MaKho =VT.MaKho;
+                GiaNhap = (int)VT.GiaNhap;
+                GiaXuat = (int)VT.GiaXuat;
+                SoLuongTonKho = (int)VT.SoLuongTonKho;
+                ImageLocation = VT.ImageLocation;
+            }
+            else
+            {
+                TenVatTu = null;
+                LoaiVT = null;
+                DonViTinh = null;
+                MaNCC = null;
+                MaKho = null;
+                GiaNhap = 0;
+                GiaXuat = 0;
+                SoLuongTonKho = 0;
+                ImageLocation = null;
+            }
+
         }
         void LoadNhaCungCap()
         {
