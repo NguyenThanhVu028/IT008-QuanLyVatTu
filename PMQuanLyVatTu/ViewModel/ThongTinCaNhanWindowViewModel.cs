@@ -14,9 +14,8 @@ namespace PMQuanLyVatTu.ViewModel
 {
     public class ThongTinCaNhanWindowViewModel : BaseViewModel
     {
-        public ThongTinCaNhanWindowViewModel(string MaNV)
+        public ThongTinCaNhanWindowViewModel()
         {
-            //LoadData(MaNV);
             LoadEmployeeInfo();
             CloseWindowCommand = new RelayCommand<Window>(CloseWindow);
             MoveWindowCommand = new RelayCommand<Window>(MoveWindow);
@@ -108,20 +107,19 @@ namespace PMQuanLyVatTu.ViewModel
             EnableEditing = false;
             //Lưu xuống database
             string manv = CurrentUser.Instance.MaNv;
-            var employee = DataProvider.Instance.DB.Employees.Find(manv) as Employee;
+            var employee = DataProvider.Instance.DB.Employees.Find(manv);
             if(employee != null)
             {
                 employee.MaNv = MaNV;
                 employee.HoTen = HoTen;
-                employee.GioiTinh = GioiTinh.ToString();
-                if (DateOnly.TryParse(NgaySinh, out DateOnly parsedNgaySinh))
+                employee.GioiTinh = GTinh;
+                try
                 {
-                    employee.NgaySinh = parsedNgaySinh;
+                    employee.NgaySinh = DateOnly.ParseExact(NgaySinh, "ddd/dd/MM/yyyy");
                 }
-                else
+                catch
                 {
-                    // Xử lý khi giá trị NgaySinh không hợp lệ, ví dụ: gán giá trị mặc định hoặc báo lỗi
-                    employee.NgaySinh = default; // Hoặc một giá trị mặc định
+                    employee.NgaySinh = default;
                 }
                 employee.Sdt = SDT;
                 employee.Email = Email;
@@ -130,6 +128,7 @@ namespace PMQuanLyVatTu.ViewModel
 
             }
             CustomMessage msg = new CustomMessage("/Material/Images/Icons/success.png", "THÀNH CÔNG", "Đã lưu thông tin chỉnh sửa.");
+            CurrentUser.Instance.Update(employee);
             msg.ShowDialog();
         }
         public ICommand ChangePasswordCommand { get; set; }
@@ -142,40 +141,10 @@ namespace PMQuanLyVatTu.ViewModel
         }
         #endregion
         #region Function
-        void LoadData(string manv)
-        {
-
-            //Đổ thông tin NV vào info
-            var result = DataProvider.Instance.DB.Employees.Find(manv);
-            if (result != null)
-            {
-                MaNV = manv;
-                HoTen = result.HoTen;
-                GTinh = result.GioiTinh;
-                NgaySinh = result.NgaySinh.ToString();
-                SDT = result.Sdt;
-                Email = result.Email;
-                DiaChi = result.DiaChi;
-            }
-            else
-            {
-                MessageBox.Show("Null");
-                MaNV = manv;
-                HoTen = "";
-                GTinh = "";
-                NgaySinh = "";
-                SDT = "";
-                Email = "";
-                DiaChi = "";
-            }
-        }
         public void LoadEmployeeInfo()
         {
-            // Tìm Employee có MaNV trùng với CurrentUser.Instance.MaNV
-            //var employee = DataProvider.Instance.DB.Employees
-            //                 .FirstOrDefault(e => e.MaNv == CurrentUser.Instance.MaNv);
             string manv = CurrentUser.Instance.MaNv;
-            var employee = DataProvider.Instance.DB.Employees.Find(manv) as Employee;
+            var employee = DataProvider.Instance.DB.Employees.Find(manv);
 
             if (employee != null)
             {
@@ -183,7 +152,18 @@ namespace PMQuanLyVatTu.ViewModel
                 MaNV = employee.MaNv ?? "";
                 HoTen = employee.HoTen ?? "";
                 GTinh = employee.GioiTinh ?? "";
-                NgaySinh = employee.NgaySinh?.ToString() ?? ""; // Dùng ToString() với xử lý null
+                if(employee.NgaySinh != null)
+                {
+                    try
+                    {
+                        NgaySinh = ((DateOnly)employee.NgaySinh).ToDateTime(TimeOnly.MinValue).ToString("ddd/dd/MM/yyyy");
+                    }
+                    catch
+                    {
+                        NgaySinh = "";
+                    }
+                }
+                //NgaySinh = (employee.NgaySinh!=null)?employee.NgaySinh.ToString("ddd,dd,MM,yyyy") : ""; // Dùng ToString() với xử lý null
                 SDT = employee.Sdt ?? "";
                 Email = employee.Email ?? "";
                 DiaChi = employee.DiaChi ?? "";

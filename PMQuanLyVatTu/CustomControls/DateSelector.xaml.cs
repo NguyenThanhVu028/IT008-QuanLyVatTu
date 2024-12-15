@@ -40,7 +40,7 @@ namespace PMQuanLyVatTu.CustomControls
         void SelectedDateChanged(object sender, RoutedEventArgs e)
         {
             DateTime temp = (DateTime)InnerCalender.SelectedDate;
-            SelectedValue = temp.ToShortDateString();
+            SelectedValue = temp.ToString("ddd/dd/MM/yyyy");
         }
     }
 }

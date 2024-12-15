@@ -99,14 +99,14 @@ namespace PMQuanLyVatTu.ViewModel
                         {
                             case "Mã đã xóa":
                                 if (item.MaVt != null)
-                                    if (item.MaVt.Contains(SearchString)) DanhSachDaXoa.Add(new DeletedItem(true, item.MaVt, item.ThoiGianXoa));
+                                    if (item.MaVt.ToLower().Contains(SearchString.ToLower())) DanhSachDaXoa.Add(new DeletedItem(false, item.MaVt, item.ThoiGianXoa));
                                 break;
                             case "Thời gian xóa":
                                 if (item.ThoiGianXoa != null)
-                                    if (item.ThoiGianXoa.ToString().Contains(SearchString)) DanhSachDaXoa.Add(new DeletedItem(true, item.MaVt, item.ThoiGianXoa));
+                                    if (item.ThoiGianXoa.ToString().Contains(SearchString)) DanhSachDaXoa.Add(new DeletedItem(false, item.MaVt, item.ThoiGianXoa));
                                 break;
                             case "Không":
-                                DanhSachDaXoa.Add(new DeletedItem(true, item.MaVt, item.ThoiGianXoa));
+                                DanhSachDaXoa.Add(new DeletedItem(false, item.MaVt, item.ThoiGianXoa));
                                 break;
                         }
 
@@ -120,14 +120,14 @@ namespace PMQuanLyVatTu.ViewModel
                         {
                             case "Mã đã xóa":
                                 if (item.MaNv != null)
-                                    if (item.MaNv.Contains(SearchString)) DanhSachDaXoa.Add(new DeletedItem(true, item.MaNv, item.ThoiGianXoa));
+                                    if (item.MaNv.ToLower().Contains(SearchString.ToLower())) DanhSachDaXoa.Add(new DeletedItem(false, item.MaNv, item.ThoiGianXoa));
                                 break;
                             case "Thời gian xóa":
                                 if (item.ThoiGianXoa != null)
-                                    if (item.ThoiGianXoa.ToString().Contains(SearchString)) DanhSachDaXoa.Add(new DeletedItem(true, item.MaNv, item.ThoiGianXoa));
+                                    if (item.ThoiGianXoa.ToString().Contains(SearchString)) DanhSachDaXoa.Add(new DeletedItem(false, item.MaNv, item.ThoiGianXoa));
                                 break;
                             case "Không":
-                                DanhSachDaXoa.Add(new DeletedItem(true, item.MaNv, item.ThoiGianXoa));
+                                DanhSachDaXoa.Add(new DeletedItem(false, item.MaNv, item.ThoiGianXoa));
                                 break;
                         }
 
@@ -141,14 +141,14 @@ namespace PMQuanLyVatTu.ViewModel
                         {
                             case "Mã đã xóa":
                                 if (item.MaKh != null)
-                                    if (item.MaKh.Contains(SearchString)) DanhSachDaXoa.Add(new DeletedItem(true, item.MaKh, item.ThoiGianXoa));
+                                    if (item.MaKh.ToLower().Contains(SearchString.ToLower())) DanhSachDaXoa.Add(new DeletedItem(false, item.MaKh, item.ThoiGianXoa));
                                 break;
                             case "Thời gian xóa":
                                 if (item.ThoiGianXoa != null)
-                                    if (item.ThoiGianXoa.ToString().Contains(SearchString)) DanhSachDaXoa.Add(new DeletedItem(true, item.MaKh, item.ThoiGianXoa));
+                                    if (item.ThoiGianXoa.ToString().Contains(SearchString)) DanhSachDaXoa.Add(new DeletedItem(false, item.MaKh, item.ThoiGianXoa));
                                 break;
                             case "Không":
-                                DanhSachDaXoa.Add(new DeletedItem(true, item.MaKh, item.ThoiGianXoa));
+                                DanhSachDaXoa.Add(new DeletedItem(false, item.MaKh, item.ThoiGianXoa));
                                 break;
                         }
 
@@ -162,14 +162,14 @@ namespace PMQuanLyVatTu.ViewModel
                         {
                             case "Mã đã xóa":
                                 if (item.MaNcc != null)
-                                    if (item.MaNcc.Contains(SearchString)) DanhSachDaXoa.Add(new DeletedItem(true, item.MaNcc, item.ThoiGianXoa));
+                                    if (item.MaNcc.ToLower().Contains(SearchString.ToLower())) DanhSachDaXoa.Add(new DeletedItem(false, item.MaNcc, item.ThoiGianXoa));
                                 break;
                             case "Thời gian xóa":
                                 if (item.ThoiGianXoa != null)
-                                    if (item.ThoiGianXoa.ToString().Contains(SearchString)) DanhSachDaXoa.Add(new DeletedItem(true, item.MaNcc, item.ThoiGianXoa));
+                                    if (item.ThoiGianXoa.ToString().Contains(SearchString)) DanhSachDaXoa.Add(new DeletedItem(false, item.MaNcc, item.ThoiGianXoa));
                                 break;
                             case "Không":
-                                DanhSachDaXoa.Add(new DeletedItem(true, item.MaNcc, item.ThoiGianXoa));
+                                DanhSachDaXoa.Add(new DeletedItem(false, item.MaNcc, item.ThoiGianXoa));
                                 break;
                         }
 
@@ -183,14 +183,14 @@ namespace PMQuanLyVatTu.ViewModel
                         {
                             case "Mã đã xóa":
                                 if (item.MaKho != null)
-                                    if (item.MaKho.Contains(SearchString)) DanhSachDaXoa.Add(new DeletedItem(true, item.MaKho, item.ThoiGianXoa));
+                                    if (item.MaKho.ToLower().Contains(SearchString.ToLower())) DanhSachDaXoa.Add(new DeletedItem(false, item.MaKho, item.ThoiGianXoa));
                                 break;
                             case "Thời gian xóa":
                                 if (item.ThoiGianXoa != null)
-                                    if (item.ThoiGianXoa.ToString().Contains(SearchString)) DanhSachDaXoa.Add(new DeletedItem(true, item.MaKho, item.ThoiGianXoa));
+                                    if (item.ThoiGianXoa.ToString().Contains(SearchString)) DanhSachDaXoa.Add(new DeletedItem(false, item.MaKho, item.ThoiGianXoa));
                                 break;
                             case "Không":
-                                DanhSachDaXoa.Add(new DeletedItem(true, item.MaKho, item.ThoiGianXoa));
+                                DanhSachDaXoa.Add(new DeletedItem(false, item.MaKho, item.ThoiGianXoa));
                                 break;
                         }
 
@@ -204,14 +204,14 @@ namespace PMQuanLyVatTu.ViewModel
                         {
                             case "Mã đã xóa":
                                 if (item.MaYcx != null)
-                                    if (item.MaYcx.Contains(SearchString)) DanhSachDaXoa.Add(new DeletedItem(true, item.MaYcx, item.ThoiGianXoa));
+                                    if (item.MaYcx.ToLower().Contains(SearchString.ToLower())) DanhSachDaXoa.Add(new DeletedItem(false, item.MaYcx, item.ThoiGianXoa));
                                 break;
                             case "Thời gian xóa":
                                 if (item.ThoiGianXoa != null)
-                                    if (item.ThoiGianXoa.ToString().Contains(SearchString)) DanhSachDaXoa.Add(new DeletedItem(true, item.MaYcx, item.ThoiGianXoa));
+                                    if (item.ThoiGianXoa.ToString().Contains(SearchString)) DanhSachDaXoa.Add(new DeletedItem(false, item.MaYcx, item.ThoiGianXoa));
                                 break;
                             case "Không":
-                                DanhSachDaXoa.Add(new DeletedItem(true, item.MaYcx, item.ThoiGianXoa));
+                                DanhSachDaXoa.Add(new DeletedItem(false, item.MaYcx, item.ThoiGianXoa));
                                 break;
                         }
 
@@ -225,14 +225,14 @@ namespace PMQuanLyVatTu.ViewModel
                         {
                             case "Mã đã xóa":
                                 if (item.MaYcn != null)
-                                    if (item.MaYcn.Contains(SearchString)) DanhSachDaXoa.Add(new DeletedItem(true, item.MaYcn, item.ThoiGianXoa));
+                                    if (item.MaYcn.ToLower().Contains(SearchString.ToLower())) DanhSachDaXoa.Add(new DeletedItem(false, item.MaYcn, item.ThoiGianXoa));
                                 break;
                             case "Thời gian xóa":
                                 if (item.ThoiGianXoa != null)
-                                    if (item.ThoiGianXoa.ToString().Contains(SearchString)) DanhSachDaXoa.Add(new DeletedItem(true, item.MaYcn, item.ThoiGianXoa));
+                                    if (item.ThoiGianXoa.ToString().Contains(SearchString)) DanhSachDaXoa.Add(new DeletedItem(false, item.MaYcn, item.ThoiGianXoa));
                                 break;
                             case "Không":
-                                DanhSachDaXoa.Add(new DeletedItem(true, item.MaYcn, item.ThoiGianXoa));
+                                DanhSachDaXoa.Add(new DeletedItem(false, item.MaYcn, item.ThoiGianXoa));
                                 break;
                         }
 
@@ -246,14 +246,14 @@ namespace PMQuanLyVatTu.ViewModel
                         {
                             case "Mã đã xóa":
                                 if (item.MaPn != null)
-                                    if (item.MaPn.Contains(SearchString)) DanhSachDaXoa.Add(new DeletedItem(true, item.MaPn, item.ThoiGianXoa));
+                                    if (item.MaPn.ToLower().Contains(SearchString.ToLower())) DanhSachDaXoa.Add(new DeletedItem(false, item.MaPn, item.ThoiGianXoa));
                                 break;
                             case "Thời gian xóa":
                                 if (item.ThoiGianXoa != null)
-                                    if (item.ThoiGianXoa.ToString().Contains(SearchString)) DanhSachDaXoa.Add(new DeletedItem(true, item.MaPn, item.ThoiGianXoa));
+                                    if (item.ThoiGianXoa.ToString().Contains(SearchString)) DanhSachDaXoa.Add(new DeletedItem(false, item.MaPn, item.ThoiGianXoa));
                                 break;
                             case "Không":
-                                DanhSachDaXoa.Add(new DeletedItem(true, item.MaPn, item.ThoiGianXoa));
+                                DanhSachDaXoa.Add(new DeletedItem(false, item.MaPn, item.ThoiGianXoa));
                                 break;
                         }
 
@@ -267,14 +267,14 @@ namespace PMQuanLyVatTu.ViewModel
                         {
                             case "Mã đã xóa":
                                 if (item.MaPx != null)
-                                    if (item.MaPx.Contains(SearchString)) DanhSachDaXoa.Add(new DeletedItem(true, item.MaPx, item.ThoiGianXoa));
+                                    if (item.MaPx.ToLower().Contains(SearchString.ToLower())) DanhSachDaXoa.Add(new DeletedItem(false, item.MaPx, item.ThoiGianXoa));
                                 break;
                             case "Thời gian xóa":
                                 if (item.ThoiGianXoa != null)
-                                    if (item.ThoiGianXoa.ToString().Contains(SearchString)) DanhSachDaXoa.Add(new DeletedItem(true, item.MaPx, item.ThoiGianXoa));
+                                    if (item.ThoiGianXoa.ToString().Contains(SearchString)) DanhSachDaXoa.Add(new DeletedItem(false, item.MaPx, item.ThoiGianXoa));
                                 break;
                             case "Không":
-                                DanhSachDaXoa.Add(new DeletedItem(true, item.MaPx, item.ThoiGianXoa));
+                                DanhSachDaXoa.Add(new DeletedItem(false, item.MaPx, item.ThoiGianXoa));
                                 break;
                         }
 

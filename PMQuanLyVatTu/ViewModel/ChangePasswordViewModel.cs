@@ -18,7 +18,7 @@ namespace PMQuanLyVatTu.ViewModel
     {
         public ChangePasswordViewModel()
         {
-            ConfirmCommand = new RelayCommand<object>(Confirm);
+            ConfirmCommand = new RelayCommand<Window>(Confirm);
             CancelCommand = new RelayCommand<Window>(CloseWindow);
             MoveWindowCommand = new RelayCommand<Window>(MoveWindow);
         }
@@ -44,7 +44,7 @@ namespace PMQuanLyVatTu.ViewModel
         #endregion
         #region Command
         public ICommand ConfirmCommand { get; set; }
-        void Confirm(object t)
+        void Confirm(Window t)
         {
             bool level1, level2, level3, level4;
             Excute(out level1, out level2, out level3, out level4);
@@ -76,17 +76,25 @@ namespace PMQuanLyVatTu.ViewModel
             // Hợp lệ
             else
             {
-                // Lưu xuống database
-                string manv = CurrentUser.Instance.MaNv;
-                // Tìm bằng linQ do trường MaNv không phải là khóa chính nên không thể dùng hàm Find()
-                var account = DataProvider.Instance.DB.Accounts.FirstOrDefault(a => a.MaNv == manv);
-                if (account != null)
-                {
-                    account.MatKhau = MkMoi;
-                    DataProvider.Instance.DB.SaveChanges();
-                }
-                CustomMessage msg = new CustomMessage("/Material/Images/Icons/success.png", "THÀNH CÔNG", "Đổi mật khẩu thành công.");
+                CustomMessage msg = new CustomMessage("/Material/Images/Icons/question.png", "THÔNG BÁO", "Bạn có xác nhận đổi mật khẩu?", true);
                 msg.ShowDialog();
+                if(msg.ReturnValue == true)
+                {
+                    string manv = CurrentUser.Instance.MaNv;
+                    // Tìm bằng linQ do trường MaNv không phải là khóa chính nên không thể dùng hàm Find()
+                    var account = DataProvider.Instance.DB.Accounts.FirstOrDefault(a => a.MaNv == manv);
+                    if (account != null)
+                    {
+                        account.MatKhau = MkMoi;
+                        DataProvider.Instance.DB.SaveChanges();
+                    }
+                    CustomMessage msg1 = new CustomMessage("/Material/Images/Icons/success.png", "THÀNH CÔNG", "Đổi mật khẩu thành công.");
+                    msg1.ShowDialog();
+                    t.Close();
+                }
+                // Lưu xuống database
+
+                
             }
             
         }

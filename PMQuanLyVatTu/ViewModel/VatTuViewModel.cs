@@ -129,27 +129,27 @@ namespace PMQuanLyVatTu.ViewModel
                     {
                         case "Mã vật tư":
                             if(item.MaVt != null)
-                                if(item.MaVt.Contains(SearchString)) DanhSachVatTu.Add(item);
+                                if(item.MaVt.ToLower().Contains(SearchString.ToLower())) DanhSachVatTu.Add(item);
                             break;
                         case "Tên vật tư":
                             if (item.TenVatTu != null)
-                                if (item.TenVatTu.Contains(SearchString)) DanhSachVatTu.Add(item);
+                                if (item.TenVatTu.ToLower().Contains(SearchString.ToLower())) DanhSachVatTu.Add(item);
                             break;
                         case "Loại vật tư":
                             if (item.LoaiVatTu != null)
-                                if (item.LoaiVatTu.Contains(SearchString)) DanhSachVatTu.Add(item);
+                                if (item.LoaiVatTu.ToLower().Contains(SearchString.ToLower())) DanhSachVatTu.Add(item);
                             break;
                         case "Đơn vị tính":
                             if (item.DonViTinh != null)
-                                if (item.DonViTinh.Contains(SearchString)) DanhSachVatTu.Add(item);
+                                if (item.DonViTinh.ToLower().Contains(SearchString.ToLower())) DanhSachVatTu.Add(item);
                             break;
                         case "Mã nhà cung cấp":
                             if (item.MaNcc != null)
-                                if (item.MaNcc.Contains(SearchString)) DanhSachVatTu.Add(item);
+                                if (item.MaNcc.ToLower().Contains(SearchString.ToLower())) DanhSachVatTu.Add(item);
                             break;
                         case "Mã kho chứa":
                             if (item.MaKho != null)
-                                if (item.MaNcc.Contains(SearchString)) DanhSachVatTu.Add(item);
+                                if (item.MaKho.ToLower().Contains(SearchString.ToLower())) DanhSachVatTu.Add(item);
                             break;
                         default:
                             DanhSachVatTu.Add(item);
@@ -171,6 +171,7 @@ namespace PMQuanLyVatTu.ViewModel
             for (int i=0; i<DanhSachVatTu.Count(); i++)
             {
                 _tempDS[i].Visibility = Visibility.Visible;
+                _tempDS[i].DataContext = null;
                 _tempDS[i].DataContext = DanhSachVatTu[i];
             }
             for(int i=DanhSachVatTu.Count(); i<_tempDS.Count(); i++) _tempDS[i].Visibility = Visibility.Collapsed;
@@ -229,7 +230,7 @@ namespace PMQuanLyVatTu.ViewModel
         #region Function
         void VatTuDisplayerButtonClick(object sender, RoutedEventArgs e)
         {
-            if(CurrentUser.Instance.ChucVu == "Quản Lý")
+            if(CurrentUser.Instance.ChucVu == "Quản Lý" || CurrentUser.Instance.ChucVu == "Kế Toán")
             {
                 string mavt = ((sender as VatTuDisplayer).DataContext as Supply).MaVt;
                 ThongTinVatTuWindowViewModel TTVTVM = new ThongTinVatTuWindowViewModel(mavt);
@@ -239,8 +240,6 @@ namespace PMQuanLyVatTu.ViewModel
                 Refresh();
             }
 
-
-            DataProvider.Instance.DB.SaveChanges();
         }
         #endregion
         //public class Supply

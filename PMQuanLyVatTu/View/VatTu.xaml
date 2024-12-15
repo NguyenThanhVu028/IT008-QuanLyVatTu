@@ -105,7 +105,7 @@
                             <DataTemplate>
                                 <StackPanel Orientation="Horizontal"
                                             DataContext="{Binding ElementName=ThisUC, Path=DataContext}"
-                                            Visibility="{Binding ChucVu, Converter={StaticResource Allow1}}">
+                                            Visibility="{Binding ChucVu, Converter={StaticResource Allow12}}">
                                     <CustomControl:ImageButton x:Name="EditButton" 
                                                            Width="20"
                                                            Height="20"
@@ -186,7 +186,7 @@
                                             Margin="5, 0, 0, 0"
                                             RadiusOfCorner="5"
                                             Command="{Binding XoaGanDayCommand}"
-                                            Visibility="{Binding ChucVu, Mode=OneWay, Converter={StaticResource Allow1}}"/>
+                                            Visibility="{Binding ChucVu, Mode=OneWay, Converter={StaticResource Allow12}}"/>
                 <CustomControl:CustomButton Width="100"
                                             Height="40"
                                             HorizontalAlignment="Right"
@@ -200,7 +200,7 @@
                                             Margin="5, 0, 0, 0"
                                             RadiusOfCorner="5"
                                             Command="{Binding AddCommand}"
-                                            Visibility="{Binding ChucVu, Mode=OneWay, Converter={StaticResource Allow1}}"/>
+                                            Visibility="{Binding ChucVu, Mode=OneWay, Converter={StaticResource Allow12}}"/>
                 <CustomControl:ImageButton ImageLocation="/Material/Images/Icons/refresh.png"
                                            VerticalAlignment="Top"
                                            HorizontalAlignment="Right"
@@ -249,7 +249,7 @@
                        Foreground="{StaticResource LightAqua1a}"
                        FontFamily="/Material/Fonts/Lexend/#Lexend Medium"
                        FontWeight="Medium"
-                       Visibility="{Binding ChucVu, Mode=OneWay, Converter={StaticResource Allow14}}"/>
+                       Visibility="{Binding ChucVu, Mode=OneWay, Converter={StaticResource Allow124}}"/>
             <CustomControl:CustomTogglebutton x:Name="ModeSwitch" 
                                               Width="50"
                                               Height="30"
@@ -261,7 +261,7 @@
                                               RadiusOfCorner="10"
                                               SliderHeight="25"
                                               SliderWidth="25"
-                                              Visibility="{Binding ChucVu, Mode=OneWay, Converter={StaticResource Allow14}}"/>
+                                              Visibility="{Binding ChucVu, Mode=OneWay, Converter={StaticResource Allow124}}"/>
         </Grid>
     </Grid>
 </UserControl>

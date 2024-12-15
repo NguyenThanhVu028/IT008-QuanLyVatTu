@@ -241,7 +241,7 @@
                                         Margin="60,200,0,0"
                                         Height="200"
                                         Width="270"
-                                        SelectedValue="{Binding NgaySinh}"/>
+                                        SelectedValue="{Binding NgaySinh, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
             <TextBlock Grid.Row="1"
                        VerticalAlignment="Top"
                        HorizontalAlignment="Left"

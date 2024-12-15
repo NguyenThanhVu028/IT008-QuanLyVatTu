@@ -62,10 +62,6 @@ namespace PMQuanLyVatTu.ViewModel
             _currentPage = new TrangChu(); (_currentPage as TrangChu).DataContext = TrangChuVM;
             LoginWindow newLogin = new LoginWindow(); newLogin.DataContext = LoginVM; newLogin.ShowDialog();
 
-            MaNV = CurrentUser.Instance.MaNv;
-            ChucVu = CurrentUser.Instance.ChucVu;
-            HoTen = CurrentUser.Instance.HoTen;
-            Avatar = CurrentUser.Instance.ImageLocation;
         }
         #region CurrentPage
         private object _currentPage;
@@ -122,9 +118,10 @@ namespace PMQuanLyVatTu.ViewModel
         void AccountInfo(object t)
         {
             ThongTinCaNhanWindow AccountWin = new ThongTinCaNhanWindow();
-            ThongTinCaNhanWindowViewModel TTCNVM = new ThongTinCaNhanWindowViewModel("NV0001");
+            ThongTinCaNhanWindowViewModel TTCNVM = new ThongTinCaNhanWindowViewModel();
             AccountWin.DataContext = TTCNVM;
             AccountWin.ShowDialog();
+
         }
         public ICommand LogOutCommand { get; set; }
         void LogOut(Window t)
@@ -190,6 +187,12 @@ namespace PMQuanLyVatTu.ViewModel
         PhieuXuatViewModel PhieuXuatVM;
         #endregion
         #region Info
+        private CurrentUser user = CurrentUser.Instance;
+        public CurrentUser User
+        {
+            get { return user; }
+            //private set { user = value; OnPropertyChanged(); }
+        }
         private string _maNV;
         public string MaNV
         {
