@@ -22,7 +22,7 @@ namespace PMQuanLyVatTu.ViewModel
             MoveWindowCommand = new RelayCommand<Window>(MoveWindow);
             EditInfoCommand = new RelayCommand<object>(EditInfo);
             DeleteButtonCommand = new RelayCommand<Window>(DeleteButton);
-            SaveInfoCommand = new RelayCommand<object>(SaveInfo);
+            SaveInfoCommand = new RelayCommand<Window>(SaveInfo);
         }
         #region Title
         private string _title = "";
@@ -105,8 +105,7 @@ namespace PMQuanLyVatTu.ViewModel
             msg.ShowDialog();
             if (msg.ReturnValue == true)
             {
-                var NCC = DataProvider.Instance.DB.Suppliers
-                            .Find(MaNCC);
+                var NCC = DataProvider.Instance.DB.Suppliers.Find(MaNCC);
 
                 if (NCC != null)
                 {
@@ -121,7 +120,7 @@ namespace PMQuanLyVatTu.ViewModel
             t.Close();
         }
         public ICommand SaveInfoCommand { get; set; }
-        void SaveInfo(object t)
+        void SaveInfo(Window t)
         {
             if (EditMode == true) //Nếu đang chế độ chỉnh sửa
             {
@@ -183,8 +182,8 @@ namespace PMQuanLyVatTu.ViewModel
 
                     CustomMessage msgSuccess = new CustomMessage("/Material/Images/Icons/success.png", "THÀNH CÔNG", "Thêm nhà cung cấp thành công.");
                     msgSuccess.ShowDialog();
-                    (t as Window).Close();
                 }
+                t.Close();
             }
         }
         #endregion

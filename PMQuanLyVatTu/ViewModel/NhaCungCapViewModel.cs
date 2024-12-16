@@ -104,23 +104,23 @@ namespace PMQuanLyVatTu.ViewModel
                     {
                         case "Mã nhà cung cấp":
                             if (item.MaNcc != null)
-                                if (item.MaNcc.Contains(SearchString)) DanhSachNhaCungCap.Add(item);
+                                if (item.MaNcc.ToLower().Contains(SearchString.ToLower())) DanhSachNhaCungCap.Add(item);
                             break;
                         case "Tên nhà cung cấp":
                             if (item.TenNcc != null)
-                                if (item.TenNcc.Contains(SearchString)) DanhSachNhaCungCap.Add(item);
+                                if (item.TenNcc.ToLower().Contains(SearchString.ToLower())) DanhSachNhaCungCap.Add(item);
                             break;
                         case "Địa chỉ":
                             if (item.DiaChi != null)
-                                if (item.DiaChi.Contains(SearchString)) DanhSachNhaCungCap.Add(item);
+                                if (item.DiaChi.ToLower().Contains(SearchString.ToLower())) DanhSachNhaCungCap.Add(item);
                             break;
                         case "Số điện thoại":
                             if (item.Sdt != null)
-                                if (item.Sdt.Contains(SearchString)) DanhSachNhaCungCap.Add(item);
+                                if (item.Sdt.ToLower().Contains(SearchString.ToLower())) DanhSachNhaCungCap.Add(item);
                             break;
                         case "Email":
                             if (item.Email != null)
-                                if (item.Email.Contains(SearchString)) DanhSachNhaCungCap.Add(item);
+                                if (item.Email.ToLower().Contains(SearchString.ToLower())) DanhSachNhaCungCap.Add(item);
                             break;
                         default:
                             DanhSachNhaCungCap.Add(item);
@@ -150,8 +150,7 @@ namespace PMQuanLyVatTu.ViewModel
             msg.ShowDialog();
             if (msg.ReturnValue == true)
             {
-                var NCC = DataProvider.Instance.DB.Suppliers
-                            .Find(SelectedNhaCungCap.MaNcc);
+                var NCC = DataProvider.Instance.DB.Suppliers.Find(SelectedNhaCungCap.MaNcc);
 
                 if (NCC != null)
                 {

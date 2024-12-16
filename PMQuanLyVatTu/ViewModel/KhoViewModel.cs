@@ -107,15 +107,15 @@ namespace PMQuanLyVatTu.ViewModel
                     {
                         case "Mã kho":
                             if (item.MaKho != null)
-                                if (item.MaKho.Contains(SearchString)) DanhSachKho.Add(item);
+                                if (item.MaKho.ToLower().Contains(SearchString.ToLower())) DanhSachKho.Add(item);
                             break;
                         case "Loại vật tư":
                             if (item.LoaiVatTu != null)
-                                if (item.LoaiVatTu.Contains(SearchString)) DanhSachKho.Add(item);
+                                if (item.LoaiVatTu.ToLower().Contains(SearchString.ToLower())) DanhSachKho.Add(item);
                             break;
                         case "Địa chỉ":
                             if (item.DiaChi != null)
-                                if (item.DiaChi.Contains(SearchString)) DanhSachKho.Add(item);
+                                if (item.DiaChi.ToLower().Contains(SearchString.ToLower())) DanhSachKho.Add(item);
                             break;
                         default:
                             DanhSachKho.Add(item);
@@ -144,8 +144,7 @@ namespace PMQuanLyVatTu.ViewModel
             msg.ShowDialog();
             if (msg.ReturnValue == true)
             {
-                var Kho = DataProvider.Instance.DB.Warehouses
-                            .Find(SelectedKho.MaKho);
+                var Kho = DataProvider.Instance.DB.Warehouses.Find(SelectedKho.MaKho);
 
                 if (Kho != null)
                 {
