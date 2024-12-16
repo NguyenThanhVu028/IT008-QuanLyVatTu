@@ -98,10 +98,30 @@ namespace PMQuanLyVatTu.ViewModel
         {
             DanhSachKho.Clear();
 
-            var ListFromDB = DataProvider.Instance.DB.Warehouses.ToList();
-            foreach ( var item in ListFromDB)
+            var ListFromDB = DataProvider.Instance.DB.Warehouses.Where(c => c.DaXoa == false).ToList();
+            if (ListFromDB != null)
             {
-                DanhSachKho.Add(item);
+                foreach (var item in ListFromDB)
+                {
+                    switch (SelectedSearchFilter)
+                    {
+                        case "Mã kho":
+                            if (item.MaKho != null)
+                                if (item.MaKho.ToLower().Contains(SearchString.ToLower())) DanhSachKho.Add(item);
+                            break;
+                        case "Loại vật tư":
+                            if (item.LoaiVatTu != null)
+                                if (item.LoaiVatTu.ToLower().Contains(SearchString.ToLower())) DanhSachKho.Add(item);
+                            break;
+                        case "Địa chỉ":
+                            if (item.DiaChi != null)
+                                if (item.DiaChi.ToLower().Contains(SearchString.ToLower())) DanhSachKho.Add(item);
+                            break;
+                        default:
+                            DanhSachKho.Add(item);
+                            break;
+                    }
+                }
             }
             //DanhSachKho.Add(new Warehouse() { MaKho = "KHO0001", LoaiVatTu = "TB", DiaChi = "123 Phạm Trung Đông, Đại lộ Hà Nam Ninh" });
             //DanhSachKho.Add(new Warehouse() { MaKho = "KHO0002", LoaiVatTu = "VL", DiaChi = "123 Phạm Trung Đông, Đại lộ Hà Nam Ninh" });
@@ -124,7 +144,17 @@ namespace PMQuanLyVatTu.ViewModel
             msg.ShowDialog();
             if (msg.ReturnValue == true)
             {
-                //Xóa trong database
+                var Kho = DataProvider.Instance.DB.Warehouses.Find(SelectedKho.MaKho);
+
+                if (Kho != null)
+                {
+                    Kho.DaXoa = true;
+                    DataProvider.Instance.DB.SaveChanges();
+                }
+                else
+                {
+                    msg = new CustomMessage("/Material/Images/Icons/wrong.png", "LỖI", "Không tìm thấy kho để xóa!", false);
+                }
             }
             Refresh();
         }
