@@ -133,19 +133,19 @@ namespace PMQuanLyVatTu.ViewModel
                     {
                         case "Mã nhân viên":
                             if (item.MaNv != null)
-                                if (item.MaNv.Contains(SearchString)) DanhSachNhanVien.Add(item);
+                                if (item.MaNv.ToLower().Contains(SearchString.ToLower())) DanhSachNhanVien.Add(item);
                             break;
                         case "Họ và tên":
                             if (item.HoTen != null)
-                                if (item.HoTen.Contains(SearchString)) DanhSachNhanVien.Add(item);
+                                if (item.HoTen.ToLower().Contains(SearchString.ToLower())) DanhSachNhanVien.Add(item);
                             break;
                         case "Chức vụ":
                             if (item.ChucVu != null)
-                                if (item.ChucVu.Contains(SearchString)) DanhSachNhanVien.Add(item);
+                                if (item.ChucVu.ToLower().Contains(SearchString.ToLower())) DanhSachNhanVien.Add(item);
                             break;
                         case "Giới tính":
                             if (item.GioiTinh != null)
-                                if (item.GioiTinh.Contains(SearchString)) DanhSachNhanVien.Add(item);
+                                if (item.GioiTinh.ToLower().Contains(SearchString.ToLower())) DanhSachNhanVien.Add(item);
                             break;
                         case "Ngày sinh":
                             if (item.NgaySinh != null)
@@ -153,15 +153,15 @@ namespace PMQuanLyVatTu.ViewModel
                             break;
                         case "Số điện thoại":
                             if (item.Sdt != null)
-                                if (item.Sdt.Contains(SearchString)) DanhSachNhanVien.Add(item);
+                                if (item.Sdt.ToLower().Contains(SearchString.ToLower())) DanhSachNhanVien.Add(item);
                             break;
                         case "Email":
                             if (item.Email != null)
-                                if (item.Email.Contains(SearchString)) DanhSachNhanVien.Add(item);
+                                if (item.Email.ToLower().Contains(SearchString.ToLower())) DanhSachNhanVien.Add(item);
                             break;
                         case "Địa chỉ":
                             if (item.DiaChi != null)
-                                if (item.DiaChi.Contains(SearchString)) DanhSachNhanVien.Add(item);
+                                if (item.DiaChi.ToLower().Contains(SearchString.ToLower())) DanhSachNhanVien.Add(item);
                             break;
                         case "Lương":
                             if (item.Luong != null)
@@ -187,6 +187,7 @@ namespace PMQuanLyVatTu.ViewModel
             for (int i = 0; i < DanhSachNhanVien.Count(); i++)
             {
                 _tempDS[i].Visibility = Visibility.Visible;
+                _tempDS[i].DataContext = null;
                 _tempDS[i].DataContext = DanhSachNhanVien[i];
             }
             for (int i = DanhSachNhanVien.Count(); i < _tempDS.Count(); i++) _tempDS[i].Visibility = Visibility.Collapsed;

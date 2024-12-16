@@ -1,5 +1,6 @@
 ﻿using Microsoft.Win32;
 using PMQuanLyVatTu.ErrorMessage;
+using PMQuanLyVatTu.Models;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -170,6 +171,8 @@ namespace PMQuanLyVatTu.ViewModel
         public ICommand SaveInfoCommand { get; set; }
         void SaveInfo(object t)
         {
+            //Lưu ý chuyển đổi từ string NgaySinh thành NgaySinh của employee thì dùng employee.NgaySinh = DateOnly.ParseExact(NgaySinh, "ddd/dd/MM/yyyy"); và đặt trong khối try-catch
+
             if (EditMode == true) //Nếu đang chế độ chỉnh sửa
             {
                 EnableEditing = false;
@@ -213,6 +216,10 @@ namespace PMQuanLyVatTu.ViewModel
         void LoadData(string manv)
         {
             //Dùng manv để load dữ liệu từ database
+            //Lưu ý, để đổ NgaySinh từ DateOnly? thành string với đúng định dạng để dễ Parse lúc lưu thì dùng:
+            //NgaySinh = ((DateOnly)employee.NgaySinh).ToDateTime(TimeOnly.MinValue).ToString("ddd/dd/MM/yyyy");
+            //Nhớ kiểm tra ngày sinh khác null
+
             MaNV = manv;
             HoTen = "Nguyễn Văn A";
             CVu = "QL";
