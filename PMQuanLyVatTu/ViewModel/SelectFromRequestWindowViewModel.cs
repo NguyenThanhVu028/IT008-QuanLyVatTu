@@ -25,6 +25,8 @@ namespace PMQuanLyVatTu.ViewModel
         #region Info
         private string _ma1 = "";
         private string _ma2 = "";
+        private double _chietKhau = 0;
+        private double _vAT = 0;
         public string Ma1
         {
             get { return _ma1; }
@@ -34,6 +36,16 @@ namespace PMQuanLyVatTu.ViewModel
         {
             get { return _ma2; }
             set { _ma2 = value; OnPropertyChanged(); }
+        }
+        public double ChietKhau
+        {
+            get { return _chietKhau; }
+            set { _chietKhau = value; OnPropertyChanged(); }
+        }
+        public double VAT
+        {
+            get { return _vAT; }
+            set { _vAT = value; OnPropertyChanged(); }
         }
         #endregion
         #region IsYCN
@@ -99,7 +111,7 @@ namespace PMQuanLyVatTu.ViewModel
                         var item = DataProvider.Instance.DB.Supplies.Find(YC.MaVt);
                         if(item != null)
                         {
-                            Ma1 = item.MaNcc; Ma2 = item.MaKho;
+                            Ma1 = item.MaNcc ?? ""; Ma2 = item.MaKho ?? "";
                         }
                     }
                 }
@@ -108,7 +120,7 @@ namespace PMQuanLyVatTu.ViewModel
                     var Request = DataProvider.Instance.DB.ExportRequests.Find(SelectedYeuCau.MaYC);
                     if(Request != null)
                     {
-                        Ma1 = Request.MaKh; Ma2 = Request.KhoXuat;
+                        Ma1 = Request.MaKh ?? ""; Ma2 = Request.KhoXuat ?? "";
                     }
                 }
                 ReturnValue = true;
@@ -136,9 +148,9 @@ namespace PMQuanLyVatTu.ViewModel
                     var item = DataProvider.Instance.DB.Supplies.Find(request.MaVt);
                     if(item != null)
                     {
-                        if(item.MaNcc.Contains(ma1) && item.MaKho.Contains(ma2))
+                        if((item.MaNcc == null || item.MaNcc.Contains(ma1)) && (item.MaKho == null || (item.MaKho.Contains(ma2))))
                         {
-                            Request temp = new Request(); temp.MaYC = request.MaYcn; temp.NgayLap = request.NgayLap;
+                            Request temp = new Request(); temp.MaYC = request.MaYcn; temp.NgayLap = request.NgayLap??default;
                             DanhSachYeuCau.Add(temp);
                         }
                     }
@@ -149,9 +161,9 @@ namespace PMQuanLyVatTu.ViewModel
                 var ListFromDB = DataProvider.Instance.DB.ExportRequests.Where(p=>p.DaXoa == false).ToList();
                 foreach(var item in ListFromDB)
                 {
-                    if (item.MaKh.Contains(ma1) && item.KhoXuat.Contains(ma2))
+                    if ((item.MaKh == null || item.MaKh.Contains(ma1)) && (item.KhoXuat == null || item.KhoXuat.Contains(ma2)))
                     {
-                        Request temp = new Request(); temp.MaYC = item.MaYcx; temp.NgayLap = item.NgayLap;
+                        Request temp = new Request(); temp.MaYC = item.MaYcx; temp.NgayLap = item.NgayLap??default;
                         DanhSachYeuCau.Add(temp);
                     }
                 }
@@ -186,6 +198,13 @@ namespace PMQuanLyVatTu.ViewModel
             //DanhSachYeuCauXuat.Add(new ExportRequest() { MaYCX = "YCN0001", NgayLap = "Friday,06/12/2024" });
             //DanhSachYeuCauXuat.Add(new ExportRequest() { MaYCX = "YCN0002", NgayLap = "Friday,06/12/2024" });
             //DanhSachYeuCauXuat.Add(new ExportRequest() { MaYCX = "YCN0003", NgayLap = "Friday,06/12/2024" });
+        }
+        void SelectionChanged(object sender, EventArgs e)
+        {
+            if(!IsYCN)
+            {
+                ChietKhau = 0; VAT = 0;
+            }
         }
         #endregion
         public class Request

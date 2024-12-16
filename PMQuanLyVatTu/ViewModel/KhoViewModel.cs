@@ -151,6 +151,8 @@ namespace PMQuanLyVatTu.ViewModel
                     Kho.DaXoa = true;
                     Kho.ThoiGianXoa = DateTime.Now;
                     DataProvider.Instance.DB.SaveChanges();
+                    msg = new CustomMessage("/Material/Images/Icons/success.png", "THÔNG BÁO", "Xóa kho thành công.");
+                    msg.ShowDialog();
                 }
                 else
                 {

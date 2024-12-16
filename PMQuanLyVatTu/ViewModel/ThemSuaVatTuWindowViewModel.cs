@@ -1,4 +1,5 @@
-﻿using PMQuanLyVatTu.ErrorMessage;
+﻿using Microsoft.IdentityModel.Tokens;
+using PMQuanLyVatTu.ErrorMessage;
 using PMQuanLyVatTu.Models;
 using PMQuanLyVatTu.View;
 using System;
@@ -16,7 +17,7 @@ namespace PMQuanLyVatTu.ViewModel
     {
         public ThemSuaVatTuWindowViewModel(string makho = "", string mancc = "")
         {
-            Makho = makho; MaNCC = mancc;
+            Makho = makho; MaNCC = mancc; ReturnValue = false;
             
             LoadVatTu();
 
@@ -91,17 +92,35 @@ namespace PMQuanLyVatTu.ViewModel
         }
         public ICommand ConfirmCommand { get; set; }
         void Confirm(Window t) {
-            if(MaVT == "")
+            if(MaVT.IsNullOrEmpty())
             {
                 CustomMessage msg1 = new CustomMessage("/Material/Images/Icons/wrong.png", "LỖI", "Vui lòng chọn mã vật tư.", false);
                 msg1.ShowDialog();
                 return;
             }
+
             if(SoLuong < 0 || ChietKhau < 0 || VAT < 0)
             {
                 CustomMessage msg1 = new CustomMessage("/Material/Images/Icons/wrong.png", "LỖI", "Không được nhập số âm.", false);
                 msg1.ShowDialog();
                 return;
+            }
+            var supplies = DataProvider.Instance.DB.Supplies.Find(MaVT);
+            if (supplies == null)
+            {
+                CustomMessage msg1 = new CustomMessage("/Material/Images/Icons/wrong.png", "LỖI", "Vật tư đã không còn trên hệ thống.", false);
+                msg1.ShowDialog();
+                return;
+            }
+            else
+            {
+                if(supplies.SoLuongTonKho != null)
+                    if(SoLuong > supplies.SoLuongTonKho)
+                    {
+                        CustomMessage msg1 = new CustomMessage("/Material/Images/Icons/wrong.png", "LỖI", "Số lượng tồn kho không đủ. Tồn kho: " + supplies.SoLuongTonKho, false);
+                        msg1.ShowDialog();
+                        return;
+                    }
             }
             //CustomMessage msg = new CustomMessage("/Material/Images/Icons/success.png", "THÀNH CÔNG", "Đã lưu thông tin.", false);
             //msg.ShowDialog();
@@ -116,7 +135,7 @@ namespace PMQuanLyVatTu.ViewModel
             var ListFromDB = DataProvider.Instance.DB.Supplies.Where(p=>p.DaXoa == false).ToList();
             foreach (var item in ListFromDB)
             {
-                if(item.MaKho.Contains(Makho) && item.MaNcc.Contains(MaNCC)) DanhSachVatTu.Add(item.MaVt);
+                if((item.MaKho == null ||item.MaKho.Contains(Makho)) && (item.MaNcc == null || item.MaNcc.Contains(MaNCC))) DanhSachVatTu.Add(item.MaVt);
             }
         }
         #endregion  

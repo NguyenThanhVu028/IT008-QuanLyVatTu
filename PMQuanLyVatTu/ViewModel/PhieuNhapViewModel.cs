@@ -1,5 +1,6 @@
 ﻿using PMQuanLyVatTu.ErrorMessage;
 using PMQuanLyVatTu.Models;
+using PMQuanLyVatTu.User;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -22,6 +23,10 @@ namespace PMQuanLyVatTu.ViewModel
             //DeleteSelectedCommand = new RelayCommand<object>(DeleteSelected);
             Refresh();
         }
+        #region User
+        CurrentUser _user = CurrentUser.Instance;
+        public CurrentUser User { get { return _user; } }
+        #endregion
         #region Data for SelectionList
         private ObservableCollection<string> _searchFilter = new ObservableCollection<string>() { "Mã phiếu nhập", "Mã nhân viên", "Mã nhà cung cấp", "Ngày lập phiếu", "Kho nhập", "Trạng thái" };
         public ObservableCollection<string> SearchFilter
@@ -81,11 +86,43 @@ namespace PMQuanLyVatTu.ViewModel
         void Refresh(object t = null)
         {
             DanhSachPhieuNhap.Clear();
+            var ListFromDB = DataProvider.Instance.DB.GoodsReceivedNotes.Where(p => p.DaXoa == false).ToList();
 
-            var ListFromDB = DataProvider.Instance.DB.GoodsReceivedNotes.ToList();
-            foreach ( var item in ListFromDB )
+            if (ListFromDB != null)
             {
-                if (item.DaXoa == false) DanhSachPhieuNhap.Add(item);
+                foreach(var item in ListFromDB)
+                {
+                    switch (SelectedSearchFilter)
+                    {
+                        case "Mã phiếu nhập":
+                            if (item.MaPn != null)
+                                if (item.MaPn.ToLower().Contains(SearchString.ToLower())) DanhSachPhieuNhap.Add(item);
+                            break;
+                        case "Mã nhân viên":
+                            if (item.MaNv != null)
+                                if (item.MaNv.ToLower().Contains(SearchString.ToLower())) DanhSachPhieuNhap.Add(item);
+                            break;
+                        case "Mã nhà cung cấp":
+                            if (item.MaNcc != null)
+                                if (item.MaNcc.ToLower().Contains(SearchString.ToLower())) DanhSachPhieuNhap.Add(item);
+                            break;
+                        case "Ngày lập phiếu":
+                            if (item.NgayLap != null)
+                                if (item.NgayLap.ToString().Contains(SearchString)) DanhSachPhieuNhap.Add(item);
+                            break;
+                        case "Kho nhập":
+                            if (item.KhoNhap != null)
+                                if (item.KhoNhap.ToLower().Contains(SearchString.ToLower())) DanhSachPhieuNhap.Add(item);
+                            break;
+                        case "Trạng thái":
+                            if (item.TrangThai != null)
+                                if (item.TrangThai.ToLower().Contains(SearchString.ToLower())) DanhSachPhieuNhap.Add(item);
+                            break;
+                        default:
+                            DanhSachPhieuNhap.Add(item);
+                            break;
+                    }
+                }
             }
         }
         public ICommand EditButtonCommand { get; set; }
@@ -104,7 +141,21 @@ namespace PMQuanLyVatTu.ViewModel
             msg.ShowDialog();
             if (msg.ReturnValue == true)
             {
-                
+                var PhieuNhap = DataProvider.Instance.DB.GoodsReceivedNotes.Find(SelectedPhieuNhap.MaPn);
+                if(PhieuNhap == null)
+                {
+                    msg = new CustomMessage("/Material/Images/Icons/wrong.png", "LỖI", "Không tìm thấy nhà cung cấp để xóa!", false);
+                    msg.ShowDialog();
+                }
+                else
+                {
+                    PhieuNhap.DaXoa = true;
+                    PhieuNhap.ThoiGianXoa = DateTime.Now;
+                    DataProvider.Instance.DB.SaveChanges();
+
+                    CustomMessage msg1 = new CustomMessage("/Material/Images/Icons/success.png", "THÔNG BÁO", "Xóa phiếu nhập thành công.");
+                    msg1.ShowDialog();
+                }
             }
             Refresh();
         }

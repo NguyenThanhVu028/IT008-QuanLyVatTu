@@ -7,7 +7,7 @@
         xmlns:CustomControl="clr-namespace:PMQuanLyVatTu.CustomControls"
         xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
         mc:Ignorable="d"
-        Title="SelectFromRequestWindow" Height="400" Width="450"
+        Title="SelectFromRequestWindow" Height="350" Width="550"
         WindowStartupLocation="CenterScreen"
         Background="Transparent"
         AllowsTransparency="True"
@@ -19,7 +19,7 @@
             <i:Interaction.Triggers>
                 <i:EventTrigger EventName="MouseLeftButtonDown">
                     <i:InvokeCommandAction Command="{Binding MoveWindowCommand}"
-                               CommandParameter="{Binding ElementName=ChangePasswordWin}"/>
+                               CommandParameter="{Binding ElementName=ThisWin}"/>
                 </i:EventTrigger>
             </i:Interaction.Triggers>
         </Border>
@@ -34,7 +34,7 @@
         <Border Grid.Row="1"
                 HorizontalAlignment="Stretch"
                 VerticalAlignment="Stretch"
-                Margin="20, 70, 20, 70"
+                Margin="20, 70, 120, 20"
                 Background="White"
                 BorderBrush="{StaticResource DarkGreen2}"
                 BorderThickness="2"
@@ -60,12 +60,49 @@
                                         IsReadOnly="True"
                                         Binding="{Binding NgayLap}"/>
                     </DataGrid.Columns>
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="SelectionChanged">
+                            <i:InvokeCommandAction Command="{Binding SelectionChanged}"/>
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
                 </DataGrid>
             </Grid>
-
         </Border>
-        <CustomControl:CustomButton VerticalAlignment="Bottom"
-                                    HorizontalAlignment="Right"
+        <StackPanel HorizontalAlignment="Right"
+                    VerticalAlignment="Top"
+                    Margin="0, 70, 10, 0">
+            <TextBlock HorizontalAlignment="Left"
+                       VerticalAlignment="Top" 
+                       Margin="0,0,0,5"
+                       Text="Chiết khấu:"
+                       FontSize="18"
+                       Foreground="White"
+                       FontFamily="/Material/Fonts/Lexend/#Lexend Medium"
+                       FontWeight="Medium" Grid.Column="1"/>
+            <CustomControl:CustomTextbox Height="40"
+                                         Width="100"
+                                         Text="{Binding ChietKhau}"
+                                         VerticalAlignment="Bottom"
+                                         HorizontalAlignment="Left"
+                                         Margin="0, 0, 0, 0"
+                                         RadiusOfCorner="10"/>
+            <TextBlock HorizontalAlignment="Left"
+                       VerticalAlignment="Top" 
+                       Margin="0,5,0,5"
+                       Text="VAT:"
+                       FontSize="18"
+                       Foreground="White"
+                       FontFamily="/Material/Fonts/Lexend/#Lexend Medium"
+                       FontWeight="Medium" Grid.Column="1"/>
+            <CustomControl:CustomTextbox Height="40"
+                                         Width="100"
+                                         Text="{Binding VAT}"
+                                         VerticalAlignment="Bottom"
+                                         HorizontalAlignment="Left"
+                                         Margin="0, 0, 0, 0"
+                                         RadiusOfCorner="10"/>
+            <CustomControl:CustomButton VerticalAlignment="Top"
+                                    HorizontalAlignment="Left"
                                     RadiusOfCorner="10"
                                     DisplayText="Xác nhận"
                                     TextSize="15"
@@ -73,12 +110,12 @@
                                     BorderBackgroundClicked="Aqua"
                                     BorderColor="{StaticResource DarkGreen2}"
                                     BorderColorHighlight="{StaticResource DarkGreen3}"
-                                    Margin="0, 0, 40, 20"
-                                    Width="120"
+                                    Margin="0, 20, 0, 0"
+                                    Width="100"
                                     Height="40"
                                     Command="{Binding ConfirmCommand}"
                                     CommandParameter="{Binding ElementName=ThisWin}"/>
-        <CustomControl:CustomButton VerticalAlignment="Bottom"
+            <CustomControl:CustomButton VerticalAlignment="Top"
                                     HorizontalAlignment="Left"
                                     RadiusOfCorner="10"
                                     DisplayText="Hủy"
@@ -87,10 +124,30 @@
                                     BorderColorHighlight="Red"
                                     BorderBackgroundClicked="{StaticResource DarkRed}"
                                     BorderColor="{StaticResource DarkRed}"
-                                    Margin="40, 0, 0, 20"
-                                    Width="120"
+                                    Margin="0, 10, 0, 0"
+                                    Width="100"
                                     Height="40"
                                     Command="{Binding CancelCommand}"
                                     CommandParameter="{Binding ElementName=ThisWin}"/>
+        </StackPanel>
+        <Border Height="40"
+                Width="100"
+                Background="Gray"
+                VerticalAlignment="Top"
+                HorizontalAlignment="Right"
+                Margin="0, 97.5, 10, 0"
+                CornerRadius="10"
+                Opacity="0.6"
+                Visibility="{Binding IsYCN, Converter={StaticResource ReverseBoolToVisibilityConverter}}"/>
+        <Border Height="40"
+                Width="100"
+                Background="Gray"
+                VerticalAlignment="Top"
+                HorizontalAlignment="Right"
+                Margin="0, 170, 10, 0"
+                CornerRadius="10"
+                Opacity="0.6"
+                Visibility="{Binding IsYCN, Converter={StaticResource ReverseBoolToVisibilityConverter}}"/>
+
     </Grid>
 </Window>

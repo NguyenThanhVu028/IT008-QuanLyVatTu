@@ -19,4 +19,5 @@
     <convert:Position134 x:Key="Allow134"/>
     <convert:TrangThaiConverter x:Key="TrangThaiConverter"/>
     <convert:TrangthaiToColorConverter x:Key="TrangThaiToColorConverter"/>
+    <convert:DateTimeConverter x:Key="DateTimeConverter"/>
 </ResourceDictionary>

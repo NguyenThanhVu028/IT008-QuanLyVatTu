@@ -157,10 +157,13 @@ namespace PMQuanLyVatTu.ViewModel
                     NCC.DaXoa = true;
                     NCC.ThoiGianXoa = DateTime.Now;
                     DataProvider.Instance.DB.SaveChanges();
+                    msg = new CustomMessage("/Material/Images/Icons/success.png", "THÔNG BÁO", "Xóa nhà cung cấp thành công.");
+                    msg.ShowDialog();
                 }
                 else
                 {
                     msg = new CustomMessage("/Material/Images/Icons/wrong.png", "LỖI", "Không tìm thấy nhà cung cấp để xóa!", false);
+                    msg.ShowDialog();
                 }
             }
             Refresh();

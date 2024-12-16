@@ -201,6 +201,13 @@ namespace PMQuanLyVatTu.ViewModel
                     vt.DaXoa = true;
                     vt.ThoiGianXoa = DateTime.Now;
                     DataProvider.Instance.DB.SaveChanges();
+                    CustomMessage msg1 = new CustomMessage("/Material/Images/Icons/success.png", "THÔNG BÁO", "Xóa vật tư thành công.");
+                    msg1.ShowDialog();
+                }
+                else
+                {
+                    msg = new CustomMessage("/Material/Images/Icons/wrong.png", "LỖI", "Không tìm thấy vật tư để xóa!", false);
+                    msg.ShowDialog();
                 }
             }
             Refresh();

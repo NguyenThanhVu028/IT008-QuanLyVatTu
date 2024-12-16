@@ -210,6 +210,8 @@ namespace PMQuanLyVatTu.ViewModel
                     VT.SoLuongTonKho = SoLuongTonKho;
                     VT.ImageLocation = ImageLocation;
                     DataProvider.Instance.DB.SaveChanges();
+                    CustomMessage msg = new CustomMessage("/Material/Images/Icons/success.png", "THÀNH CÔNG", "Đã lưu thông tin chỉnh sửa.");
+                    msg.ShowDialog();
                 }
                 else
                 {
@@ -217,8 +219,6 @@ namespace PMQuanLyVatTu.ViewModel
                     msg1.ShowDialog();
                     return;
                 }
-                CustomMessage msg = new CustomMessage("/Material/Images/Icons/success.png", "THÀNH CÔNG", "Đã lưu thông tin chỉnh sửa.");
-                msg.ShowDialog();
             }
             else //Nếu trong chế độ thêm vật tư
             {
