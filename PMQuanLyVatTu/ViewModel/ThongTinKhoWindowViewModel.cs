@@ -106,6 +106,7 @@ namespace PMQuanLyVatTu.ViewModel
                 if (Kho != null)
                 {
                     Kho.DaXoa = true;
+                    Kho.ThoiGianXoa = DateTime.Now;
                     DataProvider.Instance.DB.SaveChanges();
                 }
                 else

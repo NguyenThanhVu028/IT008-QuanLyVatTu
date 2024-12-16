@@ -155,6 +155,7 @@ namespace PMQuanLyVatTu.ViewModel
                 if (NCC != null)
                 {
                     NCC.DaXoa = true;
+                    NCC.ThoiGianXoa = DateTime.Now;
                     DataProvider.Instance.DB.SaveChanges();
                 }
                 else
