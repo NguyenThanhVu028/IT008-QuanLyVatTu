@@ -25,7 +25,7 @@ namespace PMQuanLyVatTu.ViewModel
         public ChiTietPhieuNhapWindowViewModel(string mapn = null) 
         {
             if(mapn != null) { EditMode = true; Title = "CHỈNH SỬA PHIẾU NHẬP"; LoadData(mapn); LoadDanhSach();}
-            else { EditMode = false; EnableEditing = true; Title = "THÊM PHIẾU NHẬP"; MaNV = CurrentUser.Instance.MaNv; }
+            else { EditMode = false; EnableEditing = true; Title = "THÊM PHIẾU NHẬP"; MaNV = CurrentUser.Instance.MaNv; NgayLap = DateTime.Now.ToString("ddd/dd/MM/yyyy"); }
 
             LoadNhaCungCap(); LoadKho(); LoadNhanVien();
 

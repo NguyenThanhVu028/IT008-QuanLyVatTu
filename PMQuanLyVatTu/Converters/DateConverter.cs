@@ -14,7 +14,7 @@ namespace PMQuanLyVatTu.Converters
         {
             if (value != null)
             {
-                return ((DateTime)value).ToString("dd/MM/yyy HH:mm:ss");
+                return ((DateTime)value).ToString("dd/MM/yyy");
             }
             else return "";
         }

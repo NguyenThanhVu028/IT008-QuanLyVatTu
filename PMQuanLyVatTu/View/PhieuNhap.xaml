@@ -64,7 +64,7 @@
                     <DataGridTextColumn Header="Ngày lập yêu cầu"
                                         Width="200"
                                         IsReadOnly="True"
-                                        Binding="{Binding NgayLap, Converter={StaticResource DateTimeConverter}}"/>
+                                        Binding="{Binding NgayLap, Mode=OneWay, Converter={StaticResource DateTimeConverter}}"/>
                     <DataGridTextColumn Header="Lý do nhập"
                                         Width="250"
                                         IsReadOnly="True"

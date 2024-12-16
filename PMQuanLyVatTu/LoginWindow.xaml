@@ -52,7 +52,7 @@
                         HorizontalAlignment="Right">
                 <CustomControl:ImageButton Width="25"
                                            Height="25"
-                                           BorderBackgroundHightlight="#FF063747"
+                                           BorderBackgroundHightlight="{StaticResource DarkGreenTransparent1}"
                                            HorizontalAlignment="Right"
                                            Margin="0,0,10,0"
                                            ImageLocation="/Material/Images/Icons/minimize2.png"
@@ -60,7 +60,7 @@
                                            CommandParameter="{Binding ElementName=LoginWin}"/>
                 <CustomControl:ImageButton Width="25"
                                            Height="25"
-                                           BorderBackgroundHightlight="{StaticResource RedTransparent1}"
+                                           BorderBackgroundHightlight="{StaticResource RedTransparent2}"
                                            HorizontalAlignment="Right"
                                            Margin="0,0,10,0"
                                            ImageLocation="/Material/Images/Icons/close2.png"
@@ -141,7 +141,7 @@
                                             BorderColor="{StaticResource LightAqua1a}"
                                             BorderColorHighlight="{StaticResource Aqua}"
                                             BorderBackground="Transparent"
-                                            BorderBackgroundClicked="#7F003547"
+                                            BorderBackgroundClicked="{StaticResource DarkGreenTransparent1}"
                                             BorderThick="2"
                                             RadiusOfCorner="10"
                                             TextSize="20"
