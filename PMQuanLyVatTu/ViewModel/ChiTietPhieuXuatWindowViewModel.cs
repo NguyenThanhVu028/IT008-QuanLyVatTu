@@ -1,9 +1,11 @@
-﻿using PMQuanLyVatTu.ErrorMessage;
+﻿using Microsoft.IdentityModel.Tokens;
+using PMQuanLyVatTu.ErrorMessage;
 using PMQuanLyVatTu.Models;
 using PMQuanLyVatTu.User;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Globalization;
 using System.Linq;
 using System.Runtime;
 using System.Text;
@@ -29,7 +31,7 @@ namespace PMQuanLyVatTu.ViewModel
             EditInfoCommand = new RelayCommand<object>(EditInfo);
             InPhieuCommand = new RelayCommand<object>(InPhieu);
             DeleteButtonCommand = new RelayCommand<Window>(DeleteButton);
-            SaveInfoCommand = new RelayCommand<object>(SaveInfo);
+            SaveInfoCommand = new RelayCommand<Window>(SaveInfo);
             AddCommand = new RelayCommand<object>(Add);
             DeleteSelectedCommand = new RelayCommand<object>(DeleteSelected);
             SelectFromRequestCommand = new RelayCommand<object>(SelectFromRequest);
@@ -194,53 +196,177 @@ namespace PMQuanLyVatTu.ViewModel
         public ICommand DeleteButtonCommand {  get; set; }
         void DeleteButton(Window t)
         {
-            CustomMessage msg = new CustomMessage("/Material/Images/Icons/question.png", "THÔNG BÁO", "Bạn có muốn xóa vật tư đã chọn?");
+            CustomMessage msg = new CustomMessage("/Material/Images/Icons/question.png", "THÔNG BÁO", "Bạn có muốn xóa phiếu xuất đã chọn?");
             msg.ShowDialog();
             if (msg.ReturnValue == true)
             { //Chấp nhận xóa
                 EnableEditing = false;
-                //Xóa
+                var PhieuXuat = DataProvider.Instance.DB.GoodsDeliveryNotes.Find(MaPX);
+                if(PhieuXuat == null)
+                {
+                    msg = new CustomMessage("/Material/Images/Icons/wrong.png", "LỖI", "Không tìm thấy phiếu để xóa!", false);
+                    msg.ShowDialog();
+                }
+                else
+                {
+                    PhieuXuat.DaXoa = true;
+                    PhieuXuat.ThoiGianXoa = DateTime.Now;
+                    DataProvider.Instance.DB.SaveChanges();
+
+                    CustomMessage msg1 = new CustomMessage("/Material/Images/Icons/success.png", "THÔNG BÁO", "Xóa phiếu nhập thành công.");
+                    msg1.ShowDialog();
+                }
+
                 t.Close();
             }
         }
         public ICommand SaveInfoCommand { get; set; }
-        void SaveInfo(object t)
+        void SaveInfo(Window t)
         {
             if (EditMode == true) //Nếu đang chế độ chỉnh sửa
             {
                 EnableEditing = false;
-                //Thay đổi Info
-                CustomMessage msg = new CustomMessage("/Material/Images/Icons/success.png", "THÀNH CÔNG", "Đã lưu thông tin chỉnh sửa.", false);
-                msg.ShowDialog();
+                var PhieuXuat = DataProvider.Instance.DB.GoodsDeliveryNotes.Find(MaPX);
+                if(PhieuXuat != null)
+                {
+                    PhieuXuat.MaNv = MaNV;
+                    PhieuXuat.MaKh = MaKH;
+                    PhieuXuat.KhoXuat = KhoXuat;
+                    try{ PhieuXuat.NgayLap = DateTime.ParseExact(NgayLap, "ddd/dd/MM/yyyy", CultureInfo.InvariantCulture); }
+                    catch{ PhieuXuat.NgayLap = default; }
+                    PhieuXuat.LyDoXuat = LyDoXuat;
+                    PhieuXuat.ChietKhau = ChietKhau;
+                    PhieuXuat.Vat = VAT;
+                    PhieuXuat.TongGia = TongGia;
+                    PhieuXuat.TrangThai = "Chưa duyệt";
+                    PhieuXuat.DaXoa = false;
+
+                    var PhieuXuatInfos = DataProvider.Instance.DB.GoodsDeliveryNoteInfos.Where(p => p.MaPx == MaPX);
+                    if (PhieuXuatInfos != null) DataProvider.Instance.DB.GoodsDeliveryNoteInfos.RemoveRange(PhieuXuatInfos);
+
+                    foreach (var item in DanhSachVatTu)
+                    {
+                        GoodsDeliveryNoteInfo temp = new GoodsDeliveryNoteInfo() { MaPx = MaPX, MaVt = item.MaVT, SoLuong = item.SoLuong, ChietKhau = item.ChietKhau, Vat = item.VAT };
+                        DataProvider.Instance.DB.GoodsDeliveryNoteInfos.Add(temp);
+                    }
+                    DataProvider.Instance.DB.SaveChanges();
+                    CustomMessage msg = new CustomMessage("/Material/Images/Icons/success.png", "THÀNH CÔNG", "Đã lưu thông tin chỉnh sửa.", false);
+                    msg.ShowDialog();
+                }
+                else
+                {
+                    CustomMessage msg1 = new CustomMessage("/Material/Images/Icons/wrong.png", "LỖI", "Phiếu đã không còn trên hệ thống.");
+                    msg1.ShowDialog();
+                    return;
+                }
+
             }
             else //Nếu trong chế độ thêm 
             {
-                if (MaPX == "") //Chưa nhập mã 
+                if (MaPX.IsNullOrEmpty()) //Chưa nhập mã 
                 {
                     CustomMessage msg1 = new CustomMessage("/Material/Images/Icons/wrong.png", "LỖI", "Vui lòng nhập mã phiếu xuất hàng.", false);
                     msg1.ShowDialog();
                     return;
                 }
-                if (true) //Trùng mã 
+                if(MaPX.Length > 6)
                 {
-                    AlreadyExistsError msg1 = new AlreadyExistsError();
+                    CustomMessage msg1 = new CustomMessage("/Material/Images/Icons/wrong.png", "LỖI", "Mã phiếu không được vượt quá 6 ký tự.", false);
                     msg1.ShowDialog();
+                    return;
+                }
+                if (MaNV.IsNullOrEmpty())
+                {
+                    CustomMessage msg1 = new CustomMessage("/Material/Images/Icons/wrong.png", "LỖI", "Vui lòng chọn mã nhân viên.", false);
+                    msg1.ShowDialog();
+                    return;
+                }
+                if (MaKH.IsNullOrEmpty())
+                {
+                    CustomMessage msg1 = new CustomMessage("/Material/Images/Icons/wrong.png", "LỖI", "Vui lòng chọn mã khách hàng.", false);
+                    msg1.ShowDialog();
+                    return;
+                }
+                if (KhoXuat.IsNullOrEmpty())
+                {
+                    CustomMessage msg1 = new CustomMessage("/Material/Images/Icons/wrong.png", "LỖI", "Vui lòng chọn kho xuất.", false);
+                    msg1.ShowDialog();
+                    return;
+                }
+                var PhieuXuat = DataProvider.Instance.DB.GoodsDeliveryNotes.Find(MaPX);
+                if (PhieuXuat != null) //Trùng mã 
+                {
+                    if(PhieuXuat.DaXoa == false)
+                    {
+                        AlreadyExistsError msg1 = new AlreadyExistsError();
+                        msg1.ShowDialog();
+                        return;
+                    }
+                    else
+                    {
+                        PhieuXuat.MaNv = MaNV;
+                        PhieuXuat.MaKh = MaKH;
+                        PhieuXuat.KhoXuat = KhoXuat;
+                        try { PhieuXuat.NgayLap = DateTime.ParseExact(NgayLap, "ddd/dd/MM/yyyy", CultureInfo.InvariantCulture); }
+                        catch { PhieuXuat.NgayLap = default; }
+                        PhieuXuat.LyDoXuat = LyDoXuat;
+                        PhieuXuat.ChietKhau = ChietKhau;
+                        PhieuXuat.Vat = VAT;
+                        PhieuXuat.TongGia = TongGia;
+                        PhieuXuat.TrangThai = "Chưa duyệt";
+                        PhieuXuat.DaXoa = false;
+
+                        var PhieuXuatInfos = DataProvider.Instance.DB.GoodsDeliveryNoteInfos.Where(p => p.MaPx == MaPX);
+                        if (PhieuXuatInfos != null) DataProvider.Instance.DB.GoodsDeliveryNoteInfos.RemoveRange(PhieuXuatInfos);
+
+                        foreach (var item in DanhSachVatTu)
+                        {
+                            GoodsDeliveryNoteInfo temp = new GoodsDeliveryNoteInfo() { MaPx = MaPX, MaVt = item.MaVT, SoLuong = item.SoLuong, ChietKhau = item.ChietKhau, Vat = item.VAT };
+                            DataProvider.Instance.DB.GoodsDeliveryNoteInfos.Add(temp);
+                        }
+                    }
+                }
+                else
+                {
+                    GoodsDeliveryNote px = new GoodsDeliveryNote();
+                    px.MaPx = MaPX;
+                    px.MaNv = MaNV;
+                    px.MaKh = MaKH;
+                    px.KhoXuat = KhoXuat;
+                    try { px.NgayLap = DateTime.ParseExact(NgayLap, "ddd/dd/MM/yyyy", CultureInfo.InvariantCulture); }
+                    catch { px.NgayLap = default; }
+                    px.LyDoXuat = LyDoXuat;
+                    px.ChietKhau = ChietKhau;
+                    px.Vat = VAT;
+                    px.TongGia = TongGia;
+                    px.TrangThai = "Chưa duyệt";
+                    px.DaXoa = false;
+                    DataProvider.Instance.DB.GoodsDeliveryNotes.Add(px);
+
+                    var PhieuXuatInfos = DataProvider.Instance.DB.GoodsDeliveryNoteInfos.Where(p => p.MaPx == MaPX);
+                    if (PhieuXuatInfos != null) DataProvider.Instance.DB.GoodsDeliveryNoteInfos.RemoveRange(PhieuXuatInfos);
+
+                    foreach (var item in DanhSachVatTu)
+                    {
+                        GoodsDeliveryNoteInfo temp = new GoodsDeliveryNoteInfo() { MaPx = MaPX, MaVt = item.MaVT, SoLuong = item.SoLuong, ChietKhau = item.ChietKhau, Vat = item.VAT };
+                        DataProvider.Instance.DB.GoodsDeliveryNoteInfos.Add(temp);
+                    }
                 }
 
                 EnableEditing = false;
-                //Thêm phiếu + Thêm Info
+                DataProvider.Instance.DB.SaveChanges();
                 CustomMessage msg = new CustomMessage("/Material/Images/Icons/success.png", "THÀNH CÔNG", "Thêm phiếu xuất thành công.", false);
                 msg.ShowDialog();
-                (t as Window).Close();
+                t.Close();
 
             }
         }
         public ICommand AddCommand { get; set; }
         void Add(object t)
         {
-            if (MaKH == "" || KhoXuat == "")
+            if (KhoXuat.IsNullOrEmpty())
             {
-                CustomMessage msg = new CustomMessage("/Material/Images/Icons/wrong.png", "LỖI", "Vui lòng nhập đầy đủ khách hàng và kho xuất hàng.");
+                CustomMessage msg = new CustomMessage("/Material/Images/Icons/wrong.png", "LỖI", "Vui lòng nhập đầy đủ kho xuất hàng.");
                 msg.ShowDialog();
                 return;
             }
@@ -261,8 +387,13 @@ namespace PMQuanLyVatTu.ViewModel
                     }
                 }
                 var item2 = DataProvider.Instance.DB.Supplies.Find(VM.MaVT);
-                int GNY = 0;
-                if (item2 != null) GNY = (int)item2.GiaNhap;
+                if (item2 == null || item2.DaXoa == true)
+                {
+                    CustomMessage msg2 = new CustomMessage("/Material/Images/Icons/wrong.png", "LỖI", "Vật tư đã không còn trên hện thống, vui lòng chọn vật tư khác.");
+                    msg2.ShowDialog();
+                    return;
+                }
+                int GNY = item2 != null ? (int)item2.GiaNhap : 0;
                 DanhSachVatTu.Add(new VatTu() { Checked = false, MaVT = VM.MaVT, SoLuong = VM.SoLuong, ChietKhau = VM.ChietKhau, VAT = VM.VAT, GiaNiemYet = GNY, ThanhTien = (int?)(GNY * VM.SoLuong * (1 - VM.ChietKhau + VM.VAT)) }); Calculate();
                 if (DanhSachVatTu.Count() > 0) { ListEmpty = false; }
                 else ListEmpty = true;
@@ -272,7 +403,7 @@ namespace PMQuanLyVatTu.ViewModel
         void DeleteSelected(object t)
         {
             int Count = 0;
-            CustomMessage msg = new CustomMessage("/Material/Images/Icons/question.png", "THÔNG BÁO", "Bạn có muốn xóa mục đã chọn?");
+            CustomMessage msg = new CustomMessage("/Material/Images/Icons/question.png", "THÔNG BÁO", "Bạn có muốn xóa mục đã chọn?", true);
             msg.ShowDialog();
             if (msg.ReturnValue == true)
             {
@@ -293,6 +424,7 @@ namespace PMQuanLyVatTu.ViewModel
                 }
                 if (DanhSachVatTu.Count() > 0) { ListEmpty = false; }
                 else ListEmpty = true;
+                Calculate();
             }
         }
         public ICommand SelectFromRequestCommand { get; set; }
@@ -303,28 +435,64 @@ namespace PMQuanLyVatTu.ViewModel
             SelectWin.DataContext = VM;
             SelectWin.ShowDialog();
 
-            //Thực hiện
-
-            if (VM.ReturnValue == true)
+            if (VM.ReturnValue == true && VM.SelectedYeuCau != null)
             {
-                MaKH = VM.Ma1; KhoXuat = VM.Ma2;
+                string MaYCX = VM.SelectedYeuCau.MaYC;
+                var YCX = DataProvider.Instance.DB.ExportRequests.Find(MaYCX);
+                if(YCX == null || YCX.DaXoa == true)
+                {
+                    CustomMessage msg = new CustomMessage("/Material/Images/Icons/wrong.png", "LỖI", "Không tìm thấy yêu cầu đã chọn! Vui lòng chọn mã yêu cầu khác.", false);
+                    msg.ShowDialog();
+                    return;
+                }
+                else
+                {
+                    var YCXInfo = DataProvider.Instance.DB.ExportRequestInfos.Where(p => p.MaYcx == YCX.MaYcx);
+                    if(YCXInfo != null)
+                    {
+                        foreach(var item in YCXInfo)
+                        {
+                            var supply = DataProvider.Instance.DB.Supplies.Find(item.MaVt);
+                            if(supply == null || supply.DaXoa == true)
+                            {
+                                CustomMessage msg2 = new CustomMessage("/Material/Images/Icons/wrong.png", "LỖI", "Mã vật tư: " + item.MaVt + " đã không còn tồn tại.");
+                                msg2.ShowDialog();
+                                continue;
+                            }
+                            foreach(var vt in DanhSachVatTu)
+                            {
+                                if(vt.MaVT == supply.MaVt)
+                                {
+                                    CustomMessage msg2 = new CustomMessage("/Material/Images/Icons/wrong.png", "LỖI", "Mã vật tư: " + supply.MaVt + " đã được yêu cầu.");
+                                    msg2.ShowDialog();
+                                    continue;
+                                }
+                            }
+
+                            VatTu temp = new VatTu() 
+                            {
+                                Checked = false,
+                                MaVT = item.MaVt,
+                                SoLuong = item.SoLuong,
+                                ChietKhau = item.ChietKhau,
+                                VAT = item.Vat
+                            };
+
+                            temp.GiaNiemYet = supply.GiaXuat ?? 0;
+                            temp.ThanhTien = (int?)(temp.GiaNiemYet * temp.SoLuong * (1 - ChietKhau + VAT));
+                            DanhSachVatTu.Add(temp);
+                        }
+                    }
+                    MaKH = VM.Ma1 ?? "";
+                    KhoXuat = VM.Ma2 ?? "";
+                }
             }
+            Calculate();
+            if (DanhSachVatTu.Count() > 0) { ListEmpty = false; }
+            else ListEmpty = true;
         }
         #endregion
         #region Function
-        void LoadData(string mapx)
-        {
-            //Load
-        }
-        void LoadDanhSach()
-        {
-            DanhSachVatTu.Clear();
-
-            if (DanhSachVatTu.Count() > 0) { ListEmpty = false; }
-            else ListEmpty = true;
-
-            Calculate();
-        }
         void LoadKhachHang()
         {
             KhachHang.Clear();
@@ -356,8 +524,42 @@ namespace PMQuanLyVatTu.ViewModel
             var ListFromDB = DataProvider.Instance.DB.Employees.ToList();
             foreach (var item in ListFromDB)
             {
-                if (item.ChucVu == "Nhập Xuất" && item.DaXoa == false) NhanVien.Add(item.MaNv);
+                if ((item.ChucVu == "Nhập Xuất" || item.ChucVu == "Quản Lý") && item.DaXoa == false) NhanVien.Add(item.MaNv);
             }
+        }
+        void LoadData(string mapx)
+        {
+            var PhieuXuat = DataProvider.Instance.DB.GoodsDeliveryNotes.Find(mapx);
+            if(PhieuXuat == null)
+            {
+                MaPX = "";
+            }
+            else
+            {
+                MaPX = PhieuXuat.MaPx ?? "";
+                MaNV = PhieuXuat.MaNv ?? "";
+                MaKH = PhieuXuat.MaKh ?? "";
+                NgayLap = PhieuXuat.NgayLap?.ToString("ddd/dd/MM/yyyy") ?? "";
+                KhoXuat = PhieuXuat.KhoXuat ?? "";
+                LyDoXuat = PhieuXuat.LyDoXuat ?? "";
+            }
+        }
+        void LoadDanhSach()
+        {
+            DanhSachVatTu.Clear();
+            var InnerList = DataProvider.Instance.DB.GoodsDeliveryNoteInfos.Where(p => p.MaPx == MaPX);
+            if(InnerList != null)
+            {
+                foreach (var item in InnerList)
+                {
+                    VatTu add = new VatTu(item);
+                    DanhSachVatTu.Add(add);
+                }
+            }
+
+            if (DanhSachVatTu.Count() > 0) { ListEmpty = false; }
+            else ListEmpty = true;
+            Calculate();
         }
         void Calculate()
         {
@@ -366,6 +568,14 @@ namespace PMQuanLyVatTu.ViewModel
             TongGia = 0;
             foreach (VatTu i in DanhSachVatTu)
             {
+                var supply = DataProvider.Instance.DB.Supplies.Find(i.MaVT);
+                if (supply != null)
+                {
+                    ChietKhau += (int)((supply.GiaXuat ?? 0) * i.SoLuong * i.ChietKhau);
+                    VAT += (int)((supply.GiaXuat ?? 0) * i.SoLuong * i.VAT);
+                    TongGia += (int)((supply.GiaXuat ?? 0) * i.SoLuong);
+                }
+
                 //Lấy giá nhập của vật tư i
                 //ChietSuat += GiaNhap(i) * SoLuong * ChietSuat
                 //VAT += GiaNHap(i) * SoLuong * VAT
@@ -380,13 +590,21 @@ namespace PMQuanLyVatTu.ViewModel
             public VatTu(GoodsDeliveryNoteInfo t) 
             {
                 Checked = false;
-                MaVT = t.MaVt; SoLuong = t.SoLuong; ChietKhau = t.ChietKhau; VAT = t.Vat;
-                var ListFromDB = DataProvider.Instance.DB.Supplies.ToList();
-                foreach (var item in ListFromDB)
+                MaVT = t.MaVt ?? "";
+                SoLuong = t.SoLuong ?? 0;
+                ChietKhau = t.ChietKhau ?? 0;
+                VAT = t.Vat ?? 0;
+                var supply = DataProvider.Instance.DB.Supplies.Find(MaVT);
+                if(supply == null)
                 {
-                    if (item.MaVt == MaVT) { GiaNiemYet = item.GiaXuat; break; }
+                    ThanhTien = 0;
                 }
-                ThanhTien = (int?)(GiaNiemYet * SoLuong - GiaNiemYet * SoLuong * ChietKhau + GiaNiemYet * SoLuong * VAT);
+                else
+                {
+                    GiaNiemYet = supply.GiaXuat ?? 0;
+                    ThanhTien = (int?)(GiaNiemYet * SoLuong - GiaNiemYet * SoLuong * ChietKhau + GiaNiemYet * SoLuong * VAT);
+                }
+                
             }
             public bool Checked { get; set; }
             public string MaVT { get; set; }

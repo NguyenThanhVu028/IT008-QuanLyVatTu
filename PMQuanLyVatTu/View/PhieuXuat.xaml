@@ -60,7 +60,7 @@
                     <DataGridTextColumn Header="Ngày lập yêu cầu"
                                         Width="200"
                                         IsReadOnly="True"
-                                        Binding="{Binding NgayLap}"/>
+                                        Binding="{Binding NgayLap, Mode=OneWay, Converter={StaticResource DateTimeConverter}}"/>
                     <DataGridTextColumn Header="Kho xuất"
                                         Width="150"
                                         IsReadOnly="True"
@@ -94,7 +94,9 @@
                     <DataGridTemplateColumn Header="" IsReadOnly="True">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
-                                <StackPanel Orientation="Horizontal">
+                                <StackPanel Orientation="Horizontal"
+                                            DataContext="{Binding ElementName=ThisWin, Path=DataContext}"
+                                            Visibility="{Binding User.ChucVu, Mode=OneWay, Converter={StaticResource Allow14}}">
                                     <!--<CustomControl:CustomButton Width="70"
                                                                 Height="30"
                                                                 RadiusOfCorner="3"
@@ -182,7 +184,8 @@
                                         TextSize="15"
                                         Margin="5, 0, 0, 0"
                                         RadiusOfCorner="5"
-                                        Command="{Binding XoaGanDayCommand}"/>
+                                        Command="{Binding XoaGanDayCommand}"
+                                            Visibility="{Binding User.ChucVu, Mode=OneWay, Converter={StaticResource Allow14}}"/>
                 <CustomControl:CustomButton Width="100"
                                         Height="40"
                                         HorizontalAlignment="Right"
@@ -195,7 +198,8 @@
                                         TextSize="15"
                                         Margin="5, 0, 0, 0"
                                         RadiusOfCorner="5"
-                                        Command="{Binding AddCommand}"/>
+                                        Command="{Binding AddCommand}"
+                                            Visibility="{Binding User.ChucVu, Mode=OneWay, Converter={StaticResource Allow14}}"/>
                 <CustomControl:ImageButton ImageLocation="/Material/Images/Icons/refresh.png"
                                            VerticalAlignment="Top"
                                            HorizontalAlignment="Right"

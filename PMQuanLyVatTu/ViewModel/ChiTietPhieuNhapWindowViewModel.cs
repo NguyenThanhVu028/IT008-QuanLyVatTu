@@ -272,6 +272,12 @@ namespace PMQuanLyVatTu.ViewModel
                     msg1.ShowDialog();
                     return;
                 }
+                if(MaPN.Length > 6)
+                {
+                    CustomMessage msg1 = new CustomMessage("/Material/Images/Icons/wrong.png", "LỖI", "Mã phiếu không được vượt quá 6 ký tự.", false);
+                    msg1.ShowDialog();
+                    return;
+                }
                 if (MaNV.IsNullOrEmpty())
                 {
                     CustomMessage msg1 = new CustomMessage("/Material/Images/Icons/wrong.png", "LỖI", "Vui lòng chọn mã nhân viên.", false);
@@ -382,8 +388,13 @@ namespace PMQuanLyVatTu.ViewModel
                     }
                 }
                 var item2 = DataProvider.Instance.DB.Supplies.Find(VM.MaVT);
-                int GNY = 0;
-                if (item2 != null) GNY = item2.GiaNhap != null ? (int)item2.GiaNhap : 0;
+                if(item2 == null || item2.DaXoa == true)
+                {
+                    CustomMessage msg2 = new CustomMessage("/Material/Images/Icons/wrong.png", "LỖI", "Vật tư đã không còn trên hện thống, vui lòng chọn vật tư khác.");
+                    msg2.ShowDialog();
+                    return;
+                }
+                int GNY = item2.GiaNhap != null ? (int)item2.GiaNhap : 0;
                 DanhSachVatTu.Add(new VatTu() { Checked = false, MaVT = VM.MaVT, SoLuong = VM.SoLuong, ChietKhau = VM.ChietKhau, VAT = VM.VAT, GiaNiemYet = GNY, ThanhTien = (int?)(GNY *VM.SoLuong*(1-VM.ChietKhau+VM.VAT)) }) ; Calculate();
                 if (DanhSachVatTu.Count() > 0) { ListEmpty = false; }
                 else ListEmpty = true;
@@ -415,7 +426,6 @@ namespace PMQuanLyVatTu.ViewModel
                 else ListEmpty = true;
                 Calculate();
             }
-            Calculate ();
         }
         public ICommand SelectFromRequestCommand { get; set; }
         void SelectFromRequest(object t)
@@ -425,11 +435,11 @@ namespace PMQuanLyVatTu.ViewModel
             SelectWin.DataContext = VM;
             SelectWin.ShowDialog();
 
-            if(VM.ReturnValue == true)
+            if(VM.ReturnValue == true && VM.SelectedYeuCau != null)
             {
                 string MaYCN = VM.SelectedYeuCau.MaYC;
                 var YeuCau = DataProvider.Instance.DB.ImportRequests.Find(MaYCN);
-                if (YeuCau == null)
+                if (YeuCau == null || YeuCau.DaXoa == true)
                 {
                     CustomMessage msg = new CustomMessage("/Material/Images/Icons/wrong.png", "LỖI", "Không tìm thấy yêu cầu đã chọn! Vui lòng chọn mã yêu cầu khác.", false);
                     msg.ShowDialog();
@@ -437,7 +447,7 @@ namespace PMQuanLyVatTu.ViewModel
                 }
                 
                 var supply = DataProvider.Instance.DB.Supplies.Find(YeuCau.MaVt);
-                if (supply == null)
+                if (supply == null || supply.DaXoa == true)
                 {
                     CustomMessage msg2 = new CustomMessage("/Material/Images/Icons/wrong.png", "LỖI", "Mặt hàng yêu cầu đã không còn tồn tại.");
                     msg2.ShowDialog();
@@ -462,7 +472,7 @@ namespace PMQuanLyVatTu.ViewModel
                     ChietKhau = VM.ChietKhau, 
                     VAT = VM.VAT 
                 };
-                temp.GiaNiemYet = supply.GiaNhap;
+                temp.GiaNiemYet = supply.GiaNhap ?? 0;
                 temp.ThanhTien = (int?)(temp.GiaNiemYet * temp.SoLuong * (1 - ChietKhau + VAT));
 
                 MaNCC = (VM.Ma1 == null) ? "" : VM.Ma1; 
@@ -509,13 +519,12 @@ namespace PMQuanLyVatTu.ViewModel
             {
                 if (item.DaXoa == false)
                 {
-                    if(item.ChucVu == "Nhập Xuất") NhanVien.Add(item.MaNv);
+                    if((item.ChucVu == "Nhập Xuất" || item.ChucVu == "Quản Lý")) NhanVien.Add(item.MaNv);
                 }
             }
         }
         void LoadData(string mapn)
         {
-            DanhSachVatTu.Clear();
             var pn = DataProvider.Instance.DB.GoodsReceivedNotes.Find(mapn);
             if (pn == null)
             {

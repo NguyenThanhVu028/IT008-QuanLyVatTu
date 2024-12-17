@@ -144,7 +144,7 @@ namespace PMQuanLyVatTu.ViewModel
                 var PhieuNhap = DataProvider.Instance.DB.GoodsReceivedNotes.Find(SelectedPhieuNhap.MaPn);
                 if(PhieuNhap == null)
                 {
-                    msg = new CustomMessage("/Material/Images/Icons/wrong.png", "LỖI", "Không tìm thấy nhà cung cấp để xóa!", false);
+                    msg = new CustomMessage("/Material/Images/Icons/wrong.png", "LỖI", "Không tìm thấy phiếu để xóa!", false);
                     msg.ShowDialog();
                 }
                 else
