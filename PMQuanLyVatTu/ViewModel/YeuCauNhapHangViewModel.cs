@@ -1,6 +1,7 @@
 ﻿using PMQuanLyVatTu.ErrorMessage;
 using PMQuanLyVatTu.Models;
 using PMQuanLyVatTu.User;
+using PMQuanLyVatTu.View;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -10,6 +11,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
+using System.Windows.Interop;
 using static PMQuanLyVatTu.ViewModel.YeuCauXuatHangViewModel;
 
 namespace PMQuanLyVatTu.ViewModel
@@ -98,10 +100,35 @@ namespace PMQuanLyVatTu.ViewModel
         {
             DanhSachYeuCauNhap.Clear();
 
-            var ListFromDB = DataProvider.Instance.DB.ImportRequests.ToList();
-            foreach( var item in ListFromDB)
+            var ListFromDB = DataProvider.Instance.DB.ImportRequests.Where(c => c.DaXoa == false).ToList();
+            foreach ( var item in ListFromDB)
             {
-                DanhSachYeuCauNhap.Add(item);
+                switch (SelectedSearchFilter)
+                {
+                    case "Mã yêu cầu nhập":
+                        if (item.MaYcn != null)
+                            if (item.MaYcn.ToLower().Contains(SearchString.ToLower())) DanhSachYeuCauNhap.Add(item);
+                        break;
+                    case "Mã nhân viên":
+                        if (item.MaNv != null)
+                            if (item.MaNv.ToLower().Contains(SearchString.ToLower())) DanhSachYeuCauNhap.Add(item);
+                        break;
+                    case "Mã vật tư":
+                        if (item.MaVt != null)
+                            if (item.MaVt.ToLower().Contains(SearchString.ToLower())) DanhSachYeuCauNhap.Add(item);
+                        break;
+                    case "Ngày lập yêu cầu":
+                        if (item.NgayLap != null)
+                            if (item.NgayLap.Value.ToString("ddd/dd/MM/yyyy").ToLower().Contains(SearchString.ToLower())) DanhSachYeuCauNhap.Add(item);
+                        break;
+                    case "Trạng thái":
+                        if (item.TrangThai != null)
+                            if (item.TrangThai.ToLower().Contains(SearchString.ToLower())) DanhSachYeuCauNhap.Add(item);
+                        break;
+                    default:
+                        DanhSachYeuCauNhap.Add(item);
+                        break;
+                }
             }
             //DanhSachYeuCauNhap.Add(new ImportRequest() { Checked = true, MaYCN = "YCN0001", MaNV = "NV0012", MaVT = "VT0008", SoLuong = 15, NgayLap = "Friday/03/12/2024", GhiChu = "Nhập hàng trong tuần này.", TrangThai = "Đã tiếp nhận" });
             //DanhSachYeuCauNhap.Add(new ImportRequest() { Checked = true, MaYCN = "YCN0002", MaNV = "NV0010", MaVT = "VT0002", SoLuong = 30, NgayLap = "Friday/03/12/2024", GhiChu = "Nhập hàng trong tuần này.", TrangThai = "Chờ tiếp nhận" });
@@ -120,11 +147,22 @@ namespace PMQuanLyVatTu.ViewModel
         public ICommand DeleteButtonCommand { get; set; }
         void DeleteButton(object t)
         {
-            CustomMessage msg = new CustomMessage("/Material/Images/Icons/question.png", "THÔNG BÁO", "Bạn có muốn xóa yêu cầu đã chọn?");
+            CustomMessage msg = new CustomMessage("/Material/Images/Icons/question.png", "THÔNG BÁO", "Bạn có muốn xóa yêu cầu nhập đã chọn?", true);
             msg.ShowDialog();
             if (msg.ReturnValue == true)
             {
-                //Xóa trong database
+                var YCN = DataProvider.Instance.DB.ImportRequests.Find(SelectedYeuCauNhap.MaYcn);
+
+                if (YCN != null)
+                {
+                    YCN.DaXoa = true;
+                    YCN.ThoiGianXoa = DateTime.Now;
+                    DataProvider.Instance.DB.SaveChanges();
+                }
+                else
+                {
+                    msg = new CustomMessage("/Material/Images/Icons/wrong.png", "LỖI", "Không tìm thấy yêu cầu nhập để xóa!", false);
+                }
             }
             Refresh();
         }
@@ -152,12 +190,32 @@ namespace PMQuanLyVatTu.ViewModel
         public ICommand DaTiepNhanCommand { get; set; }
         void DaTiepNhan(object t)
         {
-            MessageBox.Show("Đã tiếp nhận");
+            var YCN = DataProvider.Instance.DB.ImportRequests.Find(SelectedYeuCauNhap);
+
+            if (YCN != null)
+            {
+                YCN.TrangThai = "Đã tiếp nhận";
+                DataProvider.Instance.DB.SaveChanges();
+            }
+            else
+            {
+                var msg = new CustomMessage("/Material/Images/Icons/wrong.png", "LỖI", "Không tìm thấy yêu cầu nhập!", false);
+            }
         }
         public ICommand TuChoiCommand { get; set; }
         void TuChoi(object t)
         {
-            MessageBox.Show("Từ chối");
+            var YCN = DataProvider.Instance.DB.ImportRequests.Find(SelectedYeuCauNhap);
+
+            if (YCN != null)
+            {
+                YCN.TrangThai = "Bị từ chối";
+                DataProvider.Instance.DB.SaveChanges();
+            }
+            else
+            {
+                var msg = new CustomMessage("/Material/Images/Icons/wrong.png", "LỖI", "Không tìm thấy yêu cầu nhập!", false);
+            }
         }
         #endregion
     }
