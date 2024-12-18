@@ -17,7 +17,7 @@ namespace PMQuanLyVatTu.ViewModel
 {
     public class NhanVienViewModel : BaseViewModel
     {
-        public NhanVienViewModel() 
+        public NhanVienViewModel()
         {
             AddCommand = new RelayCommand<object>(Add);
             XoaGanDayCommand = new RelayCommand<object>(XoaGanDay);
@@ -38,7 +38,7 @@ namespace PMQuanLyVatTu.ViewModel
         }
         #endregion
         #region Data for SelectionList
-        private ObservableCollection<string> _searchFilter = new ObservableCollection<string>() {"Mã nhân viên", "Họ và tên", "Chức vụ", "Giới tính", "Chức vụ", "Ngày sinh", "Số điện thoại", "Email", "Địa chỉ", "Lương" };
+        private ObservableCollection<string> _searchFilter = new ObservableCollection<string>() { "Mã nhân viên", "Họ và tên", "Chức vụ", "Giới tính", "Chức vụ", "Ngày sinh", "Số điện thoại", "Email", "Địa chỉ", "Lương" };
         public ObservableCollection<string> SearchFilter
         {
             get { return _searchFilter; }
@@ -126,7 +126,8 @@ namespace PMQuanLyVatTu.ViewModel
         {
             DanhSachNhanVien.Clear(); DanhSachNhanVienLargeIcon = null;
             var ListFromDB = DataProvider.Instance.DB.Employees.Where(c => c.DaXoa == false).ToList();
-            if(ListFromDB != null) {
+            if (ListFromDB != null)
+            {
                 foreach (var item in ListFromDB)
                 {
                     switch (SelectedSearchFilter)
@@ -211,8 +212,29 @@ namespace PMQuanLyVatTu.ViewModel
             if (msg.ReturnValue == true)
             {
                 //Xóa trong database theo SelectedNhanVien
+                if (CurrentUser.Instance.MaNv == SelectedNhanVien.MaNv)
+                {
+                    CustomMessage message = new CustomMessage("/Material/Images/Icons/question.png", "THÔNG BÁO", "Không thể xóa nhân viên hiện tại.");
+                    message.ShowDialog();
+                }
+                else
+                {
+                    var nv = DataProvider.Instance.DB.Employees.Find(SelectedNhanVien.MaNv);
+                    var account = DataProvider.Instance.DB.Accounts.Where(e => e.MaNv == SelectedNhanVien.MaNv).FirstOrDefault();
+                    if (account != null)
+                    {
+
+                        account.DaXoa = true;
+                    }
+
+                    if (nv != null)
+                    {
+                        nv.DaXoa = true;
+                    }
+                    DataProvider.Instance.DB.SaveChanges();
+                }
+                Refresh();
             }
-            Refresh();
         }
         //public ICommand DeleteSelectedCommand { get; set; }
         //void DeleteSelected(object t)
@@ -239,7 +261,7 @@ namespace PMQuanLyVatTu.ViewModel
         #region Function
         void NhanVienDisplayerClicked(object sender, EventArgs e)
         {
-            if(CurrentUser.Instance.ChucVu == "Quản Lý")
+            if (CurrentUser.Instance.ChucVu == "Quản Lý")
             {
                 string manv = ((sender as NhanVienDisplayer).DataContext as Employee).MaNv;
                 ThongTinNhanVienWindowViewModel TTVTVM = new ThongTinNhanVienWindowViewModel(manv);
@@ -248,7 +270,7 @@ namespace PMQuanLyVatTu.ViewModel
                 AddWindow.ShowDialog();
                 Refresh();
             }
-            
+
         }
         #endregion
         //public class Employee
@@ -267,3 +289,4 @@ namespace PMQuanLyVatTu.ViewModel
         //}
     }
 }
+

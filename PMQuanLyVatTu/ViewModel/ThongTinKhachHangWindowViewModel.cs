@@ -1,4 +1,6 @@
-﻿using PMQuanLyVatTu.ErrorMessage;
+﻿using Microsoft.EntityFrameworkCore.Storage;
+using PMQuanLyVatTu.ErrorMessage;
+using PMQuanLyVatTu.Models;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -120,6 +122,12 @@ namespace PMQuanLyVatTu.ViewModel
             { //Chấp nhận xóa
                 EnableEditing = false;
                 //Xóa
+                var kh = DataProvider.Instance.DB.Customers.Find(MaKH);
+                if(kh != null)
+                {
+                    kh.DaXoa = true;
+                    DataProvider.Instance.DB.SaveChanges();
+                }
                 t.Close();
             }
         }
@@ -135,41 +143,104 @@ namespace PMQuanLyVatTu.ViewModel
             if (EditMode == true) //Nếu đang chế độ chỉnh sửa
             {
                 EnableEditing = false;
+                var KH = DataProvider.Instance.DB.Customers.Find(MaKH);
+                if (KH != null)
+                {
+                    KH.HoTen = HoTen;
+                    KH.GioiTinh = GTinh;
+                    KH.NgaySinh = DateOnly.ParseExact(NgaySinh, "ddd/dd/MM/yyyy");
+                    KH.Sdt = SDT;
+                    KH.Email = Email;
+                    KH.DiaChi = DiaChi;
+                    DataProvider.Instance.DB.SaveChanges();
+                }
                 CustomMessage msg = new CustomMessage("/Material/Images/Icons/success.png", "THÀNH CÔNG", "Đã lưu thông tin chỉnh sửa.");
                 msg.ShowDialog();
             }
             else //Nếu trong chế độ thêm nhân viên
             {
-                if (false) //Chưa nhập mã nhân viên
+                if (MaKH == "") //Chưa nhập mã nhân viên
                 {
                     CustomMessage msg1 = new CustomMessage("/Material/Images/Icons/wrong.png", "LỖI", "Vui lòng nhập mã khách hàng.");
                     msg1.ShowDialog();
                     return;
                 }
-                if (false) //Trùng mã nhân viên
+                if (CompareAndExecute()) //Trùng mã nhân viên
                 {
                     AlreadyExistsError msg2 = new AlreadyExistsError();
                     msg2.ShowDialog();
                     return;
                 }
-                 // Hợp lệ
+                // Hợp lệ
+                Addnew();
                 EnableEditing = false;
                 CustomMessage msg = new CustomMessage("/Material/Images/Icons/success.png", "THÀNH CÔNG", "Thêm khách hàng thành công.");
                 msg.ShowDialog();
                 (t as Window).Close();
             }
         }
+        bool CompareAndExecute()
+        {
+            var kh = DataProvider.Instance.DB.Customers.Find(MaKH);
+            if (kh == null)
+            {
+                return false;
+            }
+            else
+            {
+                if(kh.DaXoa == true)
+                {
+                    DataProvider.Instance.DB.Customers.Remove(kh);
+                    return false;
+                }
+                else
+                {
+                    return true;
+                }
+            }
+            
+            return true;
+        }
+        void Addnew()
+        {
+            var newKH = new Customer();
+            newKH.MaKh = MaKH;
+            newKH.HoTen = HoTen;
+            newKH.GioiTinh = GTinh;
+            newKH.NgaySinh = DateOnly.ParseExact(NgaySinh, "ddd/dd/MM/yyyy");
+            newKH.Sdt = SDT;
+            newKH.Email = Email;
+            newKH.DiaChi = DiaChi;
+            newKH.DaXoa = false;
+            DataProvider.Instance.DB.Customers.Add(newKH);
+            DataProvider.Instance.DB.SaveChanges();
+        }
         #endregion
         #region Function
         void LoadData(string makh)
         {
             MaKH = makh;
-            HoTen = "Nguyễn Văn A";
-            GTinh = "Nam";
-            NgaySinh = "14/07/1080";
-            Email = "default@gmail.com";
-            SDT = "0123456789";
-            DiaChi = "123 Phố Thạch Mỹ, Huyện An Lão";
+            var KH = DataProvider.Instance.DB.Customers.Find(makh);
+            if (KH != null)
+            {
+                HoTen = KH.HoTen;
+                GTinh = KH.GioiTinh;
+                NgaySinh = ((DateOnly)KH.NgaySinh).ToDateTime(TimeOnly.MinValue).ToString("ddd/dd/MM/yyyy");
+                Email = KH.Email;
+                SDT = KH.Sdt;
+                DiaChi = KH.DiaChi;
+            }
+            else
+            {
+                makh = "";
+                HoTen = "";
+                GTinh = "";
+                NgaySinh = "";
+                Email = "";
+                SDT = "";
+                DiaChi = "";
+            }
+            
         }
         #endregion
     }

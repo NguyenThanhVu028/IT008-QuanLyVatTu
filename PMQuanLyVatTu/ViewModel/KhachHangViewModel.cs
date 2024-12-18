@@ -107,13 +107,49 @@ namespace PMQuanLyVatTu.ViewModel
         {
             DanhSachKhachHang.Clear();
 
-            var ListFromDB = DataProvider.Instance.DB.Customers.ToList();
+            var ListFromDB = DataProvider.Instance.DB.Customers.Where(e => e.DaXoa == false).ToList();
 
             foreach ( var item in ListFromDB)
             {
-                DanhSachKhachHang.Add(item);
+                switch (SelectedSearchFilter)
+                {
+                    case "Mã khách hàng":
+                        if (item.MaKh != null)
+                            if (item.MaKh.ToLower().Contains(SearchString.ToLower())) DanhSachKhachHang.Add(item);
+                        break;
+                    case "Họ và tên":
+                        if (item.HoTen != null)
+                            if (item.HoTen.ToLower().Contains(SearchString.ToLower())) DanhSachKhachHang.Add(item);
+                        break;
+                    case "Số điện thoại":
+                        if (item.Sdt != null)
+                            if (item.Sdt.ToLower().Contains(SearchString.ToLower())) DanhSachKhachHang.Add(item);
+                        break;
+                    case "Giới tính":
+                        if (item.GioiTinh != null)
+                            if (item.GioiTinh.ToLower().Contains(SearchString.ToLower())) DanhSachKhachHang.Add(item);
+                        break;
+                    case "Ngày sinh":
+                        if (item.NgaySinh != null)
+                            if (item.NgaySinh.ToString().Contains(SearchString)) DanhSachKhachHang.Add(item);
+                        break;
+                    default:
+                        DanhSachKhachHang.Add(item);
+                        break;
+                }
             }
         }
+        //void Refresh(object t = null)
+        //{
+        //    DanhSachKhachHang.Clear();
+
+        //    var ListFromDB = DataProvider.Instance.DB.Customers.ToList();
+
+        //    foreach (var item in ListFromDB)
+        //    {
+        //        DanhSachKhachHang.Add(item);
+        //    }
+        //}
         public ICommand DeleteButtonCommand { get; set; }
         void DeleteButton(object t)
         {
@@ -121,7 +157,12 @@ namespace PMQuanLyVatTu.ViewModel
             msg.ShowDialog();
             if (msg.ReturnValue == true)
             {
-                //Xóa trong database
+                var kh = DataProvider.Instance.DB.Customers.Find(SelectedKhachHang.MaKh);
+                if (kh != null)
+                {
+                    kh.DaXoa = true;
+                    DataProvider.Instance.DB.SaveChanges();
+                }
             }
             Refresh();
         }
