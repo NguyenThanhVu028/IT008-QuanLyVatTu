@@ -94,33 +94,10 @@
                     <DataGridTemplateColumn Header="" IsReadOnly="True">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
-                                <StackPanel Orientation="Horizontal"
-                                            DataContext="{Binding ElementName=ThisWin, Path=DataContext}"
-                                            Visibility="{Binding User.ChucVu, Mode=OneWay, Converter={StaticResource Allow14}}">
-                                    <!--<CustomControl:CustomButton Width="70"
-                                                                Height="30"
-                                                                RadiusOfCorner="3"
-                                                                DisplayText="Duyệt"
-                                                                TextSize="12"
-                                                                BorderBackground="LawnGreen"
-                                                                BorderBackgroundClicked="Green"
-                                                                BorderColor="{StaticResource DarkGreen2}"
-                                                                BorderColorHighlight="{StaticResource DarkGreen3}"
-                                                                BorderThick="0"
-                                                                Command="{Binding DuyetCommand}"/>
-                                    <CustomControl:CustomButton Width="70"
-                                                                Height="30"
-                                                                Margin="10, 0, 0, 0"
-                                                                RadiusOfCorner="3"
-                                                                DisplayText="Từ chối"
-                                                                TextSize="12"
-                                                                BorderBackground="Red"
-                                                                BorderBackgroundClicked="{StaticResource DarkRed2}"
-                                                                BorderColor="{StaticResource White}"
-                                                                BorderColorHighlight="{StaticResource LightRed}"
-                                                                BorderThick="0"
-                                                                Command="{Binding TuChoiCommand}"/>-->
-                                    <CustomControl:ImageButton x:Name="EditButton" 
+                                <StackPanel Orientation="Horizontal">
+                                    <Grid DataContext="{Binding ElementName=ThisWin, Path=DataContext}"
+                                          Visibility="{Binding User.ChucVu, Mode=OneWay, Converter={StaticResource Allow124}}">
+                                        <CustomControl:ImageButton x:Name="EditButton" 
                                                            Width="20"
                                                            Height="20"
                                                            ImageLocation="/Material/Images/Icons/edit1.png"
@@ -128,7 +105,10 @@
                                                            Margin="7, 7, 7, 7"
                                                            DataContext="{Binding ElementName=ThisWin, Path=DataContext}"
                                                            Command="{Binding EditButtonCommand}"/>
-                                    <CustomControl:ImageButton x:Name="DeleteButton" 
+                                    </Grid>
+                                    <Grid DataContext="{Binding ElementName=ThisWin, Path=DataContext}"
+                                          Visibility="{Binding User.ChucVu, Mode=OneWay, Converter={StaticResource Allow14}}">
+                                        <CustomControl:ImageButton x:Name="DeleteButton" 
                                                            Width="20"
                                                            Height="20"
                                                            ImageLocation="/Material/Images/Icons/delete.png"
@@ -136,6 +116,7 @@
                                                            Margin="7, 7, 7, 7"
                                                            DataContext="{Binding ElementName=ThisWin, Path=DataContext}"
                                                            Command="{Binding DeleteButtonCommand}"/>
+                                    </Grid>
                                 </StackPanel>
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>

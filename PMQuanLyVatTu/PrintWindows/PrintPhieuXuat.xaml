@@ -1,0 +1,532 @@
+﻿<Window x:Class="PMQuanLyVatTu.PrintWindows.PrintPhieuXuat"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:PMQuanLyVatTu.PrintWindows"
+        xmlns:CustomControl="clr-namespace:PMQuanLyVatTu.CustomControls"
+        xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+        mc:Ignorable="d"
+        Title="PrintPhieuXuat" Height="1169" Width="827"
+        Background="Transparent"
+        WindowStartupLocation="CenterScreen"
+        WindowStyle="none">
+    <Grid>
+        <Grid x:Name="Print">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="125"/>
+                <RowDefinition Height="75"/>
+                <RowDefinition Height="210"/>
+                <RowDefinition Height="0"/>
+                <RowDefinition Height="auto"/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+            <Border Grid.RowSpan="10"
+                    Background="White"/>
+            <Border Background="{StaticResource DarkGreen2}"
+                    Height="100"
+                    Width="300"
+                    HorizontalAlignment="Left"
+                    VerticalAlignment="Center"
+                    Margin="0"
+                    CornerRadius="0, 50, 50, 0">
+                <Image Source="/Material/Images/AppLogo/logo.png"/>
+            </Border>
+            <Border Background="{StaticResource DarkGreen2}"
+                    VerticalAlignment="Bottom"
+                    Height="5"
+                    Margin="0, 0, 0, 10"/>
+            <StackPanel HorizontalAlignment="Right"
+                        VerticalAlignment="Center"
+                        Margin="0, 0, 30, 0">
+                <TextBlock FontFamily="/Material/Fonts/Lexend/#Lexend Regular"
+                           FontWeight="Regular"
+                           Foreground="{StaticResource DarkGreen2}"
+                           Text="Số:...................."
+                           FontSize="18"/>
+                <TextBlock FontFamily="/Material/Fonts/Lexend/#Lexend Regular"
+                           FontWeight="Regular"
+                           Foreground="{StaticResource DarkGreen2}"
+                           Text="Ngày ........ tháng ........ năm 20......"
+                           FontSize="18"/>
+            </StackPanel>
+            <TextBlock Grid.Row="1" 
+                       HorizontalAlignment="Center"
+                       VerticalAlignment="Center"
+                       Foreground="{StaticResource DarkGreen2}"
+                       FontFamily="/Material/Fonts/Lexend/#Lexend Black"
+                       FontWeight="Black"
+                       Text="PHIẾU XUẤT KHO"
+                       FontSize="35"/>
+            <StackPanel Grid.Row="2"
+                        Margin="50, 10, 30, 10">
+                <!--<TextBlock FontFamily="/Material/Fonts/Lexend/#Lexend Regular"
+                           FontWeight="Regular"
+                           Foreground="{StaticResource DarkGreen2}"
+                           Margin="0, 10, 0, 10"
+                           Text="Họ và tên người giao: ..........................................................................................................................................................................................."
+                           FontSize="14"/>-->
+                <TextBlock FontFamily="/Material/Fonts/Lexend/#Lexend Regular"
+                           FontWeight="Regular"
+                           Foreground="{StaticResource DarkGreen2}"
+                           Margin="0, 10, 0, 10"
+                           Text="Theo ......................... số .......... ngày .......... tháng .......... năm .......... của ...................................................................................................."
+                           FontSize="14"/>
+                <TextBlock FontFamily="/Material/Fonts/Lexend/#Lexend Regular"
+                           FontWeight="Regular"
+                           Foreground="{StaticResource DarkGreen2}"
+                           Margin="0, 10, 0, 10"
+                           Text="Tên khách hàng: ......................................................................................................................................................................................................."
+                           FontSize="14"/>
+                <TextBlock FontFamily="/Material/Fonts/Lexend/#Lexend Regular"
+                           FontWeight="Regular"
+                           Foreground="{StaticResource DarkGreen2}"
+                           Margin="0, 10, 0, 10"
+                           Text="Địa chỉ: ........................................................................................................................................................................................................................."
+                           FontSize="14"/>
+                <TextBlock FontFamily="/Material/Fonts/Lexend/#Lexend Regular"
+                           FontWeight="Regular"
+                           Foreground="{StaticResource DarkGreen2}"
+                           Margin="0, 10, 0, 10"
+                           Text="Xuất tại kho: ................................. Địa chỉ: .........................................................................................................................................................."
+                           FontSize="14"/>
+                <TextBlock FontFamily="/Material/Fonts/Lexend/#Lexend Regular"
+                           FontWeight="Regular"
+                           Foreground="{StaticResource DarkGreen2}"
+                           Margin="0, 10, 0, 10"
+                           Text="Lý do xuất: ................................................................................................................................................................................................................."
+                           FontSize="14"/>
+            </StackPanel>
+
+            <TextBlock Grid.Row="2" 
+                       FontFamily="/Material/Fonts/Lexend/#Lexend Regular"
+                       FontWeight="Regular"
+                       HorizontalAlignment="Left"
+                       VerticalAlignment="Top"
+                       Margin="180, 55, 0, 0"
+                       Text="{Binding TenKH}"
+                       FontSize="14"/>
+            <TextBlock Grid.Row="2" 
+                       FontFamily="/Material/Fonts/Lexend/#Lexend Regular"
+                       FontWeight="Regular"
+                       VerticalAlignment="Top"
+                       HorizontalAlignment="Left"
+                       Margin="112, 92, 30, 5"
+                       Text="{Binding DiaChiKH}"
+                       FontSize="14"/>
+            <TextBlock Grid.Row="2" 
+                       FontFamily="/Material/Fonts/Lexend/#Lexend Regular"
+                       FontWeight="Regular"
+                       HorizontalAlignment="Left"
+                       VerticalAlignment="Top"
+                       Margin="154, 130, 0, 0"
+                       Text="{Binding KhoXuat}"
+                       FontSize="14"/>
+            <TextBlock Grid.Row="2" 
+                       FontFamily="/Material/Fonts/Lexend/#Lexend Regular"
+                       FontWeight="Regular"
+                       VerticalAlignment="Top"
+                       HorizontalAlignment="Left"
+                       Margin="314, 130, 30, 5"
+                       Text="{Binding DiaChiKho}"
+                       FontSize="14"/>
+            <TextBlock Grid.Row="2" 
+                       FontFamily="/Material/Fonts/Lexend/#Lexend Regular"
+                       FontWeight="Regular"
+                       VerticalAlignment="Top"
+                       HorizontalAlignment="Left"
+                       Margin="142, 169, 0, 5"
+                       Text="{Binding LyDoXuat}"
+                       FontSize="14"/>
+
+            <!--<TextBlock Grid.Row="3"
+                       VerticalAlignment="Top"
+                       FontFamily="/Material/Fonts/Lexend/#Lexend Bold"
+                       FontWeight="Bold"
+                       Margin="50, 0, 0, 0"
+                       Text="Chi tiết phiếu"
+                       Foreground="{StaticResource DarkGreen2}"
+                       FontSize="25"/>-->
+            <Border Grid.Row="3" 
+                    Background="{StaticResource DarkGreen2}"
+                    VerticalAlignment="Bottom"
+                    Height="3"
+                    Margin="30, 0, 30, 10"/>
+
+            <StackPanel Grid.Row="4"
+                        VerticalAlignment="Top"
+                        MaxHeight="500">
+                <DataGrid Grid.Row="4"
+                          Margin="30, 0, 30, 0"
+                          Background="Transparent"
+                          BorderBrush="{StaticResource DarkGreen2}"
+                          BorderThickness="1, 1, 1, 0"
+                          Padding="0"
+                          FontFamily="/Material/Fonts/Lexend/#Lexend Regular"
+                          FontWeight="Regular"
+                          FontSize="14"
+                          CanUserAddRows="False"
+                          CanUserDeleteRows="False"
+                          CanUserReorderColumns="False"
+                          CanUserResizeRows="False"
+                          AutoGenerateColumns="False"
+                          SelectionMode="Single"
+                          SelectionUnit="FullRow"
+                          RowHeaderWidth="0"
+                          HorizontalGridLinesBrush="Transparent"
+                          VerticalGridLinesBrush="{StaticResource DarkGreen2}"
+                          HorizontalScrollBarVisibility="Hidden"
+                          ItemsSource="{Binding DanhSachVatTu}"
+                          CellStyle="{StaticResource DataGridCellStyle2}"
+                          RowStyle="{StaticResource DataGridRowStyle2}"
+                          ColumnHeaderStyle="{StaticResource DataGridColumnHeaderStyle2}">
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Header="STT"
+                                            Width="40"
+                                            IsReadOnly="True"
+                                            CanUserResize="False"
+                                            Binding="{Binding STT}"/>
+                        <DataGridTextColumn Header="Tên vật tư"
+                                            Width="200"
+                                            IsReadOnly="True"
+                                            CanUserResize="False"
+                                            Binding="{Binding TenVT}"/>
+                        <DataGridTextColumn Header="Mã vật tư"
+                                            Width="80"
+                                            IsReadOnly="True"
+                                            CanUserResize="False"
+                                            Binding="{Binding MaVT}"/>
+                        <DataGridTextColumn Header="Đơn vị tính"
+                                            Width="70"
+                                            IsReadOnly="True"
+                                            CanUserResize="False"
+                                            Binding="{Binding DVT}"/>
+                        <DataGridTextColumn Header="Số    lượng"
+                                            Width="70"
+                                            IsReadOnly="True"
+                                            CanUserResize="False"
+                                            Binding="{Binding SoLuong}"/>
+                        <DataGridTemplateColumn Header="Đơn giá"
+                                                Width="153.4"
+                                                IsReadOnly="True"
+                                                CanUserResize="False">
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+                                    <StackPanel Orientation="Horizontal"
+                                                HorizontalAlignment="Center">
+                                        <TextBlock Text="{Binding DonGia, StringFormat={}{0:n0}}"/>
+                                        <TextBlock Text="VNĐ"
+                                                   Margin="5, 0, 0, 0"/>
+                                    </StackPanel>
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
+                        <DataGridTemplateColumn Header="Thành tiền"
+                                                Width="153.4"
+                                                IsReadOnly="True"
+                                                CanUserResize="False">
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+                                    <StackPanel Orientation="Horizontal"
+                                                HorizontalAlignment="Center">
+                                        <TextBlock Text="{Binding ThanhTien, StringFormat={}{0:n0}}"/>
+                                        <TextBlock Text="VNĐ"
+                                                   Margin="5, 0, 0, 0"/>
+                                    </StackPanel>
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
+                        <!--<DataGridTextColumn Header="Đơn giá"
+                                            Width="153.4"
+                                            IsReadOnly="True"
+                                            CanUserResize="False"
+                                            Binding=""/>-->
+                        <!--<DataGridTextColumn Header="Thành tiền"
+                                            Width="153.4"
+                                            IsReadOnly="True"
+                                            CanUserResize="False"
+                                            Binding="{Binding ThanhTien, StringFormat={}{0:n0}}"/>-->
+                    </DataGrid.Columns>
+                </DataGrid>
+                <Grid Margin="30, 0, 30, 0">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="30"/>
+                        <RowDefinition Height="30"/>
+                        <RowDefinition Height="30"/>
+                        <RowDefinition Height="30"/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="614.5"/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+                    <Border Background="Transparent"
+                            BorderBrush="{StaticResource DarkGreen2}"
+                            Margin="0, 0, 0, 0"
+                            BorderThickness="1, 1, 1, 1">
+                        <TextBlock Grid.Row="3"
+                                   VerticalAlignment="Center"
+                                   FontFamily="/Material/Fonts/Lexend/#Lexend Bold"
+                                   FontWeight="Bold"
+                                   TextAlignment="Center"
+                                   Text="Cộng"
+                                   Foreground="{StaticResource DarkGreen2}"
+                                   FontSize="14"/>
+                    </Border>
+                    <Border Grid.Column="1" Background="Transparent"
+                            BorderBrush="{StaticResource DarkGreen2}"
+                            HorizontalAlignment="Stretch"
+                            Margin="0, 0, 0, 0"
+                            BorderThickness="0, 1, 1, 1">
+                        <StackPanel Orientation="Horizontal"
+                                    HorizontalAlignment="Center">
+                            <TextBlock VerticalAlignment="Center"
+                                       Margin="0, 0, 0, 0"
+                                       FontFamily="/Material/Fonts/Lexend/#Lexend Bold"
+                                       FontWeight="Bold"
+                                       TextAlignment="Center"
+                                       Text="{Binding Cong, StringFormat={}{0:n0}}"
+                                       Foreground="Black"
+                                       FontSize="14"/>
+                            <TextBlock VerticalAlignment="Center"
+                                       Margin="5, 0, 0, 0"
+                                       FontFamily="/Material/Fonts/Lexend/#Lexend Bold"
+                                       FontWeight="Bold"
+                                       TextAlignment="Center"
+                                       Text="VNĐ"
+                                       Foreground="Black"
+                                       FontSize="14"/>
+                        </StackPanel>
+                    </Border>
+                    <Border Grid.Row="1" 
+                            Background="Transparent"
+                            BorderBrush="{StaticResource DarkGreen2}"
+                            Margin="0, 0, 0, 0"
+                            BorderThickness="1, 0, 1, 1">
+                        <TextBlock Grid.Row="3"
+                                   VerticalAlignment="Center"
+                                   FontFamily="/Material/Fonts/Lexend/#Lexend Bold"
+                                   FontWeight="Bold"
+                                   TextAlignment="Center"
+                                   Text="Chiết khấu"
+                                   Foreground="{StaticResource DarkGreen2}"
+                                   FontSize="14"/>
+                    </Border>
+                    <Border Grid.Row="1" 
+                            Grid.Column="1" 
+                            Background="Transparent"
+                            BorderBrush="{StaticResource DarkGreen2}"
+                            Margin="0, 0, 0, 0"
+                            BorderThickness="0, 0, 1, 1">
+                        <StackPanel Orientation="Horizontal"
+                                    HorizontalAlignment="Center">
+                            <TextBlock VerticalAlignment="Center"
+                                       Margin="0, 0, 0, 0"
+                                       FontFamily="/Material/Fonts/Lexend/#Lexend Bold"
+                                       FontWeight="Bold"
+                                       TextAlignment="Center"
+                                       Text="{Binding ChietKhau, StringFormat={}{0:n0}}"
+                                       Foreground="Black"
+                                       FontSize="14"/>
+                            <TextBlock VerticalAlignment="Center"
+                                       Margin="5, 0, 0, 0"
+                                       FontFamily="/Material/Fonts/Lexend/#Lexend Bold"
+                                       FontWeight="Bold"
+                                       TextAlignment="Center"
+                                       Text="VNĐ"
+                                       Foreground="Black"
+                                       FontSize="14"/>
+                        </StackPanel>
+                    </Border>
+                    <Border Grid.Row="2" 
+                            Background="Transparent"
+                            BorderBrush="{StaticResource DarkGreen2}"
+                            Margin="0, 0, 0, 0"
+                            BorderThickness="1, 0, 1, 1">
+                        <TextBlock Grid.Row="3"
+                                   VerticalAlignment="Center"
+                                   FontFamily="/Material/Fonts/Lexend/#Lexend Bold"
+                                   FontWeight="Bold"
+                                   TextAlignment="Center"
+                                   Text="Thuế VAT"
+                                   Foreground="{StaticResource DarkGreen2}"
+                                   FontSize="14"/>
+                    </Border>
+                    <Border Grid.Row="2" 
+                            Grid.Column="2" 
+                            Background="Transparent"
+                            BorderBrush="{StaticResource DarkGreen2}"
+                            Margin="0, 0, 0, 0"
+                            BorderThickness="0, 0, 1, 1">
+                        <StackPanel Orientation="Horizontal"
+                                    HorizontalAlignment="Center">
+                            <TextBlock VerticalAlignment="Center"
+                                       Margin="0, 0, 0, 0"
+                                       FontFamily="/Material/Fonts/Lexend/#Lexend Bold"
+                                       FontWeight="Bold"
+                                       TextAlignment="Center"
+                                       Text="{Binding VAT, StringFormat={}{0:n0}}"
+                                       Foreground="Black"
+                                       FontSize="14"/>
+                            <TextBlock VerticalAlignment="Center"
+                                       Margin="5, 0, 0, 0"
+                                       FontFamily="/Material/Fonts/Lexend/#Lexend Bold"
+                                       FontWeight="Bold"
+                                       TextAlignment="Center"
+                                       Text="VNĐ"
+                                       Foreground="Black"
+                                       FontSize="14"/>
+                        </StackPanel>
+                    </Border>
+                    <Border Grid.Row="3" 
+                            Background="Transparent"
+                            BorderBrush="{StaticResource DarkGreen2}"
+                            Margin="0, 0, 0, 0"
+                            BorderThickness="1, 0, 1, 1">
+                        <TextBlock Grid.Row="3"
+                                   VerticalAlignment="Center"
+                                   FontFamily="/Material/Fonts/Lexend/#Lexend Bold"
+                                   FontWeight="Bold"
+                                   TextAlignment="Center"
+                                   Text="Tổng tiền"
+                                   Foreground="{StaticResource DarkGreen2}"
+                                   FontSize="14"/>
+                    </Border>
+                    <Border Grid.Row="3" 
+                            Grid.Column="3" 
+                            Background="Transparent"
+                            BorderBrush="{StaticResource DarkGreen2}"
+                            Margin="0, 0, 0, 0"
+                            BorderThickness="0, 0, 1, 1">
+                        <StackPanel Orientation="Horizontal"
+                                    HorizontalAlignment="Center">
+                            <TextBlock VerticalAlignment="Center"
+                                       Margin="0, 0, 0, 0"
+                                       FontFamily="/Material/Fonts/Lexend/#Lexend Bold"
+                                       FontWeight="Bold"
+                                       TextAlignment="Center"
+                                       Text="{Binding TongGia, StringFormat={}{0:n0}}"
+                                       Foreground="Black"
+                                       FontSize="14"/>
+                            <TextBlock VerticalAlignment="Center"
+                                       Margin="5, 0, 0, 0"
+                                       FontFamily="/Material/Fonts/Lexend/#Lexend Bold"
+                                       FontWeight="Bold"
+                                       TextAlignment="Center"
+                                       Text="VNĐ"
+                                       Foreground="Black"
+                                       FontSize="14"/>
+                        </StackPanel>
+                    </Border>
+                </Grid>
+                <StackPanel Orientation="Horizontal"
+                            HorizontalAlignment="Center">
+
+
+                </StackPanel>
+                <TextBlock FontFamily="/Material/Fonts/Lexend/#Lexend Regular"
+                           Foreground="{StaticResource DarkGreen2}"
+                           Margin="30, 15, 30, 0"
+                           FontWeight="Regular"
+                           Text="Số tiền viết bằng chữ: ................................................................................................................................................................................................."
+                           FontSize="14"/>
+                <Border Grid.Row="3" 
+                        Background="{StaticResource DarkGreen2}"
+                        VerticalAlignment="Bottom"
+                        Height="3"
+                        Margin="30, 10, 30, 0"/>
+
+            </StackPanel>
+
+            <StackPanel Grid.Row="5"
+                        Margin="30, 20, 30, 0"
+                        VerticalAlignment="Top"
+                        HorizontalAlignment="Center"
+                        Orientation="Horizontal">
+                <StackPanel Orientation="Vertical"
+                            Margin="10, 0, 10, 0">
+                    <TextBlock VerticalAlignment="Center"
+                               Margin="5, 0, 0, 0"
+                               FontFamily="/Material/Fonts/Lexend/#Lexend Black"
+                               FontWeight="Black"
+                               Foreground="{StaticResource DarkGreen2}"
+                               TextAlignment="Center"
+                               Text="Người lập phiếu"
+                               FontSize="18"/>
+                    <TextBlock VerticalAlignment="Center"
+                               Margin="5, 5, 0, 0"
+                               FontFamily="/Material/Fonts/Lexend/#Lexend Light"
+                               FontWeight="Light"
+                               TextAlignment="Center"
+                               Text="(Ký, họ tên)"
+                               Foreground="{StaticResource DarkGreen2}"
+                               FontSize="14"/>
+                    <TextBlock VerticalAlignment="Center"
+                               Margin="5, 60, 0, 0"
+                               FontFamily="/Material/Fonts/Lexend/#Lexend Medium"
+                               FontWeight="Medium"
+                               TextAlignment="Center"
+                               Text="{Binding NguoiLapPhieu}"
+                               Foreground="Black"
+                               FontSize="18"/>
+                </StackPanel>
+                <StackPanel Orientation="Vertical"
+                            Margin="35, 0, 35, 0">
+                    <TextBlock VerticalAlignment="Center"
+                               Margin="5, 0, 0, 0"
+                               FontFamily="/Material/Fonts/Lexend/#Lexend Black"
+                               FontWeight="Black"
+                               TextAlignment="Center"
+                               Text="Người nhận hàng"
+                               Foreground="{StaticResource DarkGreen2}"
+                               FontSize="18"/>
+                    <TextBlock VerticalAlignment="Center"
+                               Margin="5, 5, 0, 0"
+                               FontFamily="/Material/Fonts/Lexend/#Lexend Light"
+                               FontWeight="Light"
+                               TextAlignment="Center"
+                               Text="(Ký, họ tên)"
+                               Foreground="{StaticResource DarkGreen2}"
+                               FontSize="14"/>
+                </StackPanel>
+                <StackPanel Orientation="Vertical"
+                            Margin="10, 0, 35, 0">
+                    <TextBlock VerticalAlignment="Center"
+                               Margin="5, 0, 0, 0"
+                               FontFamily="/Material/Fonts/Lexend/#Lexend Black"
+                               FontWeight="Black"
+                               TextAlignment="Center"
+                               Text="Kế toán trưởng"
+                               Foreground="{StaticResource DarkGreen2}"
+                               FontSize="18"/>
+                    <TextBlock VerticalAlignment="Center"
+                               Margin="5, 5, 0, 0"
+                               FontFamily="/Material/Fonts/Lexend/#Lexend Light"
+                               FontWeight="Light"
+                               TextAlignment="Center"
+                               Text="(Ký, họ tên)"
+                               Foreground="{StaticResource DarkGreen2}"
+                               FontSize="14"/>
+                </StackPanel>
+                <StackPanel Orientation="Vertical"
+                            Margin="10, 0, 10, 0">
+                    <TextBlock VerticalAlignment="Center"
+                               Margin="5, 0, 0, 0"
+                               FontFamily="/Material/Fonts/Lexend/#Lexend Black"
+                               FontWeight="Black"
+                               TextAlignment="Center"
+                               Text="Quản lý"
+                               Foreground="{StaticResource DarkGreen2}"
+                               FontSize="18"/>
+                    <TextBlock VerticalAlignment="Center"
+                               Margin="5, 5, 0, 0"
+                               FontFamily="/Material/Fonts/Lexend/#Lexend Light"
+                               FontWeight="Light"
+                               TextAlignment="Center"
+                               Text="(Ký, họ tên)"
+                               Foreground="{StaticResource DarkGreen2}"
+                               FontSize="14"/>
+                </StackPanel>
+            </StackPanel>
+        </Grid>
+    </Grid>
+</Window>

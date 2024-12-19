@@ -1,6 +1,7 @@
 ﻿using Microsoft.IdentityModel.Tokens;
 using PMQuanLyVatTu.ErrorMessage;
 using PMQuanLyVatTu.Models;
+using PMQuanLyVatTu.PrintWindows;
 using PMQuanLyVatTu.User;
 using PMQuanLyVatTu.View;
 using System;
@@ -39,6 +40,10 @@ namespace PMQuanLyVatTu.ViewModel
             DeleteSelectedCommand = new RelayCommand<object>(DeleteSelected);
             SelectFromRequestCommand = new RelayCommand<object>(SelectFromRequest);
         }
+        #region User
+        CurrentUser _user = CurrentUser.Instance;
+        public CurrentUser User { get { return _user; } }
+        #endregion
         #region Title
         private string _title = "";
         public string Title
@@ -191,9 +196,13 @@ namespace PMQuanLyVatTu.ViewModel
             }
             else
             {
-                CustomMessage msg = new CustomMessage("/Material/Images/Icons/success.png", "THÀNH CÔNG", "Xuất file pdf thành công.", false);
-                msg.ShowDialog();
-                //Mở file pdf
+                PrintPhieuNhap printPhieuNhap = new PrintPhieuNhap();
+                PrintViewModel VM = new PrintViewModel(this);
+                printPhieuNhap.DataContext = VM;
+
+                VM.GridToPrint = printPhieuNhap.Print;
+                VM.Print();
+
             }
         }
         public ICommand DeleteButtonCommand { get; set; }
@@ -225,6 +234,9 @@ namespace PMQuanLyVatTu.ViewModel
         public ICommand SaveInfoCommand { get; set; }
         void SaveInfo(Window t)
         {
+            CustomMessage msg = new CustomMessage("/Material/Images/Icons/question.png", "THÔNG BÁO", "Bạn có xác nhận lưu?", true);
+            msg.ShowDialog();
+            if (msg.ReturnValue == false) return;
             if (EditMode == true) //Nếu đang chế độ chỉnh sửa
             {
                 EnableEditing = false;
@@ -253,8 +265,8 @@ namespace PMQuanLyVatTu.ViewModel
                     }
                     DataProvider.Instance.DB.SaveChanges();
 
-                    CustomMessage msg = new CustomMessage("/Material/Images/Icons/success.png", "THÀNH CÔNG", "Đã lưu thông tin chỉnh sửa.", false);
-                    msg.ShowDialog();
+                    CustomMessage msg2 = new CustomMessage("/Material/Images/Icons/success.png", "THÀNH CÔNG", "Đã lưu thông tin chỉnh sửa.", false);
+                    msg2.ShowDialog();
                 }
                 else
                 {
@@ -357,8 +369,8 @@ namespace PMQuanLyVatTu.ViewModel
                 }
                 EnableEditing = false;
                 DataProvider.Instance.DB.SaveChanges();
-                CustomMessage msg = new CustomMessage("/Material/Images/Icons/success.png", "THÀNH CÔNG", "Thêm phiếu nhập thành công.", false);
-                msg.ShowDialog();
+                CustomMessage msg2 = new CustomMessage("/Material/Images/Icons/success.png", "THÀNH CÔNG", "Thêm phiếu nhập thành công.", false);
+                msg2.ShowDialog();
                 t.Close();
             }
         }
