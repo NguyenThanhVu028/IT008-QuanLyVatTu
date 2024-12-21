@@ -150,9 +150,13 @@ namespace PMQuanLyVatTu.ViewModel
                     {
                         if (existingWarehouses.DaXoa == true) // Hợp lệ
                         {
-                            // Xóa kho cũ khỏi database
-                            DataProvider.Instance.DB.Warehouses.Remove(existingWarehouses);
+                            existingWarehouses.DaXoa = false;
+                            existingWarehouses.LoaiVatTu = LoaiVT;
+                            existingWarehouses.DiaChi = DiaChi;
                             DataProvider.Instance.DB.SaveChanges();
+                            CustomMessage msgSuccess = new CustomMessage("/Material/Images/Icons/success.png", "THÀNH CÔNG", "Thêm nhà kho thành công.");
+                            msgSuccess.ShowDialog();
+                            t.Close();
                         }
                         else //Trùng mã kho
                         {
@@ -161,21 +165,21 @@ namespace PMQuanLyVatTu.ViewModel
                             return;
                         }
                     }
-                    EnableEditing = false;
-                    // Tạo kho mới và thêm vào database
-                    var newWarehouses = new Warehouse
+                    else
                     {
-                        MaKho = MaKho,
-                        LoaiVatTu = LoaiVT,
-                        DiaChi = DiaChi,
-                        DaXoa = false
-                    };
-                    DataProvider.Instance.DB.Warehouses.Add(newWarehouses);
-                    DataProvider.Instance.DB.SaveChanges();
-
-                    CustomMessage msgSuccess = new CustomMessage("/Material/Images/Icons/success.png", "THÀNH CÔNG", "Thêm nhà kho thành công.");
-                    msgSuccess.ShowDialog();
-                    t.Close();
+                        var newWarehouses = new Warehouse
+                        {
+                            MaKho = MaKho,
+                            LoaiVatTu = LoaiVT,
+                            DiaChi = DiaChi,
+                            DaXoa = false
+                        };
+                        DataProvider.Instance.DB.Warehouses.Add(newWarehouses);
+                        DataProvider.Instance.DB.SaveChanges();
+                        CustomMessage msgSuccess = new CustomMessage("/Material/Images/Icons/success.png", "THÀNH CÔNG", "Thêm nhà kho thành công.");
+                        msgSuccess.ShowDialog();
+                        t.Close();
+                    }
                 }
             }
         }

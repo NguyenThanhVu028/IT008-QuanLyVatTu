@@ -58,7 +58,8 @@ namespace PMQuanLyVatTu.ViewModel
             var account = DataProvider.Instance.DB.Accounts.Find(UserName);
             if (account != null)
             {
-                if(account.MatKhau == Password)
+                if (account.DaXoa == true) Check = false;
+                else if(account.MatKhau == Password)
                 {
                     var emp = DataProvider.Instance.DB.Employees.Find(account.MaNv);
                     if (emp != null)
@@ -72,30 +73,6 @@ namespace PMQuanLyVatTu.ViewModel
                 }
                 
             } 
-            //var ListFromDB = DataProvider.Instance.DB.Accounts.ToList();
-            //foreach (var account in ListFromDB)
-            //{
-            //    if(account.TenDn == UserName)
-            //    {
-            //        if(account.MatKhau == Password)
-            //        {
-            //            Check = true;
-            //            var emp = DataProvider.Instance.DB.Employees.Find()
-            //            var ListEmployee = DataProvider.Instance.DB.Employees.ToList();
-            //            foreach (var emp in ListEmployee)
-            //            {
-            //                if(emp.MaNv == account.MaNv)
-            //                {
-            //                    CurrentUser.Instance.MaNv = emp.MaNv;
-            //                    CurrentUser.Instance.HoTen = emp.HoTen;
-            //                    CurrentUser.Instance.ChucVu = emp.ChucVu;
-            //                    CurrentUser.Instance.ImageLocation = emp.ImageLocation;
-            //                }
-            //            }
-            //            break;
-            //        }
-            //    }
-            //}
             if (Check) //Check tài khoản hợp lệ
             {
                 ReturnValue = true;

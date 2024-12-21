@@ -107,11 +107,36 @@ namespace PMQuanLyVatTu.ViewModel
         {
             DanhSachKhachHang.Clear();
 
-            var ListFromDB = DataProvider.Instance.DB.Customers.ToList();
+            var ListFromDB = DataProvider.Instance.DB.Customers.Where(e => e.DaXoa == false).ToList();
 
             foreach ( var item in ListFromDB)
             {
-                DanhSachKhachHang.Add(item);
+                switch (SelectedSearchFilter)
+                {
+                    case "Mã khách hàng":
+                        if (item.MaKh != null)
+                            if (item.MaKh.ToLower().Contains(SearchString.ToLower())) DanhSachKhachHang.Add(item);
+                        break;
+                    case "Họ và tên":
+                        if (item.HoTen != null)
+                            if (item.HoTen.ToLower().Contains(SearchString.ToLower())) DanhSachKhachHang.Add(item);
+                        break;
+                    case "Số điện thoại":
+                        if (item.Sdt != null)
+                            if (item.Sdt.ToLower().Contains(SearchString.ToLower())) DanhSachKhachHang.Add(item);
+                        break;
+                    case "Giới tính":
+                        if (item.GioiTinh != null)
+                            if (item.GioiTinh.ToLower().Contains(SearchString.ToLower())) DanhSachKhachHang.Add(item);
+                        break;
+                    case "Ngày sinh":
+                        if (item.NgaySinh != null)
+                            if (item.NgaySinh.ToString().Contains(SearchString)) DanhSachKhachHang.Add(item);
+                        break;
+                    default:
+                        DanhSachKhachHang.Add(item);
+                        break;
+                }
             }
         }
         public ICommand DeleteButtonCommand { get; set; }
@@ -121,7 +146,13 @@ namespace PMQuanLyVatTu.ViewModel
             msg.ShowDialog();
             if (msg.ReturnValue == true)
             {
-                //Xóa trong database
+                var kh = DataProvider.Instance.DB.Customers.Find(SelectedKhachHang.MaKh);
+                if (kh != null)
+                {
+                    kh.DaXoa = true;
+                    kh.ThoiGianXoa = DateTime.Now;
+                    DataProvider.Instance.DB.SaveChanges();
+                }
             }
             Refresh();
         }
@@ -140,39 +171,6 @@ namespace PMQuanLyVatTu.ViewModel
             if (CurrentUser.Instance.ChucVu == "Quản Lý") return true;
             else return false;
         }
-        //public ICommand DeleteSelectedCommand { get; set; }
-        //void DeleteSelected(object t)
-        //{
-        //    int Count = 0;
-        //    CustomMessage msg = new CustomMessage("/Material/Images/Icons/question.png", "THÔNG BÁO", "Bạn có muốn xóa mục đã chọn?");
-        //    msg.ShowDialog();
-        //    if (msg.ReturnValue == true)
-        //    {
-        //        foreach (Customer i in DanhSachKhachHang)
-        //        {
-        //            if (i.Checked == true)
-        //            {
-        //                //Xóa
-        //                Count++;
-        //            }
-        //        }
-        //        CustomMessage msg2 = new CustomMessage("/Material/Images/Icons/success.png", "THÀNH CÔNG", "Đã xóa thành công " + Count.ToString() + " mục.");
-        //        msg2.ShowDialog();
-        //        Refresh();
-        //    }
-        //}
         #endregion
     }
-
-    //public class Customer
-    //{
-    //    public bool Checked {  get; set; }
-    //    public string MaKH { get; set; }
-    //    public string HoTen { get; set; }
-    //    public string GioiTinh { get; set; }
-    //    public string SDT { get; set; }
-    //    public string Email { get; set; }
-    //    public string NgaySinh { get; set; }
-    //    public string DiaChi { get; set; }
-    //}
 }

@@ -1,4 +1,7 @@
-﻿using PMQuanLyVatTu.ErrorMessage;
+﻿using Microsoft.EntityFrameworkCore.Storage;
+using Microsoft.IdentityModel.Tokens;
+using PMQuanLyVatTu.ErrorMessage;
+using PMQuanLyVatTu.Models;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -21,7 +24,7 @@ namespace PMQuanLyVatTu.ViewModel
             MoveWindowCommand = new RelayCommand<Window>(MoveWindow);
             DeleteButtonCommand = new RelayCommand<Window>(DeleteButton);
             EditInfoCommand = new RelayCommand<object>(EditInfo);
-            SaveInfoCommand = new RelayCommand<object>(SaveInfo);
+            SaveInfoCommand = new RelayCommand<Window>(SaveInfo);
         }
         #region Title
         private string _title = "";
@@ -120,6 +123,13 @@ namespace PMQuanLyVatTu.ViewModel
             { //Chấp nhận xóa
                 EnableEditing = false;
                 //Xóa
+                var kh = DataProvider.Instance.DB.Customers.Find(MaKH);
+                if(kh != null)
+                {
+                    kh.DaXoa = true;
+                    kh.ThoiGianXoa = DateTime.Now;
+                    DataProvider.Instance.DB.SaveChanges();
+                }
                 t.Close();
             }
         }
@@ -130,33 +140,75 @@ namespace PMQuanLyVatTu.ViewModel
             if (msg.ReturnValue == true) EnableEditing = true;
         }
         public ICommand SaveInfoCommand { get; set; }
-        void SaveInfo(object t)
+        void SaveInfo(Window t)
         {
             if (EditMode == true) //Nếu đang chế độ chỉnh sửa
             {
                 EnableEditing = false;
+                var KH = DataProvider.Instance.DB.Customers.Find(MaKH);
+                if (KH != null)
+                {
+                    KH.HoTen = HoTen;
+                    KH.GioiTinh = GTinh;
+                    KH.NgaySinh = DateOnly.ParseExact(NgaySinh, "ddd/dd/MM/yyyy");
+                    KH.Sdt = SDT;
+                    KH.Email = Email;
+                    KH.DiaChi = DiaChi;
+                    DataProvider.Instance.DB.SaveChanges();
+                }
                 CustomMessage msg = new CustomMessage("/Material/Images/Icons/success.png", "THÀNH CÔNG", "Đã lưu thông tin chỉnh sửa.");
                 msg.ShowDialog();
             }
             else //Nếu trong chế độ thêm nhân viên
             {
-                if (false) //Chưa nhập mã nhân viên
+                if (MaKH.IsNullOrEmpty()) //Chưa nhập mã nhân viên
                 {
                     CustomMessage msg1 = new CustomMessage("/Material/Images/Icons/wrong.png", "LỖI", "Vui lòng nhập mã khách hàng.");
                     msg1.ShowDialog();
                     return;
                 }
-                if (false) //Trùng mã nhân viên
+                var kh = DataProvider.Instance.DB.Customers.Find(MaKH);
+                if (kh != null) //Trùng mã nhân viên
                 {
-                    AlreadyExistsError msg2 = new AlreadyExistsError();
-                    msg2.ShowDialog();
-                    return;
+                    if (kh.DaXoa == true)
+                    {
+                        kh.DaXoa = false;
+                        kh.GioiTinh = GTinh;
+                        try { kh.NgaySinh = DateOnly.ParseExact(NgaySinh, "ddd/dd/MM/yyyy"); }
+                        catch { kh.NgaySinh = DateOnly.FromDateTime(DateTime.Now); }
+                        kh.HoTen = HoTen;
+                        kh.Email = Email;
+                        kh.Sdt = SDT;
+                        kh.DiaChi = DiaChi;
+
+                        CustomMessage msg = new CustomMessage("/Material/Images/Icons/success.png", "THÀNH CÔNG", "Thêm khách hàng thành công.");
+                        msg.ShowDialog();
+                        t.Close();
+                    }
+                    else
+                    {
+                        AlreadyExistsError msg2 = new AlreadyExistsError();
+                        msg2.ShowDialog();
+                        return;
+                    }
                 }
-                 // Hợp lệ
-                EnableEditing = false;
-                CustomMessage msg = new CustomMessage("/Material/Images/Icons/success.png", "THÀNH CÔNG", "Thêm khách hàng thành công.");
-                msg.ShowDialog();
-                (t as Window).Close();
+                else
+                {
+                    var newKH = new Customer();
+                    newKH.MaKh = MaKH;
+                    newKH.HoTen = HoTen;
+                    newKH.GioiTinh = GTinh;
+                    newKH.NgaySinh = DateOnly.ParseExact(NgaySinh, "ddd/dd/MM/yyyy");
+                    newKH.Sdt = SDT;
+                    newKH.Email = Email;
+                    newKH.DiaChi = DiaChi;
+                    newKH.DaXoa = false;
+                    DataProvider.Instance.DB.Customers.Add(newKH);
+                    DataProvider.Instance.DB.SaveChanges();
+                    CustomMessage msg = new CustomMessage("/Material/Images/Icons/success.png", "THÀNH CÔNG", "Thêm khách hàng thành công.");
+                    msg.ShowDialog();
+                    t.Close();
+                }
             }
         }
         #endregion
@@ -164,12 +216,27 @@ namespace PMQuanLyVatTu.ViewModel
         void LoadData(string makh)
         {
             MaKH = makh;
-            HoTen = "Nguyễn Văn A";
-            GTinh = "Nam";
-            NgaySinh = "14/07/1080";
-            Email = "default@gmail.com";
-            SDT = "0123456789";
-            DiaChi = "123 Phố Thạch Mỹ, Huyện An Lão";
+            var KH = DataProvider.Instance.DB.Customers.Find(makh);
+            if (KH != null)
+            {
+                HoTen = KH.HoTen;
+                GTinh = KH.GioiTinh;
+                NgaySinh = ((DateOnly)KH.NgaySinh).ToDateTime(TimeOnly.MinValue).ToString("ddd/dd/MM/yyyy");
+                Email = KH.Email;
+                SDT = KH.Sdt;
+                DiaChi = KH.DiaChi;
+            }
+            else
+            {
+                makh = "";
+                HoTen = "";
+                GTinh = "";
+                NgaySinh = "";
+                Email = "";
+                SDT = "";
+                DiaChi = "";
+            }
+            
         }
         #endregion
     }
