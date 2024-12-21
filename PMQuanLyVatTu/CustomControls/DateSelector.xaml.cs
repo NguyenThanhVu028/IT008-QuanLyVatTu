@@ -30,7 +30,7 @@ namespace PMQuanLyVatTu.CustomControls
             set { SetValue(SelectedValueProperty, value); }
         }
         public static readonly DependencyProperty SelectedValueProperty =
-            DependencyProperty.Register("SelectedValue", typeof(string), typeof(DateSelector), new PropertyMetadata(""));
+            DependencyProperty.Register("SelectedValue", typeof(string), typeof(DateSelector), new PropertyMetadata(DateTime.Now.ToString("ddd/dd/MM/yyyy")));
         public DateSelector()
         {
             InitializeComponent();

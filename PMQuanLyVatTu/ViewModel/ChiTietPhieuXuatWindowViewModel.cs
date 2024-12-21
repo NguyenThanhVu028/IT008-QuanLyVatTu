@@ -54,7 +54,7 @@ namespace PMQuanLyVatTu.ViewModel
         private string _maPX = "";
         private string _maNV = CurrentUser.Instance.MaNv;
         private string _maKH = "";
-        private string _ngayLap = "";
+        private string _ngayLap = DateTime.Now.ToString("ddd/dd/MM/yyyy");
         private string _khoXuat = "";
         private string _lyDoXuat = "";
         private int _chietSuat = 0;
@@ -251,7 +251,6 @@ namespace PMQuanLyVatTu.ViewModel
                     PhieuXuat.ChietKhau = ChietKhau;
                     PhieuXuat.Vat = VAT;
                     PhieuXuat.TongGia = TongGia;
-                    PhieuXuat.TrangThai = "Chưa duyệt";
                     PhieuXuat.DaXoa = false;
 
                     var PhieuXuatInfos = DataProvider.Instance.DB.GoodsDeliveryNoteInfos.Where(p => p.MaPx == MaPX);

@@ -4,6 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:PMQuanLyVatTu.View"
+             xmlns:lvc="clr-namespace:LiveCharts.Wpf;assembly=LiveCharts.Wpf"
              xmlns:CustomControl="clr-namespace:PMQuanLyVatTu.CustomControls"
              mc:Ignorable="d" 
              d:DesignHeight="665" d:DesignWidth="1080">
@@ -21,27 +22,28 @@
         </EventTrigger>
     </UserControl.Triggers>
     <Grid>
+
         <Border Background="{StaticResource DarkGreenTransparent1}"
                 CornerRadius="10"
                 Margin="10"/>
         <Grid x:Name="LayoutGrid">
             <Grid.RowDefinitions>
-                <RowDefinition Height="6*"/>
+                <RowDefinition Height="3.5*"/>
                 <RowDefinition Height="29*"/>
             </Grid.RowDefinitions>
-            <StackPanel HorizontalAlignment="Left"
+            <StackPanel HorizontalAlignment="Right"
                         VerticalAlignment="Bottom"
-                        Margin="55, 0, 0, -10"
+                        Margin="0, 0, 55, -10"
                         Orientation="Horizontal">
                 <CustomControl:NavigationButton x:Name="TongQuanButton" 
                                                 Style="{StaticResource CustomNavigationButtonExpandable}"
                                                 VerticalAlignment="Bottom"
                                                 Height="40"
-                                                Width="120"
-                                                IsChecked="False"
+                                                Width="150"
+                                                IsChecked="{Binding IsTongQuan, Mode=OneWayToSource, UpdateSourceTrigger=PropertyChanged}"
                                                 BorderThick="0"
                                                 RadiusOfCorner="10"
-                                                BackgroundColor="{StaticResource DarkGreen2}"
+                                                BackgroundColor="#FF02F3F3"
                                                 ImageLocation=""
                                                 DisplayText="TỔNG QUAN"
                                                 TextColor="{StaticResource White}"/>
@@ -50,7 +52,7 @@
                                                 VerticalAlignment="Bottom"
                                                 Margin="10, 0, 0, 0"
                                                 Height="40"
-                                                Width="120"
+                                                Width="150"
                                                 IsChecked="False"
                                                 BorderThick="0"
                                                 RadiusOfCorner="10"
@@ -63,7 +65,7 @@
                                                 VerticalAlignment="Bottom"
                                                 Margin="10, 0, 0, 0"
                                                 Height="40"
-                                                Width="120"
+                                                Width="150"
                                                 IsChecked="False"
                                                 BorderThick="0"
                                                 RadiusOfCorner="10"
@@ -76,7 +78,7 @@
                                                 VerticalAlignment="Bottom"
                                                 Margin="10, 0, 0, 0"
                                                 Height="40"
-                                                Width="120"
+                                                Width="150"
                                                 IsChecked="False"
                                                 BorderThick="0"
                                                 RadiusOfCorner="10"
@@ -88,7 +90,7 @@
             <Border Grid.Row="1"
                     Grid.RowSpan="1"
                     Margin="30,0,30,30"
-                    Background="{StaticResource BackGroundColor}"
+                    Background="White"
                     BorderBrush="Aqua"
                     BorderThickness="2"
                     CornerRadius="25">
@@ -96,22 +98,806 @@
                         VerticalAlignment="Stretch"
                         Margin="0, 0, 0, 0"
                         BorderThickness="2"
-                        CornerRadius="25">
-                    <Border.Background>
-                        <ImageBrush ImageSource="/Material/Images/BackGround/BackGround2.jpg"
-                                    Stretch="UniformToFill"/>
-                    </Border.Background>
+                        CornerRadius="25" Background="#FFC8E2E2">
                     <Grid>
-                        <Grid x:Name="TongQuanDisplayArea">
+                        <Grid x:Name="TongQuanDisplayArea"
+                              Margin="10, 10, 10, 10"
+                              Visibility="{Binding ElementName=TongQuanButton, Path=IsChecked, Converter={StaticResource BoolToVisibilityConverter}}">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="1*"/>
+                                <ColumnDefinition Width="1*"/>
+                            </Grid.ColumnDefinitions>
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition/>
+                                    <RowDefinition/>
+                                </Grid.RowDefinitions>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition/>
+                                    <ColumnDefinition/>
+                                </Grid.ColumnDefinitions>
+                                <Border CornerRadius="5"
+                                        Margin="5, 5, 5, 5" Background="#FFF5C0FF">
+                                    <Border.BitmapEffect>
+                                        <DropShadowBitmapEffect Softness="0.2"
+                                                                Opacity="0.5"
+                                                                ShadowDepth="0"/>
+                                    </Border.BitmapEffect>
+                                    <Grid>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition/>
+                                            <RowDefinition/>
+                                        </Grid.RowDefinitions>
+                                        <TextBlock HorizontalAlignment="Left" 
+                                                   VerticalAlignment="Center"
+                                                   Margin="10, 0, 5, 0"
+                                                   Text="Tổng tiền nhập hàng trong năm nay:"
+                                                   TextWrapping="Wrap"
+                                                   Foreground="#FFA500C5"
+                                                   FontFamily="/Material/Fonts/Lexend/#Lexend Bold"
+                                                   FontSize="18"
+                                                   FontWeight="Bold"/>
+                                        <StackPanel Grid.Row="1" 
+                                                    HorizontalAlignment="Right" 
+                                                    VerticalAlignment="Center"
+                                                    Margin="5, 0, 10, 0"
+                                                    Orientation="Vertical">
+                                            <TextBlock Grid.Row="1" 
+                                                   HorizontalAlignment="Right" 
+                                                   VerticalAlignment="Center"
+                                                   Margin="0, 0, 0, 0"
+                                                   Text="{Binding TienNhapHang, StringFormat={}{0:n0}}"
+                                                   TextWrapping="Wrap"
+                                                   Foreground="#FFFF00F0"
+                                                   FontFamily="/Material/Fonts/Lexend/#Lexend Bold"
+                                                   FontSize="24"
+                                                   FontWeight="Bold"/>
+                                            <TextBlock Grid.Row="1" 
+                                                   HorizontalAlignment="Right" 
+                                                   VerticalAlignment="Bottom"
+                                                   Margin="5, 0, 0, 0"
+                                                   Text="VNĐ"
+                                                   TextWrapping="Wrap"
+                                                   Foreground="#FFA500C5"
+                                                   FontFamily="/Material/Fonts/Lexend/#Lexend Bold"
+                                                   FontSize="15"
+                                                   FontWeight="Bold"/>
+                                        </StackPanel>
+                                    </Grid>
+                                </Border>
+                                <Border Grid.Column="1" 
+                                        CornerRadius="5"
+                                        Margin="5, 5, 5, 5" Background="#FFC8FFBB">
+                                    <Border.BitmapEffect>
+                                        <DropShadowBitmapEffect Softness="0.2"
+                                                                Opacity="0.5"
+                                                                ShadowDepth="0"/>
+                                    </Border.BitmapEffect>
+                                    <Grid>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition/>
+                                            <RowDefinition/>
+                                        </Grid.RowDefinitions>
+                                        <TextBlock HorizontalAlignment="Left" 
+                                                   VerticalAlignment="Center"
+                                                   Margin="10, 0, 5, 0"
+                                                   Text="Tổng tiền xuất hàng trong năm nay:"
+                                                   TextWrapping="Wrap"
+                                                   Foreground="#FF22B400"
+                                                   FontFamily="/Material/Fonts/Lexend/#Lexend Bold"
+                                                   FontSize="18"
+                                                   FontWeight="Bold"/>
+                                        <StackPanel Grid.Row="1" 
+                                                    HorizontalAlignment="Right" 
+                                                    VerticalAlignment="Center"
+                                                    Margin="5, 0, 10, 0"
+                                                    Orientation="Vertical">
+                                            <TextBlock Grid.Row="1" 
+                                                   HorizontalAlignment="Right" 
+                                                   VerticalAlignment="Center"
+                                                   Margin="0, 0, 0, 0"
+                                                   Text="{Binding TienXuatHang, StringFormat={}{0:n0}}"
+                                                   TextWrapping="Wrap"
+                                                   Foreground="#FF00DC94"
+                                                   FontFamily="/Material/Fonts/Lexend/#Lexend Bold"
+                                                   FontSize="24"
+                                                   FontWeight="Bold"/>
+                                            <TextBlock Grid.Row="1" 
+                                                   HorizontalAlignment="Right" 
+                                                   VerticalAlignment="Bottom"
+                                                   Margin="5, 0, 0, 0"
+                                                   Text="VNĐ"
+                                                   TextWrapping="Wrap"
+                                                   Foreground="#FF22B400"
+                                                   FontFamily="/Material/Fonts/Lexend/#Lexend Bold"
+                                                   FontSize="15"
+                                                   FontWeight="Bold"/>
+                                        </StackPanel>
+                                    </Grid>
+                                </Border>
+                                <Border Grid.Row="1" 
+                                        CornerRadius="5"
+                                        Margin="5, 5, 5, 5" 
+                                        Background="#FFC0F9FF">
+                                    <Border.BitmapEffect>
+                                        <DropShadowBitmapEffect Softness="0.2"
+                                                                Opacity="0.5"
+                                                                ShadowDepth="0"/>
+                                    </Border.BitmapEffect>
+                                    <Grid>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition/>
+                                            <RowDefinition/>
+                                        </Grid.RowDefinitions>
+                                        <TextBlock HorizontalAlignment="Left" 
+                                                   VerticalAlignment="Center"
+                                                   Margin="10, 0, 5, 0"
+                                                   Text="Doanh thu trong năm nay:"
+                                                   TextWrapping="Wrap"
+                                                   Foreground="#FF00B6C9"
+                                                   FontFamily="/Material/Fonts/Lexend/#Lexend Bold"
+                                                   FontSize="18"
+                                                   FontWeight="Bold"/>
+                                        <StackPanel Grid.Row="1" 
+                                                    HorizontalAlignment="Right" 
+                                                    VerticalAlignment="Center"
+                                                    Margin="5, 0, 10, 0"
+                                                    Orientation="Vertical">
+                                            <TextBlock Grid.Row="1" 
+                                                   HorizontalAlignment="Right" 
+                                                   VerticalAlignment="Center"
+                                                   Margin="0, 0, 0, 0"
+                                                   Text="{Binding DoanhThuNamNay, StringFormat={}{0:n0}}"
+                                                   TextWrapping="Wrap"
+                                                   Foreground="#FF006BC9"
+                                                   FontFamily="/Material/Fonts/Lexend/#Lexend Bold"
+                                                   FontSize="24"
+                                                   FontWeight="Bold"/>
+                                            <TextBlock Grid.Row="1" 
+                                                   HorizontalAlignment="Right" 
+                                                   VerticalAlignment="Bottom"
+                                                   Margin="5, 0, 0, 0"
+                                                   Text="VNĐ"
+                                                   TextWrapping="Wrap"
+                                                   Foreground="#FF00B6C9"
+                                                   FontFamily="/Material/Fonts/Lexend/#Lexend Bold"
+                                                   FontSize="15"
+                                                   FontWeight="Bold"/>
+                                        </StackPanel>
+                                    </Grid>
+                                </Border>
+                                <Border Grid.Row="1"
+                                        Grid.Column="1"
+                                        CornerRadius="5"
+                                        Margin="5, 5, 5, 5" Background="#FFFFFDB4">
+                                    <Border.BitmapEffect>
+                                        <DropShadowBitmapEffect Softness="0.2"
+                                                                Opacity="0.5"
+                                                                ShadowDepth="0"/>
+                                    </Border.BitmapEffect>
+                                    <Grid>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition/>
+                                            <RowDefinition/>
+                                        </Grid.RowDefinitions>
+                                        <TextBlock HorizontalAlignment="Left" 
+                                                   VerticalAlignment="Center"
+                                                   Margin="10, 0, 5, 0"
+                                                   Text="Vật tư bán chạy nhất trong năm nay:"
+                                                   TextWrapping="Wrap"
+                                                   Foreground="#FFB5A400"
+                                                   FontFamily="/Material/Fonts/Lexend/#Lexend Bold"
+                                                   FontSize="18"
+                                                   FontWeight="Bold"/>
+                                        <StackPanel Grid.Row="1" 
+                                                    HorizontalAlignment="Right" 
+                                                    VerticalAlignment="Center"
+                                                    Margin="5, 0, 10, 0"
+                                                    Orientation="Vertical">
+                                            <TextBlock Grid.Row="1" 
+                                                   HorizontalAlignment="Right" 
+                                                   VerticalAlignment="Center"
+                                                   Margin="0, 0, 0, 0"
+                                                   Text="{Binding BestVT}"
+                                                   TextWrapping="Wrap"
+                                                   Foreground="#FFEE8100"
+                                                   FontFamily="/Material/Fonts/Lexend/#Lexend Bold"
+                                                   FontSize="24"
+                                                   FontWeight="Bold"/>
+                                            <StackPanel Orientation="Horizontal">
+                                                <TextBlock Grid.Row="1" 
+                                                   HorizontalAlignment="Right" 
+                                                   VerticalAlignment="Center"
+                                                   Margin="5, 0, 0, 0"
+                                                   Text="Đã bán: "
+                                                   TextWrapping="Wrap"
+                                                   Foreground="#FFB5A400"
+                                                   FontFamily="/Material/Fonts/Lexend/#Lexend Bold"
+                                                   FontSize="15"
+                                                   FontWeight="Bold"/>
+                                                <TextBlock Grid.Row="1" 
+                                                           HorizontalAlignment="Right" 
+                                                           VerticalAlignment="Bottom"
+                                                           Margin="5, 0, 0, 0"
+                                                           Text="{Binding BestSL}"
+                                                           TextWrapping="Wrap"
+                                                           Foreground="#FFEE3400"
+                                                           FontFamily="/Material/Fonts/Lexend/#Lexend Bold"
+                                                           FontSize="20"
+                                                           FontWeight="Bold"/>
+                                            </StackPanel>
+
+                                        </StackPanel>
+                                    </Grid>
+                                </Border>
+                                <!--<Border Grid.Row="4" 
+                                        CornerRadius="5"
+                                        Margin="5, 5, 5, 5" Background="#FFFFCEC4">
+                                    <Border.BitmapEffect>
+                                        <DropShadowBitmapEffect Softness="0.2"
+                                                                Opacity="0.5"
+                                                                ShadowDepth="0"/>
+                                    </Border.BitmapEffect>
+
+                                </Border>-->
+                            </Grid>
+                            <Grid Grid.Column="1"
+                                  Margin="10, 0, 10, 0">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition/>
+                                    <RowDefinition/>
+                                </Grid.RowDefinitions>
+                                <Border Background="White"
+                                        CornerRadius="5"
+                                        Margin="10, 10, 5, 5">
+                                    <Border.BitmapEffect>
+                                        <DropShadowBitmapEffect Softness="0.2"
+                                                                Opacity="0.5"
+                                                                ShadowDepth="0"/>
+                                    </Border.BitmapEffect>
+                                    <Grid>
+                                        <TextBlock HorizontalAlignment="Right" 
+                                                   VerticalAlignment="Top"
+                                                   Width="150"
+                                                   Margin="10, 10, 15, 0"
+                                                   Text="Tương quan nhập / xuất"
+                                                   TextWrapping="Wrap"
+                                                   TextAlignment="Right"
+                                                   Foreground="#FF006BC9"
+                                                   FontFamily="/Material/Fonts/Lexend/#Lexend Bold"
+                                                   FontSize="18"
+                                                   FontWeight="Bold"/>
+                                        <lvc:PieChart LegendLocation="Right"
+                                                      Series="{Binding NhapXuatSeries}"
+                                                      InnerRadius="70"
+                                                      Margin="5, 25,20, 10"/>
+                                    </Grid>
+                                </Border>
+                                <!--<Border Grid.Column="1" 
+                                        Background="White"
+                                        CornerRadius="5"
+                                        Margin="5, 10, 10, 5">
+                                    <Border.BitmapEffect>
+                                        <DropShadowBitmapEffect Softness="0.2"
+                                                                Opacity="0.5"
+                                                                ShadowDepth="0"/>
+                                    </Border.BitmapEffect>
+                                </Border>-->
+                                <!--<Border Grid.Row="1" 
+                                        Background="White"
+                                        CornerRadius="5"
+                                        Margin="10, 5, 5, 10">
+                                    <Border.BitmapEffect>
+                                        <DropShadowBitmapEffect Softness="0.2"
+                                                                Opacity="0.5"
+                                                                ShadowDepth="0"/>
+                                    </Border.BitmapEffect>
+                                    --><!--<Grid>
+                                        <lvc:CartesianChart Margin="10"
+                                                            Series="{Binding KhachHangSeries}">
+                                            <lvc:CartesianChart.AxisX>
+                                                <lvc:Axis Title=""
+                                                          LabelFormatter="{Binding Formatter}"/>
+                                            </lvc:CartesianChart.AxisX>
+                                            <lvc:CartesianChart.AxisY>
+                                                <lvc:Axis Title=""
+                                                          Labels="{Binding KhachHangLabels}"/>
+                                            </lvc:CartesianChart.AxisY>
+                                        </lvc:CartesianChart>
+                                    </Grid>--><!--
+                                </Border>-->
+                                <Border Grid.Row="1"
+                                        Grid.Column="1"
+                                        Background="White"
+                                        CornerRadius="5"
+                                        Margin="10, 10, 5, 5">
+                                    <Border.BitmapEffect>
+                                        <DropShadowBitmapEffect Softness="0.2"
+                                                                Opacity="0.5"
+                                                                ShadowDepth="0"/>
+                                    </Border.BitmapEffect>
+                                    <Grid>
+                                        <TextBlock HorizontalAlignment="Left" 
+                                                   VerticalAlignment="Top"
+                                                   Width="150"
+                                                   Margin="15, 10, 15, 0"
+                                                   Text="Tình trạng phiếu xuất:"
+                                                   TextWrapping="Wrap"
+                                                   TextAlignment="Left"
+                                                   Foreground="#FF006BC9"
+                                                   FontFamily="/Material/Fonts/Lexend/#Lexend Bold"
+                                                   FontSize="18"
+                                                   FontWeight="Bold"/>
+                                        <lvc:PieChart LegendLocation="Left"
+                                                      Series="{Binding PhieuXuatSeries}"
+                                                      InnerRadius="70"
+                                                      Margin="20, 25, 70, 10"/>
+                                    </Grid>
+                                </Border>
+                            </Grid>
+                        </Grid>
+                        <Grid x:Name="LichSuNhapDisplayArea"
+                              Margin="10, 10, 10, 10"
+                              Visibility="{Binding ElementName=LichSuNhapButton, Path=IsChecked, Converter={StaticResource BoolToVisibilityConverter}}">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="3.5*"/>
+                                <ColumnDefinition Width="1*"/>
+                            </Grid.ColumnDefinitions>
+                            <Border Grid.Column="0"
+                                    Background="White"
+                                    Margin="5, 5, 5, 5"
+                                    CornerRadius="10">
+                                <Border.BitmapEffect>
+                                    <DropShadowBitmapEffect Softness="0.2"
+                                                                Opacity="0.5"
+                                                                ShadowDepth="0"/>
+                                </Border.BitmapEffect>
+                                <Grid>
+                                    <Grid x:Name="MonthChart"
+                                      Visibility="{Binding TheoThang, Converter={StaticResource BoolToVisibilityConverter}}">
+                                        <lvc:CartesianChart Margin="10"
+                                                        Series="{Binding NhapMonthSeries}">
+                                            <lvc:CartesianChart.AxisX>
+                                                <lvc:Axis Title=""
+                                                      Labels ="{Binding MonthLabels}">
+                                                    <lvc:Axis.Separator>
+                                                        <lvc:Separator IsEnabled="False" Step="3"/>
+                                                    </lvc:Axis.Separator>
+                                                </lvc:Axis>
+                                            </lvc:CartesianChart.AxisX>
+                                            <lvc:CartesianChart.AxisY>
+                                                <lvc:Axis Title=""
+                                                      LabelFormatter="{Binding Formatter}">
+                                                </lvc:Axis>
+                                            </lvc:CartesianChart.AxisY>
+                                        </lvc:CartesianChart>
+                                    </Grid>
+                                    <Grid x:Name="YearChart"
+                                      Visibility="{Binding TheoThang, Converter={StaticResource ReverseBoolToVisibilityConverter}}">
+                                        <lvc:CartesianChart Margin="10"
+                                                        Series="{Binding NhapYearSeries}">
+                                            <lvc:CartesianChart.AxisX>
+                                                <lvc:Axis Title=""
+                                                      Labels ="{Binding YearLabels}">
+                                                    <lvc:Axis.Separator>
+                                                        <lvc:Separator IsEnabled="False" Step="1"/>
+                                                    </lvc:Axis.Separator>
+                                                </lvc:Axis>
+                                            </lvc:CartesianChart.AxisX>
+                                            <lvc:CartesianChart.AxisY>
+                                                <lvc:Axis Title=""
+                                                      LabelFormatter="{Binding Formatter}">
+                                                </lvc:Axis>
+                                            </lvc:CartesianChart.AxisY>
+                                        </lvc:CartesianChart>
+                                    </Grid>
+                                </Grid>
+
+                            </Border>
+                            <Grid Grid.Column="1">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="0.7*"/>
+                                    <RowDefinition Height="1*"/>
+                                    <RowDefinition Height="7*"/>
+                                </Grid.RowDefinitions>
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition/>
+                                        <ColumnDefinition/>
+                                    </Grid.ColumnDefinitions>
+                                    <CustomControl:NavigationButton Style="{StaticResource ImagelessNavigationButton}"
+                                                                    VerticalAlignment="Center"
+                                                                    Height="35"
+                                                                    Margin="10, 0, 0, 0"
+                                                                    RadiusOfCorner="5, 0, 0, 5"
+                                                                    BackgroundColor="#FFCBFBFF"
+                                                                    BackgroundColorClicked="#FF5BFFFF"
+                                                                    BorderColor="#FF719B9B"
+                                                                    IsChecked="{Binding TheoThang, Mode=TwoWay}"
+                                                                    DisplayText="Theo tháng"
+                                                                    TextColor="#FF00A4C8"/>
+                                    <CustomControl:NavigationButton Grid.Column="1" 
+                                                                    Style="{StaticResource ImagelessNavigationButton}"
+                                                                    VerticalAlignment="Center"
+                                                                    Height="35"
+                                                                    Margin="0, 0, 10, 0"
+                                                                    RadiusOfCorner="0, 5, 5, 0"
+                                                                    BackgroundColor="#FFCBFBFF"
+                                                                    BackgroundColorClicked="#FF5BFFFF"
+                                                                    BorderColor="#FF719B9B"
+                                                                    IsChecked="False"
+                                                                    DisplayText="Theo năm"
+                                                                    TextColor="#FF00A4C8"/>
+                                </Grid>
+                                <Border Grid.Row="2"
+                                        Background="#FFF1F1F1"
+                                        CornerRadius="0, 0, 10, 10"
+                                        Margin="5, 0, 5, 10">
+                                    <Border.BitmapEffect>
+                                        <DropShadowBitmapEffect Softness="0.2"
+                                                                Opacity="0.5"
+                                                                ShadowDepth="0"/>
+                                    </Border.BitmapEffect>
+                                    <Grid>
+                                        <DataGrid x:Name="DisplayDataGRid"
+                                                  Style="{DynamicResource DataGridStyle1}" 
+                                                  CellStyle="{DynamicResource DataGridCellStyle1}" 
+                                                  ColumnHeaderStyle="{DynamicResource DataGridColumnHeaderStyle1}"
+                                                  RowStyle="{DynamicResource DataGridRowStyle1}" 
+                                                  HorizontalAlignment="Stretch"
+                                                  VerticalAlignment="Stretch"
+                                                  Margin="5, 5, 5, 5"
+                                                  HorizontalScrollBarVisibility="Hidden"
+                                                  ItemsSource="{Binding DanhSachVatTuNhap}">
+                                            <DataGrid.Columns>
+                                                <DataGridTextColumn Header="VT"
+                                                                    FontSize="14"
+                                                                    Width="90"
+                                                                    IsReadOnly="True"
+                                                                    Binding="{Binding MaVt}"/>
+                                                <DataGridTextColumn Header="SL"
+                                                                    FontSize="14"
+                                                                    Width="90"
+                                                                    IsReadOnly="True"
+                                                                    Binding="{Binding SoLuong}"/>
+                                            </DataGrid.Columns>
+                                        </DataGrid>
+                                    </Grid>
+                                </Border>
+                                <Border Grid.Row="1" 
+                                        Background="White"
+                                        CornerRadius="10, 10, 0, 0"
+                                        VerticalAlignment="Stretch"
+                                        Margin="5, 10, 5, 0">
+                                    <Border.BitmapEffect>
+                                        <DropShadowBitmapEffect Softness="0.2"
+                                                                Opacity="0.5"
+                                                                ShadowDepth="0"/>
+                                    </Border.BitmapEffect>
+                                </Border>
+                                <Grid Grid.Row="1"
+                                      Grid.RowSpan="2"
+                                      Margin="5, 0, 5, 10">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="auto"/>
+                                        <ColumnDefinition/>
+                                    </Grid.ColumnDefinitions>
+                                    <CustomControl:SelectionList Grid.Row="1" 
+                                                                 Height="150"
+                                                                 Width="90"
+                                                                 Grid.RowSpan="2"
+                                                                 HorizontalAlignment="Stretch"
+                                                                 VerticalAlignment="Top"
+                                                                 Margin="5, 15, 5, 0"
+                                                                 IsAllowed="True"
+                                                                 SelectedValue="{Binding SelectedMonth, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                                                 DataList="{Binding MonthList}"
+                                                                 Visibility="{Binding TheoThang, Mode=OneWay, Converter={StaticResource BoolToVisibilityConverter}}"/>
+                                    <CustomControl:SelectionList Grid.Column="1" 
+                                                                 Height="150"
+                                                                 Grid.RowSpan="2"
+                                                                 HorizontalAlignment="Stretch"
+                                                                 VerticalAlignment="Top"
+                                                                 Margin="5, 15, 5, 0"
+                                                                 IsAllowed="True"
+                                                                 SelectedValue="{Binding SelectedYear, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                                                 DataList="{Binding YearList}"/>
+                                </Grid>
+
+                            </Grid>
+                        </Grid>
+                        <Grid x:Name="LichSuXuatDisplayArea"
+                              Margin="10, 10, 10, 10"
+                              Visibility="{Binding ElementName=LichSuXuatButton, Path=IsChecked, Converter={StaticResource BoolToVisibilityConverter}}">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="3.5*"/>
+                                <ColumnDefinition Width="1*"/>
+                            </Grid.ColumnDefinitions>
+                            <Border Grid.Column="0"
+                                    Background="White"
+                                    Margin="5, 5, 5, 5"
+                                    CornerRadius="10">
+                                <Border.BitmapEffect>
+                                    <DropShadowBitmapEffect Softness="0.2"
+                                                                Opacity="0.5"
+                                                                ShadowDepth="0"/>
+                                </Border.BitmapEffect>
+                                <Grid>
+                                    <Grid Visibility="{Binding TheoThang, Converter={StaticResource BoolToVisibilityConverter}}">
+                                        <lvc:CartesianChart Margin="10"
+                                                        Series="{Binding XuatMonthSeries}">
+                                            <lvc:CartesianChart.AxisX>
+                                                <lvc:Axis Title=""
+                                                      Labels ="{Binding MonthLabels}">
+                                                    <lvc:Axis.Separator>
+                                                        <lvc:Separator IsEnabled="False" Step="3"/>
+                                                    </lvc:Axis.Separator>
+                                                </lvc:Axis>
+                                            </lvc:CartesianChart.AxisX>
+                                            <lvc:CartesianChart.AxisY>
+                                                <lvc:Axis Title=""
+                                                      LabelFormatter="{Binding Formatter}">
+                                                </lvc:Axis>
+                                            </lvc:CartesianChart.AxisY>
+                                        </lvc:CartesianChart>
+                                    </Grid>
+                                    <Grid Visibility="{Binding TheoThang, Converter={StaticResource ReverseBoolToVisibilityConverter}}">
+                                        <lvc:CartesianChart Margin="10"
+                                                        Series="{Binding XuatYearSeries}">
+                                            <lvc:CartesianChart.AxisX>
+                                                <lvc:Axis Title=""
+                                                      Labels ="{Binding YearLabels}">
+                                                    <lvc:Axis.Separator>
+                                                        <lvc:Separator IsEnabled="False" Step="1"/>
+                                                    </lvc:Axis.Separator>
+                                                </lvc:Axis>
+                                            </lvc:CartesianChart.AxisX>
+                                            <lvc:CartesianChart.AxisY>
+                                                <lvc:Axis Title=""
+                                                      LabelFormatter="{Binding Formatter}">
+                                                </lvc:Axis>
+                                            </lvc:CartesianChart.AxisY>
+                                        </lvc:CartesianChart>
+                                    </Grid>
+                                </Grid>
+                            </Border>
+                            <Grid Grid.Column="1">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="0.7*"/>
+                                    <RowDefinition Height="1*"/>
+                                    <RowDefinition Height="7*"/>
+                                </Grid.RowDefinitions>
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition/>
+                                        <ColumnDefinition/>
+                                    </Grid.ColumnDefinitions>
+                                    <CustomControl:NavigationButton Style="{StaticResource ImagelessNavigationButton}"
+                                                                    VerticalAlignment="Center"
+                                                                    Height="35"
+                                                                    Margin="10, 0, 0, 0"
+                                                                    RadiusOfCorner="5, 0, 0, 5"
+                                                                    BackgroundColor="#FFCBFBFF"
+                                                                    BackgroundColorClicked="#FF5BFFFF"
+                                                                    BorderColor="#FF719B9B"
+                                                                    IsChecked="{Binding TheoThang, Mode=TwoWay}"
+                                                                    DisplayText="Theo tháng"
+                                                                    TextColor="#FF00A4C8"/>
+                                    <CustomControl:NavigationButton Grid.Column="1" 
+                                                                    Style="{StaticResource ImagelessNavigationButton}"
+                                                                    VerticalAlignment="Center"
+                                                                    Height="35"
+                                                                    Margin="0, 0, 10, 0"
+                                                                    RadiusOfCorner="0, 5, 5, 0"
+                                                                    BackgroundColor="#FFCBFBFF"
+                                                                    BackgroundColorClicked="#FF5BFFFF"
+                                                                    BorderColor="#FF719B9B"
+                                                                    IsChecked="False"
+                                                                    DisplayText="Theo năm"
+                                                                    TextColor="#FF00A4C8"/>
+                                </Grid>
+                                <Border Grid.Row="2"
+                                        Background="#FFF1F1F1"
+                                        CornerRadius="0, 0, 10, 10"
+                                        Margin="5, 0, 5, 10">
+                                    <Border.BitmapEffect>
+                                        <DropShadowBitmapEffect Softness="0.2"
+                                                                Opacity="0.5"
+                                                                ShadowDepth="0"/>
+                                    </Border.BitmapEffect>
+                                    <Grid>
+                                        <DataGrid Style="{DynamicResource DataGridStyle1}" 
+                                                  CellStyle="{DynamicResource DataGridCellStyle1}" 
+                                                  ColumnHeaderStyle="{DynamicResource DataGridColumnHeaderStyle1}"
+                                                  RowStyle="{DynamicResource DataGridRowStyle1}" 
+                                                  HorizontalAlignment="Stretch"
+                                                  VerticalAlignment="Stretch"
+                                                  Margin="5, 5, 5, 5"
+                                                  HorizontalScrollBarVisibility="Hidden"
+                                                  ItemsSource="{Binding DanhSachVatTuXuat}">
+                                            <DataGrid.Columns>
+                                                <DataGridTextColumn Header="VT"
+                                                                    FontSize="14"
+                                                                    Width="90"
+                                                                    IsReadOnly="True"
+                                                                    Binding="{Binding MaVt}"/>
+                                                <DataGridTextColumn Header="SL"
+                                                                    FontSize="14"
+                                                                    Width="90"
+                                                                    IsReadOnly="True"
+                                                                    Binding="{Binding SoLuong}"/>
+                                            </DataGrid.Columns>
+                                        </DataGrid>
+                                    </Grid>
+                                </Border>
+                                <Border Grid.Row="1" 
+                                        Background="White"
+                                        CornerRadius="10, 10, 0, 0"
+                                        VerticalAlignment="Stretch"
+                                        Margin="5, 10, 5, 0">
+                                    <Border.BitmapEffect>
+                                        <DropShadowBitmapEffect Softness="0.2"
+                                                                Opacity="0.5"
+                                                                ShadowDepth="0"/>
+                                    </Border.BitmapEffect>
+                                </Border>
+                                <Grid Grid.Row="1"
+                                      Grid.RowSpan="2"
+                                      Margin="5, 0, 5, 10">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="auto"/>
+                                        <ColumnDefinition/>
+                                    </Grid.ColumnDefinitions>
+                                    <CustomControl:SelectionList Grid.Row="1" 
+                                                                 Height="150"
+                                                                 Width="90"
+                                                                 Grid.RowSpan="2"
+                                                                 HorizontalAlignment="Left"
+                                                                 VerticalAlignment="Top"
+                                                                 Margin="5, 15, 5, 0"
+                                                                 IsAllowed="True"
+                                                                 SelectedValue="{Binding SelectedMonth, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                                                 DataList="{Binding MonthList}"
+                                                                 Visibility="{Binding TheoThang, Mode=OneWay, Converter={StaticResource BoolToVisibilityConverter}}"/>
+                                    <CustomControl:SelectionList Grid.Column="1" 
+                                                                 Height="150"
+                                                                 Grid.RowSpan="2"
+                                                                 HorizontalAlignment="Stretch"
+                                                                 VerticalAlignment="Top"
+                                                                 Margin="5, 15, 5, 0"
+                                                                 IsAllowed="True"
+                                                                 SelectedValue="{Binding SelectedYear, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                                                 DataList="{Binding YearList}"/>
+                                </Grid>
+
+                            </Grid>
+                        </Grid>
+                        <Grid x:Name="DoanhSoDisplayArea"
+                              Margin="10, 10, 10, 10"
+                              Visibility="{Binding ElementName=DoanhThuButton, Path=IsChecked, Converter={StaticResource BoolToVisibilityConverter}}">
+                            <Border Grid.ColumnSpan="2"
+                                    Background="White"
+                                    Margin="5, 5, 5, 5"
+                                    CornerRadius="10">
+                                <Border.BitmapEffect>
+                                    <DropShadowBitmapEffect Softness="0.2"
+                                                                Opacity="0.5"
+                                                                ShadowDepth="0"/>
+                                </Border.BitmapEffect>
+                                <Grid>
+                                    <Grid Visibility="{Binding TheoThang, Converter={StaticResource BoolToVisibilityConverter}}">
+                                        <lvc:CartesianChart Margin="10, 40, 10, 10"
+                                                        Series="{Binding DoanhThuMonthSeries}">
+                                            <lvc:CartesianChart.AxisX>
+                                                <lvc:Axis Title=""
+                                                      Labels ="{Binding MonthLabels}">
+                                                    <lvc:Axis.Separator>
+                                                        <lvc:Separator IsEnabled="False" Step="1"/>
+                                                    </lvc:Axis.Separator>
+                                                </lvc:Axis>
+                                            </lvc:CartesianChart.AxisX>
+                                            <lvc:CartesianChart.AxisY>
+                                                <lvc:Axis Title=""
+                                                      LabelFormatter="{Binding Formatter}">
+                                                </lvc:Axis>
+                                            </lvc:CartesianChart.AxisY>
+                                        </lvc:CartesianChart>
+                                    </Grid>
+                                    <Grid Visibility="{Binding TheoThang, Converter={StaticResource ReverseBoolToVisibilityConverter}}">
+                                        <lvc:CartesianChart Margin="10, 40, 10, 10"
+                                                        Series="{Binding DoanhThuYearSeries}">
+                                            <lvc:CartesianChart.AxisX>
+                                                <lvc:Axis Title=""
+                                                      Labels ="{Binding YearLabels}">
+                                                    <lvc:Axis.Separator>
+                                                        <lvc:Separator IsEnabled="False" Step="1"/>
+                                                    </lvc:Axis.Separator>
+                                                </lvc:Axis>
+                                            </lvc:CartesianChart.AxisX>
+                                            <lvc:CartesianChart.AxisY>
+                                                <lvc:Axis Title=""
+                                                      LabelFormatter="{Binding Formatter}">
+                                                </lvc:Axis>
+                                            </lvc:CartesianChart.AxisY>
+                                        </lvc:CartesianChart>
+                                    </Grid>
+                                    
+                                </Grid>
+                            </Border>
+                            <Grid Grid.Column="1">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="1*"/>
+                                    <RowDefinition Height="1*"/>
+                                    <RowDefinition Height="7*"/>
+                                </Grid.RowDefinitions>
+                                <Grid HorizontalAlignment="Right">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition/>
+                                        <ColumnDefinition/>
+                                    </Grid.ColumnDefinitions>
+                                    <CustomControl:NavigationButton Style="{StaticResource ImagelessNavigationButton}"
+                                                                    Height="40"
+                                                                    Width="100"
+                                                                    Margin="10,9,0,0"
+                                                                    RadiusOfCorner="5, 0, 0, 5"
+                                                                    BackgroundColor="#FFCBFBFF"
+                                                                    BackgroundColorClicked="#FF5BFFFF"
+                                                                    BorderColor="#FF719B9B"
+                                                                    IsChecked="{Binding TheoThang, Mode=TwoWay}"
+                                                                    DisplayText="Theo tháng"
+                                                                    TextColor="#FF00A4C8" Grid.RowSpan="2"/>
+                                    <CustomControl:NavigationButton Grid.Column="1" 
+                                                                    Style="{StaticResource ImagelessNavigationButton}"
+                                                                    Height="40"
+                                                                    Width="100"
+                                                                    Margin="0,9,10,0"
+                                                                    RadiusOfCorner="0, 5, 5, 0"
+                                                                    BackgroundColor="#FFCBFBFF"
+                                                                    BackgroundColorClicked="#FF5BFFFF"
+                                                                    BorderColor="#FF719B9B"
+                                                                    IsChecked="False"
+                                                                    DisplayText="Theo năm"
+                                                                    TextColor="#FF00A4C8" Grid.RowSpan="2"/>
+                                </Grid>
+                                <Grid Grid.Row="0"
+                                      Grid.RowSpan="3"
+                                      HorizontalAlignment="Right"
+                                      Margin="5, 0, 210, 10">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="auto"/>
+                                        <ColumnDefinition/>
+                                    </Grid.ColumnDefinitions>
+                                    <CustomControl:SelectionList Grid.Row="1" 
+                                                                 Height="150"
+                                                                 Width="90"
+                                                                 Grid.RowSpan="3"
+                                                                 HorizontalAlignment="Left"
+                                                                 VerticalAlignment="Top"
+                                                                 Margin="5, 9, 5, 0"
+                                                                 IsAllowed="True"
+                                                                 SelectedValue="{Binding SelectedMonth, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                                                 DataList="{Binding MonthList}"
+                                                                 Visibility="{Binding TheoThang, Mode=OneWay, Converter={StaticResource BoolToVisibilityConverter}}"/>
+                                    <CustomControl:SelectionList Grid.Column="1" 
+                                                                 Height="150"
+                                                                 Width="100"
+                                                                 Grid.RowSpan="3"
+                                                                 HorizontalAlignment="Stretch"
+                                                                 VerticalAlignment="Top"
+                                                                 Margin="5, 9, 5, 0"
+                                                                 IsAllowed="True"
+                                                                 SelectedValue="{Binding SelectedYear, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                                                 DataList="{Binding YearList}"/>
+                                </Grid>
+
+                            </Grid>
                         </Grid>
                     </Grid>
                 </Border>
             </Border>
-            <TextBlock 
-                       Height="70"
-                       Width="600"
-                       HorizontalAlignment="Center"
-                       VerticalAlignment="Center"
+            <TextBlock HorizontalAlignment="Left"
+                       VerticalAlignment="Top"
+                       Margin="50, 20, 0, 0"
                        Text="THỐNG KÊ"
                        Foreground="{StaticResource LightAqua1a}"
                        FontFamily="/Material/Fonts/Lexend/#Lexend Black"

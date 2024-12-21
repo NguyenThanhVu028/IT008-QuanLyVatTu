@@ -35,6 +35,7 @@
     <None Remove="Material\Images\BackGround\BackGround5.jpg" />
     <None Remove="Material\Images\BackGround\DefaultBackGround.jpg" />
     <None Remove="Material\Images\BackGround\DefaultBackGround.png" />
+    <None Remove="Material\Images\BackGround\ReportBackGround.jpg" />
     <None Remove="Material\Images\Icons\approve.png" />
     <None Remove="Material\Images\Icons\close.png" />
     <None Remove="Material\Images\Icons\close2.png" />
@@ -112,6 +113,7 @@
     <Resource Include="Material\Images\BackGround\BackGround5.jpg" />
     <Resource Include="Material\Images\BackGround\DefaultBackGround.jpg" />
     <Resource Include="Material\Images\BackGround\DefaultBackGround.png" />
+    <Resource Include="Material\Images\BackGround\ReportBackGround.jpg" />
     <Resource Include="Material\Images\Icons\approve.png" />
     <Resource Include="Material\Images\Icons\close.png" />
     <Resource Include="Material\Images\Icons\close2.png" />

@@ -117,8 +117,8 @@
                         </Style>
                     </ScrollViewer.Resources>
                     <StackPanel x:Name="ContainerStack"
-                                HorizontalAlignment="Left"
-                                Margin="10, 0, 0, 0">
+                                HorizontalAlignment="Center"
+                                Margin="0, 0, 0, 0">
                     </StackPanel>
                 </ScrollViewer>
             </Border>

@@ -34,11 +34,11 @@
                     BorderBrush="Aqua"
                     BorderThickness="2"
                     CornerRadius="25"/>
-            <DataGrid x:Name="DisplayDataGRid" 
+            <DataGrid x:Name="DisplayDataGRid"
                       SelectedItem="{Binding SelectedPhieuNhap}"
                       Style="{DynamicResource DataGridStyle1}" 
                       CellStyle="{DynamicResource DataGridCellStyle1}" 
-                      ColumnHeaderStyle="{DynamicResource DataGridColumnHeaderStyle1}" 
+                      ColumnHeaderStyle="{DynamicResource DataGridColumnHeaderStyle1}"
                       RowStyle="{DynamicResource DataGridRowStyle1}" 
                       HorizontalAlignment="Stretch"
                       VerticalAlignment="Stretch"

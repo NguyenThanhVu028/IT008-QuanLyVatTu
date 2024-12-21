@@ -70,6 +70,13 @@ namespace PMQuanLyVatTu.CustomControls
         }
         public static readonly DependencyProperty BackgroundColorProperty =
             DependencyProperty.Register("BackgroundColor", typeof(SolidColorBrush), typeof(NavigationButton), new PropertyMetadata(Brushes.Black));
+        public SolidColorBrush BackgroundColorClicked
+        {
+            get { return (SolidColorBrush)GetValue(BackgroundColorClickedProperty); }
+            set { SetValue(BackgroundColorClickedProperty, value); }
+        }
+        public static readonly DependencyProperty BackgroundColorClickedProperty =
+            DependencyProperty.Register("BackgroundColorClicked", typeof(SolidColorBrush), typeof(NavigationButton), new PropertyMetadata(Brushes.Aqua));
         #endregion
         #region BorderColor
         public SolidColorBrush BorderColor

@@ -237,13 +237,6 @@
                                            Command="{Binding RefreshCommand}"/>
             </StackPanel>
             
-            <Border Height="40"
-                    Width="200"
-                    HorizontalAlignment="Right"
-                    VerticalAlignment="Top"
-                    Margin="0, 95, 30, 0"
-                    Background="{StaticResource DarkGreenTransparent2}"
-                    CornerRadius="10"/>
             <StackPanel Orientation="Horizontal"
                         Height="40"
                         Width="200"
@@ -255,7 +248,9 @@
                                                 Height="40"
                                                 HorizontalAlignment="Center"
                                                 BorderColor="{StaticResource DarkGreen2}"
-                                                BorderThick="2"
+                                                BackgroundColor="{StaticResource DarkGreenTransparent2}"
+                                                BackgroundColorClicked="{StaticResource DarkGreen2}"
+                                                BorderThick="0"
                                                 RadiusOfCorner="10, 0, 0, 10"
                                                 DisplayText="Phiếu nhập"
                                                 TextColor="White"
@@ -267,7 +262,9 @@
                                                 Height="40"
                                                 HorizontalAlignment="Center"
                                                 BorderColor="{StaticResource DarkGreen2}"
-                                                BorderThick="2"
+                                                BackgroundColor="{StaticResource DarkGreenTransparent2}"
+                                                BackgroundColorClicked="{StaticResource DarkGreen2}"
+                                                BorderThick="0"
                                                 RadiusOfCorner="0, 10, 10, 0"
                                                 DisplayText="Phiếu xuất"
                                                 TextColor="White"

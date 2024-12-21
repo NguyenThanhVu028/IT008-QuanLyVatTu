@@ -102,6 +102,8 @@ namespace PMQuanLyVatTu.CustomControls
             foreach(string s in DataList)
             {
                 Button temp = new Button();
+                temp.HorizontalAlignment = HorizontalAlignment.Stretch;
+                temp.VerticalAlignment = VerticalAlignment.Stretch;
                 temp.Content = s;
                 temp.Click += ItemClicked;
                 ContainerStack.Children.Add(temp);

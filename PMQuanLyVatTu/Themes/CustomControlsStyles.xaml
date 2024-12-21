@@ -50,31 +50,38 @@
                 <ControlTemplate TargetType="CustomControl:NavigationButton">
                     <Grid>
                         <Border x:Name="ButtonBorder" 
-                                Background="#FF56CDCD"
+                                Background="#7756CDCD"
                                 CornerRadius="{TemplateBinding RadiusOfCorner}"
                                 BorderThickness="{TemplateBinding BorderThick}"/>
-                        <StackPanel Orientation="Horizontal">
-                            <Image Source="{Binding ImageLocation, RelativeSource={RelativeSource TemplatedParent}}"
+                        <Grid>
+                            <!--<Image Source="{Binding ImageLocation, RelativeSource={RelativeSource TemplatedParent}}"
                                    HorizontalAlignment="Left"
                                    VerticalAlignment="Center"
-                                   Margin="7, 8"/>
-                            <TextBlock HorizontalAlignment="Left" 
+                                   Margin="7, 8"/>-->
+                            <TextBlock HorizontalAlignment="Center" 
                                        VerticalAlignment="Center"
                                        Text="{TemplateBinding DisplayText}"
                                        Foreground="{TemplateBinding TextColor}"
                                        FontFamily="/Material/Fonts/Lexend/#Lexend Bold"
                                        FontSize="{TemplateBinding TextSize}"
-                                       FontWeight="Bold"/>
-                        </StackPanel>
+                                       FontWeight="Bold">
+                                <TextBlock.BitmapEffect>
+                                    <DropShadowBitmapEffect Opacity="0.8"
+                                                            Softness="0.1" 
+                                                            Direction="-45" 
+                                                            ShadowDepth="1"/>
+                                </TextBlock.BitmapEffect>
+                            </TextBlock>
+                        </Grid>
                     </Grid>
                     <ControlTemplate.Triggers>
                         <!--<Trigger Property="IsChecked" Value="True">
                             <Setter Property="BorderBrush" Value="White" TargetName="ButtonBorder"/>
                         </Trigger>-->
-                        <EventTrigger RoutedEvent="Checked">
+                        <!--<EventTrigger RoutedEvent="Checked">
                             <BeginStoryboard>
                                 <Storyboard>
-                                    <DoubleAnimation Duration="0:0:0.25" Storyboard.TargetProperty="Height" From="40" To="60"/>
+                                    <DoubleAnimation Duration="0:0:0.25" Storyboard.TargetProperty="Height" From="40" To="50"/>
                                     <ColorAnimation Duration="0:0:0.25" Storyboard.TargetName="ButtonBorder" Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)" To="#FF00FFFF"/>
                                 </Storyboard>
                             </BeginStoryboard>
@@ -82,8 +89,24 @@
                         <EventTrigger RoutedEvent="Unchecked">
                             <BeginStoryboard>
                                 <Storyboard>
-                                    <DoubleAnimation Duration="0:0:0.25" Storyboard.TargetProperty="Height" From="60" To="40"/>
+                                    <DoubleAnimation Duration="0:0:0.25" Storyboard.TargetProperty="Height" From="60" To="50"/>
                                     <ColorAnimation Duration="0:0:0.25" Storyboard.TargetName="ButtonBorder" Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)" To="#FF56CDCD"/>
+                                </Storyboard>
+                            </BeginStoryboard>
+                        </EventTrigger>-->
+                        <EventTrigger RoutedEvent="Checked">
+                            <BeginStoryboard>
+                                <Storyboard>
+                                    <DoubleAnimation Duration="0:0:0.25" Storyboard.TargetProperty="Height" From="40" To="50"/>
+                                    <ColorAnimation Duration="0:0:0.25" Storyboard.TargetName="ButtonBorder" Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)" To="#FF56CDCD"/>
+                                </Storyboard>
+                            </BeginStoryboard>
+                        </EventTrigger>
+                        <EventTrigger RoutedEvent="Unchecked">
+                            <BeginStoryboard>
+                                <Storyboard>
+                                    <DoubleAnimation Duration="0:0:0.25" Storyboard.TargetProperty="Height" From="50" To="40"/>
+                                    <ColorAnimation Duration="0:0:0.25" Storyboard.TargetName="ButtonBorder" Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)" To="#7756CDCD"/>
                                 </Storyboard>
                             </BeginStoryboard>
                         </EventTrigger>
@@ -313,7 +336,7 @@
                 <ControlTemplate TargetType="CustomControl:NavigationButton">
                     <Grid>
                         <Border x:Name="ButtonBorder" 
-                                Background="Transparent"
+                                Background="{TemplateBinding BackgroundColor}"
                                 CornerRadius="{TemplateBinding RadiusOfCorner}"
                                 BorderThickness="{TemplateBinding BorderThick}"/>
                         <TextBlock HorizontalAlignment="Center" 
@@ -327,7 +350,7 @@
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsChecked" Value="True">
                             <Setter Property="BorderBrush" Value="{Binding BorderColor, RelativeSource={RelativeSource TemplatedParent}}" TargetName="ButtonBorder"/>
-                            <Setter Property="Background" Value="#FF009191" TargetName="ButtonBorder"/>
+                            <Setter Property="Background" Value="{Binding BackgroundColorClicked, RelativeSource={RelativeSource TemplatedParent}}" TargetName="ButtonBorder"/>
                         </Trigger>
                         <!--<EventTrigger RoutedEvent="Mouse.MouseEnter">
                             <BeginStoryboard>
