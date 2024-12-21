@@ -1,4 +1,5 @@
-﻿using PMQuanLyVatTu.ErrorMessage;
+﻿using Microsoft.IdentityModel.Tokens;
+using PMQuanLyVatTu.ErrorMessage;
 using PMQuanLyVatTu.Models;
 using PMQuanLyVatTu.User;
 using PMQuanLyVatTu.View;
@@ -31,7 +32,7 @@ namespace PMQuanLyVatTu.ViewModel
             MoveWindowCommand = new RelayCommand<Window>(MoveWindow);
             EditInfoCommand = new RelayCommand<object>(EditInfo);
             DeleteButtonCommand = new RelayCommand<Window>(DeleteButton);
-            SaveInfoCommand = new RelayCommand<object>(SaveInfo);
+            SaveInfoCommand = new RelayCommand<Window>(SaveInfo);
         }
         #region Title
         private string _title = "";
@@ -45,7 +46,7 @@ namespace PMQuanLyVatTu.ViewModel
         private string _maYCN = "";
         private string _maNV = CurrentUser.Instance.MaNv;
         private string _maVT = "";
-        private string _ngayLap = "";
+        private string _ngayLap = DateTime.Now.ToString("dd/ddd/MM/yyyy");
         private int _soLuong = 0;
         private string _ghiChu = "";
         public string MaYCN
@@ -151,129 +152,120 @@ namespace PMQuanLyVatTu.ViewModel
             }
         }
         public ICommand SaveInfoCommand { get; set; }
-        void SaveInfo(object t)
+        void SaveInfo(Window t)
         {
-            try
+            if (MaYCN.IsNullOrEmpty())
             {
-                if (EditMode == true) //Nếu đang chế độ chỉnh sửa
+                var msg = new CustomMessage("/Material/Images/Icons/wrong.png", "LỖI", "Vui lòng nhập mã yêu cầu nhập.");
+                msg.ShowDialog();
+                return;
+            }
+            if (MaNV.IsNullOrEmpty())
+            {
+                var msg = new CustomMessage("/Material/Images/Icons/wrong.png", "LỖI", "Vui lòng chọn mã nhân viên.");
+                msg.ShowDialog();
+                return;
+            }
+            if (MaVT.IsNullOrEmpty())
+            {
+                var msg = new CustomMessage("/Material/Images/Icons/wrong.png", "LỖI", "Vui lòng chọn mã vật tư.");
+                msg.ShowDialog();
+                return;
+            }
+            if (EditMode == true) //Nếu đang chế độ chỉnh sửa
+            {
+                //Lưu thông tin vào database
+                var YCN = DataProvider.Instance.DB.ImportRequests.Find(MaYCN);
+
+                if (YCN != null)
                 {
-                    EnableEditing = false;
-                    //Lưu thông tin vào database
-                    var YCN = DataProvider.Instance.DB.ImportRequests.Find(MaYCN);
-
-                    if (YCN != null)
+                    YCN.MaVt = MaVT;
+                    YCN.MaNv = MaNV;
+                    YCN.SoLuong = SoLuong;
+                    YCN.GhiChu = GhiChu;
+                    try
                     {
+                        YCN.NgayLap = DateTime.ParseExact(NgayLap, "ddd/dd/MM/yyyy", CultureInfo.CurrentCulture);
+                    }
+                    catch
+                    {
+                        YCN.NgayLap = DateTime.Now;
+                    }
+                    DataProvider.Instance.DB.SaveChanges();
 
-                        if (String.IsNullOrEmpty(MaVT) ||
-                                String.IsNullOrEmpty(MaNV) ||
-                                String.IsNullOrEmpty(NgayLap))
-                            throw new Exception();
+                    CustomMessage msg = new CustomMessage("/Material/Images/Icons/success.png", "THÀNH CÔNG", "Đã lưu thông tin chỉnh sửa.");
+                    msg.ShowDialog();
+                    EnableEditing = false;
+                }
+                else
+                {
+                    var msg = new CustomMessage("/Material/Images/Icons/wrong.png", "LỖI", "Yêu cầu đã không còn trên hệ thống.");
+                    msg.ShowDialog();
+                    return;
+                }
+                DataProvider.Instance.DB.SaveChanges(true);
+            }
+            else //Nếu trong chế độ thêm YCN
+            {
+                var YCN = DataProvider.Instance.DB.ImportRequests.Find(MaYCN);
+
+                if (YCN != null)
+                {
+                    if (YCN.DaXoa == true)
+                    {
                         YCN.MaVt = MaVT;
                         YCN.MaNv = MaNV;
                         YCN.SoLuong = SoLuong;
                         YCN.GhiChu = GhiChu;
+                        YCN.DaXoa = false;
+                        YCN.TrangThai = "Chưa tiếp nhận";
                         try
                         {
                             YCN.NgayLap = DateTime.ParseExact(NgayLap, "ddd/dd/MM/yyyy", CultureInfo.CurrentCulture);
                         }
                         catch
                         {
-
+                            YCN.NgayLap = DateTime.Now;
                         }
                         DataProvider.Instance.DB.SaveChanges();
-
-                        CustomMessage msg = new CustomMessage("/Material/Images/Icons/success.png", "THÀNH CÔNG", "Đã lưu thông tin chỉnh sửa.");
-                        msg.ShowDialog();
+                        CustomMessage msgSuccess = new CustomMessage("/Material/Images/Icons/success.png", "THÀNH CÔNG", "Thêm yêu cầu nhập thành công.");
+                        msgSuccess.ShowDialog();
                     }
-                }
-                else //Nếu trong chế độ thêm YCN
-                {
-                    if (string.IsNullOrWhiteSpace(MaYCN)) //Chưa nhập mã YCN
+                    else //Trùng mã YCN
                     {
-                        CustomMessage msg = new CustomMessage("/Material/Images/Icons/wrong.png", "LỖI", "Vui lòng nhập mã yêu cầu nhập.");
-                        msg.ShowDialog();
+                        AlreadyExistsError msg1 = new AlreadyExistsError();
+                        msg1.ShowDialog();
                         return;
                     }
-                    else
+                }
+                else
+                {
+                    ImportRequest NewYCN = new ImportRequest
                     {
-                        var YCN = DataProvider.Instance.DB.ImportRequests.Find(MaYCN);
-
-                        if (YCN != null)
-                        {
-                            if (YCN.DaXoa == true)
-                            {
-                                if (String.IsNullOrEmpty(MaVT) ||
-                                String.IsNullOrEmpty(MaNV) ||
-                                String.IsNullOrEmpty(NgayLap))
-                                    throw new Exception();
-                                YCN.MaVt = MaVT;
-                                YCN.MaNv = MaNV;
-                                YCN.SoLuong = SoLuong;
-                                YCN.GhiChu = GhiChu;
-                                YCN.TrangThai = "Chưa tiếp nhận";
-                                try
-                                {
-                                    YCN.NgayLap = DateTime.ParseExact(NgayLap, "ddd/dd/MM/yyyy", CultureInfo.CurrentCulture);
-                                }
-                                catch
-                                {
-
-                                }
-                                YCN.DaXoa = false;
-                                DataProvider.Instance.DB.SaveChanges();
-                                CustomMessage msgSuccess = new CustomMessage("/Material/Images/Icons/success.png", "THÀNH CÔNG", "Thêm yêu cầu nhập thành công.");
-                                msgSuccess.ShowDialog();
-                            }
-                            else //Trùng mã YCN
-                            {
-                                AlreadyExistsError msg1 = new AlreadyExistsError();
-                                msg1.ShowDialog();
-                                return;
-                            }
-                        }
-                        else
-                        {
-                            if (String.IsNullOrEmpty(MaVT) ||
-                                String.IsNullOrEmpty(MaNV) ||
-                                String.IsNullOrEmpty(NgayLap))
-                                throw new Exception();
-                            //string cleanDate = NgayLap.Substring(NgayLap.IndexOf("/") + 1);
-                            DateTime NgayL;
-                            try
-                            {
-                                NgayL = DateTime.ParseExact(NgayLap, "ddd/dd/MM/yyyy", CultureInfo.CurrentCulture);
-                            }
-                            catch
-                            {
-                                NgayL = YCN.NgayLap.Value;
-                            }
-                            ImportRequest NewYCN = new ImportRequest
-                            {
-                                MaYcn = MaYCN,
-                                MaNv = MaNV,
-                                MaVt = MaVT,
-                                SoLuong = SoLuong,
-                                GhiChu = GhiChu,
-                                TrangThai = "Chưa tiếp nhận",
-                                NgayLap = NgayL,
-                                DaXoa = false
-                            };
-                            DataProvider.Instance.DB.ImportRequests.Add(NewYCN);
-                            DataProvider.Instance.DB.SaveChanges();
-                            CustomMessage msgSuccess = new CustomMessage("/Material/Images/Icons/success.png", "THÀNH CÔNG", "Thêm yêu cầu nhập thành công.");
-                            msgSuccess.ShowDialog();
-                        }
+                        MaYcn = MaYCN,
+                        MaNv = MaNV,
+                        MaVt = MaVT,
+                        SoLuong = SoLuong,
+                        GhiChu = GhiChu,
+                        TrangThai = "Chưa tiếp nhận",
+                        DaXoa = false
+                    };
+                    try
+                    {
+                        NewYCN.NgayLap = DateTime.ParseExact(NgayLap, "ddd/dd/MM/yyyy", CultureInfo.CurrentCulture);
                     }
+                    catch
+                    {
+                        NewYCN.NgayLap = DateTime.Now;
+                    }
+                    DataProvider.Instance.DB.ImportRequests.Add(NewYCN);
+                    DataProvider.Instance.DB.SaveChanges();
+                    CustomMessage msgSuccess = new CustomMessage("/Material/Images/Icons/success.png", "THÀNH CÔNG", "Thêm yêu cầu nhập thành công.");
+                    msgSuccess.ShowDialog();
+                    t.Close();
                 }
             }
-            catch
-            {
-                var msg = new CustomMessage("/Material/Images/Icons/wrong.png", "LỖI", "Thông tin nhập không hợp lệ.");
-                msg.ShowDialog();
-                return;
-            }
             EnableEditing = false;
-            (t as Window).Close();
         }
         #endregion
         #region Function

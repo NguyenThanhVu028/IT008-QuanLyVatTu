@@ -200,6 +200,7 @@ namespace PMQuanLyVatTu.ViewModel
             else
             {
                 var msg = new CustomMessage("/Material/Images/Icons/wrong.png", "LỖI", "Không tìm thấy yêu cầu nhập!", false);
+                msg.ShowDialog();
             }
         }
         public ICommand TuChoiCommand { get; set; }

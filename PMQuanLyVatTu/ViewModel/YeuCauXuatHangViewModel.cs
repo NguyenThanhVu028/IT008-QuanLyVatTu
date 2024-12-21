@@ -97,40 +97,54 @@ namespace PMQuanLyVatTu.ViewModel
         public ICommand KiemTraTonKhoCommand { get; set; }
         void KiemTraTonKho(object t)
         {
-            bool kt = false;
-            DanhSachYeuCauXuat.Clear();
-            var ListFromDB = DataProvider.Instance.DB.ExportRequests.Where(c => c.DaXoa == false).ToList();
+            bool IsSufficient = true;
+            var ListFromDB = DataProvider.Instance.DB.ExportRequests.Where(c => c.DaXoa == false && (c.TrangThai == "Thiếu hàng" || c.TrangThai == "Chưa duyệt")).ToList();
+            if (ListFromDB == null) return;
             foreach (var list in ListFromDB)
             {
-                kt = false;
-                List<ExportRequestInfo> request = DataProvider.Instance.DB.
-                    ExportRequestInfos.Where(c => c.MaYcx == list.MaYcx).ToList();
+                if (list.GhiChu == null) list.GhiChu = "";
+                List<ExportRequestInfo> request = DataProvider.Instance.DB.ExportRequestInfos.Where(c => c.MaYcx == list.MaYcx).ToList();
+                if(request == null)
+                {
+                    continue;
+                }
                 foreach (var record in request)
                 {
                     var Sp = DataProvider.Instance.DB.Supplies.Find(record.MaVt);
-                    if (Sp == null)
+                    if (Sp == null || Sp.DaXoa == true)
                     {
-                        list.TrangThai = "Lỗi không tồn tại";
-                        DataProvider.Instance.DB.SaveChanges();
-                        kt = true;
-                        break;
+                        list.GhiChu += "/*" + Sp.MaVt + " không còn tốn tại";
+                        IsSufficient = false;
+                    }
+                    else if(Sp.SoLuongTonKho < record.SoLuong)
+                    {
+                        list.GhiChu += "/*" + Sp.MaVt + " thiếu: " + (record.SoLuong - Sp.SoLuongTonKho).ToString();
+                        IsSufficient = false;
                     }
                 }
-                if (!kt)
-                    foreach (var record in request)
+                if (IsSufficient)
+                {
+                    if(list.TrangThai == "Thiếu hàng")
                     {
-                        kt = false;
-                        var Sp = DataProvider.Instance.DB.Supplies.Find(record.MaVt);
-                        if (record.SoLuong > Sp.SoLuongTonKho)
+                        list.TrangThai = "Chưa duyệt";
+                        for(int i=0; i<list.GhiChu.Length-1; i++)
                         {
-                            list.TrangThai = "Thiếu hàng";
-                            DataProvider.Instance.DB.SaveChanges();
-                            break;
+                            if (list.GhiChu[i] == '/' && list.GhiChu[i + 1] == '*')
+                                list.GhiChu.Remove(i, list.GhiChu.Length - i);
                         }
                     }
+                }
+                else
+                {
+                    if(list.TrangThai == "Chưa duyệt")
+                    {
+                        list.TrangThai = "Thiếu hàng";
+                    }
+                }
                 //Duyệt từng sản phẩm trong ExportRequestInfo của list.MaYcx, nếu có hàng không đủ => Duyệt qua ExportResquests, Cập nhật trạng thái của list, TrangThai = "Thiếu hàng"
                 //Nhớ SaveChanges()
-                DanhSachYeuCauXuat.Add(list);
+                DataProvider.Instance.DB.SaveChanges();
+                Refresh();
             }
         }
         public ICommand RefreshCommand { get; set; }
