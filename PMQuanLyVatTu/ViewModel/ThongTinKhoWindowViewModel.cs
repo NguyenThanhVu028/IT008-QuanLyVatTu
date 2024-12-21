@@ -142,6 +142,12 @@ namespace PMQuanLyVatTu.ViewModel
                     CustomMessage msg = new CustomMessage("/Material/Images/Icons/wrong.png", "LỖI", "Vui lòng nhập mã kho.");
                     msg.ShowDialog();
                 }
+                if (MaKho.Length > 7)
+                {
+                    CustomMessage msg1 = new CustomMessage("/Material/Images/Icons/wrong.png", "LỖI", "Mã kho không được vượt quá 7 ký tự.", false);
+                    msg1.ShowDialog();
+                    return;
+                }
                 else
                 {
                     var existingWarehouses = DataProvider.Instance.DB.Warehouses.Find(MaKho);

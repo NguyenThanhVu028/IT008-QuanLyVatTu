@@ -207,6 +207,12 @@ namespace PMQuanLyVatTu.ViewModel
                 msg.ShowDialog();
                 return;
             }
+            if (MaNV.Length > 6)
+            {
+                CustomMessage msg1 = new CustomMessage("/Material/Images/Icons/wrong.png", "LỖI", "Mã nhân viên không được vượt quá 6 ký tự.", false);
+                msg1.ShowDialog();
+                return;
+            }
             if (CVu.IsNullOrEmpty())
             {
                 CustomMessage msg = new CustomMessage("/Material/Images/Icons/wrong.png", "LỖI", "Vui lòng chọn chức vụ.");

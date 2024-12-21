@@ -167,6 +167,12 @@ namespace PMQuanLyVatTu.ViewModel
                     msg1.ShowDialog();
                     return;
                 }
+                if (MaKH.Length > 6)
+                {
+                    CustomMessage msg1 = new CustomMessage("/Material/Images/Icons/wrong.png", "LỖI", "Mã khách hàng không được vượt quá 6 ký tự.", false);
+                    msg1.ShowDialog();
+                    return;
+                }
                 var kh = DataProvider.Instance.DB.Customers.Find(MaKH);
                 if (kh != null) //Trùng mã nhân viên
                 {

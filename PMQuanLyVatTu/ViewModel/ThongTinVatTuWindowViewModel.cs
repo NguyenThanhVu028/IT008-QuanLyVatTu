@@ -228,6 +228,12 @@ namespace PMQuanLyVatTu.ViewModel
                     msg1.ShowDialog();
                     return;
                 }
+                if (MaVT.Length > 6)
+                {
+                    CustomMessage msg1 = new CustomMessage("/Material/Images/Icons/wrong.png", "LỖI", "Mã vật tư không được vượt quá 6 ký tự.", false);
+                    msg1.ShowDialog();
+                    return;
+                }
                 if (MaNCC == "") //Chưa nhập mã vật tư
                 {
                     CustomMessage msg1 = new CustomMessage("/Material/Images/Icons/wrong.png", "LỖI", "Vui lòng nhập mã nhà cung cấp.");

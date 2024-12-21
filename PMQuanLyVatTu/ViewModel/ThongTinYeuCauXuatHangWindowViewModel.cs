@@ -193,6 +193,12 @@ namespace PMQuanLyVatTu.ViewModel
                 msg.ShowDialog();
                 return;
             }
+            if (MaYCX.Length > 7)
+            {
+                CustomMessage msg1 = new CustomMessage("/Material/Images/Icons/wrong.png", "LỖI", "Mã yêu cầu xuất không được vượt quá 7 ký tự.", false);
+                msg1.ShowDialog();
+                return;
+            }
             if (MaNV.IsNullOrEmpty())
             {
                 var msg = new CustomMessage("/Material/Images/Icons/wrong.png", "LỖI", "Vui lòng chọn mã nhân viên.");

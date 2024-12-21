@@ -148,6 +148,12 @@ namespace PMQuanLyVatTu.ViewModel
                     CustomMessage msg = new CustomMessage("/Material/Images/Icons/wrong.png", "LỖI", "Vui lòng nhập mã nhà cung cấp.");
                     msg.ShowDialog();
                 }
+                if (MaNCC.Length > 7)
+                {
+                    CustomMessage msg1 = new CustomMessage("/Material/Images/Icons/wrong.png", "LỖI", "Mã nhà cung cấp không được vượt quá 7 ký tự.", false);
+                    msg1.ShowDialog();
+                    return;
+                }
                 else 
                 {
                     var existingSuppliers = DataProvider.Instance.DB.Suppliers.Find(MaNCC);
