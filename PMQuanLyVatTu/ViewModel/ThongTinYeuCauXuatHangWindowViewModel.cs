@@ -1,17 +1,21 @@
-﻿using PMQuanLyVatTu.ErrorMessage;
+﻿using Microsoft.IdentityModel.Tokens;
+using PMQuanLyVatTu.ErrorMessage;
 using PMQuanLyVatTu.Models;
 using PMQuanLyVatTu.User;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Globalization;
 using System.IO.Packaging;
 using System.Linq;
 using System.Runtime;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Threading.Tasks.Sources;
 using System.Windows;
 using System.Windows.Input;
+using System.Windows.Interop;
 using System.Windows.Media;
 using System.Windows.Media.Media3D;
 using static PMQuanLyVatTu.ViewModel.NhanVienViewModel;
@@ -33,7 +37,7 @@ namespace PMQuanLyVatTu.ViewModel
             MoveWindowCommand = new RelayCommand<Window>(MoveWindow);
             EditInfoCommand = new RelayCommand<object>(EditInfo);
             DeleteButtonCommand = new RelayCommand<Window>(DeleteButton);
-            SaveInfoCommand = new RelayCommand<object>(SaveInfo);
+            SaveInfoCommand = new RelayCommand<Window>(SaveInfo);
 
             AddCommand = new RelayCommand<object>(Add);
             DeleteSelectedCommand = new RelayCommand<object>(DeleteSelected);
@@ -52,7 +56,7 @@ namespace PMQuanLyVatTu.ViewModel
         private string _maNV = CurrentUser.Instance.MaNv;
         private string _maKH = "";
         public string _maKho = "";
-        private string _ngayLap = "";
+        private string _ngayLap = DateTime.Now.ToString("dd/ddd/MM/yyyy");
         private string _ghiChu = "";
         public string MaYCX
         {
@@ -159,41 +163,191 @@ namespace PMQuanLyVatTu.ViewModel
         public ICommand DeleteButtonCommand { get; set; }
         void DeleteButton(Window t)
         {
-            CustomMessage msg = new CustomMessage("/Material/Images/Icons/question.png", "THÔNG BÁO", "Bạn có muốn xóa vật tư đã chọn?");
+            CustomMessage msg = new CustomMessage("/Material/Images/Icons/question.png", "THÔNG BÁO", "Bạn có muốn xóa yêu cầu đã chọn?", true);
             msg.ShowDialog();
             if (msg.ReturnValue == true)
-            { //Chấp nhận xóa
+            {
                 EnableEditing = false;
-                //Xóa
+                var YCX = DataProvider.Instance.DB.ExportRequests.Find(MaYCX);
+
+                if (YCX != null)
+                {
+                    YCX.DaXoa = true;
+                    YCX.ThoiGianXoa = DateTime.Now;
+                    DataProvider.Instance.DB.SaveChanges();
+                }
+                else
+                {
+                    msg = new CustomMessage("/Material/Images/Icons/wrong.png", "LỖI", "Không tìm thấy yêu cầu xuất để xóa!", false);
+                }
                 t.Close();
             }
         }
         public ICommand SaveInfoCommand { get; set; }
-        void SaveInfo(object t)
+        void SaveInfo(Window t)
         {
-            if (EditMode == true) //Nếu đang chế độ chỉnh sửa
+            if (MaYCX.IsNullOrEmpty())
             {
-                EnableEditing = false;
-                CustomMessage msg = new CustomMessage("/Material/Images/Icons/success.png", "THÀNH CÔNG", "Đã lưu thông tin chỉnh sửa.", false);
+                var msg = new CustomMessage("/Material/Images/Icons/wrong.png", "LỖI", "Vui lòng nhập mã yêu cầu xuất.");
                 msg.ShowDialog();
+                return;
             }
-            else //Nếu trong chế độ thêm 
+            if (MaNV.IsNullOrEmpty())
             {
-                if (MaYCX == "") //Chưa nhập mã 
+                var msg = new CustomMessage("/Material/Images/Icons/wrong.png", "LỖI", "Vui lòng chọn mã nhân viên.");
+                msg.ShowDialog();
+                return;
+            }
+            if (MaKH.IsNullOrEmpty())
+            {
+                var msg = new CustomMessage("/Material/Images/Icons/wrong.png", "LỖI", "Vui lòng chọn mã khách hàng.");
+                msg.ShowDialog();
+                return;
+            }
+            if (MaKho.IsNullOrEmpty())
+            {
+                var msg = new CustomMessage("/Material/Images/Icons/wrong.png", "LỖI", "Vui lòng chọn mã kho.");
+                msg.ShowDialog();
+                return;
+            }
+            if (NgayLap.IsNullOrEmpty())
+            {
+                var msg = new CustomMessage("/Material/Images/Icons/wrong.png", "LỖI", "Vui lòng chọn ngày lập.");
+                msg.ShowDialog();
+                return;
+            }
+            if (EditMode == true) // Nếu đang chế độ chỉnh sửa
+            {
+                var YCX = DataProvider.Instance.DB.ExportRequests.Find(MaYCX);
+
+                if (YCX != null)
                 {
-                    CustomMessage msg1 = new CustomMessage("/Material/Images/Icons/wrong.png", "LỖI", "Vui lòng nhập mã yêu cầu xuất hàng.", false);
-                    msg1.ShowDialog();
+                    var existingRecords = DataProvider.Instance.DB.ExportRequestInfos.Where(c => c.MaYcx == MaYCX).ToList();
+                    DataProvider.Instance.DB.ExportRequestInfos.RemoveRange(existingRecords);
+                    // Cập nhật thông tin vào ExportRequests
+                    YCX.MaKh = MaKH;
+                    YCX.MaNv = MaNV;
+                    YCX.GhiChu = GhiChu;
+                    YCX.KhoXuat = MaKho;
+                    try
+                    {
+                        YCX.NgayLap = DateTime.ParseExact(NgayLap, "ddd/dd/MM/yyyy", CultureInfo.CurrentCulture);
+                    }
+                    catch
+                    {
+                        YCX.NgayLap = DateTime.Now;
+                    }
+                    // Thêm mới các ExportRequestInfo từ DanhSachVatTuYeuCau
+                    foreach (var vatTu in DanhSachVatTuYeuCau)
+                    {
+                        var newRequestInfo = new ExportRequestInfo
+                        {
+                            MaYcx = MaYCX,
+                            MaVt = vatTu.MaVT,
+                            SoLuong = vatTu.SoLuong,
+                            ChietKhau = vatTu.ChietKhau,
+                            Vat = vatTu.VAT
+                        };
+                        DataProvider.Instance.DB.ExportRequestInfos.Add(newRequestInfo);
+                    }
+                    DataProvider.Instance.DB.SaveChanges();
+                    EnableEditing = false;
+                    CustomMessage msg = new CustomMessage("/Material/Images/Icons/success.png", "THÀNH CÔNG", "Đã lưu thông tin chỉnh sửa.");
+                    msg.ShowDialog();
+                }
+                else
+                {
+                    var msg = new CustomMessage("/Material/Images/Icons/wrong.png", "LỖI", "Yêu cầu đã không còn tồn tại trên hệ thống.");
+                    msg.ShowDialog();
                     return;
                 }
-                if (true) //Trùng mã 
+            }
+            else // Nếu trong chế độ thêm YCX
+            {
+                var YCX = DataProvider.Instance.DB.ExportRequests.Find(MaYCX);
+                if (YCX != null)
                 {
-                    AlreadyExistsError msg2 = new AlreadyExistsError();
-                    msg2.ShowDialog();
-                }
-                EnableEditing = false;
-                CustomMessage msg = new CustomMessage("/Material/Images/Icons/success.png", "THÀNH CÔNG", "Thêm nhân viên thành công.", false);
-                msg.ShowDialog();
+                    if (YCX.DaXoa == true)
+                    {
+                        // Xóa hẳn các record của MaYCX bên ExportRequestInfo
+                        var existingRecords = DataProvider.Instance.DB.ExportRequestInfos.Where(c => c.MaYcx == MaYCX).ToList();
+                        DataProvider.Instance.DB.ExportRequestInfos.RemoveRange(existingRecords);
 
+                        YCX.MaKh = MaKH;
+                        YCX.MaNv = MaNV;
+                        YCX.GhiChu = GhiChu;
+                        YCX.KhoXuat = MaKho;
+                        YCX.DaXoa = false;
+                        YCX.TrangThai = "Chưa tiếp nhận";
+                        try
+                        {
+                            YCX.NgayLap = DateTime.ParseExact(NgayLap, "ddd/dd/MM/yyyy", CultureInfo.CurrentCulture);
+                        }
+                        catch
+                        {
+                            YCX.NgayLap = DateTime.Now;
+                        }
+                        foreach (var vatTu in DanhSachVatTuYeuCau)
+                        {
+                            var newRequestInfo = new ExportRequestInfo
+                            {
+                                MaYcx = MaYCX,
+                                MaVt = vatTu.MaVT,
+                                SoLuong = vatTu.SoLuong,
+                                ChietKhau = vatTu.ChietKhau,
+                                Vat = vatTu.VAT
+                            };
+                            DataProvider.Instance.DB.ExportRequestInfos.Add(newRequestInfo);
+                        }
+
+                        DataProvider.Instance.DB.SaveChanges();
+                    }
+                    else // Trùng mã YCX
+                    {
+                        AlreadyExistsError msg1 = new AlreadyExistsError();
+                        msg1.ShowDialog();
+                        return;
+                    }
+                }
+                else
+                {
+                    ExportRequest newYCX = new ExportRequest
+                    {
+                        MaYcx = MaYCX,
+                        MaNv = MaNV,
+                        MaKh = MaKH,
+                        KhoXuat = MaKho,
+                        GhiChu = GhiChu,
+                        TrangThai = "Chưa tiếp nhận",
+                        DaXoa = false,
+                    };
+                    try
+                    {
+                        newYCX.NgayLap = DateTime.ParseExact(NgayLap, "dd/ddd/MM/yyyy", CultureInfo.CurrentCulture);
+                    }
+                    catch
+                    {
+                        newYCX.NgayLap = DateTime.Now;
+                    }
+                    DataProvider.Instance.DB.ExportRequests.Add(newYCX);
+
+                    foreach (var vatTu in DanhSachVatTuYeuCau)
+                    {
+                        var newRequestInfo = new ExportRequestInfo
+                        {
+                            MaYcx = MaYCX,
+                            MaVt = vatTu.MaVT,
+                            SoLuong = vatTu.SoLuong,
+                            ChietKhau = vatTu.ChietKhau,
+                            Vat = vatTu.VAT
+                        };
+                        DataProvider.Instance.DB.ExportRequestInfos.Add(newRequestInfo);
+                    }
+                    DataProvider.Instance.DB.SaveChanges();
+                }
+                CustomMessage msgSuccess = new CustomMessage("/Material/Images/Icons/success.png", "THÀNH CÔNG", "Thêm yêu cầu xuất thành công.");
+                msgSuccess.ShowDialog();
+                t.Close();
             }
         }
         public ICommand AddCommand { get; set; }
@@ -234,7 +388,7 @@ namespace PMQuanLyVatTu.ViewModel
         void DeleteSelected(object t)
         {
             int Count = 0;
-            CustomMessage msg = new CustomMessage("/Material/Images/Icons/question.png", "THÔNG BÁO", "Bạn có muốn xóa mục đã chọn?");
+            CustomMessage msg = new CustomMessage("/Material/Images/Icons/question.png", "THÔNG BÁO", "Bạn có muốn xóa mục đã chọn?", true);
             msg.ShowDialog();
             if (msg.ReturnValue == true)
             {
@@ -291,17 +445,28 @@ namespace PMQuanLyVatTu.ViewModel
         }
         void LoadData(string maycx)
         {
-            MaYCX = maycx;
-            MaNV = "NV0001";
-            MaKH = "KH0005";
-            NgayLap = "03/12/2024";
-            GhiChu = "Xuất đủ hàng và giao đi trước ngày 07/12/2024";
+            var YCX = DataProvider.Instance.DB.ExportRequests.Find(maycx);
+            if (YCX != null)
+            {
+                MaYCX = maycx;
+                MaKH = (YCX.MaKh != null) ? YCX.MaKh : "";
+                MaNV = (YCX.MaNv != null) ? YCX.MaNv : "";
+                MaKho = (YCX.KhoXuat != null) ? YCX.KhoXuat : "";
+                NgayLap = (YCX.NgayLap != null) ? YCX.NgayLap.Value.ToString("ddd dd/MM/yyyy") : "";
+                GhiChu = (YCX.GhiChu != null) ? YCX.GhiChu : "";
+            }
         }
         void LoadDanhSach()
         {
             DanhSachVatTuYeuCau.Clear(); ListEmpty = true;
-            
-            if(DanhSachVatTuYeuCau.Count() > 0) { ListEmpty = false; }
+            VatTu Vt;
+            List<ExportRequestInfo> request = DataProvider.Instance.DB.ExportRequestInfos.Where(c => c.MaYcx == MaYCX).ToList();
+            foreach (var record in request)
+            {
+                Vt = new VatTu(record);
+                DanhSachVatTuYeuCau.Add(Vt);
+            }
+            if (DanhSachVatTuYeuCau.Count() > 0) { ListEmpty = false; }
         }
         #endregion
         //public class VatTuYeuCau

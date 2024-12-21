@@ -97,13 +97,54 @@ namespace PMQuanLyVatTu.ViewModel
         public ICommand KiemTraTonKhoCommand { get; set; }
         void KiemTraTonKho(object t)
         {
-            DanhSachYeuCauXuat.Clear();
-            var ListFromDB = DataProvider.Instance.DB.ExportRequests.ToList();
+            bool IsSufficient = true;
+            var ListFromDB = DataProvider.Instance.DB.ExportRequests.Where(c => c.DaXoa == false && (c.TrangThai == "Thiếu hàng" || c.TrangThai == "Chưa duyệt")).ToList();
+            if (ListFromDB == null) return;
             foreach (var list in ListFromDB)
             {
+                if (list.GhiChu == null) list.GhiChu = "";
+                List<ExportRequestInfo> request = DataProvider.Instance.DB.ExportRequestInfos.Where(c => c.MaYcx == list.MaYcx).ToList();
+                if(request == null)
+                {
+                    continue;
+                }
+                foreach (var record in request)
+                {
+                    var Sp = DataProvider.Instance.DB.Supplies.Find(record.MaVt);
+                    if (Sp == null || Sp.DaXoa == true)
+                    {
+                        list.GhiChu += "/*" + Sp.MaVt + " không còn tốn tại";
+                        IsSufficient = false;
+                    }
+                    else if(Sp.SoLuongTonKho < record.SoLuong)
+                    {
+                        list.GhiChu += "/*" + Sp.MaVt + " thiếu: " + (record.SoLuong - Sp.SoLuongTonKho).ToString();
+                        IsSufficient = false;
+                    }
+                }
+                if (IsSufficient)
+                {
+                    if(list.TrangThai == "Thiếu hàng")
+                    {
+                        list.TrangThai = "Chưa duyệt";
+                        for(int i=0; i<list.GhiChu.Length-1; i++)
+                        {
+                            if (list.GhiChu[i] == '/' && list.GhiChu[i + 1] == '*')
+                                list.GhiChu.Remove(i, list.GhiChu.Length - i);
+                        }
+                    }
+                }
+                else
+                {
+                    if(list.TrangThai == "Chưa duyệt")
+                    {
+                        list.TrangThai = "Thiếu hàng";
+                    }
+                }
                 //Duyệt từng sản phẩm trong ExportRequestInfo của list.MaYcx, nếu có hàng không đủ => Duyệt qua ExportResquests, Cập nhật trạng thái của list, TrangThai = "Thiếu hàng"
                 //Nhớ SaveChanges()
-                DanhSachYeuCauXuat.Add(list);
+                DataProvider.Instance.DB.SaveChanges();
+                Refresh();
             }
         }
         public ICommand RefreshCommand { get; set; }
@@ -111,10 +152,35 @@ namespace PMQuanLyVatTu.ViewModel
         {
             DanhSachYeuCauXuat.Clear();
 
-            var ListFromDB = DataProvider.Instance.DB.ExportRequests.ToList();
-            foreach( var list in ListFromDB)
+            var ListFromDB = DataProvider.Instance.DB.ExportRequests.Where(c => c.DaXoa == false).ToList();
+            foreach( var item in ListFromDB)
             {
-                DanhSachYeuCauXuat.Add(list);
+                switch (SelectedSearchFilter)
+                {
+                    case "Mã yêu cầu xuất":
+                        if (item.MaYcx != null)
+                            if (item.MaYcx.ToLower().Contains(SearchString.ToLower())) DanhSachYeuCauXuat.Add(item);
+                        break;
+                    case "Mã nhân viên":
+                        if (item.MaNv != null)
+                            if (item.MaNv.ToLower().Contains(SearchString.ToLower())) DanhSachYeuCauXuat.Add(item);
+                        break;
+                    case "Mã khách hàng":
+                        if (item.MaKh != null)
+                            if (item.MaKh.ToLower().Contains(SearchString.ToLower())) DanhSachYeuCauXuat.Add(item);
+                        break;
+                    case "Ngày lập yêu cầu":
+                        if (item.NgayLap != null)
+                            if (item.NgayLap.Value.ToString("ddd/dd/MM/yyyy").ToLower().Contains(SearchString.ToLower())) DanhSachYeuCauXuat.Add(item);
+                        break;
+                    case "Trạng thái":
+                        if (item.TrangThai != null)
+                            if (item.TrangThai.ToLower().Contains(SearchString.ToLower())) DanhSachYeuCauXuat.Add(item);
+                        break;
+                    default:
+                        DanhSachYeuCauXuat.Add(item);
+                        break;
+                }
             }
         }
         public ICommand EditButtonCommand { get; set; }
@@ -130,14 +196,24 @@ namespace PMQuanLyVatTu.ViewModel
         public ICommand DeleteButtonCommand { get; set; }
         void DeleteButton(object t) 
         {
-            CustomMessage msg = new CustomMessage("/Material/Images/Icons/question.png", "THÔNG BÁO", "Bạn có muốn xóa yêu cầu đã chọn?");
+            CustomMessage msg = new CustomMessage("/Material/Images/Icons/question.png", "THÔNG BÁO", "Bạn có muốn xóa yêu cầu xuất đã chọn?", true);
             msg.ShowDialog();
             if (msg.ReturnValue == true)
             {
-                DanhSachYeuCauXuat.Remove(SelectedYeuCauXuat);
+                var YCX = DataProvider.Instance.DB.ExportRequests.Find(SelectedYeuCauXuat.MaYcx);
+
+                if (YCX != null)
+                {
+                    YCX.DaXoa = true;
+                    YCX.ThoiGianXoa = DateTime.Now;
+                    DataProvider.Instance.DB.SaveChanges();
+                }
+                else
+                {
+                    msg = new CustomMessage("/Material/Images/Icons/wrong.png", "LỖI", "Không tìm thấy yêu cầu xuất để xóa!", false);
+                }
             }
-            //Xóa trong database
-            //Refresh();
+            Refresh();
         }
         //public ICommand DeleteSelectedCommand {  get; set; }
         //void DeleteSelected(object t)
@@ -163,12 +239,32 @@ namespace PMQuanLyVatTu.ViewModel
         public ICommand DaTiepNhanCommand { get; set; }
         void DaTiepNhan(object t)
         {
-            MessageBox.Show("Đã tiếp nhận");
+            var YCX = DataProvider.Instance.DB.ImportRequests.Find(SelectedYeuCauXuat);
+
+            if (YCX != null)
+            {
+                YCX.TrangThai = "Đã tiếp nhận";
+                DataProvider.Instance.DB.SaveChanges();
+            }
+            else
+            {
+                var msg = new CustomMessage("/Material/Images/Icons/wrong.png", "LỖI", "Không tìm thấy yêu cầu xuất!", false);
+            }
         }
         public ICommand TuChoiCommand { get; set; }
         void TuChoi(object t)
         {
-            MessageBox.Show("Từ chối");
+            var YCX = DataProvider.Instance.DB.ImportRequests.Find(SelectedYeuCauXuat);
+
+            if (YCX != null)
+            {
+                YCX.TrangThai = "Bị từ chối";
+                DataProvider.Instance.DB.SaveChanges();
+            }
+            else
+            {
+                var msg = new CustomMessage("/Material/Images/Icons/wrong.png", "LỖI", "Không tìm thấy yêu cầu xuất!", false);
+            }
         }
         #endregion
     }
