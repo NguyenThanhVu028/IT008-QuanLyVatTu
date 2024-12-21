@@ -7,13 +7,13 @@
         xmlns:CustomControl="clr-namespace:PMQuanLyVatTu.CustomControls"
         xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
         mc:Ignorable="d"
-        Title="XoaGanDayWindow" Height="665" Width="770"
+        Title="XoaGanDayWindow" Height="679" Width="784"
         WindowStartupLocation="CenterScreen"
         Background="Transparent"
         AllowsTransparency="True"
         WindowStyle="None"
         Name="DaXoaGanDayWin">
-    <Grid>
+    <Grid Margin="7, 7, 7, 7">
         <Border Background="{StaticResource DarkGreen2}"
                 CornerRadius="20" Margin="0,0,0,0">
             <i:Interaction.Triggers>
@@ -22,6 +22,9 @@
                                            CommandParameter="{Binding ElementName=DaXoaGanDayWin}"/>
                 </i:EventTrigger>
             </i:Interaction.Triggers>
+            <Border.BitmapEffect>
+                <DropShadowBitmapEffect Opacity="0.5" ShadowDepth="0"/>
+            </Border.BitmapEffect>
         </Border>
         <CustomControl:ImageButton ImageLocation="/Material/Images/Icons/close2.png" 
                                    Width="25"

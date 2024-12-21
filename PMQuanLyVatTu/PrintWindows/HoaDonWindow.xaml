@@ -91,7 +91,7 @@
                        FontWeight="Regular"
                        HorizontalAlignment="Left"
                        VerticalAlignment="Top"
-                       Margin="180, 20, 0, 0"
+                       Margin="180, 19, 0, 0"
                        Text="{Binding TenKH}"
                        FontSize="14"/>
             <TextBlock Grid.Row="2" 
@@ -195,7 +195,7 @@
                                             Width="80"
                                             IsReadOnly="True"
                                             CanUserResize="False"
-                                            Binding="{Binding STT}"/>
+                                            Binding="{Binding CK}"/>
                         <DataGridTemplateColumn Header="Thành tiền"
                                                 Width="193.4"
                                                 IsReadOnly="True"
@@ -231,7 +231,7 @@
                         <RowDefinition Height="30"/>
                     </Grid.RowDefinitions>
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="614.5"/>
+                        <ColumnDefinition Width="584.5"/>
                         <ColumnDefinition/>
                     </Grid.ColumnDefinitions>
                     <Border Background="Transparent"

@@ -7,13 +7,13 @@
         xmlns:CustomControl="clr-namespace:PMQuanLyVatTu.CustomControls"
         xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
         mc:Ignorable="d"
-        Title="SelectFromRequestWindow" Height="350" Width="550"
+        Title="SelectFromRequestWindow" Height="364" Width="564"
         WindowStartupLocation="CenterScreen"
         Background="Transparent"
         AllowsTransparency="True"
         WindowStyle="None"
         x:Name="ThisWin">
-    <Grid>
+    <Grid Margin="7, 7, 7, 7">
         <Border Background="{StaticResource DarkGreen2}"
                 CornerRadius="20" Margin="0,0,0,0">
             <i:Interaction.Triggers>
@@ -22,6 +22,9 @@
                                CommandParameter="{Binding ElementName=ThisWin}"/>
                 </i:EventTrigger>
             </i:Interaction.Triggers>
+            <Border.BitmapEffect>
+                <DropShadowBitmapEffect Opacity="0.5" ShadowDepth="0"/>
+            </Border.BitmapEffect>
         </Border>
         <TextBlock Text="CHỌN YÊU CẦU"
                    Foreground="White"

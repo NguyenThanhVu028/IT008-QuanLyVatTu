@@ -1,6 +1,7 @@
 ﻿using Microsoft.IdentityModel.Tokens;
 using PMQuanLyVatTu.ErrorMessage;
 using PMQuanLyVatTu.Models;
+using PMQuanLyVatTu.PrintWindows;
 using PMQuanLyVatTu.User;
 using System;
 using System.Collections.Generic;
@@ -412,7 +413,20 @@ namespace PMQuanLyVatTu.ViewModel
         public ICommand CreateReceiptCommand {  get; set; }
         void CreateRecepit(object t)
         {
-            MessageBox.Show("Created Recepit");
+            if (EnableEditing == true)
+            {
+                CustomMessage msg = new CustomMessage("/Material/Images/Icons/wrong.png", "LỖI", "Vui lòng thoát chế độ chỉnh sửa trước khi in.", false);
+                msg.ShowDialog();
+            }
+            else
+            {
+                HoaDonWindow printHoaDon = new HoaDonWindow();
+                PrintViewModel VM = new PrintViewModel(this);
+                printHoaDon.DataContext = VM;
+
+                VM.GridToPrint = printHoaDon.Print;
+                VM.Print();
+            }
         }
         #endregion
         #region Function
@@ -469,14 +483,6 @@ namespace PMQuanLyVatTu.ViewModel
             if (DanhSachVatTuYeuCau.Count() > 0) { ListEmpty = false; }
         }
         #endregion
-        //public class VatTuYeuCau
-        //{
-        //    public bool Checked { get; set; }
-        //    public string MaVT { get; set; }
-        //    public int SoLuong { get; set; }
-        //    public double ChietKhau { get; set; }
-        //    public double VAT { get; set; }
-        //}
         public class VatTu
         {
             public VatTu() { }

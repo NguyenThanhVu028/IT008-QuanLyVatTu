@@ -1,6 +1,7 @@
 ﻿using LiveCharts;
 using LiveCharts.Defaults;
 using LiveCharts.Wpf;
+using PMQuanLyVatTu.ErrorMessage;
 using PMQuanLyVatTu.Models;
 using System;
 using System.Collections.Generic;
@@ -10,6 +11,8 @@ using System.Runtime.Serialization;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Input;
 using System.Windows.Media;
 using static System.Net.Mime.MediaTypeNames;
 
@@ -31,6 +34,9 @@ namespace PMQuanLyVatTu.ViewModel
             LoadDanhSachVatTuXuat(SelectedMonth, SelectedYear);
 
             Formatter = value => value.ToString("N0");
+
+            PrintCommand = new RelayCommand<Grid>(Print);
+
         }
         #region Info
 
@@ -248,6 +254,19 @@ namespace PMQuanLyVatTu.ViewModel
             set { _danhSachVatTuXuat = value; OnPropertyChanged(); }
         }
         #endregion
+        #region Command
+        public ICommand PrintCommand {  get; set; }
+        void Print(Grid d)
+        {
+            PrintDialog dlg = new PrintDialog();
+            if (dlg.ShowDialog() == true)
+            {
+                dlg.PrintVisual(d, "Biểu đồ tương quan nhập xuất");
+                CustomMessage msg = new CustomMessage("/Material/Images/Icons/success.png", "THÀNH CÔNG", "Xuất file pdf thành công.", false);
+                msg.ShowDialog();
+            }
+        }
+        #endregion
         #region Function
         void LoadYearList()
         {
@@ -457,10 +476,6 @@ namespace PMQuanLyVatTu.ViewModel
                     DoanhThuYearSeries[1].Values.Add(0);
                     DoanhThuYearSeries[0].Values.Add(Total);
                 }
-                if(Year == DateTime.Now.Year)
-                {
-                    DoanhThuNamNay += Total;
-                }
             }
         }
         void LoadDanhSachVatTuNhap(string m, string y)
@@ -605,13 +620,14 @@ namespace PMQuanLyVatTu.ViewModel
         }
         void FindTienNHTienXH()
         {
+            DoanhThuNamNay = 0;
             TienNhapHang = 0;
             var ListPNFromDB = DataProvider.Instance.DB.GoodsReceivedNotes.Where(p => p.DaXoa == false && p.TrangThai == "Đã duyệt" && ((DateTime)(p.NgayLap ?? default)).Year == 2024).ToList();
             foreach(var info in ListPNFromDB) { TienNhapHang += info.TongGia ?? 0; }
             TienXuatHang = 0;
             var ListPXFromDB = DataProvider.Instance.DB.GoodsDeliveryNotes.Where(p => p.DaXoa == false && p.TrangThai == "Đã duyệt" && ((DateTime)(p.NgayLap ?? DateTime.Now)).Year == 2024).ToList();
             foreach (var info in ListPXFromDB) { TienXuatHang += info.TongGia ?? 0; }
-
+            DoanhThuNamNay = TienXuatHang - TienNhapHang;
         }
         void LoadNhapXuatChart()
         {

@@ -326,7 +326,6 @@
                                                            FontSize="20"
                                                            FontWeight="Bold"/>
                                             </StackPanel>
-
                                         </StackPanel>
                                     </Grid>
                                 </Border>
@@ -355,8 +354,18 @@
                                                                 Opacity="0.5"
                                                                 ShadowDepth="0"/>
                                     </Border.BitmapEffect>
+
                                     <Grid>
-                                        <TextBlock HorizontalAlignment="Right" 
+                                        <CustomControl:ImageButton ImageLocation="/Material/Images/Icons/printer2.png"
+                                                                   HorizontalAlignment="Left"
+                                                                   VerticalAlignment="Top"
+                                                                   Height="30"
+                                                                   Width="30"
+                                                                   Margin="10"
+                                                                   Command="{Binding PrintCommand}"
+                                                                   CommandParameter="{Binding ElementName=TQNX}"/>
+                                        <Grid x:Name="TQNX">
+                                            <TextBlock HorizontalAlignment="Right" 
                                                    VerticalAlignment="Top"
                                                    Width="150"
                                                    Margin="10, 10, 15, 0"
@@ -367,45 +376,14 @@
                                                    FontFamily="/Material/Fonts/Lexend/#Lexend Bold"
                                                    FontSize="18"
                                                    FontWeight="Bold"/>
-                                        <lvc:PieChart LegendLocation="Right"
+                                            <lvc:PieChart LegendLocation="Right"
                                                       Series="{Binding NhapXuatSeries}"
                                                       InnerRadius="70"
-                                                      Margin="5, 25,20, 10"/>
+                                                      Margin="50, 25,20, 10"/>
+                                        </Grid>
+
                                     </Grid>
                                 </Border>
-                                <!--<Border Grid.Column="1" 
-                                        Background="White"
-                                        CornerRadius="5"
-                                        Margin="5, 10, 10, 5">
-                                    <Border.BitmapEffect>
-                                        <DropShadowBitmapEffect Softness="0.2"
-                                                                Opacity="0.5"
-                                                                ShadowDepth="0"/>
-                                    </Border.BitmapEffect>
-                                </Border>-->
-                                <!--<Border Grid.Row="1" 
-                                        Background="White"
-                                        CornerRadius="5"
-                                        Margin="10, 5, 5, 10">
-                                    <Border.BitmapEffect>
-                                        <DropShadowBitmapEffect Softness="0.2"
-                                                                Opacity="0.5"
-                                                                ShadowDepth="0"/>
-                                    </Border.BitmapEffect>
-                                    --><!--<Grid>
-                                        <lvc:CartesianChart Margin="10"
-                                                            Series="{Binding KhachHangSeries}">
-                                            <lvc:CartesianChart.AxisX>
-                                                <lvc:Axis Title=""
-                                                          LabelFormatter="{Binding Formatter}"/>
-                                            </lvc:CartesianChart.AxisX>
-                                            <lvc:CartesianChart.AxisY>
-                                                <lvc:Axis Title=""
-                                                          Labels="{Binding KhachHangLabels}"/>
-                                            </lvc:CartesianChart.AxisY>
-                                        </lvc:CartesianChart>
-                                    </Grid>--><!--
-                                </Border>-->
                                 <Border Grid.Row="1"
                                         Grid.Column="1"
                                         Background="White"
@@ -417,22 +395,33 @@
                                                                 ShadowDepth="0"/>
                                     </Border.BitmapEffect>
                                     <Grid>
-                                        <TextBlock HorizontalAlignment="Left" 
-                                                   VerticalAlignment="Top"
-                                                   Width="150"
-                                                   Margin="15, 10, 15, 0"
-                                                   Text="Tình trạng phiếu xuất:"
-                                                   TextWrapping="Wrap"
-                                                   TextAlignment="Left"
-                                                   Foreground="#FF006BC9"
-                                                   FontFamily="/Material/Fonts/Lexend/#Lexend Bold"
-                                                   FontSize="18"
-                                                   FontWeight="Bold"/>
-                                        <lvc:PieChart LegendLocation="Left"
-                                                      Series="{Binding PhieuXuatSeries}"
-                                                      InnerRadius="70"
-                                                      Margin="20, 25, 70, 10"/>
+                                        <CustomControl:ImageButton ImageLocation="/Material/Images/Icons/printer2.png"
+                                                                   HorizontalAlignment="Right"
+                                                                   VerticalAlignment="Top"
+                                                                   Height="30"
+                                                                   Width="30"
+                                                                   Margin="10"
+                                                                   Command="{Binding PrintCommand}"
+                                                                   CommandParameter="{Binding ElementName=TTPX}"/>
+                                        <Grid x:Name="TTPX">
+                                            <TextBlock HorizontalAlignment="Left" 
+                                                       VerticalAlignment="Top"
+                                                       Width="150"
+                                                       Margin="15, 10, 15, 0"
+                                                       Text="Tình trạng phiếu xuất:"
+                                                       TextWrapping="Wrap"
+                                                       TextAlignment="Left"
+                                                       Foreground="#FF006BC9"
+                                                       FontFamily="/Material/Fonts/Lexend/#Lexend Bold"
+                                                       FontSize="18"
+                                                       FontWeight="Bold"/>
+                                            <lvc:PieChart LegendLocation="Left"
+                                                          Series="{Binding PhieuXuatSeries}"
+                                                          InnerRadius="70"
+                                                          Margin="20, 25, 50, 10"/>
+                                        </Grid>
                                     </Grid>
+
                                 </Border>
                             </Grid>
                         </Grid>
@@ -453,46 +442,55 @@
                                                                 ShadowDepth="0"/>
                                 </Border.BitmapEffect>
                                 <Grid>
-                                    <Grid x:Name="MonthChart"
-                                      Visibility="{Binding TheoThang, Converter={StaticResource BoolToVisibilityConverter}}">
-                                        <lvc:CartesianChart Margin="10"
-                                                        Series="{Binding NhapMonthSeries}">
-                                            <lvc:CartesianChart.AxisX>
-                                                <lvc:Axis Title=""
-                                                      Labels ="{Binding MonthLabels}">
-                                                    <lvc:Axis.Separator>
-                                                        <lvc:Separator IsEnabled="False" Step="3"/>
-                                                    </lvc:Axis.Separator>
-                                                </lvc:Axis>
-                                            </lvc:CartesianChart.AxisX>
-                                            <lvc:CartesianChart.AxisY>
-                                                <lvc:Axis Title=""
-                                                      LabelFormatter="{Binding Formatter}">
-                                                </lvc:Axis>
-                                            </lvc:CartesianChart.AxisY>
-                                        </lvc:CartesianChart>
+                                    <Grid x:Name="Chart">
+                                        <Grid x:Name="MonthChart"
+                                              Visibility="{Binding TheoThang, Converter={StaticResource BoolToVisibilityConverter}}">
+                                            <lvc:CartesianChart Margin="10"
+                                                            Series="{Binding NhapMonthSeries}">
+                                                <lvc:CartesianChart.AxisX>
+                                                    <lvc:Axis Title=""
+                                                            Labels ="{Binding MonthLabels}">
+                                                        <lvc:Axis.Separator>
+                                                            <lvc:Separator IsEnabled="False" Step="3"/>
+                                                        </lvc:Axis.Separator>
+                                                    </lvc:Axis>
+                                                </lvc:CartesianChart.AxisX>
+                                                <lvc:CartesianChart.AxisY>
+                                                    <lvc:Axis Title=""
+                                                            LabelFormatter="{Binding Formatter}">
+                                                    </lvc:Axis>
+                                                </lvc:CartesianChart.AxisY>
+                                            </lvc:CartesianChart>
+                                        </Grid>
+                                        <Grid x:Name="YearChart"
+                                              Visibility="{Binding TheoThang, Converter={StaticResource ReverseBoolToVisibilityConverter}}">
+                                            <lvc:CartesianChart Margin="10"
+                                                            Series="{Binding NhapYearSeries}">
+                                                <lvc:CartesianChart.AxisX>
+                                                    <lvc:Axis Title=""
+                                                          Labels ="{Binding YearLabels}">
+                                                        <lvc:Axis.Separator>
+                                                            <lvc:Separator IsEnabled="False" Step="1"/>
+                                                        </lvc:Axis.Separator>
+                                                    </lvc:Axis>
+                                                </lvc:CartesianChart.AxisX>
+                                                <lvc:CartesianChart.AxisY>
+                                                    <lvc:Axis Title=""
+                                                          LabelFormatter="{Binding Formatter}">
+                                                    </lvc:Axis>
+                                                </lvc:CartesianChart.AxisY>
+                                            </lvc:CartesianChart>
+                                        </Grid>
                                     </Grid>
-                                    <Grid x:Name="YearChart"
-                                      Visibility="{Binding TheoThang, Converter={StaticResource ReverseBoolToVisibilityConverter}}">
-                                        <lvc:CartesianChart Margin="10"
-                                                        Series="{Binding NhapYearSeries}">
-                                            <lvc:CartesianChart.AxisX>
-                                                <lvc:Axis Title=""
-                                                      Labels ="{Binding YearLabels}">
-                                                    <lvc:Axis.Separator>
-                                                        <lvc:Separator IsEnabled="False" Step="1"/>
-                                                    </lvc:Axis.Separator>
-                                                </lvc:Axis>
-                                            </lvc:CartesianChart.AxisX>
-                                            <lvc:CartesianChart.AxisY>
-                                                <lvc:Axis Title=""
-                                                      LabelFormatter="{Binding Formatter}">
-                                                </lvc:Axis>
-                                            </lvc:CartesianChart.AxisY>
-                                        </lvc:CartesianChart>
-                                    </Grid>
+                                    <CustomControl:ImageButton ImageLocation="/Material/Images/Icons/printer2.png"
+                                                                   HorizontalAlignment="Right"
+                                                                   VerticalAlignment="Top"
+                                                                   Height="30"
+                                                                   Width="30"
+                                                                   Margin="10"
+                                                                   Command="{Binding PrintCommand}"
+                                                                   CommandParameter="{Binding ElementName=Chart}"/>
                                 </Grid>
-
                             </Border>
                             <Grid Grid.Column="1">
                                 <Grid.RowDefinitions>
@@ -623,42 +621,52 @@
                                                                 ShadowDepth="0"/>
                                 </Border.BitmapEffect>
                                 <Grid>
-                                    <Grid Visibility="{Binding TheoThang, Converter={StaticResource BoolToVisibilityConverter}}">
-                                        <lvc:CartesianChart Margin="10"
-                                                        Series="{Binding XuatMonthSeries}">
-                                            <lvc:CartesianChart.AxisX>
-                                                <lvc:Axis Title=""
-                                                      Labels ="{Binding MonthLabels}">
-                                                    <lvc:Axis.Separator>
-                                                        <lvc:Separator IsEnabled="False" Step="3"/>
-                                                    </lvc:Axis.Separator>
-                                                </lvc:Axis>
-                                            </lvc:CartesianChart.AxisX>
-                                            <lvc:CartesianChart.AxisY>
-                                                <lvc:Axis Title=""
-                                                      LabelFormatter="{Binding Formatter}">
-                                                </lvc:Axis>
-                                            </lvc:CartesianChart.AxisY>
-                                        </lvc:CartesianChart>
+                                    <Grid x:Name="Chart2">
+                                        <Grid Visibility="{Binding TheoThang, Converter={StaticResource BoolToVisibilityConverter}}">
+                                            <lvc:CartesianChart Margin="10"
+                                                            Series="{Binding XuatMonthSeries}">
+                                                <lvc:CartesianChart.AxisX>
+                                                    <lvc:Axis Title=""
+                                                          Labels ="{Binding MonthLabels}">
+                                                        <lvc:Axis.Separator>
+                                                            <lvc:Separator IsEnabled="False" Step="3"/>
+                                                        </lvc:Axis.Separator>
+                                                    </lvc:Axis>
+                                                </lvc:CartesianChart.AxisX>
+                                                <lvc:CartesianChart.AxisY>
+                                                    <lvc:Axis Title=""
+                                                          LabelFormatter="{Binding Formatter}">
+                                                    </lvc:Axis>
+                                                </lvc:CartesianChart.AxisY>
+                                            </lvc:CartesianChart>
+                                        </Grid>
+                                        <Grid Visibility="{Binding TheoThang, Converter={StaticResource ReverseBoolToVisibilityConverter}}">
+                                            <lvc:CartesianChart Margin="10"
+                                                            Series="{Binding XuatYearSeries}">
+                                                <lvc:CartesianChart.AxisX>
+                                                    <lvc:Axis Title=""
+                                                          Labels ="{Binding YearLabels}">
+                                                        <lvc:Axis.Separator>
+                                                            <lvc:Separator IsEnabled="False" Step="1"/>
+                                                        </lvc:Axis.Separator>
+                                                    </lvc:Axis>
+                                                </lvc:CartesianChart.AxisX>
+                                                <lvc:CartesianChart.AxisY>
+                                                    <lvc:Axis Title=""
+                                                          LabelFormatter="{Binding Formatter}">
+                                                    </lvc:Axis>
+                                                </lvc:CartesianChart.AxisY>
+                                            </lvc:CartesianChart>
+                                        </Grid>
                                     </Grid>
-                                    <Grid Visibility="{Binding TheoThang, Converter={StaticResource ReverseBoolToVisibilityConverter}}">
-                                        <lvc:CartesianChart Margin="10"
-                                                        Series="{Binding XuatYearSeries}">
-                                            <lvc:CartesianChart.AxisX>
-                                                <lvc:Axis Title=""
-                                                      Labels ="{Binding YearLabels}">
-                                                    <lvc:Axis.Separator>
-                                                        <lvc:Separator IsEnabled="False" Step="1"/>
-                                                    </lvc:Axis.Separator>
-                                                </lvc:Axis>
-                                            </lvc:CartesianChart.AxisX>
-                                            <lvc:CartesianChart.AxisY>
-                                                <lvc:Axis Title=""
-                                                      LabelFormatter="{Binding Formatter}">
-                                                </lvc:Axis>
-                                            </lvc:CartesianChart.AxisY>
-                                        </lvc:CartesianChart>
-                                    </Grid>
+                                    <CustomControl:ImageButton ImageLocation="/Material/Images/Icons/printer2.png"
+                                                                   HorizontalAlignment="Right"
+                                                                   VerticalAlignment="Top"
+                                                                   Height="30"
+                                                                   Width="30"
+                                                                   Margin="10"
+                                                                   Command="{Binding PrintCommand}"
+                                                                   CommandParameter="{Binding ElementName=Chart2}"/>
                                 </Grid>
                             </Border>
                             <Grid Grid.Column="1">
@@ -785,43 +793,53 @@
                                                                 ShadowDepth="0"/>
                                 </Border.BitmapEffect>
                                 <Grid>
-                                    <Grid Visibility="{Binding TheoThang, Converter={StaticResource BoolToVisibilityConverter}}">
-                                        <lvc:CartesianChart Margin="10, 40, 10, 10"
-                                                        Series="{Binding DoanhThuMonthSeries}">
-                                            <lvc:CartesianChart.AxisX>
-                                                <lvc:Axis Title=""
-                                                      Labels ="{Binding MonthLabels}">
-                                                    <lvc:Axis.Separator>
-                                                        <lvc:Separator IsEnabled="False" Step="1"/>
-                                                    </lvc:Axis.Separator>
-                                                </lvc:Axis>
-                                            </lvc:CartesianChart.AxisX>
-                                            <lvc:CartesianChart.AxisY>
-                                                <lvc:Axis Title=""
-                                                      LabelFormatter="{Binding Formatter}">
-                                                </lvc:Axis>
-                                            </lvc:CartesianChart.AxisY>
-                                        </lvc:CartesianChart>
+                                    <Grid x:Name="Chart3">
+                                        <Grid Visibility="{Binding TheoThang, Converter={StaticResource BoolToVisibilityConverter}}">
+                                            <lvc:CartesianChart Margin="10, 40, 10, 10"
+                                                            Series="{Binding DoanhThuMonthSeries}">
+                                                <lvc:CartesianChart.AxisX>
+                                                    <lvc:Axis Title=""
+                                                          Labels ="{Binding MonthLabels}">
+                                                        <lvc:Axis.Separator>
+                                                            <lvc:Separator IsEnabled="False" Step="1"/>
+                                                        </lvc:Axis.Separator>
+                                                    </lvc:Axis>
+                                                </lvc:CartesianChart.AxisX>
+                                                <lvc:CartesianChart.AxisY>
+                                                    <lvc:Axis Title=""
+                                                          LabelFormatter="{Binding Formatter}">
+                                                    </lvc:Axis>
+                                                </lvc:CartesianChart.AxisY>
+                                            </lvc:CartesianChart>
+                                        </Grid>
+                                        <Grid Visibility="{Binding TheoThang, Converter={StaticResource ReverseBoolToVisibilityConverter}}">
+                                            <lvc:CartesianChart Margin="10, 40, 10, 10"
+                                                                
+                                                            Series="{Binding DoanhThuYearSeries}">
+                                                <lvc:CartesianChart.AxisX>
+                                                    <lvc:Axis Title=""
+                                                          Labels ="{Binding YearLabels}">
+                                                        <lvc:Axis.Separator>
+                                                            <lvc:Separator IsEnabled="False" Step="1"/>
+                                                        </lvc:Axis.Separator>
+                                                    </lvc:Axis>
+                                                </lvc:CartesianChart.AxisX>
+                                                <lvc:CartesianChart.AxisY>
+                                                    <lvc:Axis Title=""
+                                                          LabelFormatter="{Binding Formatter}">
+                                                    </lvc:Axis>
+                                                </lvc:CartesianChart.AxisY>
+                                            </lvc:CartesianChart>
+                                        </Grid>
                                     </Grid>
-                                    <Grid Visibility="{Binding TheoThang, Converter={StaticResource ReverseBoolToVisibilityConverter}}">
-                                        <lvc:CartesianChart Margin="10, 40, 10, 10"
-                                                        Series="{Binding DoanhThuYearSeries}">
-                                            <lvc:CartesianChart.AxisX>
-                                                <lvc:Axis Title=""
-                                                      Labels ="{Binding YearLabels}">
-                                                    <lvc:Axis.Separator>
-                                                        <lvc:Separator IsEnabled="False" Step="1"/>
-                                                    </lvc:Axis.Separator>
-                                                </lvc:Axis>
-                                            </lvc:CartesianChart.AxisX>
-                                            <lvc:CartesianChart.AxisY>
-                                                <lvc:Axis Title=""
-                                                      LabelFormatter="{Binding Formatter}">
-                                                </lvc:Axis>
-                                            </lvc:CartesianChart.AxisY>
-                                        </lvc:CartesianChart>
-                                    </Grid>
-                                    
+                                    <CustomControl:ImageButton ImageLocation="/Material/Images/Icons/printer2.png"
+                                                                   HorizontalAlignment="Left"
+                                                                   VerticalAlignment="Top"
+                                                                   Height="30"
+                                                                   Width="30"
+                                                                   Margin="10"
+                                                                   Command="{Binding PrintCommand}"
+                                                                   CommandParameter="{Binding ElementName=Chart3}"/>
                                 </Grid>
                             </Border>
                             <Grid Grid.Column="1">

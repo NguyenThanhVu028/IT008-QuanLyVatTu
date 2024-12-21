@@ -7,7 +7,7 @@
         xmlns:CustomControl="clr-namespace:PMQuanLyVatTu.CustomControls"
         xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
         mc:Ignorable="d"
-        Title="ThongTinNhanVienWindow" Height="700" Width="890"
+        Title="ThongTinNhanVienWindow" Height="714" Width="904"
         AllowsTransparency="True"
         WindowStyle="None"
         Background="Transparent"
@@ -16,7 +16,7 @@
         MaxWidth="1010"
         Name="ThisWin">
     <Grid>
-        <Grid>
+        <Grid Margin="7, 7, 7, 7">
             <Grid.RowDefinitions>
                 <RowDefinition Height="55"/>
                 <RowDefinition/>
@@ -30,6 +30,9 @@
                                    CommandParameter="{Binding ElementName=ThisWin}"/>
                     </i:EventTrigger>
                 </i:Interaction.Triggers>
+                <Border.BitmapEffect>
+                    <DropShadowBitmapEffect Opacity="0.5" ShadowDepth="0"/>
+                </Border.BitmapEffect>
             </Border>
             <CustomControl:ImageButton Height="25"
                                        Width="25"
@@ -51,26 +54,6 @@
                     <DropShadowBitmapEffect/>
                 </Border.BitmapEffect>
             </Border>
-            <StackPanel Grid.Row="1"
-                        HorizontalAlignment="Right"
-                        VerticalAlignment="Top"
-                        Margin="0, 25, 35, 0"
-                        Orientation="Horizontal">
-                <CustomControl:ImageButton Width="30"
-                                           Height="30"
-                                           Margin="0, 0, 10, 0"
-                                           ImageLocation="/Material/Images/Icons/edit1.png"
-                                           BorderBackgroundHightlight="{StaticResource LightAqua1}"
-                                           Visibility="{Binding EditMode, Converter={StaticResource BoolToVisibilityConverter}}"
-                                           Command="{Binding EditInfoCommand}"/>
-                <CustomControl:ImageButton Width="30"
-                                           Height="30"
-                                           ImageLocation="/Material/Images/Icons/delete.png"
-                                           BorderBackgroundHightlight="{StaticResource LightRed}"
-                                           Visibility="{Binding EditMode, Converter={StaticResource BoolToVisibilityConverter}}"
-                                           Command="{Binding DeleteButtonCommand}"
-                                           CommandParameter="{Binding ElementName=ThisWin}"/>
-            </StackPanel>
             <CustomControl:CircleImage Grid.Row="1"
                                        HorizontalAlignment="Left"
                                        VerticalAlignment="Top"
@@ -329,6 +312,34 @@
                     <DropShadowBitmapEffect/>
                 </Border.BitmapEffect>
             </Border>
+            <Border Grid.Row="1"
+                    HorizontalAlignment="Stretch"
+                    VerticalAlignment="Stretch"
+                    Margin="20, 10, 20, 210"
+                    Background="#36000000"
+                    CornerRadius="20"
+                    Grid.Column="1"
+                    Visibility="{Binding EnableEditing, Converter={StaticResource ReverseBoolToVisibilityConverter}}"/>
+            <StackPanel Grid.Row="1"
+                        HorizontalAlignment="Right"
+                        VerticalAlignment="Top"
+                        Margin="0, 25, 35, 0"
+                        Orientation="Horizontal">
+                <CustomControl:ImageButton Width="30"
+                                           Height="30"
+                                           Margin="0, 0, 10, 0"
+                                           ImageLocation="/Material/Images/Icons/edit1.png"
+                                           BorderBackgroundHightlight="{StaticResource LightAqua1}"
+                                           Visibility="{Binding EditMode, Converter={StaticResource BoolToVisibilityConverter}}"
+                                           Command="{Binding EditInfoCommand}"/>
+                <CustomControl:ImageButton Width="30"
+                                           Height="30"
+                                           ImageLocation="/Material/Images/Icons/delete.png"
+                                           BorderBackgroundHightlight="{StaticResource LightRed}"
+                                           Visibility="{Binding EditMode, Converter={StaticResource BoolToVisibilityConverter}}"
+                                           Command="{Binding DeleteButtonCommand}"
+                                           CommandParameter="{Binding ElementName=ThisWin}"/>
+            </StackPanel>
             <TextBlock Grid.Row="1" 
                        Height="70"
                        Width="200"
@@ -388,6 +399,14 @@
             <Border Background="Transparent"
                     Grid.Row="1"
                     Margin="40, 450, 30, 110"
+                    Visibility="{Binding EnableEditing, Converter={StaticResource ReverseBoolToVisibilityConverter}}"/>
+            <Border Grid.Row="1"
+                    HorizontalAlignment="Stretch"
+                    VerticalAlignment="Stretch"
+                    Margin="20,440,20,100"
+                    Background="#36000000"
+                    CornerRadius="20"
+                    Grid.ColumnSpan="2"
                     Visibility="{Binding EnableEditing, Converter={StaticResource ReverseBoolToVisibilityConverter}}"/>
         </Grid>
     </Grid>

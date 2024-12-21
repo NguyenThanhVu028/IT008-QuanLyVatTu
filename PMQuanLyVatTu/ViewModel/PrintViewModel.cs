@@ -1,11 +1,14 @@
-﻿using PMQuanLyVatTu.ErrorMessage;
+﻿using Microsoft.EntityFrameworkCore.ChangeTracking.Internal;
+using PMQuanLyVatTu.ErrorMessage;
 using PMQuanLyVatTu.Models;
 using PMQuanLyVatTu.User;
+using PMQuanLyVatTu.View;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics.Contracts;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Controls;
@@ -55,6 +58,18 @@ namespace PMQuanLyVatTu.ViewModel
 
             LoadDanhSachPX(); Calculate();
         }
+        public PrintViewModel(ThongTinYeuCauXuatHangWindowViewModel ycx)
+        {
+            var kh = DataProvider.Instance.DB.Customers.Find(ycx.MaKH);
+            if (kh != null)
+            {
+                TenKH = kh.HoTen ?? "";
+                DiaChiKH = kh.DiaChi ?? "";
+                SDT = kh.Sdt ?? "";
+                GhiChu = ycx.GhiChu ?? "";
+            }
+            LoadHoaDon(ycx.MaYCX); CalculatHoaDon();  
+        }
         #region GridToPrint
         Grid _gridToPrint;
         public Grid GridToPrint
@@ -91,6 +106,8 @@ namespace PMQuanLyVatTu.ViewModel
         private string _maKH = "";
         private string _tenKH = "";
         private string _diaChiKH = "";
+        private string _sDT = "";
+        private string _ghiChu = "";
         private string _khoXuat = "";
         private string _lyDoXuat = "";
 
@@ -185,6 +202,8 @@ namespace PMQuanLyVatTu.ViewModel
             get { return _diaChiKH; }
             set { _diaChiKH = value; OnPropertyChanged(); }
         }
+        public string SDT { get { return _sDT; } set { _sDT = value; OnPropertyChanged(); } }
+        public string GhiChu { get { return _ghiChu; } set { _ghiChu = value; OnPropertyChanged(); } }
         public string KhoXuat
         {
             get { return _khoXuat; }
@@ -263,6 +282,37 @@ namespace PMQuanLyVatTu.ViewModel
                 }
             }
         }
+        void LoadHoaDon(string ycx)
+        {
+            DanhSachVatTu.Clear(); int Count = 0;
+            var hd = DataProvider.Instance.DB.ExportRequests.Find(ycx);
+            if(hd != null)
+            {
+                var cthd = DataProvider.Instance.DB.ExportRequestInfos.Where(p => p.MaYcx == ycx).ToList();
+                foreach(var item in cthd)
+                {
+                    var supply = DataProvider.Instance.DB.Supplies.Find(item.MaVt);
+                    if(supply != null)
+                    {
+                        Count++;
+                        VatTu temp = new VatTu();
+                        temp.STT = Count;
+                        temp.TenVT = supply.TenVatTu ?? "";
+                        temp.MaVT = supply.MaVt;
+                        temp.DVT = supply.DonViTinh ?? "";
+                        temp.SoLuong = (int)(item.SoLuong ?? 0);
+                        temp.DonGia = (int)(supply.GiaXuat ?? 0);
+                        temp.CK = item.ChietKhau ?? 0;
+                        temp.dVAT = item.Vat ?? 0;
+                        //temp.ChietKhau = (int)((temp.SoLuong * temp.DonGia * item.ChietKhau) ?? 0);
+                        //temp.VAT = (int)((temp.SoLuong * temp.DonGia * item.Vat) ?? 0);
+                        temp.ThanhTien = temp.SoLuong * temp.DonGia;
+
+                        DanhSachVatTu.Add(temp);
+                    }
+                }
+            }
+        }
         void Calculate()
         {
             Cong = 0; /*ChietKhau = 0; VAT = 0; TongGia = 0;*/
@@ -273,6 +323,19 @@ namespace PMQuanLyVatTu.ViewModel
                 //VAT += item.VAT;
                 //TongGia += (item.ThanhTien - item.ChietKhau + item.VAT);
             }
+        }
+        void CalculatHoaDon()
+        {
+            Cong = 0;
+            VAT = 0;
+            ChietKhau = 0;
+            foreach (var item in DanhSachVatTu)
+            {
+                Cong += item.ThanhTien;
+                ChietKhau += (int)(item.CK * item.DonGia * item.SoLuong);
+                VAT += (int)(item.dVAT * item.DonGia * item.SoLuong);
+            }
+            TongGia = Cong - ChietKhau + VAT;
         }
         public void Print()
         {
@@ -297,6 +360,8 @@ namespace PMQuanLyVatTu.ViewModel
             public int SoLuong {  get; set; }
             public int DonGia {  get; set; }
             public int ChietKhau {  get; set; }
+            public double CK {  get; set; }
+            public double dVAT {  get; set; }
             public int VAT {  get; set; }
             public int ThanhTien {  get; set; }
 

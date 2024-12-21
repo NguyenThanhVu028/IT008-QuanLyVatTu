@@ -8,7 +8,7 @@
         xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
         xmlns:ViewModel="clr-namespace:PMQuanLyVatTu.ViewModel"
         mc:Ignorable="d"
-        Height="720" Width="1280"
+        Height="734" Width="1294"
         WindowStyle="None"
         Background="Transparent"
         AllowsTransparency="True"
@@ -27,6 +27,9 @@
                                            CommandParameter="{Binding ElementName=LoginWin}"/>
                 </i:EventTrigger>
             </i:Interaction.Triggers>
+            <Border.BitmapEffect>
+                <DropShadowBitmapEffect Opacity="0.5" ShadowDepth="0"/>
+            </Border.BitmapEffect>
         </Border>
         <Grid x:Name="LW_LayoutGrid">
             <Grid.ColumnDefinitions>
