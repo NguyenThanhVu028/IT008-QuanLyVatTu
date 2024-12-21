@@ -1,10 +1,12 @@
-﻿using Microsoft.Win32;
+﻿using Microsoft.IdentityModel.Tokens;
+using Microsoft.Win32;
 using PMQuanLyVatTu.ErrorMessage;
 using PMQuanLyVatTu.Models;
 using PMQuanLyVatTu.User;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Globalization;
 using System.Linq;
 using System.Net.Http.Headers;
 using System.Net.WebSockets;
@@ -28,7 +30,7 @@ namespace PMQuanLyVatTu.ViewModel
             MoveWindowCommand = new RelayCommand<Window>(MoveWindow);
             EditInfoCommand = new RelayCommand<object>(EditInfo);
             DeleteButtonCommand = new RelayCommand<Window>(DeleteButton);
-            SaveInfoCommand = new RelayCommand<object>(SaveInfo);
+            SaveInfoCommand = new RelayCommand<Window>(SaveInfo);
             ChangeAvatarCommand = new RelayCommand<object>(ChangeAvatar);
         }
         #region Title
@@ -136,7 +138,7 @@ namespace PMQuanLyVatTu.ViewModel
             get { return _gioiTinh; }
             set { _gioiTinh = value; OnPropertyChanged(); }
         }
-        private ObservableCollection<string> _chucVu = new ObservableCollection<string>() { "QL", "KT", "NX", "TN" };
+        private ObservableCollection<string> _chucVu = new ObservableCollection<string>() { "Quản Lý", "Kế Toán", "Nhập Xuất", "Tiếp Nhận" };
         public ObservableCollection<string> ChucVu
         {
             get { return _chucVu; }
@@ -176,286 +178,317 @@ namespace PMQuanLyVatTu.ViewModel
                     var account = DataProvider.Instance.DB.Accounts.Where(e => e.MaNv == MaNV).FirstOrDefault();
                     if (account != null)
                     {
-
                         account.DaXoa = true;
+                        account.ThoiGianXoa = DateTime.Now;
                     }
 
                     if (nv != null)
                     {
                         nv.DaXoa = true;
+                        nv.ThoiGianXoa = DateTime.Now;
                     }
                     DataProvider.Instance.DB.SaveChanges();
                 }
                 else
                 {
-                    CustomMessage message = new CustomMessage("/Material/Images/Icons/question.png", "LỖI", "Không thể xóa nhân viên hiện tại.");
+                    CustomMessage message = new CustomMessage("/Material/Images/Icons/wrong.png", "LỖI", "Không thể xóa nhân viên hiện tại.");
                     message.ShowDialog();
+                    return;
                 }
-
                 t.Close();
             }
         }
         public ICommand SaveInfoCommand { get; set; }
-        void SaveInfo(object t)
+        void SaveInfo(Window t)
         {
-            //Lưu ý chuyển đổi từ string NgaySinh thành NgaySinh của employee thì dùng employee.NgaySinh = DateOnly.ParseExact(NgaySinh, "ddd/dd/MM/yyyy"); và đặt trong khối try-catch
+            if (MaNV.IsNullOrEmpty()) //Chưa nhập mã nhân viên
+            {
+                CustomMessage msg = new CustomMessage("/Material/Images/Icons/wrong.png", "LỖI", "Vui lòng nhập mã nhân viên.");
+                msg.ShowDialog();
+                return;
+            }
+            if (CVu.IsNullOrEmpty())
+            {
+                CustomMessage msg = new CustomMessage("/Material/Images/Icons/wrong.png", "LỖI", "Vui lòng chọn chức vụ.");
+                msg.ShowDialog();
+                return;
+            }
 
             if (EditMode == true) //Nếu đang chế độ chỉnh sửa
             {
                 var nv = DataProvider.Instance.DB.Employees.Find(MaNV);
-                EnableEditing = false;
-                if (nv != null)
+                if(nv == null)
                 {
+                    CustomMessage msg1 = new CustomMessage("/Material/Images/Icons/wrong.png", "LỖI", "Nhân viên đã không còn trên hệ thống.");
+                    msg1.ShowDialog();
+                    return;
+                }
 
-                    if (nv.ChucVu == "")
+                nv.HoTen = HoTen;
+                nv.ChucVu = (CVu);
+                try { nv.NgaySinh = DateOnly.ParseExact(NgaySinh, "ddd/dd/MM/yyyy"); }
+                catch { nv.NgaySinh = DateOnly.FromDateTime(DateTime.Now); }
+                nv.GioiTinh = GTinh;
+                nv.DiaChi = DiaChi;
+                nv.Sdt = SDT;
+                nv.Email = Email;
+                nv.Luong = Luong;
+                nv.ImageLocation = ImageLocation;
+
+                if (TenDangNhap.IsNullOrEmpty()) //Để trống thì xóa TK của NV này
+                {
+                    var acc = DataProvider.Instance.DB.Accounts.Where(e => e.MaNv == nv.MaNv && e.DaXoa == false).ToList();
+                    if (acc != null)
                     {
-                        CustomMessage msg1 = new CustomMessage("/Material/Images/Icons/success.png", "LỖI", "Chức vụ không được để trống.");
-                        msg1.ShowDialog();
-                        EnableEditing = true;
-                        return;
+                        foreach(var item in acc)
+                        {
+                            item.DaXoa = true; item.ThoiGianXoa = DateTime.Now;
+                        }     
+                    }
+                }
+                else
+                {
+                    var acc = DataProvider.Instance.DB.Accounts.Where(e => e.MaNv == nv.MaNv && e.DaXoa == false).FirstOrDefault();
+                    var result = DataProvider.Instance.DB.Accounts.Find(TenDangNhap);
+                    if(result != null)
+                    {
+                        if(result.DaXoa == true)
+                        {
+                            if(result.MaNv == MaNV)
+                            {
+                                result.DaXoa = false;
+                                result.MatKhau = MatKhau;
+                                result.MaNv = MaNV;
+                                result.Email = Email;
+                            }
+                            else
+                            {
+                                DataProvider.Instance.DB.Accounts.Remove(result);
+                                if (acc == null)
+                                {
+                                    var newacc = new Account();
+                                    newacc.TenDn = TenDangNhap;
+                                    newacc.MatKhau = MatKhau;
+                                    newacc.MaNv = MaNV;
+                                    newacc.Email = Email;
+                                    newacc.DaXoa = false;
+                                    DataProvider.Instance.DB.Accounts.Add(newacc);
+                                }
+                                else
+                                {
+                                    acc.TenDn = TenDangNhap;
+                                    acc.MatKhau = MatKhau;
+                                    acc.Email = Email;
+                                    acc.DaXoa = false;
+                                }
+                            }
+                        }
+                        else if(result.DaXoa == false)
+                        {
+                            if(result.MaNv == MaNV)
+                            {
+                                result.MatKhau = MatKhau;
+                                DataProvider.Instance.DB.SaveChanges();
+                            }
+                            else
+                            {
+                                CustomMessage msg1 = new CustomMessage("/Material/Images/Icons/wrong.png", "LỖI", "Tên đăng nhập này đã tồn tại trên hệ thống.");
+                                msg1.ShowDialog();
+                            }
+                        }
                     }
                     else
                     {
-
-                        var acc = DataProvider.Instance.DB.Accounts.Where(e => e.MaNv == nv.MaNv).FirstOrDefault();
-                        if (acc != null)
+                        if(acc == null)
                         {
-                            var result = DataProvider.Instance.DB.Accounts.Where(e => e.TenDn == TenDangNhap).FirstOrDefault();
-                            if (result == null)   // mật khẩu mới này chưa có người dùng
-                            {
-                                //acc.TenDn = TenDangNhap;
-                                //acc.MatKhau = MatKhau;
-                                //acc.Email = Email;
+                            var newacc = new Account();
+                            newacc.TenDn = TenDangNhap;
+                            newacc.MatKhau = MatKhau;
+                            newacc.MaNv = MaNV;
+                            newacc.Email = Email;
+                            newacc.DaXoa = false;
+                            DataProvider.Instance.DB.Accounts.Add(newacc);
+                        }
+                        else
+                        {
+                            acc.TenDn = TenDangNhap;
+                            acc.MatKhau = MatKhau;
+                            acc.Email = Email;
+                            acc.DaXoa = false;
+                        }
+                    }
+                }
+                DataProvider.Instance.DB.SaveChanges();
 
-                                DataProvider.Instance.DB.Accounts.Remove(acc);
+                if (CurrentUser.Instance.MaNv == MaNV)
+                {
+                    CurrentUser.Instance.Update(nv);
+                }
+                CustomMessage msg = new CustomMessage("/Material/Images/Icons/success.png", "THÀNH CÔNG", "Đã lưu thông tin chỉnh sửa.");
+                EnableEditing = false;
+                msg.ShowDialog();
+            }
+
+            else //Nếu trong chế độ thêm nhân viên
+            {
+                var NV = DataProvider.Instance.DB.Employees.Find(MaNV);
+                if (NV != null) //Trùng mã nhân viên
+                {
+                    if(NV.DaXoa == true)
+                    {
+                        NV.DaXoa = false;
+                        NV.ImageLocation = ImageLocation;
+                        NV.HoTen = HoTen;
+                        NV.ChucVu = (CVu);
+                        NV.GioiTinh = GTinh;
+                        try { NV.NgaySinh = DateOnly.ParseExact(NgaySinh, "ddd/dd/MM/yyyy"); }
+                        catch { NV.NgaySinh = DateOnly.FromDateTime(DateTime.Now); }
+                        NV.DiaChi = DiaChi;
+                        NV.Sdt = SDT;
+                        NV.Email = Email;
+                        NV.Luong = Luong;
+
+                        if (!TenDangNhap.IsNullOrEmpty())
+                        {
+                            var result = DataProvider.Instance.DB.Accounts.Find(TenDangNhap);
+                            if (result != null)
+                            {
+                                if (result.DaXoa == true)
+                                {
+                                    if (result.MaNv == MaNV)
+                                    {
+                                        result.DaXoa = false;
+                                        result.MatKhau = MatKhau;
+                                        result.MaNv = MaNV;
+                                        result.Email = Email;
+                                    }
+                                    else
+                                    {
+                                        DataProvider.Instance.DB.Accounts.Remove(result);
+                                        var newacc = new Account();
+                                        newacc.TenDn = TenDangNhap;
+                                        newacc.MatKhau = MatKhau;
+                                        newacc.MaNv = MaNV;
+                                        newacc.Email = Email;
+                                        newacc.DaXoa = false;
+                                        DataProvider.Instance.DB.Accounts.Add(newacc);
+                                    }
+
+                                }
+                                else if (result.DaXoa == false)
+                                {
+                                    if (result.MaNv == MaNV)
+                                    {
+                                        result.MatKhau = MatKhau;
+                                        DataProvider.Instance.DB.SaveChanges();
+                                    }
+                                    else
+                                    {
+                                        CustomMessage msg1 = new CustomMessage("/Material/Images/Icons/wrong.png", "LỖI", "Tên đăng nhập này đã tồn tại trên hệ thống.");
+                                        msg1.ShowDialog();
+                                    }
+                                }
+                            }
+                            else
+                            {
                                 var newacc = new Account();
                                 newacc.TenDn = TenDangNhap;
                                 newacc.MatKhau = MatKhau;
                                 newacc.MaNv = MaNV;
                                 newacc.Email = Email;
                                 newacc.DaXoa = false;
-
                                 DataProvider.Instance.DB.Accounts.Add(newacc);
                             }
-                            else
-                            {
-                                if (result.MaNv == MaNV)
-                                {
-                                    //acc.TenDn = TenDangNhap;
-                                    //acc.MatKhau = MatKhau;
-                                    //acc.Email = Email;
-
-                                    DataProvider.Instance.DB.Accounts.Remove(acc);
-                                    var newacc = new Account();
-                                    newacc.TenDn = TenDangNhap;
-                                    newacc.MatKhau = MatKhau;
-                                    newacc.MaNv = MaNV;
-                                    newacc.Email = Email;
-                                    newacc.DaXoa = false;
-
-                                    DataProvider.Instance.DB.Accounts.Add(newacc);
-                                }
-                                else
-                                {
-                                    CustomMessage msg1 = new CustomMessage("/Material/Images/Icons/success.png", "LỖI", "Tên đăng nhập này đã tồn tại.");
-                                    msg1.ShowDialog();
-                                    EnableEditing = true;
-                                    return;
-                                }
-                            }
-
                         }
-                        else
-                        {
-
-                            if (TenDangNhap != "" && MatKhau != "")
-                            {
-                                var result = DataProvider.Instance.DB.Accounts.Where(e => e.TenDn == TenDangNhap).FirstOrDefault();
-                                if (result == null)   // mật khẩu mới này chưa có người dùng
-                                {
-                                    //acc.TenDn = TenDangNhap;
-                                    //acc.MatKhau = MatKhau;
-                                    //acc.Email = Email;
-
-
-                                    var newacc = new Account();
-                                    newacc.TenDn = TenDangNhap;
-                                    newacc.MatKhau = MatKhau;
-                                    newacc.MaNv = MaNV;
-                                    newacc.Email = Email;
-                                    newacc.DaXoa = false;
-
-                                    DataProvider.Instance.DB.Accounts.Add(newacc);
-                                }
-                                else
-                                {
-
-                                    CustomMessage msg1 = new CustomMessage("/Material/Images/Icons/success.png", "LỖI", "Tên đăng nhập này đã tồn tại.");
-                                    msg1.ShowDialog();
-                                    EnableEditing = true;
-                                    return;
-
-                                }
-                            }
-                        }
-                        if (HoTen == "")
-                        {
-                            CustomMessage msg1 = new CustomMessage("/Material/Images/Icons/success.png", "LỖI", "Họ tên không được để trống.");
-                            msg1.ShowDialog();
-                            EnableEditing = true;
-                            return;
-                        }
-                        nv.HoTen = HoTen;
-                        nv.ChucVu = CVu;
-                        if (!string.IsNullOrWhiteSpace(NgaySinh))
-                        {
-                            nv.NgaySinh = DateOnly.ParseExact(NgaySinh, "ddd/dd/MM/yyyy");
-                        }
-                        else
-                        {
-                            nv.NgaySinh = DateOnly.MinValue; // Gán giá trị mặc định
-                        }
-                        nv.GioiTinh = GTinh;
-                        nv.DiaChi = DiaChi;
-                        nv.Sdt = SDT;
-                        nv.Email = Email;
-                        nv.Luong = Luong;
-
-                    }
-                    DataProvider.Instance.DB.SaveChanges();
-                    // Check là nếu đang sửa thông tin của current thì update thông tin cho current
-                    if (CurrentUser.Instance.MaNv == MaNV)
-                    {
-                        CurrentUser.Instance.Update(nv);
-                    }
-                    CustomMessage msg = new CustomMessage("/Material/Images/Icons/success.png", "THÀNH CÔNG", "Đã lưu thông tin chỉnh sửa.");
-                    msg.ShowDialog();
-                }
-            }
-            else //Nếu trong chế độ thêm nhân viên
-            {
-                if (MaNV == "") //Chưa nhập mã nhân viên
-                {
-                    CustomMessage msg = new CustomMessage("/Material/Images/Icons/wrong.png", "LỖI", "Vui lòng nhập mã nhân viên.");
-                    msg.ShowDialog();
-                }
-                else if (CompareAndExecute()) //Trùng mã nhân viên
-                {
-                    AlreadyExistsError msg = new AlreadyExistsError();
-                    msg.ShowDialog();
-                }
-                else // Hợp lệ
-                {
-                    EnableEditing = false;
-                    //Lưu thông tin từ Info vào database
-                    var check = AddNew();
-                    if (check)
-                    {
+                        DataProvider.Instance.DB.SaveChanges();
                         CustomMessage msg = new CustomMessage("/Material/Images/Icons/success.png", "THÀNH CÔNG", "Thêm nhân viên thành công.");
                         msg.ShowDialog();
-                        (t as Window).Close();
+                        t.Close();
                     }
                     else
                     {
-                        EnableEditing = true;
+                        AlreadyExistsError msg = new AlreadyExistsError();
+                        msg.ShowDialog();
                         return;
                     }
-
                 }
-            }
-
-        }
-        bool CompareAndExecute()
-        {
-            var nv = DataProvider.Instance.DB.Employees.Find(MaNV);
-            if (nv == null)
-            {
-                return false;
-            }
-            else
-            {
-                if (nv.DaXoa == true)
+                else // Hợp lệ
                 {
-                    DataProvider.Instance.DB.Employees.Remove(nv);
-                    return false;
+                    var newNV = new Employee();
 
+                    newNV.MaNv = MaNV;
+                    newNV.HoTen = HoTen;
+                    newNV.ChucVu = (CVu);
+                    newNV.GioiTinh = GTinh;
+                    newNV.DiaChi = DiaChi;
+                    newNV.Sdt = SDT;
+                    newNV.Email = Email;
+                    newNV.Luong = Luong;
+                    newNV.ImageLocation = ImageLocation;
+                    newNV.DaXoa = false;
+                    try { newNV.NgaySinh = DateOnly.ParseExact(NgaySinh, "ddd/dd/MM/yyyy"); }
+                    catch { newNV.NgaySinh = DateOnly.FromDateTime(DateTime.Now); }
+
+                    DataProvider.Instance.DB.Employees.Add(newNV);
+
+                    if (!TenDangNhap.IsNullOrEmpty())
+                    {
+                        var result = DataProvider.Instance.DB.Accounts.Find(TenDangNhap);
+                        if (result != null)
+                        {
+                            if (result.DaXoa == true || result.MaNv == MaNV)
+                            {
+                                if (result.MaNv == MaNV)
+                                {
+                                    result.DaXoa = false;
+                                    result.MatKhau = MatKhau;
+                                    result.MaNv = MaNV;
+                                    result.Email = Email;
+                                }
+                                else
+                                {
+                                    DataProvider.Instance.DB.Accounts.Remove(result);
+                                    var newacc = new Account();
+                                    newacc.TenDn = TenDangNhap;
+                                    newacc.MatKhau = MatKhau;
+                                    newacc.MaNv = MaNV;
+                                    newacc.Email = Email;
+                                    newacc.DaXoa = false;
+                                    DataProvider.Instance.DB.Accounts.Add(newacc);
+                                }
+                            }
+                            else if (result.DaXoa == false)
+                            {
+                                if (result.MaNv == MaNV)
+                                {
+                                    result.MatKhau = MatKhau;
+                                    DataProvider.Instance.DB.SaveChanges();
+                                }
+                                else
+                                {
+                                    CustomMessage msg1 = new CustomMessage("/Material/Images/Icons/wrong.png", "LỖI", "Tên đăng nhập này đã tồn tại trên hệ thống.");
+                                    msg1.ShowDialog();
+                                }
+                            }
+                        }
+                        else
+                        {
+                            var newacc = new Account();
+                            newacc.TenDn = TenDangNhap;
+                            newacc.MatKhau = MatKhau;
+                            newacc.MaNv = MaNV;
+                            newacc.Email = Email;
+                            newacc.DaXoa = false;
+                            DataProvider.Instance.DB.Accounts.Add(newacc);
+                        }
+                    }
+
+                    DataProvider.Instance.DB.SaveChanges();
+                    CustomMessage msg = new CustomMessage("/Material/Images/Icons/success.png", "THÀNH CÔNG", "Thêm nhân viên thành công.");
+                    msg.ShowDialog();
+                    t.Close();
                 }
-                else
-                {
-                    return true;
-                }
             }
-            return true;
-        }
-        bool AddNew()
-        {
-            var newNV = new Employee();
-            var NewAcc = new Account();
-            if (MaNV.Length > 6)
-            {
-                CustomMessage msg1 = new CustomMessage("/Material/Images/Icons/success.png", "LỖI", "Mã nhân viên không hợp lệ.");
-                msg1.ShowDialog();
-                return false;
-            }
-            if (HoTen == "")
-            {
-                CustomMessage msg1 = new CustomMessage("/Material/Images/Icons/success.png", "LỖI", "Họ tên không được để trống.");
-                msg1.ShowDialog();
-                return false;
-            }
-            if (CVu == "")
-            {
-                CustomMessage msg1 = new CustomMessage("/Material/Images/Icons/success.png", "LỖI", "Chức vụ không được để trống.");
-                msg1.ShowDialog();
-                return false;
-            }
-            var result = DataProvider.Instance.DB.Accounts.Where(e => e.TenDn == TenDangNhap).FirstOrDefault();  // kiểm tra tên đăng nhập 
-            if (result == null)   // chưa tồn tại có 2 khả năng là : 1. tên đăng nhập chưa có ai dùng   2. chưa nhập tên đăng nhập
-            {
-                if (TenDangNhap != null && MatKhau != null)  //kiểm tra xem có cho thông tin đăng nhập chưa
-                {
-                    MessageBox.Show(TenDangNhap);
-                    NewAcc.TenDn = TenDangNhap;
-                    NewAcc.MatKhau = MatKhau;
-                    NewAcc.MaNv = MaNV;
-                    NewAcc.Email = Email;
-                    NewAcc.DaXoa = false;
-
-                    DataProvider.Instance.DB.Accounts.Add(NewAcc);
-                }
-
-            }
-            else   // nếu tồn tại tên đăng nhập rồi
-            {
-
-                CustomMessage msg1 = new CustomMessage("/Material/Images/Icons/success.png", "LỖI", "Tên đăng nhập này đã tồn tại.");
-                msg1.ShowDialog();
-                return false;
-
-            }
-            newNV.MaNv = MaNV;
-            newNV.HoTen = HoTen;
-            newNV.ChucVu = CVu;
-            if (!string.IsNullOrWhiteSpace(NgaySinh))
-            {
-                newNV.NgaySinh = DateOnly.ParseExact(NgaySinh, "ddd/dd/MM/yyyy");
-            }
-            else
-            {
-                newNV.NgaySinh = DateOnly.MinValue; // Gán giá trị mặc định
-            }
-
-            newNV.GioiTinh = GTinh;
-            newNV.DiaChi = DiaChi;
-            newNV.Sdt = SDT;
-            newNV.Email = Email;
-            newNV.Luong = Luong;
-            newNV.ImageLocation = ImageLocation;
-            newNV.DaXoa = false;
-
-            DataProvider.Instance.DB.Employees.Add(newNV);
-            DataProvider.Instance.DB.SaveChanges();
-            return true;
         }
         public ICommand ChangeAvatarCommand { get; set; }
         void ChangeAvatar(object t)
@@ -475,6 +508,22 @@ namespace PMQuanLyVatTu.ViewModel
         }
         #endregion
         #region Function
+        string ConvertChucVu(string cv)
+        {
+            switch (cv)
+            {
+                case "QL":
+                    return "Quản Lý";
+                case "KT":
+                    return "Kế Toán";
+                case "NX":
+                    return "Nhập Xuất";
+                case "TN":
+                    return "Tiếp nhận";
+                default:
+                    return "";
+            }
+        }
         void LoadData(string manv)
         {
             //Dùng manv để load dữ liệu từ database
@@ -485,27 +534,25 @@ namespace PMQuanLyVatTu.ViewModel
             if (NV != null)
             {
                 MaNV = manv;
-                HoTen = NV.HoTen;
-                CVu = NV.ChucVu;
-                GTinh = NV.GioiTinh;
+                HoTen = NV.HoTen ?? "";
+                CVu = NV.ChucVu ?? "";
+                GTinh = NV.GioiTinh ?? "";
                 NgaySinh = ((DateOnly)NV.NgaySinh).ToDateTime(TimeOnly.MinValue).ToString("ddd/dd/MM/yyyy");
-                DiaChi = NV.DiaChi;
-                SDT = NV.Sdt;
-                Email = NV.Email;
-                Luong = (int)NV.Luong;
-                ImageLocation = NV.ImageLocation;
-                var acc = DataProvider.Instance.DB.Accounts.Where(e => e.MaNv == manv).FirstOrDefault();
+                DiaChi = NV.DiaChi ?? "";
+                SDT = NV.Sdt ?? "";
+                Email = NV.Email ?? "";
+                Luong = (NV.Luong ?? 0);
+                ImageLocation = NV.ImageLocation ?? "";
+                var acc = DataProvider.Instance.DB.Accounts.Where(e => e.MaNv == manv && e.DaXoa == false).FirstOrDefault();
                 if (acc != null)
                 {
                     TenDangNhap = acc.TenDn;
-                    MatKhau = acc.MatKhau;
-
+                    MatKhau = acc.MatKhau ?? "";
                 }
                 else
                 {
-                    TenDangNhap = "";
-                    MatKhau = "";
-
+                    TenDangNhap = String.Empty;
+                    MatKhau = String.Empty;
                 }
             }
             else

@@ -152,39 +152,49 @@ namespace PMQuanLyVatTu.ViewModel
                 {
                     var existingSuppliers = DataProvider.Instance.DB.Suppliers.Find(MaNCC);
 
-                    if (existingSuppliers != null) 
+                    if (existingSuppliers != null)
                     {
                         if (existingSuppliers.DaXoa == true) // Hợp lệ
                         {
-                            // Xóa nhà cung cấp cũ khỏi database
-                            DataProvider.Instance.DB.Suppliers.Remove(existingSuppliers);
+
+                            existingSuppliers.DaXoa = false;
+                            existingSuppliers.TenNcc = TenNCC;
+                            existingSuppliers.Sdt = SDT;
+                            existingSuppliers.Email = Email;
+                            existingSuppliers.DiaChi = DiaChi;
+
                             DataProvider.Instance.DB.SaveChanges();
+                            CustomMessage msgSuccess1 = new CustomMessage("/Material/Images/Icons/success.png", "THÀNH CÔNG", "Thêm nhà cung cấp thành công.");
+                            msgSuccess1.ShowDialog();
+                            t.Close();
+                            
                         }
                         else //Trùng mã nhà cung cấp
                         {
                             AlreadyExistsError msg1 = new AlreadyExistsError();
                             msg1.ShowDialog();
-                            return; 
+                            return;
                         }
                     }
-                    EnableEditing = false;
-                    // Tạo nhà cung cấp mới và thêm vào database
-                    var newSuppliers = new Supplier
+                    else
                     {
-                        MaNcc = MaNCC,
-                        TenNcc = TenNCC,
-                        DiaChi = DiaChi,
-                        Email = Email,
-                        Sdt = SDT,
-                        DaXoa = false
-                    };
-                    DataProvider.Instance.DB.Suppliers.Add(newSuppliers);
-                    DataProvider.Instance.DB.SaveChanges();
+                        var newSuppliers = new Supplier
+                        {
+                            MaNcc = MaNCC,
+                            TenNcc = TenNCC,
+                            DiaChi = DiaChi,
+                            Email = Email,
+                            Sdt = SDT,
+                            DaXoa = false
+                        };
+                        DataProvider.Instance.DB.Suppliers.Add(newSuppliers);
+                        DataProvider.Instance.DB.SaveChanges();
 
-                    CustomMessage msgSuccess = new CustomMessage("/Material/Images/Icons/success.png", "THÀNH CÔNG", "Thêm nhà cung cấp thành công.");
-                    msgSuccess.ShowDialog();
+                        CustomMessage msgSuccess = new CustomMessage("/Material/Images/Icons/success.png", "THÀNH CÔNG", "Thêm nhà cung cấp thành công.");
+                        msgSuccess.ShowDialog();
+                        t.Close();
+                    }
                 }
-                t.Close();
             }
         }
         #endregion
