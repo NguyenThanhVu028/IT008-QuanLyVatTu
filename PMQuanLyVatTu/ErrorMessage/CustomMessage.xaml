@@ -11,7 +11,8 @@
         Background="Transparent"
         WindowStartupLocation="CenterScreen"
         Title="CustomMessage" Height="180" Width="400"
-        x:Name="ThisWin">
+        x:Name="ThisWin"
+        Topmost="True">
     <Grid MouseLeftButtonDown="MoveWindow"
           Margin="7, 7, 7, 7">
         <Grid.RenderTransform>

@@ -10,7 +10,8 @@
         WindowStyle="None"
         Background="Transparent"
         WindowStartupLocation="CenterScreen"
-        Title="InputError" 
+        Title="InputError"
+        Topmost="True"
         Height="170" 
         Width="420">
     <Grid MouseLeftButtonDown="MoveWindow"

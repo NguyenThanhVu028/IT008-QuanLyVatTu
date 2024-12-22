@@ -12,7 +12,8 @@
         WindowStyle="None"
         Background="Transparent"
         WindowStartupLocation="CenterScreen"
-        Name="ThisWin">
+        Name="ThisWin"
+        Topmost="True">
     <Grid MouseLeftButtonDown="MoveWindow"
           Margin="7, 7, 7, 7">
         <Grid.RenderTransform>
