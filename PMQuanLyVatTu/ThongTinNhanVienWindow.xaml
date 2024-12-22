@@ -304,7 +304,7 @@
             <Border Grid.Row="1"
                     HorizontalAlignment="Stretch"
                     VerticalAlignment="Stretch"
-                    Margin="20,440,20,100"
+                    Margin="20,440,20,80"
                     Background="White"
                     CornerRadius="20"
                     Grid.ColumnSpan="2">
@@ -403,7 +403,7 @@
             <Border Grid.Row="1"
                     HorizontalAlignment="Stretch"
                     VerticalAlignment="Stretch"
-                    Margin="20,440,20,100"
+                    Margin="20,440,20,80"
                     Background="#36000000"
                     CornerRadius="20"
                     Grid.ColumnSpan="2"

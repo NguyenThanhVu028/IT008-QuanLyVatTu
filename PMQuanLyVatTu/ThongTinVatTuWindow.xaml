@@ -236,7 +236,7 @@
                        Foreground="{StaticResource DarkGreen2}"
                        HorizontalAlignment="Right"
                        VerticalAlignment="Bottom" 
-                       Margin="0,340,345,280"
+                       Margin="0,0,345,280"
                        FontSize="20"
                        FontFamily="/Material/Fonts/Lexend/#Lexend Medium"
                        FontWeight="Medium"/>
@@ -295,7 +295,7 @@
                                          BorderColorClicked="{StaticResource LightAqua2}"
                                          BorderThick="2"
                                          RadiusOfCorner="5" 
-                                         Margin="260,450,0,155" Grid.Column="1"
+                                         Margin="260,0,0,155" Grid.Column="1"
                                          IsEnabled="{Binding EnableEditing}"/>
             <TextBlock Grid.Row="1" 
                        Text="Số lượng tồn kho"
@@ -317,7 +317,7 @@
                                          BorderColorClicked="{StaticResource LightAqua2}"
                                          BorderThick="2"
                                          RadiusOfCorner="5" 
-                                         Margin="0,450,50,155"
+                                         Margin="0,0,50,155"
                                          IsEnabled="{Binding EnableEditing}"/>
             <TextBlock Grid.Row="1"
                        HorizontalAlignment="Stretch"
