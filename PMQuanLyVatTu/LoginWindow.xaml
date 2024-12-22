@@ -14,7 +14,8 @@
         AllowsTransparency="True"
         WindowStartupLocation="CenterScreen"
         x:Name="LoginWin">
-    <Grid x:Name="LoginWindowGrid">
+    <Grid x:Name="LoginWindowGrid"
+          Margin="7">
         <Border CornerRadius="10"
                 BorderThickness="1"
                 BorderBrush="{StaticResource DarkGreen2}">
