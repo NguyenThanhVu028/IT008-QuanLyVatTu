@@ -98,7 +98,7 @@
                         VerticalAlignment="Stretch"
                         Margin="0, 0, 0, 0"
                         BorderThickness="2"
-                        CornerRadius="25" Background="#FFC8E2E2">
+                        CornerRadius="25" Background="#FFC1EDED">
                     <Grid>
                         <Grid x:Name="TongQuanDisplayArea"
                               Margin="10, 10, 10, 10"
