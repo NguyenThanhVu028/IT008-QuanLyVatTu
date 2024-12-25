@@ -320,7 +320,7 @@ namespace PMQuanLyVatTu.ViewModel
                     {
                         pn.MaNv = MaNV;
                         pn.MaNcc = MaNCC;
-                        try { pn.NgayLap = DateTime.ParseExact(NgayLap, "ddd/dd/MM/yyyy", CultureInfo.InvariantCulture); }
+                        try { pn.NgayLap = DateTime.ParseExact(NgayLap, "ddd/dd/MM/yyyy", CultureInfo.CurrentCulture); }
                         catch { pn.NgayLap = default; }
                         pn.KhoNhap = KhoNhap;
                         pn.LyDoNhap = LyDoNhap;
@@ -346,7 +346,7 @@ namespace PMQuanLyVatTu.ViewModel
                     newNote.MaPn = MaPN;
                     newNote.MaNv = MaNV;
                     newNote.MaNcc = MaNCC;
-                    try { newNote.NgayLap = DateTime.ParseExact(NgayLap, "ddd/dd/MM/yyyy", CultureInfo.InvariantCulture); }
+                    try { newNote.NgayLap = DateTime.ParseExact(NgayLap, "ddd/dd/MM/yyyy", CultureInfo.CurrentCulture); }
                     catch { newNote.NgayLap = default; }
                     newNote.KhoNhap = KhoNhap;
                     newNote.LyDoNhap = LyDoNhap;

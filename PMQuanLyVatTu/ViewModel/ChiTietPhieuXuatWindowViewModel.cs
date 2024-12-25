@@ -319,7 +319,7 @@ namespace PMQuanLyVatTu.ViewModel
                         PhieuXuat.MaNv = MaNV;
                         PhieuXuat.MaKh = MaKH;
                         PhieuXuat.KhoXuat = KhoXuat;
-                        try { PhieuXuat.NgayLap = DateTime.ParseExact(NgayLap, "ddd/dd/MM/yyyy", CultureInfo.InvariantCulture); }
+                        try { PhieuXuat.NgayLap = DateTime.ParseExact(NgayLap, "ddd/dd/MM/yyyy", CultureInfo.CurrentCulture); }
                         catch { PhieuXuat.NgayLap = default; }
                         PhieuXuat.LyDoXuat = LyDoXuat;
                         PhieuXuat.ChietKhau = ChietKhau;
@@ -345,7 +345,7 @@ namespace PMQuanLyVatTu.ViewModel
                     px.MaNv = MaNV;
                     px.MaKh = MaKH;
                     px.KhoXuat = KhoXuat;
-                    try { px.NgayLap = DateTime.ParseExact(NgayLap, "ddd/dd/MM/yyyy", CultureInfo.InvariantCulture); }
+                    try { px.NgayLap = DateTime.ParseExact(NgayLap, "ddd/dd/MM/yyyy", CultureInfo.CurrentCulture); }
                     catch { px.NgayLap = default; }
                     px.LyDoXuat = LyDoXuat;
                     px.ChietKhau = ChietKhau;
