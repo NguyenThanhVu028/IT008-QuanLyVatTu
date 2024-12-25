@@ -16,6 +16,7 @@
         Background="Transparent"
         WindowStartupLocation="CenterScreen"
         DataContext="{StaticResource MainVM}"
+        Topmost="false"
         Name="MainWin">
     <i:Interaction.Triggers>
         <i:EventTrigger EventName="Loaded">
