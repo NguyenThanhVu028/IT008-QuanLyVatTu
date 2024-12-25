@@ -245,7 +245,7 @@ namespace PMQuanLyVatTu.ViewModel
                 {
                     PhieuNhap.MaNv = MaNV;
                     PhieuNhap.MaNcc = MaNCC;
-                    try{ PhieuNhap.NgayLap = DateTime.ParseExact(NgayLap, "ddd/dd/MM/yyyy", CultureInfo.InvariantCulture); }
+                    try{ PhieuNhap.NgayLap = DateTime.ParseExact(NgayLap, "ddd/dd/MM/yyyy", CultureInfo.CurrentCulture); }
                     catch{ PhieuNhap.NgayLap = default; }
                     PhieuNhap.KhoNhap = KhoNhap;
                     PhieuNhap.LyDoNhap = LyDoNhap;

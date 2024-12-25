@@ -60,7 +60,7 @@
                     <DataGridTextColumn Header="Ngày lập yêu cầu"
                                         Width="200"
                                         IsReadOnly="True"
-                                        Binding="{Binding NgayLap, Mode=OneWay, StringFormat=d}"/>
+                                        Binding="{Binding NgayLap, Mode=OneWay, Converter={StaticResource DateTimeConverter}}"/>
                     <DataGridTextColumn Header="Kho xuất"
                                         Width="150"
                                         IsReadOnly="True"
