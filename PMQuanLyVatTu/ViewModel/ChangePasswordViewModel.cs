@@ -48,7 +48,6 @@ namespace PMQuanLyVatTu.ViewModel
         {
             bool level1, level2, level3, level4;
             Excute(out level1, out level2, out level3, out level4);
-
             // Chưa nhập dữ liệu
             if (level1)
             {
@@ -93,8 +92,6 @@ namespace PMQuanLyVatTu.ViewModel
                     t.Close();
                 }
                 // Lưu xuống database
-
-                
             }
             
         }
@@ -133,44 +130,7 @@ namespace PMQuanLyVatTu.ViewModel
             {
                 lv4 = true; 
             }
-            //string manv = CurrentUser.Instance.MaNv;
-            //var account = DataProvider.Instance.DB.Accounts.Find(manv);
-            //account.MatKhau = MkMoi;
         }
-
-        //void Confirm(object t)
-        //{
-        //    bool flag = false;
-        //    if (_mkCu != "" && _mkMoi != "" && _mkMoiAgain != "")
-        //    {
-        //        flag = false
-        //    }
-        //    //Chưa nhập dữ liệu
-        //    if (false)
-        //    {
-        //        InputError msg = new InputError();
-        //        msg.ShowDialog();
-        //    }
-        //    //Sai mật khẩu cũ
-        //    else if (false)
-        //    {
-        //        CustomMessage msg = new CustomMessage("/Material/Images/Icons/wrong.png", "LỖI", "Mật khẩu cũ nhập vào không chính xác. Vui lòng nhập lại.");
-        //        msg.ShowDialog();
-        //    }
-        //    //Mật khẩu mới trùng với mật khẩu cũ
-        //    else if (false)
-        //    {
-        //        CustomMessage msg = new CustomMessage("/Material/Images/Icons/wrong.png", "LỖI", "Mật khẩu mới phải khác với mật khẩu cũ. Vui lòng nhập lại.");
-        //        msg.ShowDialog();
-        //    }
-        //    //Hợp lệ
-        //    else
-        //    {
-        //        //Lưu xuống database
-        //        CustomMessage msg = new CustomMessage("/Material/Images/Icons/success.png", "THÀNH CÔNG", "Đổi mật khẩu thành công.");
-        //        msg.ShowDialog();
-        //    }
-        //}
         public ICommand CancelCommand { get; set; }
         void CloseWindow(Window uc)
         {

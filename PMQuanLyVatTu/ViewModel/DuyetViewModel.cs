@@ -204,8 +204,6 @@ namespace PMQuanLyVatTu.ViewModel
                     }
                 }
             }
-            //Nếu User đang là "Quản Lý", Nếu SelectedPhieuNhap.TrangThai == "Kế toán đã duyệt" thì mới được duyệt, không thì showdialog "Chờ kế toán xác nhận"
-            //Nếu User đang là "Kế Toán" => Duyệt qua danh sách phiếu nhập, nếu MaPn == MaPn => Cập nhật trạng thái = "Kế toán đã duyệt", cập nhật tồn kho theo Infos của phiếu nhập
             DataProvider.Instance.DB.SaveChanges();
             Refresh();
         }
@@ -310,9 +308,6 @@ namespace PMQuanLyVatTu.ViewModel
                 PN.TrangThai = "Bị từ chối";
                 DataProvider.Instance.DB.SaveChanges();
             }
-            //Nếu User là "Kế Toán" => Cập nhật trạng thái
-            //Nếu User là "Quản Lý" => Duyệt qua Infos Phiếu Nhập, cộng lại sản phẩm trong phiếu nhập vào kho, cập nhật trạng thái
-            //DataProvider.Instance.DB.SaveChanges();
             Refresh();
         }
         public ICommand TuChoiPXCommand {  get; set; }
@@ -349,8 +344,6 @@ namespace PMQuanLyVatTu.ViewModel
                 PX.TrangThai = "Bị từ chối";
                 DataProvider.Instance.DB.SaveChanges();
             }
-            //Nếu User là "Kế Toán" => Cập nhật trạng thái
-            //Nếu User là "Quản Lý" => Duyệt qua Infos Phiếu Xuất, cộng lại sản phẩm trong phiếu xuất vào kho, cập nhật trạng thái
             Refresh();
         }
         #endregion

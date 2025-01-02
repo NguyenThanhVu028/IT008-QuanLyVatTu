@@ -191,7 +191,6 @@ namespace PMQuanLyVatTu.ViewModel
         public CurrentUser User
         {
             get { return user; }
-            //private set { user = value; OnPropertyChanged(); }
         }
         private string _maNV;
         public string MaNV

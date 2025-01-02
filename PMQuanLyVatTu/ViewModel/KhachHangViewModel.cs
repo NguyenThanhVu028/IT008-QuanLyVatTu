@@ -25,7 +25,6 @@ namespace PMQuanLyVatTu.ViewModel
             RefreshCommand = new RelayCommand<object>(Refresh);
             DeleteButtonCommand = new RelayCommand<object>(DeleteButton);
             EditButtonCommand = new RelayCommand<object>(EditButton);
-            //DeleteSelectedCommand = new RelayCommand<object>(DeleteSelected);
             Refresh();
         }
         #region Info

@@ -123,9 +123,6 @@ namespace PMQuanLyVatTu.ViewModel
                     }
                 }
             }
-            //DanhSachKho.Add(new Warehouse() { MaKho = "KHO0001", LoaiVatTu = "TB", DiaChi = "123 Phạm Trung Đông, Đại lộ Hà Nam Ninh" });
-            //DanhSachKho.Add(new Warehouse() { MaKho = "KHO0002", LoaiVatTu = "VL", DiaChi = "123 Phạm Trung Đông, Đại lộ Hà Nam Ninh" });
-            //DanhSachKho.Add(new Warehouse() { MaKho = "KHO0003", LoaiVatTu = "CC", DiaChi = "123 Phạm Trung Đông, Đại lộ Hà Nam Ninh" });
         }
         public ICommand EditButtonCommand { get; set; }
         void EditButton(object t)
@@ -161,34 +158,6 @@ namespace PMQuanLyVatTu.ViewModel
             }
             Refresh();
         }
-        //public ICommand DeleteSelectedCommand { get; set; }
-        //void DeleteSelected(object t)
-        //{
-        //    int Count = 0;
-        //    CustomMessage msg = new CustomMessage("/Material/Images/Icons/question.png", "THÔNG BÁO", "Bạn có muốn xóa mục đã chọn?");
-        //    msg.ShowDialog();
-        //    if (msg.ReturnValue == true)
-        //    {
-        //        foreach (Warehouse i in DanhSachKho)
-        //        {
-        //            if (i.Checked == true)
-        //            {
-        //                //Xóa
-        //                Count++;
-        //            }
-        //        }
-        //        CustomMessage msg2 = new CustomMessage("/Material/Images/Icons/success.png", "THÀNH CÔNG", "Đã xóa thành công " + Count.ToString() + " mục.");
-        //        msg2.ShowDialog();
-        //        Refresh();
-        //    }
-        //}
         #endregion
-        //public class Warehouse
-        //{
-        //    public bool Checked { get; set; }
-        //    public string MaKho { get; set; }
-        //    public string LoaiVatTu {  get; set; }
-        //    public string DiaChi {  get; set; }
-        //}
     }
 }

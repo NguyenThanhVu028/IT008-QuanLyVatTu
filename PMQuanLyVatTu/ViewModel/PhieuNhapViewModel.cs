@@ -20,7 +20,6 @@ namespace PMQuanLyVatTu.ViewModel
             RefreshCommand = new RelayCommand<object>(Refresh);
             EditButtonCommand = new RelayCommand<object>(EditButton);
             DeleteButtonCommand = new RelayCommand<object>(DeleteButton);
-            //DeleteSelectedCommand = new RelayCommand<object>(DeleteSelected);
             Refresh();
         }
         #region User
@@ -160,19 +159,5 @@ namespace PMQuanLyVatTu.ViewModel
             Refresh();
         }
         #endregion
-        //public class GoodsReceivedNote
-        //{
-        //    public bool Checked { get; set; }
-        //    public string MaPN { get; set; }
-        //    public string MaNV {  get; set; }
-        //    public string MaNCC { get; set; }
-        //    public string NgayLap {  get; set; }
-        //    public string KhoNhap {  get; set; }
-        //    public string LyDoNhap {  get; set; }
-        //    public double ChietSuat {  get; set; }
-        //    public double VAT {  get; set; }
-        //    public int TongGia { get; set; }
-        //    public string TrangThai {  get; set; }
-        //}
     }
 }

@@ -130,9 +130,6 @@ namespace PMQuanLyVatTu.ViewModel
                         break;
                 }
             }
-            //DanhSachYeuCauNhap.Add(new ImportRequest() { Checked = true, MaYCN = "YCN0001", MaNV = "NV0012", MaVT = "VT0008", SoLuong = 15, NgayLap = "Friday/03/12/2024", GhiChu = "Nhập hàng trong tuần này.", TrangThai = "Đã tiếp nhận" });
-            //DanhSachYeuCauNhap.Add(new ImportRequest() { Checked = true, MaYCN = "YCN0002", MaNV = "NV0010", MaVT = "VT0002", SoLuong = 30, NgayLap = "Friday/03/12/2024", GhiChu = "Nhập hàng trong tuần này.", TrangThai = "Chờ tiếp nhận" });
-            //DanhSachYeuCauNhap.Add(new ImportRequest() { Checked = true, MaYCN = "YCN0003", MaNV = "NV0005", MaVT = "VT0001", SoLuong = 15, NgayLap = "Friday/03/12/2024", GhiChu = "Nhập hàng trong tuần này.", TrangThai = "Đã bị từ chối" });
         }
         public ICommand EditButtonCommand { get; set; }
         void EditButton(object t)
@@ -166,27 +163,6 @@ namespace PMQuanLyVatTu.ViewModel
             }
             Refresh();
         }
-        //public ICommand DeleteSelectedCommand { get; set; }
-        //void DeleteSelected(object t)
-        //{
-        //    int Count = 0;
-        //    CustomMessage msg = new CustomMessage("/Material/Images/Icons/question.png", "THÔNG BÁO", "Bạn có muốn xóa mục đã chọn?");
-        //    msg.ShowDialog();
-        //    if (msg.ReturnValue == true)
-        //    {
-        //        foreach (ImportRequest i in DanhSachYeuCauNhap)
-        //        {
-        //            if (i.Checked == true)
-        //            {
-        //                //Xóa
-        //                Count++;
-        //            }
-        //        }
-        //        CustomMessage msg2 = new CustomMessage("/Material/Images/Icons/success.png", "THÀNH CÔNG", "Đã xóa thành công " + Count.ToString() + " mục.");
-        //        msg2.ShowDialog();
-        //        Refresh();
-        //    }
-        //}
         public ICommand DaTiepNhanCommand { get; set; }
         void DaTiepNhan(object t)
         {

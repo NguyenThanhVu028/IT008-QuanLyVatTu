@@ -236,7 +236,7 @@ namespace PMQuanLyVatTu.ViewModel
             CustomMessage msg = new CustomMessage("/Material/Images/Icons/question.png", "THÔNG BÁO", "Bạn có xác nhận lưu?", true);
             msg.ShowDialog();
             if (msg.ReturnValue == false) return;
-            if (EditMode == true) //Nếu đang chế độ chỉnh sửa
+            if (EditMode == true)
             {
                 EnableEditing = false;
                 var PhieuXuat = DataProvider.Instance.DB.GoodsDeliveryNotes.Find(MaPX);
@@ -273,9 +273,9 @@ namespace PMQuanLyVatTu.ViewModel
                 }
 
             }
-            else //Nếu trong chế độ thêm 
+            else 
             {
-                if (MaPX.IsNullOrEmpty()) //Chưa nhập mã 
+                if (MaPX.IsNullOrEmpty()) 
                 {
                     CustomMessage msg1 = new CustomMessage("/Material/Images/Icons/wrong.png", "LỖI", "Vui lòng nhập mã phiếu xuất hàng.", false);
                     msg1.ShowDialog();
@@ -306,7 +306,7 @@ namespace PMQuanLyVatTu.ViewModel
                     return;
                 }
                 var PhieuXuat = DataProvider.Instance.DB.GoodsDeliveryNotes.Find(MaPX);
-                if (PhieuXuat != null) //Trùng mã 
+                if (PhieuXuat != null) 
                 {
                     if(PhieuXuat.DaXoa == false)
                     {

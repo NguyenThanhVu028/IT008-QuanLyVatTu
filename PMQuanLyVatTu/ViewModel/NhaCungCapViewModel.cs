@@ -22,7 +22,6 @@ namespace PMQuanLyVatTu.ViewModel
             RefreshCommand = new RelayCommand<object>(Refresh);
             EditButtonCommand = new RelayCommand<object>(EditButton);
             DeleteButtonCommand = new RelayCommand<object>(DeleteButton);
-            //DeleteSelectedCommand = new RelayCommand<object>(DeleteSelected);
             Refresh();
         }
         #region Info
@@ -190,14 +189,5 @@ namespace PMQuanLyVatTu.ViewModel
         //    }
         //}
         #endregion
-        //public class Supplier
-        //{
-        //    public bool Checked { get; set; }
-        //    public string MaNCC {  get; set; }
-        //    public string TenNCC {  get; set; }
-        //    public string SDT {  get; set; }
-        //    public string Email {  get; set; }
-        //    public string DiaChi { get; set; }
-        //}
     }
 }

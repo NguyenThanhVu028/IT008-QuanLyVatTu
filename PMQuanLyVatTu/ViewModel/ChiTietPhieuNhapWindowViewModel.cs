@@ -211,7 +211,7 @@ namespace PMQuanLyVatTu.ViewModel
             CustomMessage msg = new CustomMessage("/Material/Images/Icons/question.png", "THÔNG BÁO", "Bạn có muốn xóa phiếu nhập đã chọn?", true);
             msg.ShowDialog();
             if (msg.ReturnValue == true)
-            { //Chấp nhận xóa
+            {
                 EnableEditing = false;
                 var PhieuNhap = DataProvider.Instance.DB.GoodsReceivedNotes.Find(MaPN);
                 if (PhieuNhap == null)
@@ -237,7 +237,7 @@ namespace PMQuanLyVatTu.ViewModel
             CustomMessage msg = new CustomMessage("/Material/Images/Icons/question.png", "THÔNG BÁO", "Bạn có xác nhận lưu?", true);
             msg.ShowDialog();
             if (msg.ReturnValue == false) return;
-            if (EditMode == true) //Nếu đang chế độ chỉnh sửa
+            if (EditMode == true) 
             {
                 EnableEditing = false;
                 var PhieuNhap = DataProvider.Instance.DB.GoodsReceivedNotes.Find(MaPN);
@@ -275,9 +275,9 @@ namespace PMQuanLyVatTu.ViewModel
                 }
                 
             }
-            else //Nếu trong chế độ thêm 
+            else 
             {
-                if (MaPN.IsNullOrEmpty()) //Chưa nhập mã 
+                if (MaPN.IsNullOrEmpty()) 
                 {
                     CustomMessage msg1 = new CustomMessage("/Material/Images/Icons/wrong.png", "LỖI", "Vui lòng nhập mã phiếu nhập hàng.", false);
                     msg1.ShowDialog();
@@ -308,7 +308,7 @@ namespace PMQuanLyVatTu.ViewModel
                     return;
                 }
                 var pn = DataProvider.Instance.DB.GoodsReceivedNotes.Find(MaPN);
-                if (pn != null) //Trùng mã 
+                if (pn != null) 
                 {
                     if(pn.DaXoa == false)
                     {
@@ -505,7 +505,6 @@ namespace PMQuanLyVatTu.ViewModel
             {
                 NhaCungCap.Add(item.MaNcc);
             }
-           //NhaCungCap = new ObservableCollection<string>(NhaCungCap.Distinct().ToList().OrderBy(q=>q));
         }
         void LoadKho()
         {
@@ -583,10 +582,6 @@ namespace PMQuanLyVatTu.ViewModel
                     VAT += (int)((supply.GiaNhap??0) * i.SoLuong * i.VAT);
                     TongGia += (int)((supply.GiaNhap??0) * i.SoLuong);
                 }
-                //Lấy giá nhập của vật tư i
-                //ChietSuat += GiaNhap(i) * SoLuong * ChietSuat
-                //VAT += GiaNHap(i) * SoLuong * VAT
-                //TongGia += GiaNhap(i) * SoLuong
             }
             TongGia = TongGia - ChietKhau + VAT;
         }
