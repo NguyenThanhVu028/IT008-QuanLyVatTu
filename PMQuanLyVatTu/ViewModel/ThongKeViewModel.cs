@@ -608,7 +608,7 @@ namespace PMQuanLyVatTu.ViewModel
                         var note = DataProvider.Instance.DB.GoodsDeliveryNotes.Find(info.MaPx);
                         if (note != null)
                         {
-                            if (note.DaXoa == false && note.TrangThai == "Đã duyệt" && ((DateTime)(note.NgayLap ?? DateTime.Now)).Year == 2024) SL += info.SoLuong ?? 0;
+                            if (note.DaXoa == false && note.TrangThai == "Đã duyệt" && ((DateTime)(note.NgayLap ?? DateTime.Now)).Year == DateTime.Now.Year) SL += info.SoLuong ?? 0;
                         }
                     }
                     if (SL * supply.GiaXuat > BestGia)
@@ -622,10 +622,10 @@ namespace PMQuanLyVatTu.ViewModel
         {
             DoanhThuNamNay = 0;
             TienNhapHang = 0;
-            var ListPNFromDB = DataProvider.Instance.DB.GoodsReceivedNotes.Where(p => p.DaXoa == false && p.TrangThai == "Đã duyệt" && ((DateTime)(p.NgayLap ?? default)).Year == 2024).ToList();
+            var ListPNFromDB = DataProvider.Instance.DB.GoodsReceivedNotes.Where(p => p.DaXoa == false && p.TrangThai == "Đã duyệt" && ((DateTime)(p.NgayLap ?? default)).Year == DateTime.Now.Year).ToList();
             foreach(var info in ListPNFromDB) { TienNhapHang += info.TongGia ?? 0; }
             TienXuatHang = 0;
-            var ListPXFromDB = DataProvider.Instance.DB.GoodsDeliveryNotes.Where(p => p.DaXoa == false && p.TrangThai == "Đã duyệt" && ((DateTime)(p.NgayLap ?? DateTime.Now)).Year == 2024).ToList();
+            var ListPXFromDB = DataProvider.Instance.DB.GoodsDeliveryNotes.Where(p => p.DaXoa == false && p.TrangThai == "Đã duyệt" && ((DateTime)(p.NgayLap ?? DateTime.Now)).Year == DateTime.Now.Year).ToList();
             foreach (var info in ListPXFromDB) { TienXuatHang += info.TongGia ?? 0; }
             DoanhThuNamNay = TienXuatHang - TienNhapHang;
         }
