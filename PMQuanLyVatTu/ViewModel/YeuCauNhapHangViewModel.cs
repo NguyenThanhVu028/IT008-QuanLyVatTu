@@ -190,7 +190,7 @@ namespace PMQuanLyVatTu.ViewModel
         public ICommand DaTiepNhanCommand { get; set; }
         void DaTiepNhan(object t)
         {
-            var YCN = DataProvider.Instance.DB.ImportRequests.Find(SelectedYeuCauNhap);
+            var YCN = DataProvider.Instance.DB.ImportRequests.Find(SelectedYeuCauNhap.MaYcn);
 
             if (YCN != null)
             {
@@ -202,11 +202,12 @@ namespace PMQuanLyVatTu.ViewModel
                 var msg = new CustomMessage("/Material/Images/Icons/wrong.png", "LỖI", "Không tìm thấy yêu cầu nhập!", false);
                 msg.ShowDialog();
             }
+            Refresh();
         }
         public ICommand TuChoiCommand { get; set; }
         void TuChoi(object t)
         {
-            var YCN = DataProvider.Instance.DB.ImportRequests.Find(SelectedYeuCauNhap);
+            var YCN = DataProvider.Instance.DB.ImportRequests.Find(SelectedYeuCauNhap.MaYcn);
 
             if (YCN != null)
             {
@@ -216,7 +217,9 @@ namespace PMQuanLyVatTu.ViewModel
             else
             {
                 var msg = new CustomMessage("/Material/Images/Icons/wrong.png", "LỖI", "Không tìm thấy yêu cầu nhập!", false);
+                msg.ShowDialog();
             }
+            Refresh();
         }
         #endregion
     }

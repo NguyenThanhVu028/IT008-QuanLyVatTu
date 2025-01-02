@@ -239,7 +239,7 @@ namespace PMQuanLyVatTu.ViewModel
         public ICommand DaTiepNhanCommand { get; set; }
         void DaTiepNhan(object t)
         {
-            var YCX = DataProvider.Instance.DB.ImportRequests.Find(SelectedYeuCauXuat);
+            var YCX = DataProvider.Instance.DB.ExportRequests.Find(SelectedYeuCauXuat.MaYcx);
 
             if (YCX != null)
             {
@@ -249,12 +249,14 @@ namespace PMQuanLyVatTu.ViewModel
             else
             {
                 var msg = new CustomMessage("/Material/Images/Icons/wrong.png", "LỖI", "Không tìm thấy yêu cầu xuất!", false);
+                msg.ShowDialog();
             }
+            Refresh();
         }
         public ICommand TuChoiCommand { get; set; }
         void TuChoi(object t)
         {
-            var YCX = DataProvider.Instance.DB.ImportRequests.Find(SelectedYeuCauXuat);
+            var YCX = DataProvider.Instance.DB.ExportRequests.Find(SelectedYeuCauXuat.MaYcx);
 
             if (YCX != null)
             {
@@ -264,7 +266,9 @@ namespace PMQuanLyVatTu.ViewModel
             else
             {
                 var msg = new CustomMessage("/Material/Images/Icons/wrong.png", "LỖI", "Không tìm thấy yêu cầu xuất!", false);
+                msg.ShowDialog();
             }
+            Refresh();
         }
         #endregion
     }
