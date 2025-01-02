@@ -126,14 +126,6 @@
                        FontSize="20"
                        FontFamily="/Material/Fonts/Lexend/#Lexend Medium"
                        FontWeight="Medium" Grid.Column="1"/>
-            <CustomControl:SelectionList Grid.Row="1"
-                                         Height="122"
-                                         Width="250"
-                                         VerticalAlignment="Top"
-                                         HorizontalAlignment="Left"
-                                         Margin="610, 120, 0, 0"
-                                         DataList="{Binding LoaiVatTu}"
-                                         SelectedValue="{Binding LoaiVT, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
             <TextBlock Grid.Row="1" 
                        Text="Mã vật tư"
                        Foreground="{StaticResource DarkGreen2}"
@@ -254,6 +246,14 @@
                                          Margin="610, 200, 0, 0"
                                          DataList="{Binding KhoChua}"
                                          SelectedValue="{Binding MaKho, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+            <CustomControl:SelectionList Grid.Row="1"
+                                         Height="122"
+                                         Width="250"
+                                         VerticalAlignment="Top"
+                                         HorizontalAlignment="Left"
+                                         Margin="610, 120, 0, 0"
+                                         DataList="{Binding LoaiVatTu}"
+                                         SelectedValue="{Binding LoaiVT, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
             <TextBlock Grid.Row="1" 
                        Text="Giá nhập"
                        Foreground="{StaticResource DarkGreen2}"

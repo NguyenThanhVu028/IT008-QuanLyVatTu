@@ -57,7 +57,7 @@ namespace PMQuanLyVatTu.ViewModel
         private string _maNV = CurrentUser.Instance.MaNv;
         private string _maKH = "";
         public string _maKho = "";
-        private string _ngayLap = DateTime.Now.ToString("dd/ddd/MM/yyyy");
+        private string _ngayLap = DateTime.Now.ToString("ddd/dd/MM/yyyy");
         private string _ghiChu = "";
         public string MaYCX
         {

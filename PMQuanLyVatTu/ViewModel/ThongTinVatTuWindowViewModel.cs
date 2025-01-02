@@ -134,7 +134,7 @@ namespace PMQuanLyVatTu.ViewModel
             get { return _nhaCungCap; }
             set { _nhaCungCap = value; OnPropertyChanged(); }
         }
-        ObservableCollection<string> _loaiVatTu = new ObservableCollection<string>() { "NVL", "CC", "TB" };
+        ObservableCollection<string> _loaiVatTu = new ObservableCollection<string>() { "Nguyên Vật Liệu", "Công Cụ", "Thiết Bị" };
         public ObservableCollection<string> LoaiVatTu
         {
             get { return _loaiVatTu; }
@@ -295,41 +295,6 @@ namespace PMQuanLyVatTu.ViewModel
                 (t as Window).Close();
             }
         }
-        //private bool CompareAndExecute()
-        //{
-        //    var VT = DataProvider.Instance.DB.Supplies.Find(MaVT);
-        //    if (VT == null)
-        //    {
-        //       return false;
-        //    }
-        //    else
-        //    {
-        //        if(VT.DaXoa == true)
-        //        {
-        //            DataProvider.Instance.DB.Supplies.Remove(VT);
-        //            var newVT = new Supply();
-        //            newVT.MaVt = MaVT;
-        //            newVT.DaXoa = false;
-        //            newVT.LoaiVatTu = LoaiVT;
-        //            newVT.MaNcc = MaNCC;
-        //            newVT.MaKho = MaKho;
-        //            newVT.TenVatTu = TenVatTu;
-        //            newVT.DonViTinh = DonViTinh;
-        //            newVT.GiaNhap = GiaNhap;
-        //            newVT.GiaXuat = GiaXuat;
-        //            newVT.SoLuongTonKho = SoLuongTonKho;
-        //            DataProvider.Instance.DB.Supplies.Add(newVT);
-        //            DataProvider.Instance.DB.SaveChanges();
-        //            return false;
-        //        }
-
-        //    }
-        //    return true;
-        //}
-        //private void Execute()
-        //{
-
-        //}
         public ICommand ChangeAvatarCommand { get; set; }
         void ChangeAvatar(object t)
         {
@@ -349,27 +314,27 @@ namespace PMQuanLyVatTu.ViewModel
             var VT = DataProvider.Instance.DB.Supplies.Find(mavt);
             if (VT != null)
             {
-                TenVatTu = VT.TenVatTu;
-                LoaiVT =VT.LoaiVatTu;
-                DonViTinh = VT.DonViTinh;
-                MaNCC = VT.MaNcc;
-                MaKho =VT.MaKho;
-                GiaNhap = (int)VT.GiaNhap;
-                GiaXuat = (int)VT.GiaXuat;
-                SoLuongTonKho = (int)VT.SoLuongTonKho;
-                ImageLocation = VT.ImageLocation;
+                TenVatTu = VT.TenVatTu??"";
+                LoaiVT = (VT.LoaiVatTu??""); 
+                DonViTinh = VT.DonViTinh ?? "";
+                MaNCC = VT.MaNcc ?? "";
+                MaKho =VT.MaKho ?? "";
+                GiaNhap = (int)(VT.GiaNhap ?? 0);
+                GiaXuat = (int)(VT.GiaXuat ?? 0);
+                SoLuongTonKho = (int)(VT.SoLuongTonKho ?? 0);
+                ImageLocation = VT.ImageLocation ?? "";
             }
             else
             {
-                TenVatTu = null;
-                LoaiVT = null;
-                DonViTinh = null;
-                MaNCC = null;
-                MaKho = null;
+                TenVatTu = "";
+                LoaiVT = "";
+                DonViTinh = "";
+                MaNCC = "";
+                MaKho = "";
                 GiaNhap = 0;
                 GiaXuat = 0;
                 SoLuongTonKho = 0;
-                ImageLocation = null;
+                ImageLocation = "";
             }
 
         }
