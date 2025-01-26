@@ -1,3 +1,6 @@
+# Lưu ý:
+- Tên đăng nhập và mật khẩu của từng loại nhân viên:
+- (admin - admin), (kt - kt), (nx - nx), (tn - tn)
 # ĐỒ ÁN PHẦN MỀM QUẢN LÝ VẬT TƯ
 ## Thông tin chung:
 - Đây là đồ án môn học **IT008-Lập trình trực quan** - môn cơ sở ngành của **trường Đại học Công nghệ thông tin - ĐHQG TP.HCM**.
