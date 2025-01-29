@@ -8,6 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using System.Windows.Interop;
 
 namespace PMQuanLyVatTu.ViewModel
 {
@@ -127,6 +128,19 @@ namespace PMQuanLyVatTu.ViewModel
         public ICommand EditButtonCommand { get; set; }
         void EditButton(object t)
         {
+            if (SelectedPhieuNhap.TrangThai == "Kế toán đã duyệt" || SelectedPhieuNhap.TrangThai == "Đã duyệt")
+            {
+                CustomMessage msg3 = new CustomMessage("/Material/Images/Icons/wrong.png", "LỖI", "Vui lòng không chỉnh sửa phiếu đã được duyệt!", false);
+                msg3.ShowDialog();
+                return;
+            }
+            if (SelectedPhieuNhap.TrangThai == "Bị từ chối")
+            {
+                CustomMessage msg3 = new CustomMessage("/Material/Images/Icons/wrong.png", "LỖI", "Vui lòng không chỉnh sửa phiếu đã bị từ chối!", false);
+                msg3.ShowDialog();
+                return;
+            }
+
             ChiTietPhieuNhapWindow AddWin = new ChiTietPhieuNhapWindow();
             ChiTietPhieuNhapWindowViewModel VM = new ChiTietPhieuNhapWindowViewModel(SelectedPhieuNhap.MaPn);
             AddWin.DataContext = VM;

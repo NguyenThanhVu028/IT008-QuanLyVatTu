@@ -133,6 +133,19 @@ namespace PMQuanLyVatTu.ViewModel
         public ICommand EditButtonCommand {  get; set; }
         void EditButton(object t)
         {
+            if (SelectedPhieuXuat.TrangThai == "Kế toán đã duyệt" || SelectedPhieuXuat.TrangThai == "Đã duyệt")
+            {
+                CustomMessage msg3 = new CustomMessage("/Material/Images/Icons/wrong.png", "LỖI", "Vui lòng không chỉnh sửa phiếu đã được duyệt!", false);
+                msg3.ShowDialog();
+                return;
+            }
+            if (SelectedPhieuXuat.TrangThai == "Bị từ chối")
+            {
+                CustomMessage msg3 = new CustomMessage("/Material/Images/Icons/wrong.png", "LỖI", "Vui lòng không chỉnh sửa phiếu đã bị từ chối!", false);
+                msg3.ShowDialog();
+                return;
+            }
+
             ChiTietPhieuXuatWindow AddWin = new ChiTietPhieuXuatWindow();
             ChiTietPhieuXuatWindowViewModel VM = new ChiTietPhieuXuatWindowViewModel(SelectedPhieuXuat.MaPx);
             AddWin.DataContext = VM;

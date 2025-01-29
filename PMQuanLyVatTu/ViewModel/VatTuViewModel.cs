@@ -99,25 +99,6 @@ namespace PMQuanLyVatTu.ViewModel
             Refresh();
         }
         public ICommand RefreshCommand { get; set; }
-        //void Refresh(object t=null)
-        //{
-        //    //Đổ dữ liệu, bao gồm DanhSachVatTu (danh sách chi tiết) và DanhSachVatTuLargeIcon (danh sách thu gọn, dùng ds tạm temp)
-        //    DanhSachVatTu.Clear();
-
-        //    DanhSachVatTu.Add(new Supply() { MaVT = "VT0001", TenVatTu = "Gạch 529", LoaiVatTu = "NVL", DonViTinh = "Viên", MaNCC = "NCC0002", MaKho = "KHO0001", GiaNhap = 9500, GiaXuat = 11000, SoLuongTonKho = 123, ImageLocation = "/Material/Images/Supplies/brick.jpg" });
-        //    DanhSachVatTu.Add(new Supply() { MaVT = "VT0002", TenVatTu = "Búa", LoaiVatTu = "CC", DonViTinh = "Chiếc", MaNCC = "NCC0002", MaKho = "KHO0001", GiaNhap = 9500, GiaXuat = 11000, SoLuongTonKho = 123, ImageLocation = "/Material/Images/Supplies/hammer.jpg" });
-        //    DanhSachVatTu.Add(new Supply() { MaVT = "VT0003", TenVatTu = "Máy khoan Mĩ Kim", LoaiVatTu = "TB", DonViTinh = "Máy", MaNCC = "NCC0002", MaKho = "KHO0001", GiaNhap = 9500, GiaXuat = 11000, SoLuongTonKho = 123, ImageLocation = "/Material/Images/Supplies/drill.jpg" });
-
-        //    ObservableCollection<VatTuDisplayer> temp = new ObservableCollection<VatTuDisplayer>();
-        //    foreach (Supply sup in DanhSachVatTu)
-        //    {
-        //        VatTuDisplayer newButton = new VatTuDisplayer();
-        //        newButton.DataContext = sup; newButton.Margin = new Thickness(10, 10, 10, 10); newButton.Height = 300; newButton.Width = 220; newButton.Click += VatTuDisplayerButtonClick;
-        //        temp.Add(newButton); 
-        //    }
-
-        //    DanhSachVatTuLargeIcon = temp;
-        //}
         void Refresh(object t = null)
         {
             DanhSachVatTu.Clear(); DanhSachVatTuLargeIcon = null;
