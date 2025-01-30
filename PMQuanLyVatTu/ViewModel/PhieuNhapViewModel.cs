@@ -128,21 +128,12 @@ namespace PMQuanLyVatTu.ViewModel
         public ICommand EditButtonCommand { get; set; }
         void EditButton(object t)
         {
-            if (SelectedPhieuNhap.TrangThai == "Kế toán đã duyệt" || SelectedPhieuNhap.TrangThai == "Đã duyệt")
-            {
-                CustomMessage msg3 = new CustomMessage("/Material/Images/Icons/wrong.png", "LỖI", "Vui lòng không chỉnh sửa phiếu đã được duyệt!", false);
-                msg3.ShowDialog();
-                return;
-            }
-            if (SelectedPhieuNhap.TrangThai == "Bị từ chối")
-            {
-                CustomMessage msg3 = new CustomMessage("/Material/Images/Icons/wrong.png", "LỖI", "Vui lòng không chỉnh sửa phiếu đã bị từ chối!", false);
-                msg3.ShowDialog();
-                return;
-            }
+            int IsAccepted = 0;
+            if (SelectedPhieuNhap.TrangThai == "Kế toán đã duyệt" || SelectedPhieuNhap.TrangThai == "Đã duyệt") IsAccepted = 1;
+            if (SelectedPhieuNhap.TrangThai == "Bị từ chối") IsAccepted = 2;
 
             ChiTietPhieuNhapWindow AddWin = new ChiTietPhieuNhapWindow();
-            ChiTietPhieuNhapWindowViewModel VM = new ChiTietPhieuNhapWindowViewModel(SelectedPhieuNhap.MaPn);
+            ChiTietPhieuNhapWindowViewModel VM = new ChiTietPhieuNhapWindowViewModel(SelectedPhieuNhap.MaPn, IsAccepted);
             AddWin.DataContext = VM;
             AddWin.ShowDialog();
             Refresh();

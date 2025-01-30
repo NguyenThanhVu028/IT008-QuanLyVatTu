@@ -458,7 +458,6 @@ namespace PMQuanLyVatTu.ViewModel
                     case "vt":
                         foreach (DeletedItem i in DanhSachDaXoa)
                         {
-                            MessageBox.Show(i.Checked + i.MaDaXoa);
                             if (i.Checked == true)
                             {
                                 //Xóa
@@ -473,7 +472,6 @@ namespace PMQuanLyVatTu.ViewModel
                     case "nv":
                         foreach (DeletedItem i in DanhSachDaXoa)
                         {
-                            MessageBox.Show(i.Checked + i.MaDaXoa);
                             if (i.Checked == true)
                             {
                                 //Xóa
@@ -488,7 +486,6 @@ namespace PMQuanLyVatTu.ViewModel
                     case "kh":
                         foreach (DeletedItem i in DanhSachDaXoa)
                         {
-                            MessageBox.Show(i.Checked + i.MaDaXoa);
                             if (i.Checked == true)
                             {
                                 //Xóa
@@ -503,7 +500,6 @@ namespace PMQuanLyVatTu.ViewModel
                     case "ncc":
                         foreach (DeletedItem i in DanhSachDaXoa)
                         {
-                            MessageBox.Show(i.Checked + i.MaDaXoa);
                             if (i.Checked == true)
                             {
                                 //Xóa
@@ -518,7 +514,6 @@ namespace PMQuanLyVatTu.ViewModel
                     case "kho":
                         foreach (DeletedItem i in DanhSachDaXoa)
                         {
-                            MessageBox.Show(i.Checked + i.MaDaXoa);
                             if (i.Checked == true)
                             {
                                 //Xóa
@@ -533,7 +528,6 @@ namespace PMQuanLyVatTu.ViewModel
                     case "ycx":
                         foreach (DeletedItem i in DanhSachDaXoa)
                         {
-                            MessageBox.Show(i.Checked + i.MaDaXoa);
                             if (i.Checked == true)
                             {
                                 //Xóa
@@ -554,7 +548,6 @@ namespace PMQuanLyVatTu.ViewModel
                     case "ycn":
                         foreach (DeletedItem i in DanhSachDaXoa)
                         {
-                            MessageBox.Show(i.Checked + i.MaDaXoa);
                             if (i.Checked == true)
                             {
                                 //Xóa
@@ -570,7 +563,6 @@ namespace PMQuanLyVatTu.ViewModel
                     case "pn":
                         foreach (DeletedItem i in DanhSachDaXoa)
                         {
-                            MessageBox.Show(i.Checked + i.MaDaXoa);
                             if (i.Checked == true)
                             {
                                 //Xóa
@@ -591,7 +583,6 @@ namespace PMQuanLyVatTu.ViewModel
                     case "px":
                         foreach (DeletedItem i in DanhSachDaXoa)
                         {
-                            MessageBox.Show(i.Checked + i.MaDaXoa);
                             if (i.Checked == true)
                             {
                                 //Xóa

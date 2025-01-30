@@ -21,9 +21,9 @@ namespace PMQuanLyVatTu.ViewModel
 {
     public class ChiTietPhieuXuatWindowViewModel : BaseViewModel
     {
-        public ChiTietPhieuXuatWindowViewModel(string mapx = null) 
+        public ChiTietPhieuXuatWindowViewModel(string mapx = null, int IsAccepted = 0) 
         {
-            if (mapx != null) { EditMode = true; Title = "CHỈNH SỬA PHIẾU XUẤT"; LoadData(mapx); LoadDanhSach(); }
+            if (mapx != null) { EditMode = true; Title = "CHỈNH SỬA PHIẾU XUẤT"; LoadData(mapx); LoadDanhSach(); this.IsAccepted = IsAccepted; }
             else { EditMode = false; EnableEditing = true; Title = "THÊM PHIẾU XUẤT"; }
 
             LoadNhanVien(); LoadKho(); LoadKhachHang();
@@ -60,6 +60,7 @@ namespace PMQuanLyVatTu.ViewModel
         private int _chietSuat = 0;
         private int _vAT = 0;
         private int _tongGia = 0;
+        private int IsAccepted = 0;
         public string MaPX
         {
             get { return _maPX; }
@@ -180,6 +181,18 @@ namespace PMQuanLyVatTu.ViewModel
         public ICommand EditInfoCommand { get; set; }
         void EditInfo(object t)
         {
+            if (IsAccepted == 1)
+            {
+                CustomMessage msg3 = new CustomMessage("/Material/Images/Icons/wrong.png", "LỖI", "Vui lòng không chỉnh sửa phiếu đã được duyệt!", false);
+                msg3.ShowDialog();
+                return;
+            }
+            if (IsAccepted == 2)
+            {
+                CustomMessage msg3 = new CustomMessage("/Material/Images/Icons/wrong.png", "LỖI", "Vui lòng không chỉnh sửa phiếu đã bị từ chối!", false);
+                msg3.ShowDialog();
+                return;
+            }
             CustomMessage msg = new CustomMessage("/Material/Images/Icons/success.png", "THÀNH CÔNG", "Đã vào chế độ chỉnh sửa thông tin.");
             msg.ShowDialog();
             if (msg.ReturnValue == true) EnableEditing = true;
