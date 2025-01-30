@@ -44,19 +44,28 @@ namespace PMQuanLyVatTu.ViewModel
             PhieuXuatCommand = new RelayCommand<object> (PhieuXuat);
             #endregion
             #region Page ViewModel
-            LoginVM = new LoginWindowViewModel();
-            TrangChuVM = new TrangChuViewModel();
-            VatTuVM = new VatTuViewModel();
-            NhanVienVM = new NhanVienViewModel();
-            KhachHangVM = new KhachHangViewModel();
-            NhaCungCapVM = new NhaCungCapViewModel();
-            KhoVM = new KhoViewModel();
-            DuyetVM = new DuyetViewModel();
-            ThongKeVM = new ThongKeViewModel();
-            YeuCauXuatHangVM = new YeuCauXuatHangViewModel();
-            YeuCauNhapHangVM = new YeuCauNhapHangViewModel();
-            PhieuNhapVM = new PhieuNhapViewModel();
-            PhieuXuatVM = new PhieuXuatViewModel();
+            try
+            {
+                LoginVM = new LoginWindowViewModel();
+                TrangChuVM = new TrangChuViewModel();
+                VatTuVM = new VatTuViewModel();
+                NhanVienVM = new NhanVienViewModel();
+                KhachHangVM = new KhachHangViewModel();
+                NhaCungCapVM = new NhaCungCapViewModel();
+                KhoVM = new KhoViewModel();
+                DuyetVM = new DuyetViewModel();
+                ThongKeVM = new ThongKeViewModel();
+                YeuCauXuatHangVM = new YeuCauXuatHangViewModel();
+                YeuCauNhapHangVM = new YeuCauNhapHangViewModel();
+                PhieuNhapVM = new PhieuNhapViewModel();
+                PhieuXuatVM = new PhieuXuatViewModel();
+            }
+            catch
+            {
+                ErrorMessage.CustomMessage msg = new ErrorMessage.CustomMessage("/Material/Images/Icons/wrong.png", "LỖI", "Đã xảy ra lỗi khi kết nối với cơ sở dữ liệu!", false);
+                msg.ShowDialog();
+                Application.Current.Shutdown();
+            }
             #endregion
             //Khởi tạo các trang/window ban đầu
             _currentPage = new TrangChu(); (_currentPage as TrangChu).DataContext = TrangChuVM;
