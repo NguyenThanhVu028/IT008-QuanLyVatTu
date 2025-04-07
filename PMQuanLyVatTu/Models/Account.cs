@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 
 namespace PMQuanLyVatTu.Models;
-
+//Note
 public partial class Account
 {
     public string TenDn { get; set; } = null!;
